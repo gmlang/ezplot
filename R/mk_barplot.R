@@ -5,6 +5,7 @@
 #' can be used to make barplots on variables in the data frame.
 #' 
 #' @param df data frame containing variables to be visualized.
+#' 
 #' @return
 #' \code{function(xvar, yvar, fillby, xlab="", ylab="", main="", ypct=F, ypct_jump=0.2, legend=T)}
 #' \itemize{
@@ -17,18 +18,22 @@
 #'      \item ypct     :  logical, indicating whether to use percent format on y-axis. Default is FALSE.
 #'      \item ypct_jump:  numeric, between 0 and 1. Default is 0.1
 #'      \item legend   :  logical, indicating whether to show the legend. Default is TRUE.
-#' }             
+#' }         
+#'     
 #' @examples
+#' # make some fake data
 #' df = read.table(header=TRUE, text='
 #' student grade
 #' Joe 90
 #' Mary 75
 #' Alex 50')
 #' 
+#' # draw a barplot
 #' barplt = mk_barplot(df)
 #' barplt("student", "grade", "student") 
 #' barplt("student", "grade", "student", legend=F) 
 #' 
+#' # make some fake data
 #' df2 = read.table(header=TRUE, text='
 #' group level val
 #' A      small 1.8
@@ -41,13 +46,13 @@
 #' C      medium 1.3
 #' C      large 2.9')
 #' 
+#' # draw a barplot
 #' barplt = mk_barplot(df2)
 #' barplt("group", "val", "level") 
 #' 
+#' # calculate the percentage of the levels within each group
 #' library(tidyr)
 #' library(dplyr)
-#' 
-#' # calculate the percentage of the levels within each group
 #' pct = df2 %>% spread(level, val)
 #' temp = pct[, 2:4]
 #' pct = cbind(group=pct[, 1], temp / apply(temp, 1, sum))

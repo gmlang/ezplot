@@ -28,16 +28,19 @@ mk_barplot(df)
 can be used to make barplots on variables in the data frame.
 }
 \examples{
+# make some fake data
 df = read.table(header=TRUE, text='
 student grade
 Joe 90
 Mary 75
 Alex 50')
 
+# draw a barplot
 barplt = mk_barplot(df)
 barplt("student", "grade", "student")
 barplt("student", "grade", "student", legend=F)
 
+# make some fake data
 df2 = read.table(header=TRUE, text='
 group level val
 A      small 1.8
@@ -50,13 +53,13 @@ C      small 2.5
 C      medium 1.3
 C      large 2.9')
 
+# draw a barplot
 barplt = mk_barplot(df2)
 barplt("group", "val", "level")
 
+# calculate the percentage of the levels within each group
 library(tidyr)
 library(dplyr)
-
-# calculate the percentage of the levels within each group
 pct = df2 \%>\% spread(level, val)
 temp = pct[, 2:4]
 pct = cbind(group=pct[, 1], temp / apply(temp, 1, sum))
