@@ -1,5 +1,5 @@
 #' @title Create a function that draws ggplot2 barplots
-#' 
+#
 #' @description
 #' \code{mk_barplot()} takes a data frame as input and returns a function that 
 #' can be used to make barplots on variables in the data frame.
@@ -18,7 +18,9 @@
 #'      \item ypct     :  logical, indicating whether to use percent format on y-axis. Default is FALSE.
 #'      \item ypct_jump:  numeric, between 0 and 1. Default is 0.1
 #'      \item legend   :  logical, indicating whether to show the legend. Default is TRUE.
-#' }         
+#' }    
+#'      
+#' @export
 #'     
 #' @examples
 #' # make some fake data

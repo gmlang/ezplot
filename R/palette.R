@@ -7,6 +7,8 @@
 #' 
 #' @return a character vector of color palettes
 #' 
+#' @export
+#' 
 #' @examples
 #' palette("cb_gray")
 #' palette("blue")

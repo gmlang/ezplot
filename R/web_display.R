@@ -9,6 +9,8 @@
 #' 
 #' @return a ggplot object
 #'     
+#' @export
+#'     
 #' @examples
 #' # make some data
 #' df = read.table(header=TRUE, text='
