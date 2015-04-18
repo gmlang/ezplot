@@ -2,11 +2,11 @@
 #' 
 #' @description
 #' \code{plt_dist()} takes in a data frame and a variable name, and plots the 
-#' histogram, boxplot, density curve and qqplot of the variable.
+#' histogram, boxplot, density curve and qqplot of the variable using the base
+#' plot system.
 #' 
 #' @param dat a data frame or a matrix with colnames.
 #' @param varname a string specifying the name of the variable of interest.
-#' @return it renders 4 plots on one canvas using the base plot system.
 #' @export
 #' @examples
 #' plt_dist(cars, "speed")

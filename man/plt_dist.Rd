@@ -11,12 +11,10 @@ plt_dist(dat, varname)
 
 \item{varname}{a string specifying the name of the variable of interest.}
 }
-\value{
-it renders 4 plots on one canvas using the base plot system.
-}
 \description{
 \code{plt_dist()} takes in a data frame and a variable name, and plots the
-histogram, boxplot, density curve and qqplot of the variable.
+histogram, boxplot, density curve and qqplot of the variable using the base
+plot system.
 }
 \examples{
 plt_dist(cars, "speed")
