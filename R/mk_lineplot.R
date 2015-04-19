@@ -50,11 +50,12 @@ mk_lineplot = function(df) {
                 } else {
                         p = ggplot2::ggplot(df, ggplot2::aes_string(x=xvar, y=yvar, group=fillby, color=fillby)) + 
                                 ggplot2::geom_line(size=linew) + 
-                                ggplot2::geom_point(size=pt_size)
+                                ggplot2::geom_point(size=pt_size) 
                 }
                 
                 p = p + ggplot2::labs(x = xlab, y = ylab, title = main) +
-                        ggplot2::theme_bw() 
+                        ggplot2::theme_bw() +
+                        ggplot2::theme(legend.title = ggplot2::element_blank())
                 
                 if (ylog)
                         p = p + ggplot2::scale_y_continuous(trans = scales::log_trans(),

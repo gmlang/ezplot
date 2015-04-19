@@ -4,12 +4,30 @@
 \alias{web_display}
 \title{Enlarges a ggplot2 plot for web display}
 \usage{
-web_display(p, axis_text_size = 20, axis_title_size = ggplot2::rel(2),
-  axis_title_vjust_y = 1, legend_pos = "right", mar_top = 1,
-  mar_right = 1, mar_left = 1, mar_bottom = 1)
+web_display(p, axis_text_size = 16, axis_title_size = ggplot2::rel(2),
+  axis_title_vjust_y = 1, legend_pos = "right", legend_title = T,
+  mar_top = 1, mar_right = 1, mar_left = 1, mar_bottom = 1)
 }
 \arguments{
 \item{p}{ggplot object}
+
+\item{axis_text_size}{number, the size of the tick text. Default = 16.}
+
+\item{axis_title_size}{number, the size of the axis labels. Default = rel(2).}
+
+\item{axis_title_vjust_y}{number, the distance between y label and y-axis. Default = 1.}
+
+\item{legend_pos}{string, the position of the legend. Default = "right".}
+
+\item{legend_title}{logical, whether to display legend title. Default = TRUE.}
+
+\item{mar_top}{number, top margin of the whole plot. Default = 1.}
+
+\item{mar_right}{number, right margin of the whole plot. Default = 1.}
+
+\item{mar_left}{number, left margin of the whole plot. Default = 1.}
+
+\item{mar_bottom}{number, bottom margin of the whole plot. Default = 1.}
 }
 \value{
 a ggplot object
