@@ -6,11 +6,8 @@
 #' axis labels and the axis to make it look good for web display.
 #' 
 #' @param p ggplot object
-#' 
 #' @return a ggplot object
-#'     
 #' @export
-#'     
 #' @examples
 #' # make some data
 #' df = read.table(header=TRUE, text='
@@ -30,13 +27,10 @@
 #' web_display(p, legend_pos="none")
 #' web_display(p, legend_pos="bottom")
 web_display = function(p, axis_text_size=20, axis_title_size=ggplot2::rel(2),
-                       axis_text_angle_x=0,
-                       axis_title_vjust_y=1,
-                       legend_pos="right",
+                       axis_title_vjust_y=1, legend_pos="right",
                        mar_top=1, mar_right=1, mar_left=1, mar_bottom=1) {
         p = p + ggplot2::theme(
-                axis.text.x = ggplot2::element_text(size=axis_text_size,
-                                                    angle=axis_text_angle_x),
+                axis.text.x = ggplot2::element_text(size=axis_text_size),
                 axis.text.y = ggplot2::element_text(size=axis_text_size),
                 legend.text = ggplot2::element_text(size=axis_text_size),
                 axis.title.x = ggplot2::element_text(size=axis_title_size,

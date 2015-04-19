@@ -5,8 +5,8 @@
 \title{Enlarges a ggplot2 plot for web display}
 \usage{
 web_display(p, axis_text_size = 20, axis_title_size = ggplot2::rel(2),
-  axis_text_angle_x = 0, axis_title_vjust_y = 1, legend_pos = "right",
-  mar_top = 1, mar_right = 1, mar_left = 1, mar_bottom = 1)
+  axis_title_vjust_y = 1, legend_pos = "right", mar_top = 1,
+  mar_right = 1, mar_left = 1, mar_bottom = 1)
 }
 \arguments{
 \item{p}{ggplot object}
