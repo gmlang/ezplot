@@ -25,25 +25,36 @@
 #' f("Sepal.Length", fillby="Species", type="density")
 mk_distplot = function(df) {
         function(xvar, fillby="", type="histogram", binw=NULL, main="") {
+                
                 p = ggplot2::ggplot(df, ggplot2::aes_string(x = xvar)) + 
                         ggplot2::labs(title = main) +
                         ggplot2::theme_bw()
+                
                 if (type == "histogram") {
                         if (fillby == "") 
                                 p = p + ggplot2::geom_histogram(fill = palette("blue"),
                                                                 alpha=.5, binwidth=binw,
-                                                                position="identity")
+                                                                position="identity") 
+                        
                         else 
                                 p = p + ggplot2::geom_histogram(ggplot2::aes_string(fill=fillby), 
                                                                 alpha=.5, binwidth=binw,
                                                                 position="identity")
                 }
+                
                 if (type == "density") {
                         if (fillby == "") 
                                 p = p + ggplot2::geom_density(color = palette("blue"), alpha=.3)
                         else
                                 p = p + ggplot2::geom_density(ggplot2::aes_string(color=fillby), alpha=.3)
                 }
+                
+                if (fillby == "") {
+                        # add vline at the mean
+                        p = p + ggplot2::geom_vline(ggplot2::aes_string(xintercept = mean(df[[xvar]], na.rm=T)),
+                                                    color = palette("red"), linetype = "dashed")                        
+                }
+                
                 p
         }
 }
