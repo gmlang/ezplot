@@ -8,10 +8,10 @@ Description: A collection of wrapper functions that allow you to easily make
         scatter plot. It also allows you to easily resize and rotate the axis 
         tick text, adjust the distances between the axises labels and the axises.
         It frees you from knowing the details of ggplot2 commands.
-Depends: R (>= 3.1.2)
+Depends: R (>= 3.1.2),
+    methods
 License: MIT
 LazyData: true
 Imports: ggplot2,
     scales,
-    grid,
-    methods
+    grid
