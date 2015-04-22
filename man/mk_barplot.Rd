@@ -10,7 +10,8 @@ mk_barplot(df)
 \item{df}{data frame containing variables to be visualized.}
 }
 \value{
-\code{function(xvar, yvar, fillby, xlab="", ylab="", main="", ypct=F, ypct_jump=0.2, legend=T)}
+\code{function(xvar, yvar, fillby, xlab="", ylab="", main="",
+               ylog=F, ylog10=F, ypct=F, ypct_jump=0.2, legend=T)}
 \itemize{
      \item xvar     :  string, the x variable.
      \item yvar     :  string, the y variable.
@@ -18,6 +19,8 @@ mk_barplot(df)
      \item xlab     :  string, the x-axis label.
      \item ylab     :  string, the y-axis label.
      \item main     :  string, the title of the plot.
+     \item ylog     :  logical, indicating whether to use log scale on y-axis. Default is FALSE.
+     \item ylog10   :  logical, indicating whether to use log10 scale on y-axis. Default is FALSE.
      \item ypct     :  logical, indicating whether to use percent format on y-axis. Default is FALSE.
      \item ypct_jump:  numeric, between 0 and 1. Default is 0.2
      \item legend   :  logical, indicating whether to show the legend. Default is TRUE.
