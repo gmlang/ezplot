@@ -73,23 +73,22 @@ mk_barplot = function(df) {
                 p = ggplot2::ggplot(df, ggplot2::aes_string(x = xvar, y = yvar, fill = fillby)) + 
                         ggplot2::geom_bar(stat = "identity") + 
                         ggplot2::labs(x = xlab, y = ylab, title = main) +
-                        ggplot2::theme_bw() + ggplot2::scale_y_continuous(labels = scales::comma)
+                        ggplot2::theme_bw()
                 
-                if (ylog)
+                if (ylog) 
                         p = p + ggplot2::scale_y_continuous(trans = scales::log_trans(),
                                                             breaks = scales::trans_breaks("log", function(x) exp(x)),
                                                             labels = scales::trans_format("log", scales::math_format('e'^.x)))
-                
-                if (ylog10)
+                else if (ylog10)
                         p = p + ggplot2::scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
                                                        labels = scales::trans_format("log10", scales::math_format(10^.x)))
-                
-                if (ypct)
+                else if (ypct)
                         p = p + ggplot2::scale_y_continuous(labels = scales::percent, 
                                                             limits = c(0,1),
                                                             breaks = seq(0, 1, ypct_jump))
-                if (!legend)
-                        p = p + ggplot2::guides(fill = FALSE)
+                else p = p + ggplot2::scale_y_continuous(labels = scales::comma)
+                        
+                if (!legend) p = p + ggplot2::guides(fill = FALSE)
                 
                 p
         }
