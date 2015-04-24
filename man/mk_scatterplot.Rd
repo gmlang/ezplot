@@ -10,10 +10,8 @@ mk_scatterplot(df)
 \item{df}{data frame containing variables to be visualized.}
 }
 \value{
-\code{function(xvar, yvar, fillby="", xlab="", ylab="", main="",
-               xlog=F, ylog=F, xlog10=F, ylog10=F,
-               xpct=F, ypct=F, xpct_jump=0.2, ypct_jump=0.2,
-               pt_alpha=NULL, pt_size=NULL)}
+\code{function(xvar, yvar, fillby="", xlab="", ylab="", main="", add_line=F,
+               linew=1, pt_alpha=0.5, pt_size=1)}
 \itemize{
      \item xvar     :  string, the x variable.
      \item yvar     :  string, the y variable.
@@ -21,18 +19,10 @@ mk_scatterplot(df)
      \item xlab     :  string, the x-axis label.
      \item ylab     :  string, the y-axis label.
      \item main     :  string, the title of the plot.
-     \item xlog     :  logical, indicating whether to use log scale on x-axis. Default is FALSE.
-     \item ylog     :  logical, indicating whether to use log scale on y-axis. Default is FALSE.
-     \item xlog10   :  logical, indicating whether to use log10 scale on x-axis. Default is FALSE.
-     \item ylog10   :  logical, indicating whether to use log10 scale on y-axis. Default is FALSE.
-     \item xpct     :  logical, indicating whether to use percent format on x-axis. Default is FALSE.
-     \item ypct     :  logical, indicating whether to use percent format on y-axis. Default is FALSE.
-     \item xpct_jump:  numeric, between 0 and 1. Default is 0.2
-     \item ypct_jump:  numeric, between 0 and 1. Default is 0.2
      \item add_line :  logical, indicating whether to add a lm line. Default is F.
      \item linew    :  numeric, default is 1.
-     \item pt_alpha :  numeric, specifying the transparency of the points. Default is NULL.
-     \item pt_size  :  numeric, specifying the size of the points. Default is NULL.
+     \item pt_alpha :  numeric, specifying the transparency of the points. Default is 0.5.
+     \item pt_size  :  numeric, specifying the size of the points. Default is 1.
 }
 }
 \description{
@@ -43,11 +33,28 @@ can be used to make scatterplots on variables in the data frame.
 library(ezplot)
 plt = mk_scatterplot(films)
 
-plt("boxoffice", "budget", xlog10=T, ylog10=T)
-plt("boxoffice", "budget", xlog10=T, ylog10=T, add_line=T)
-plt("boxoffice", "budget", fillby="year_cat", xlog10=T, ylog10=T)
-plt("boxoffice", "budget", fillby="year_cat", xlog10=T, ylog10=T, add_line=T)
-plt("boxoffice", "budget", fillby="year_cat", xlog10=T, ylog10=T, add_line=T)
-plt("boxoffice", "budget", fillby="made_money", xlog10=T, ylog10=T, add_line=T, linew=0.5)
+plt("budget", "boxoffice", xlab="budget", ylab="boxoffice",
+     main="Boxoffice vs. Budget")
+
+p = plt("budget", "boxoffice", xlab="budget", ylab="boxoffice",
+         pt_alpha=0.2, pt_size=1.5, add_line=T, linew=0.8)
+scale_axis(p, "y", use_log=T)
+scale_axis(p, "x", use_log=T)
+
+p = scale_axis(p, "x", use_log10=T)
+p = scale_axis(p, "y", use_log10=T)
+print(p)
+
+p = plt("budget", "boxoffice", fillby="year_cat", xlab="budget",
+         ylab="boxoffice", add_line=T)
+p = scale_axis(p, "x", use_log10=T)
+p = scale_axis(p, "y", use_log10=T)
+print(p)
+
+p = plt("budget", "boxoffice", fillby="made_money", xlab="budget",
+         ylab="boxoffice", add_line=T)
+p = scale_axis(p, "x", use_log10=T)
+p = scale_axis(p, "y", use_log10=T)
+print(p)
 }
 
