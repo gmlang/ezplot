@@ -22,10 +22,14 @@
 #' rotate_axis_text(p)
 #' rotate_axis_text(p, 90)
 #' rotate_axis_text(p, 90, 30)
-rotate_axis_text = function(p, axis_text_angle_x=45, axis_text_angle_y=0) {
+rotate_axis_text = function(p, text_angle_x=45, text_angle_y=0,
+                            hjust_x=NULL, hjust_y=NULL, 
+                            vjust_x=NULL, vjust_y=NULL) {
         p = p + ggplot2::theme(
-                axis.text.x = ggplot2::element_text(angle=axis_text_angle_x), 
-                axis.text.y = ggplot2::element_text(angle=axis_text_angle_y)
+                axis.text.x = ggplot2::element_text(angle=text_angle_x,
+                                                    hjust=hjust_x, vjust=vjust_x), 
+                axis.text.y = ggplot2::element_text(angle=text_angle_y,
+                                                    hjust=hjust_y, vjust=vjust_y)
                 )        
         p
 }

@@ -10,12 +10,19 @@ mk_distplot(df)
 \item{df}{data frame containing variables to be visualized.}
 }
 \value{
-\code{function(xvar, fillby="", type="histogram", binw=NULL)}
+\code{function(xvar, fillby="", xlab="", type="histogram", binw=NULL,
+               main="", xlog=F, xlog10=F, xpct=F, xpct_jump=0.2)}
 \itemize{
      \item xvar     :  string, the x variable.
-     \item fillby    :  string, the grouping variable. Default is "".
+     \item fillby   :  string, the grouping variable. Default is "".
      \item type     :  string, "density" or "histogram". Default is "histogram".
      \item binw     :  number, bin width. Default is NULL.
+     \item xlab     :  string, the x-axis label.
+     \item main     :  string, the title of the plot.
+     \item xlog     :  logical, indicating whether to use log scale on x-axis. Default is FALSE.
+     \item xlog10   :  logical, indicating whether to use log10 scale on x-axis. Default is FALSE.
+     \item xpct     :  logical, indicating whether to use percent format on x-axis. Default is FALSE.
+     \item xpct_jump:  numeric, between 0 and 1. Default is 0.2
 }
 }
 \description{

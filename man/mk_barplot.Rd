@@ -10,8 +10,7 @@ mk_barplot(df)
 \item{df}{data frame containing variables to be visualized.}
 }
 \value{
-\code{function(xvar, yvar, fillby, xlab="", ylab="", main="",
-               ylog=F, ylog10=F, ypct=F, ypct_jump=0.2, legend=T)}
+\code{function(xvar, yvar, fillby, xlab="", ylab="", main="", legend=T)}
 \itemize{
      \item xvar     :  string, the x variable.
      \item yvar     :  string, the y variable.
@@ -19,10 +18,6 @@ mk_barplot(df)
      \item xlab     :  string, the x-axis label.
      \item ylab     :  string, the y-axis label.
      \item main     :  string, the title of the plot.
-     \item ylog     :  logical, indicating whether to use log scale on y-axis. Default is FALSE.
-     \item ylog10   :  logical, indicating whether to use log10 scale on y-axis. Default is FALSE.
-     \item ypct     :  logical, indicating whether to use percent format on y-axis. Default is FALSE.
-     \item ypct_jump:  numeric, between 0 and 1. Default is 0.2
      \item legend   :  logical, indicating whether to show the legend. Default is TRUE.
 }
 }
@@ -71,6 +66,11 @@ pct$level = factor(pct$level, levels=c("small", "medium", "large"))
 
 # plot a stacked barplot to display the percentages
 barplt = mk_barplot(pct)
-barplt("group", "pct", "level", ypct=T)
+p = barplt("group", "pct", "level")
+scale_axis(p, "y", use_pct=T)
+scale_axis(p, "y", use_pct=T, pct_jump=0.1)
+}
+\seealso{
+\code{\link{scale_axis}} for adding different scales to the axes.
 }
 

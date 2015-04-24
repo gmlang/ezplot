@@ -4,7 +4,8 @@
 \alias{rotate_axis_text}
 \title{Rotate axis tick text}
 \usage{
-rotate_axis_text(p, axis_text_angle_x = 45, axis_text_angle_y = 0)
+rotate_axis_text(p, text_angle_x = 45, text_angle_y = 0, hjust_x = NULL,
+  hjust_y = NULL, vjust_x = NULL, vjust_y = NULL)
 }
 \arguments{
 \item{p}{ggplot2 object.}

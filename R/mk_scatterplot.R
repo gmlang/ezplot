@@ -8,7 +8,8 @@
 #' @return 
 #' \code{function(xvar, yvar, fillby="", xlab="", ylab="", main="",
 #'                xlog=F, ylog=F, xlog10=F, ylog10=F, 
-#'                xpct=F, ypct=F, xpct_jump=0.2, ypct_jump=0.2)}
+#'                xpct=F, ypct=F, xpct_jump=0.2, ypct_jump=0.2,
+#'                pt_alpha=NULL, pt_size=NULL)}
 #' \itemize{
 #'      \item xvar     :  string, the x variable.
 #'      \item yvar     :  string, the y variable.
@@ -26,6 +27,8 @@
 #'      \item ypct_jump:  numeric, between 0 and 1. Default is 0.2
 #'      \item add_line :  logical, indicating whether to add a lm line. Default is F.
 #'      \item linew    :  numeric, default is 1.
+#'      \item pt_alpha :  numeric, specifying the transparency of the points. Default is NULL.
+#'      \item pt_size  :  numeric, specifying the size of the points. Default is NULL.
 #' }
 #' 
 #' @export
@@ -43,14 +46,15 @@ mk_scatterplot = function(df) {
         function(xvar, yvar, fillby="", xlab="", ylab="", main="",
                  xlog=F, ylog=F, xlog10=F, ylog10=F,  
                  xpct=F, ypct=F, xpct_jump=0.2, ypct_jump=0.2,
-                 add_line=F, linew=1) {
+                 add_line=F, linew=1, pt_alpha=NULL, pt_size=NULL) {
                 
                 if (fillby == "") 
                         p = ggplot2::ggplot(df, ggplot2::aes_string(x=xvar, y=yvar)) +
-                                ggplot2::geom_point(color=palette("blue"))
+                                ggplot2::geom_point(color=palette("blue"), 
+                                                    alpha=pt_alpha, size=pt_size)
                 else 
                         p = ggplot2::ggplot(df, ggplot2::aes_string(x=xvar, y=yvar, color=fillby)) +
-                                ggplot2::geom_point() 
+                                ggplot2::geom_point(alpha=pt_alpha, size=pt_size) 
                 
                 if (add_line)
                         p = p + ggplot2::geom_smooth(method=lm, se=F, size=linew) 

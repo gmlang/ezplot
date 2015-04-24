@@ -12,7 +12,8 @@ mk_scatterplot(df)
 \value{
 \code{function(xvar, yvar, fillby="", xlab="", ylab="", main="",
                xlog=F, ylog=F, xlog10=F, ylog10=F,
-               xpct=F, ypct=F, xpct_jump=0.2, ypct_jump=0.2)}
+               xpct=F, ypct=F, xpct_jump=0.2, ypct_jump=0.2,
+               pt_alpha=NULL, pt_size=NULL)}
 \itemize{
      \item xvar     :  string, the x variable.
      \item yvar     :  string, the y variable.
@@ -30,6 +31,8 @@ mk_scatterplot(df)
      \item ypct_jump:  numeric, between 0 and 1. Default is 0.2
      \item add_line :  logical, indicating whether to add a lm line. Default is F.
      \item linew    :  numeric, default is 1.
+     \item pt_alpha :  numeric, specifying the transparency of the points. Default is NULL.
+     \item pt_size  :  numeric, specifying the size of the points. Default is NULL.
 }
 }
 \description{
