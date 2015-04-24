@@ -10,8 +10,7 @@ mk_boxplot(df)
 \item{df}{data frame containing variables to be visualized.}
 }
 \value{
-\code{function(xvar, yvar, xlab="", ylab="", main="", vpos=0,
-               ylog=F, ylog10=F, ypct=F, ypct_jump=0.2, legend=T)}
+\code{function(xvar, yvar, xlab="", ylab="", main="", vpos=0, legend=T)}
 \itemize{
      \item xvar     :  string, the x variable.
      \item yvar     :  string, the y variable.
@@ -19,10 +18,6 @@ mk_boxplot(df)
      \item ylab     :  string, the y-axis label.
      \item main     :  string, the title of the plot.
      \item vpos     :  number, the additional height of the text labels beyond the max y-value of each group.
-     \item ylog     :  logical, indicating whether to use log scale on y-axis. Default is FALSE.
-     \item ylog10   :  logical, indicating whether to use log10 scale on y-axis. Default is FALSE.
-     \item ypct     :  logical, indicating whether to use percent format on y-axis. Default is FALSE.
-     \item ypct_jump:  number, between 0 and 1. Default is 0.2
      \item legend   :  logical, indicating whether to show legend or not. Default is TRUE.
 }
 }
@@ -36,23 +31,28 @@ plt = mk_boxplot(films)
 
 # plot distributions of budget over the years
 title1 = "Annual Distribution of Budget from 1913 to 2014"
-p = plt("year", "budget", ylab="budget", main=title1, ylog10=T)
+p = plt("year", "budget", ylab="budget", main=title1)
+p = scale_axis(p, "y", use_comma=T)
 print(p)
+scale_axis(p, use_log10=T)
 
 # plot distributions of boxoffice over the years
 title2 = "Annual Distribution of Boxoffice from 1913 to 2014"
-p = plt("year", "boxoffice", ylab="boxoffice", main=title2, ylog10=T)
+p = plt("year", "boxoffice", ylab="boxoffice", main=title2)
 start = min(films$year)
 end = max(films$year)
-p = p + ggplot2::scale_x_continuous(limits = c(start, end), breaks = seq(start, end, 10))
+p = scale_axis(p, "y", use_log10=T)
+p = p + ggplot2::scale_x_continuous(limits = c(start, end),
+                                    breaks = seq(start, end, 10))
 print(p)
 
 # plot distributions of boxoffice at each aggregated year level
-p = plt("year_cat", "boxoffice", ylab="boxoffice", ylog10=T)
+p = plt("year_cat", "boxoffice", ylab="boxoffice")
+p = scale_axis(p, use_log10=T)
 print(p)
 
 # plot distributions of budget at each aggregated year level
-p = plt("year_cat", "budget", ylab="boxoffice", ylog10=T, legend=F)
-print(p)
+p = plt("year_cat", "budget", ylab="boxoffice", legend=F)
+scale_axis(p, use_log10=T)
 }
 
