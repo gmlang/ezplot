@@ -76,7 +76,8 @@ scale_axis = function(p, axis="y", use_comma=F, use_log=F, use_log10=F,
                 labels = scales::trans_format('log10', scales::math_format(10^.x)))"
         r_pct = paste0("_continuous(labels = scales::percent, limits = c(0,1),
                        breaks = seq(0, 1, ", pct_jump, "))")        
-                
+        
+        pexpr = NULL        
         if (use_comma)
                 pexpr = scale_axis_helper(l, axis, r_comma)
         if (use_log)
