@@ -11,7 +11,7 @@
 #' 
 #' @seealso \code{\link{scale_axis}}.
 scale_axis_helper = function(lstr, axis, rstr) {
-        out_str = eval(quote(paste0(lstr, axis, rstr)))
+        out_str = paste0(lstr, axis, rstr)
         parse(text = out_str)
 }
 
@@ -26,6 +26,9 @@ scale_axis_helper = function(lstr, axis, rstr) {
 #'      \item log10: use log10 scale.
 #'      \item pct  : use % format, the values must already be decimal.
 #' }
+#' It uses \code{scale_axis_helper()} as a helper. 
+#' 
+#' @seealso \code{\link{scale_axis_helper}}.
 #' 
 #' @param p ggplot2 object.
 #' @param axis string of value "x" or "y". Default = "y". 
@@ -85,7 +88,3 @@ scale_axis = function(p, axis="y", use_comma=F, use_log=F, use_log10=F,
         p = eval(pexpr)
         p
 }
-
-
-
-

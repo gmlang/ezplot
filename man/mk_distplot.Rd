@@ -10,33 +10,43 @@ mk_distplot(df)
 \item{df}{data frame containing variables to be visualized.}
 }
 \value{
-\code{function(xvar, fillby="", xlab="", type="histogram", binw=NULL,
-               main="", xlog=F, xlog10=F, xpct=F, xpct_jump=0.2)}
+\code{function(xvar, fillby="", xlab="", type="histogram", binw=NULL, main="")}
 \itemize{
      \item xvar     :  string, the x variable.
      \item fillby   :  string, the grouping variable. Default is "".
+     \item xlab     :  stirng, the x-axis label.
      \item type     :  string, "density" or "histogram". Default is "histogram".
      \item binw     :  number, bin width. Default is NULL.
-     \item xlab     :  string, the x-axis label.
      \item main     :  string, the title of the plot.
-     \item xlog     :  logical, indicating whether to use log scale on x-axis. Default is FALSE.
-     \item xlog10   :  logical, indicating whether to use log10 scale on x-axis. Default is FALSE.
-     \item xpct     :  logical, indicating whether to use percent format on x-axis. Default is FALSE.
-     \item xpct_jump:  numeric, between 0 and 1. Default is 0.2
 }
 }
 \description{
 \code{mk_distplot()} takes a data frame as input and returns a function that
 can be used to make histograms or density plots on variables in the data frame.
+It uses \code{draw()} as a helper.
 }
 \examples{
 f = mk_distplot(iris)
 f("Sepal.Length")
 f("Sepal.Length", binw=0.3)
+f("Sepal.Length", binw=0.3, add_vline_mean=T)
+f("Sepal.Length", binw=0.3, add_vline_median=T)
+f("Sepal.Length", binw=0.3, add_vline_mean=T, add_vline_median=T)
+
 f("Sepal.Length", type="density")
+f("Sepal.Length", type="density", add_vline_mean=T)
+f("Sepal.Length", type="density", add_vline_median=T)
+f("Sepal.Length", type="density", add_vline_median=T, add_vline_mean=T)
 
 f("Sepal.Length", fillby="Species")
 f("Sepal.Length", fillby="Species", binw=0.3)
+f("Sepal.Length", fillby="Species", binw=0.3, add_vline_mean=T)
+f("Sepal.Length", fillby="Species", binw=0.3, add_vline_median=T)
 f("Sepal.Length", fillby="Species", type="density")
+f("Sepal.Length", fillby="Species", type="density", add_vline_mean=T)
+f("Sepal.Length", fillby="Species", type="density", add_vline_median=T)
+}
+\seealso{
+\code{\link{draw}}.
 }
 

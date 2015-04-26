@@ -1,82 +1,123 @@
+#' @title Helper function used by \code{mk_distplot()}. Not for external use.
+#' 
+#' @description \code{draw()} takes "histogram" or "density" as input and returns 
+#' the corresponding ggplot2 expression to be evaluated by \code{mk_distplot()}.
+#' 
+#' @param type string of value "histogram" or "density".
+#' 
+#' @return a R expression to be evaluated by \code{mk_distplot()}.  
+#' 
+#' @seealso \code{\link{mk_distplot}}.
+draw = function(type) {
+        # code string for histogram
+        hist_code = 'if (fillby == "") {
+                        p = p + ggplot2::geom_histogram(fill = palette("blue"), alpha=.5, binwidth=binw, position="identity")
+                     } else { 
+                        p = p + ggplot2::geom_histogram(ggplot2::aes_string(fill=fillby), alpha=.5, binwidth=binw, position="identity")
+                     }'
+        
+        # code string for density
+        density_code = 'if (fillby == "") {
+                                p = p + ggplot2::geom_density(color = palette("blue"), alpha=.3)
+                        } else {
+                                p = p + ggplot2::geom_density(ggplot2::aes_string(color=fillby), alpha=.3)
+                        }'
+        
+        switch(type,
+               histogram = parse(text = hist_code),
+               density = parse(text = density_code))
+}
+
 #' @title Create a function that draws ggplot2 histograms or density plots.
 #' 
 #' @description
 #' \code{mk_distplot()} takes a data frame as input and returns a function that 
 #' can be used to make histograms or density plots on variables in the data frame.
+#' It uses \code{draw()} as a helper. 
+#' 
+#' @seealso \code{\link{draw}}.
 #' 
 #' @param df data frame containing variables to be visualized.
 #' @return 
-#' \code{function(xvar, fillby="", xlab="", type="histogram", binw=NULL, 
-#'                main="", xlog=F, xlog10=F, xpct=F, xpct_jump=0.2)}
+#' \code{function(xvar, fillby="", xlab="", type="histogram", binw=NULL, main="")}
 #' \itemize{
 #'      \item xvar     :  string, the x variable.
 #'      \item fillby   :  string, the grouping variable. Default is "".
+#'      \item xlab     :  stirng, the x-axis label.
 #'      \item type     :  string, "density" or "histogram". Default is "histogram".
 #'      \item binw     :  number, bin width. Default is NULL.
-#'      \item xlab     :  string, the x-axis label.
 #'      \item main     :  string, the title of the plot. 
-#'      \item xlog     :  logical, indicating whether to use log scale on x-axis. Default is FALSE.
-#'      \item xlog10   :  logical, indicating whether to use log10 scale on x-axis. Default is FALSE.
-#'      \item xpct     :  logical, indicating whether to use percent format on x-axis. Default is FALSE.
-#'      \item xpct_jump:  numeric, between 0 and 1. Default is 0.2
 #' }
 #' @export
 #' @examples
 #' f = mk_distplot(iris)
 #' f("Sepal.Length")
 #' f("Sepal.Length", binw=0.3)
+#' f("Sepal.Length", binw=0.3, add_vline_mean=T)
+#' f("Sepal.Length", binw=0.3, add_vline_median=T)
+#' f("Sepal.Length", binw=0.3, add_vline_mean=T, add_vline_median=T)
+#' 
 #' f("Sepal.Length", type="density")
+#' f("Sepal.Length", type="density", add_vline_mean=T)
+#' f("Sepal.Length", type="density", add_vline_median=T)
+#' f("Sepal.Length", type="density", add_vline_median=T, add_vline_mean=T)
 #' 
 #' f("Sepal.Length", fillby="Species")
 #' f("Sepal.Length", fillby="Species", binw=0.3)
+#' f("Sepal.Length", fillby="Species", binw=0.3, add_vline_mean=T)
+#' f("Sepal.Length", fillby="Species", binw=0.3, add_vline_median=T)
 #' f("Sepal.Length", fillby="Species", type="density")
+#' f("Sepal.Length", fillby="Species", type="density", add_vline_mean=T)
+#' f("Sepal.Length", fillby="Species", type="density", add_vline_median=T)
 mk_distplot = function(df) {
-        function(xvar, fillby="", xlab="", type="histogram", binw=NULL, 
-                 main="", xlog=F, xlog10=F, xpct=F, xpct_jump=0.2) {
-                
+        function(xvar, fillby="", xlab="", type="histogram", binw=NULL, main="",
+                 add_vline_mean=F, add_vline_median=F) {
                 p = ggplot2::ggplot(df, ggplot2::aes_string(x = xvar)) + 
                         ggplot2::labs(x = xlab, title = main) +
                         ggplot2::theme_bw()
                 
-                if (type == "histogram") {
-                        if (fillby == "") 
-                                p = p + ggplot2::geom_histogram(fill = palette("blue"),
-                                                                alpha=.5, binwidth=binw,
-                                                                position="identity") 
-                        
-                        else 
-                                p = p + ggplot2::geom_histogram(ggplot2::aes_string(fill=fillby), 
-                                                                alpha=.5, binwidth=binw,
-                                                                position="identity")
-                }
+                # draw histogram or density plot depending on the value of type
+                pexpr = draw(type)                
+                p = eval(pexpr)
                 
-                if (type == "density") {
-                        if (fillby == "") 
-                                p = p + ggplot2::geom_density(color = palette("blue"), alpha=.3)
-                        else
-                                p = p + ggplot2::geom_density(ggplot2::aes_string(color=fillby), alpha=.3)
-                }
-                
+                # add vline at the mean or median
                 if (fillby == "") {
                         # add vline at the mean
-                        p = p + ggplot2::geom_vline(ggplot2::aes_string(xintercept = mean(df[[xvar]], na.rm=T)),
-                                                    color = palette("red"), linetype = "dashed")                        
+                        if (add_vline_mean) {
+                                avg = mean(df[[xvar]], na.rm=T)
+                                p = p + ggplot2::geom_vline(ggplot2::aes_string(xintercept = avg),
+                                                            color = palette("red"), size = 1,
+                                                            linetype = "dashed")                        
+                        }
+                        
+                        # add vline at the median
+                        if (add_vline_median) {
+                                med = median(df[[xvar]], na.rm=T)
+                                p = p + ggplot2::geom_vline(ggplot2::aes_string(xintercept = med),
+                                                            color = palette("green"), size = 1,
+                                                            linetype = "dashed")
+                        }
+                } else {
+                        lst = split(df[,c(xvar, fillby)], df[[fillby]])
+                        
+                        # add vline at the mean
+                        if (add_vline_mean) {
+                                avg = sapply(lst, function(elt) mean(elt[[xvar]], na.rm=T))
+                                means = data.frame(level=names(avg), avg)
+                                p = p + ggplot2::geom_vline(data=means, 
+                                                            ggplot2::aes(xintercept = avg, color=level),
+                                                            linetype = "dashed", size=1)   
+                        }
+                        
+                        # add vline at the median
+                        if (add_vline_median) {
+                                med = sapply(lst, function(elt) median(elt[[xvar]], na.rm=T))
+                                medians = data.frame(level=names(med), med)
+                                p = p + ggplot2::geom_vline(data=medians, 
+                                                            ggplot2::aes(xintercept = med, color=level),
+                                                            linetype = "dashed", size=1)   
+                        }
                 }
-                
-                if (xlog)
-                        p = p + ggplot2::scale_x_continuous(trans = scales::log_trans(),
-                                                            breaks = scales::trans_breaks("log", function(x) exp(x)),
-                                                            labels = scales::trans_format("log", scales::math_format('e'^.x)))                
-                else if (xlog10)
-                        p = p + ggplot2::scale_x_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
-                                                       labels = scales::trans_format("log10", scales::math_format(10^.x)))
-                
-                else if (xpct)
-                        p = p + ggplot2::scale_x_continuous(labels = scales::percent, 
-                                                            limits = c(0, 1),
-                                                            breaks = seq(0, 1, xpct_jump))                
-                else p = p + ggplot2::scale_x_continuous(labels = scales::comma)
-                
                 p
         }
 }

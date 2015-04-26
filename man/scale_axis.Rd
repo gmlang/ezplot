@@ -34,6 +34,7 @@ y-axis one of the following four scales:
      \item log10: use log10 scale.
      \item pct  : use % format, the values must already be decimal.
 }
+It uses \code{scale_axis_helper()} as a helper.
 }
 \examples{
 # make some fake data
@@ -58,5 +59,8 @@ df$pct = df$grade / sum(df$grade)
 barplt = mk_barplot(df)
 p = barplt("student", "pct", fillby="student", legend=F)
 scale_axis(p, "y", use_pct=T, pct_jump=0.3)
+}
+\seealso{
+\code{\link{scale_axis_helper}}.
 }
 
