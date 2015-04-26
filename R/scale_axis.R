@@ -77,7 +77,7 @@ scale_axis = function(p, axis="y", use_comma=F, use_log=F, use_log10=F,
         r_pct = paste0("_continuous(labels = scales::percent, limits = c(0,1),
                        breaks = seq(0, 1, ", pct_jump, "))")        
         
-        pexpr = NULL        
+        pexpr = NULL # need this for it to work when using knitr       
         if (use_comma)
                 pexpr = scale_axis_helper(l, axis, r_comma)
         if (use_log)
