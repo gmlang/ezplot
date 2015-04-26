@@ -39,14 +39,17 @@ draw = function(type) {
 #' 
 #' @param df data frame containing variables to be visualized.
 #' @return 
-#' \code{function(xvar, fillby="", xlab="", type="histogram", binw=NULL, main="")}
+#' \code{function(xvar, fillby="", xlab="", type="histogram", binw=NULL, main="",
+#'                add_vline_mean=F, add_vline_median=F)}
 #' \itemize{
 #'      \item xvar     :  string, the x variable.
 #'      \item fillby   :  string, the grouping variable. Default is "".
 #'      \item xlab     :  stirng, the x-axis label.
 #'      \item type     :  string, "density" or "histogram". Default is "histogram".
 #'      \item binw     :  number, bin width. Default is NULL.
-#'      \item main     :  string, the title of the plot. 
+#'      \item main     :  string, the title of the plot.
+#'      \item add_vline_mean: logical, whether to add a vertical line at the mean. Default=F.
+#'      \item add_vline_median: logical, whether to add a vertical line at the median. Default=F.
 #' }
 #' @export
 #' @examples
