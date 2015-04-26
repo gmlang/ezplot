@@ -11,7 +11,7 @@ mk_lineplot(df)
 }
 \value{
 \code{function(xvar, yvar, fillby="", xlab="", ylab="", main="", linew=0.7,
-               pt_size=2, ylog=F, ylog10=F, ypct=F, ypct_jump=0.2)}
+               pt_size=2)}
 \itemize{
      \item xvar     :  string, the x variable.
      \item yvar     :  string, the y variable.
@@ -21,10 +21,6 @@ mk_lineplot(df)
      \item main     :  string, the title of the plot.
      \item linew    :  numeric, the width of the lines.
      \item pt_size  :  numeric, the size of the points.
-     \item ylog     :  logical, indicating whether to use log scale on y-axis. Default is FALSE.
-     \item ylog10   :  logical, indicating whether to use log10 scale on y-axis. Default is FALSE.
-     \item ypct     :  logical, indicating whether to use percent format on y-axis. Default is FALSE.
-     \item ypct_jump:  numeric, between 0 and 1. Default is 0.2
 }
 }
 \description{
@@ -38,8 +34,11 @@ library(ezplot)
 # plot boxoffice/budget ratio over the years
 plt = mk_lineplot(bo_bt_ratio_by_year)
 title = "Boxoffice/Budget Ratio from 1913 to 2014"
-plt("year", "bo_bt_ratio", ylab="boxoffice/budget ratio", main=title, ylog10=T)
-plt("year", "bo_bt_ratio", ylab="boxoffice/budget ratio", ylog10=T, linew=1, pt_size=2)
+p = plt("year", "bo_bt_ratio", ylab="boxoffice/budget ratio", main=title)
+scale_axis(p, use_log10=T)
+
+p = plt("year", "bo_bt_ratio", ylab="boxoffice/budget ratio", linew=1, pt_size=2)
+scale_axis(p, use_log10=T)
 
 # plot total budget and boxoffice over the years
 plt = mk_lineplot(btbo_by_year)

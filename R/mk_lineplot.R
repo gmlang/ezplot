@@ -8,7 +8,7 @@
 #' @param df data frame containing variables to be visualized.
 #' @return 
 #' \code{function(xvar, yvar, fillby="", xlab="", ylab="", main="", linew=0.7, 
-#'                pt_size=2, ylog=F, ylog10=F, ypct=F, ypct_jump=0.2)}
+#'                pt_size=2)}
 #' \itemize{
 #'      \item xvar     :  string, the x variable.
 #'      \item yvar     :  string, the y variable.
@@ -18,10 +18,6 @@
 #'      \item main     :  string, the title of the plot. 
 #'      \item linew    :  numeric, the width of the lines.
 #'      \item pt_size  :  numeric, the size of the points.
-#'      \item ylog     :  logical, indicating whether to use log scale on y-axis. Default is FALSE.
-#'      \item ylog10   :  logical, indicating whether to use log10 scale on y-axis. Default is FALSE.
-#'      \item ypct     :  logical, indicating whether to use percent format on y-axis. Default is FALSE.
-#'      \item ypct_jump:  numeric, between 0 and 1. Default is 0.2
 #' }   
 #' 
 #' @export
@@ -31,8 +27,11 @@
 #' # plot boxoffice/budget ratio over the years
 #' plt = mk_lineplot(bo_bt_ratio_by_year)
 #' title = "Boxoffice/Budget Ratio from 1913 to 2014"
-#' plt("year", "bo_bt_ratio", ylab="boxoffice/budget ratio", main=title, ylog10=T)
-#' plt("year", "bo_bt_ratio", ylab="boxoffice/budget ratio", ylog10=T, linew=1, pt_size=2)
+#' p = plt("year", "bo_bt_ratio", ylab="boxoffice/budget ratio", main=title)
+#' scale_axis(p, use_log10=T)
+#' 
+#' p = plt("year", "bo_bt_ratio", ylab="boxoffice/budget ratio", linew=1, pt_size=2)
+#' scale_axis(p, use_log10=T)
 #' 
 #' # plot total budget and boxoffice over the years
 #' plt = mk_lineplot(btbo_by_year)
@@ -40,15 +39,18 @@
 #' plt("year", "tot", "type", ylab="total amount ($billion)", main=title)
 mk_lineplot = function(df) {
         function(xvar, yvar, fillby="", xlab="", ylab="", main="", linew=0.7, 
-                 pt_size=2, ylog=F, ylog10=F, ypct=F, ypct_jump=0.2) {
-                
+                 pt_size=2) {
+
                 if (fillby == "") {
                         col = palette("blue")
                         p = ggplot2::ggplot(df, ggplot2::aes_string(x=xvar, y=yvar)) + 
-                                ggplot2::geom_line(ggplot2::aes(group = 1), color=col, size=linew) +  
+                                ggplot2::geom_line(ggplot2::aes(group = 1), 
+                                                   color=col, size=linew) +  
                                 ggplot2::geom_point(color=col, size=pt_size)
                 } else {
-                        p = ggplot2::ggplot(df, ggplot2::aes_string(x=xvar, y=yvar, group=fillby, color=fillby)) + 
+                        p = ggplot2::ggplot(df, ggplot2::aes_string(x=xvar, y=yvar, 
+                                                                    group=fillby, 
+                                                                    color=fillby)) + 
                                 ggplot2::geom_line(size=linew) + 
                                 ggplot2::geom_point(size=pt_size) 
                 }
@@ -56,20 +58,6 @@ mk_lineplot = function(df) {
                 p = p + ggplot2::labs(x = xlab, y = ylab, title = main) +
                         ggplot2::theme_bw() +
                         ggplot2::theme(legend.title = ggplot2::element_blank())
-                
-                if (ylog)
-                        p = p + ggplot2::scale_y_continuous(trans = scales::log_trans(),
-                                                            breaks = scales::trans_breaks("log", function(x) exp(x)),
-                                                            labels = scales::trans_format("log", scales::math_format('e'^.x)))
-                else if (ylog10)
-                        p = p + ggplot2::scale_y_log10(breaks = scales::trans_breaks("log10", function(x) 10^x),
-                                                       labels = scales::trans_format("log10", scales::math_format(10^.x)))
-                else if (ypct)
-                        p = p + ggplot2::scale_y_continuous(labels = scales::percent, 
-                                                            limits = c(0, 1),
-                                                            breaks = seq(0, 1, ypct_jump))                
-                else p = p + ggplot2::scale_y_continuous(labels = scales::comma)
-                
                 p
         }
 }
