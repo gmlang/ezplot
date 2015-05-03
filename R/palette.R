@@ -3,7 +3,7 @@
 #' @description
 #' \code{palette()} takes in a color name and returns the corresponding palette.
 #' 
-#' @param name "cb_gray", "cb_blank", "blue", "red", "purple", or "green".
+#' @param name "cb_gray", "cb_black", "blue", "red", "purple", or "green".
 #' 
 #' @return a character vector of color palettes
 #' 

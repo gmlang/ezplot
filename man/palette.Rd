@@ -7,7 +7,7 @@
 palette(name)
 }
 \arguments{
-\item{name}{"cb_gray", "cb_blank", "blue", "red", "purple", or "green".}
+\item{name}{"cb_gray", "cb_black", "blue", "red", "purple", or "green".}
 }
 \value{
 a character vector of color palettes
