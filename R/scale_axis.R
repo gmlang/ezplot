@@ -64,7 +64,7 @@ scale_axis_helper = function(lstr, axis, rstr) {
 #' p = barplt("student", "pct", fillby="student", legend=F)
 #' scale_axis(p, "y", use_pct=T, pct_jump=0.3)
 scale_axis = function(p, axis="y", use_comma=F, use_log=F, use_log10=F, 
-                      use_pct=F, pct_jump=0.2) {
+                      use_pct=F, pct_max=1, pct_jump=0.2) {
         # axis = "x", "y"
         x = deparse(substitute(p))
         l = paste(x, "=", x, "+ ggplot2::scale_")
@@ -74,8 +74,8 @@ scale_axis = function(p, axis="y", use_comma=F, use_log=F, use_log10=F,
                 labels = scales::trans_format('log', scales::math_format('e'^.x)))"
         r_log10 = "_log10(breaks = scales::trans_breaks('log10', function(x) 10^x),
                 labels = scales::trans_format('log10', scales::math_format(10^.x)))"
-        r_pct = paste0("_continuous(labels = scales::percent, limits = c(0,1),
-                       breaks = seq(0, 1, ", pct_jump, "))")        
+        r_pct = paste0("_continuous(labels = scales::percent, limits = c(0, ",
+                       pct_max, "), breaks = seq(0,", pct_max, ",", pct_jump, "))")        
         
         pexpr = NULL # need this for it to work when using knitr       
         if (use_comma)

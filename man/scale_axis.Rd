@@ -5,7 +5,7 @@
 \title{Add different scales to either axis of a ggplot2 plot.}
 \usage{
 scale_axis(p, axis = "y", use_comma = F, use_log = F, use_log10 = F,
-  use_pct = F, pct_jump = 0.2)
+  use_pct = F, pct_max = 1, pct_jump = 0.2)
 }
 \arguments{
 \item{p}{ggplot2 object.}
