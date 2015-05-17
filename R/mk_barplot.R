@@ -65,14 +65,14 @@
 #' scale_axis(p, "y", use_pct=T)
 #' scale_axis(p, "y", use_pct=T, pct_jump=0.1)
 mk_barplot = function(df) {
-        function(xvar, yvar, fillby, xlab="", ylab="", main="", legend=T,
+        function(xvar, yvar, fillby, xlab="", ylab="", main="", legend=T, 
                  label_bars=F, labelvar="", posvar="", label_size=3) {
                 p = ggplot2::ggplot(df, ggplot2::aes_string(x = xvar, y = yvar, 
                                                             fill = fillby)) + 
                         ggplot2::geom_bar(stat = "identity") + 
                         ggplot2::labs(x = xlab, y = ylab, title = main) +
                         ggplot2::theme_bw()
-                
+
                 if (!legend) p = p + ggplot2::guides(fill = FALSE)
                 
                 if (label_bars)
