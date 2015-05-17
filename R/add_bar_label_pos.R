@@ -24,11 +24,11 @@
 #' data = f("year", "freq")
 #' data
 add_bar_label_pos = function(dat) {
-        function(xvar, yvar) {
+        function(xvar, yvar, vpos=0.2) {
                 lst = split(dat, dat[[xvar]])
                 lst_out = lapply(lst, function(elt) {
                         top_pos = cumsum(elt[[yvar]])
-                        elt$pos_top = top_pos + 0.2  # temp, need to change to make it more general
+                        elt$pos_top = top_pos + vpos  # temp, need to change to make it more general
                         elt$pos_mid = top_pos - 0.5 * elt[[yvar]] 
                         elt})
                 dat = do.call("rbind", lst_out)
