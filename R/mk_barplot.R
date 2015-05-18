@@ -66,7 +66,8 @@
 #' scale_axis(p, "y", use_pct=T, pct_jump=0.1)
 mk_barplot = function(df) {
         function(xvar, yvar, fillby, xlab="", ylab="", main="", legend=T, 
-                 label_bars=F, labelvar="", posvar="", label_size=3) {
+                 label_bars=F, labelvar="", posvar="", label_size=3, 
+                 is_label_pct=F) {
                 p = ggplot2::ggplot(df, ggplot2::aes_string(x = xvar, y = yvar, 
                                                             fill = fillby)) + 
                         ggplot2::geom_bar(stat = "identity") + 
@@ -75,11 +76,16 @@ mk_barplot = function(df) {
 
                 if (!legend) p = p + ggplot2::guides(fill = FALSE)
                 
-                if (label_bars)
-                        p = p + ggplot2::geom_text(
-                                ggplot2::aes_string(label = labelvar, 
-                                                    y = posvar), 
-                                size = label_size)
+                if (label_bars) {
+                        if (is_label_pct) {
+                                temp = round(df[[labelvar]], 4) * 100
+                                pct_label = paste0(temp, "%")
+                        } else { pct_label = df[[labelvar]] } 
+                        
+                        p = p + ggplot2::geom_text(label = pct_label,
+                                                   ggplot2::aes_string(y = posvar), 
+                                                   size = label_size)
+                }
                 p
         }
 }
