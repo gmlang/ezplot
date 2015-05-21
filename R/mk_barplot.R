@@ -78,7 +78,7 @@ mk_barplot = function(df) {
                 
                 if (label_bars) {
                         if (is_label_pct) {
-                                temp = round(df[[labelvar]], 4) * 100
+                                temp = round(df[[labelvar]], 3) * 100
                                 pct_label = paste0(temp, "%")
                         } else { pct_label = df[[labelvar]] } 
                         
