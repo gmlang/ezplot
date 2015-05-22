@@ -2,20 +2,31 @@
 % Please edit documentation in R/add_bar_label_pos.R
 \name{add_bar_label_pos}
 \alias{add_bar_label_pos}
-\title{Create a function that adds a column of label positions to a data frame.}
+\title{Create a function that can be used to add two column of label
+positions to a data frame.}
 \usage{
 add_bar_label_pos(dat)
 }
 \arguments{
-\item{df}{data frame containing variables to be visualized.}
+\item{df}{a data frame containing variables to be visualized.}
 }
 \value{
-a data frame with one extra column indicating bar label positions.
+\code{function(xvar, yvar, vpos=0.2)}
+\itemize{
+     \item xvar     :  string, the x variable, often categorical.
+     \item yvar     :  string, the y variable, often Frequency/Count or Percent.
+     \item vpos     :  numeric, the extra vertical position beyond the top of each bar. Default is 0.2.
+}
 }
 \description{
-\code{add_bar_label_pos()} is used to prepare data before making bar charts.
-It takes a data frame as input and returns the same data frame with one extra
-column of the mid points of the y variable (often Frequency or Percent that is
+\code{add_bar_label_pos()} can be used to prep data before making bar charts.
+It takes a data frame as input and returns a function that can be used to
+append columns to the same data frame. Specifically, the output function can
+be used to add two extra columns to the original data frame, namely, pos_top
+and pos_mid, where pos_top specify the positions when labeling the bars at
+the top, and pos_mid specify the positions when labeling the bars at the
+middle.
+of the mid points of the y variable (often Frequency or Percent that is
 displayed on the y-axis in a bar chart) grouped by the x variable (a
 categorical variable displayed on the x-axis in a bar chart).
 }
@@ -29,6 +40,9 @@ data
 
 f = add_bar_label_pos(data)
 data = f("year", "freq")
+data
+
+data2 = f("cat", "freq", vpos=1)
 data
 }
 \seealso{
