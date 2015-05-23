@@ -41,15 +41,17 @@
 #' data
 add_bar_label_pos = function(dat) {
         function(xvar, yvar, vpos=0.2) {
+                varname1 = paste(yvar, "pos_top", sep="_")
+                varname2 = paste(yvar, "pos_mid", sep="_")
+
                 lst = split(dat, dat[[xvar]])
                 lst_out = lapply(lst, function(elt) {
                         top_pos = cumsum(elt[[yvar]])
-                        elt$pos_top = top_pos + vpos
-                        elt$pos_mid = top_pos - 0.5 * elt[[yvar]] 
+                        elt[[varname1]] = top_pos + vpos
+                        elt[[varname2]] = top_pos - 0.5 * elt[[yvar]] 
                         elt})
                 out = do.call("rbind", lst_out)
                 row.names(out) = NULL
                 out
         }
 }
-
