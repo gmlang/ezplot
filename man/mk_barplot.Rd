@@ -18,7 +18,12 @@ mk_barplot(df)
      \item xlab     :  string, the x-axis label.
      \item ylab     :  string, the y-axis label.
      \item main     :  string, the title of the plot.
-     \item legend   :  logical, indicating whether to show the legend. Default is TRUE.
+     \item legend   :  logical, whether to show the legend. Default is TRUE.
+     \item barlab   :  string, the name of the variable that contains the bar labels. Default is NULL.
+     \item barlab_at_top : logical, whether to place the labels at the top or middle of the bars or. Default is FALSE, meaning at the middle.
+     \item barlab_size   : numeric, the size of the bar label text. Default is 3.
+     \item barlab_use_pct: logical, whether to use pct format for the bar labels. Default is FALSE.
+     \item ...      : arguments to be passed to format_as_pct()
 }
 }
 \description{
@@ -71,6 +76,6 @@ scale_axis(p, "y", use_pct=T)
 scale_axis(p, "y", use_pct=T, pct_jump=0.1)
 }
 \seealso{
-\code{\link{scale_axis}} for adding different scales to the axes.
+\code{\link{scale_axis}} for adding different scales to the axes. \code{\link{add_bar_label_pos}} for adding label positions to the input data frame.
 }
 
