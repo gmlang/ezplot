@@ -20,6 +20,9 @@
 #'      \item barlab_at_top : logical, whether to place the labels at the top or middle of the bars or. Default is FALSE, meaning at the middle. 
 #'      \item barlab_size   : numeric, the size of the bar label text. Default is 3. 
 #'      \item barlab_use_pct: logical, whether to use pct format for the bar labels. Default is FALSE.
+#'      \item barpos        : string, "stack" or "dodge", specify to show bars stacked or dodged. Default is "stack".
+#'      \item dodged_lab_w  : numeric, the width between the dodged bar labels. Default is 1.
+#'      \item dodged_lab_h  : numeric, the height between the dodged bar labels. Default is 1. Often not used.
 #'      \item ...      : arguments to be passed to format_as_pct()
 #' }
 #' 
@@ -72,27 +75,42 @@
 mk_barplot = function(df) {
         function(xvar, yvar, fillby, xlab="", ylab="", main="", legend=T, 
                  barlab=NULL, barlab_at_top=F, barlab_size=3, 
-                 barlab_use_pct=F, ...) {
+                 barlab_use_pct=F, barpos="stack", dodged_lab_w=1, 
+                 dodged_lab_h=1, ...) {
+                                
                 p = ggplot2::ggplot(df, ggplot2::aes_string(x = xvar, y = yvar, 
                                                             fill = fillby)) + 
-                        ggplot2::geom_bar(stat = "identity") + 
+                        ggplot2::geom_bar(stat = "identity", 
+                                          position = barpos) + 
                         ggplot2::labs(x = xlab, y = ylab, title = main) +
                         ggplot2::theme_bw()
 
                 if (!legend) p = p + ggplot2::guides(fill = FALSE)
                 
-                if (!is.null(barlab)) {
+                if (!is.null(barlab)) {  
                         if (barlab_use_pct) 
-                                bar_label = format_as_pct(df[[barlab]], ...)
-                        else bar_label = df[[barlab]]
+                                df$bar_label = format_as_pct(df[[barlab]], ...)
+                        else df$bar_label = df[[barlab]]
                         
                         if (barlab_at_top)
                                 barlab_pos = paste(yvar, "pos_top", sep="_")
                         else barlab_pos = paste(yvar, "pos_mid", sep="_")
                         
-                        p = p + ggplot2::geom_text(label = bar_label,
-                                                   ggplot2::aes_string(y = barlab_pos), 
-                                                   size = barlab_size)
+                        if (barpos != "dodge")
+                                p = p + ggplot2::geom_text(data=df, 
+                                                           ggplot2::aes_string(
+                                                                   label = "bar_label",
+                                                                   y = barlab_pos), 
+                                                           size = barlab_size)
+                        else
+                                p = p + ggplot2::geom_text(data=df, 
+                                                           ggplot2::aes_string(
+                                                                   label = "bar_label",
+                                                                   y = barlab_pos,
+                                                                   ymax = "max(bar_label)"), 
+                                                           size = barlab_size,
+                                                           position=ggplot2::position_dodge(width=dodged_lab_w, 
+                                                                                            height=dodged_lab_h))
                 }
                 p
         }
