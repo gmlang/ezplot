@@ -10,7 +10,7 @@ A R package that allows people to easily make common statistical charts in ggplo
 
 ### Install and Load ezplot
 
-{% highlight r %}
+```r
 devtools::install_github("gmlang/ezplot")
 library(ezplot)
-{% endhighlight %}
+```
