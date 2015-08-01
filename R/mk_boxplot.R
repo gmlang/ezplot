@@ -61,7 +61,7 @@ mk_boxplot = function(df) {
                 else
                         p = ggplot2::ggplot(df, ggplot2::aes_string(x=xvar, y=yvar, 
                                                                     group=xvar)) +
-                                ggplot2::geom_boxplot(color = palette("blue"))
+                                ggplot2::geom_boxplot(color = cb_color("blue"))
                 
                 p = p + ggplot2::theme_bw() + 
                         ggplot2::labs(x = xlab, y = ylab, title = main)

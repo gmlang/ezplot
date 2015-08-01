@@ -11,7 +11,7 @@
 #' @examples
 #' plt_dist(cars, "speed")
 plt_dist = function(dat, varname) {
-        bluish_green = "#009E73"
+        bluish_green = cb_color("bluish_green")
         par(mfrow = c(2,2))
         hist(dat[, varname], main="histogram", xlab=varname, probability=TRUE, 
              col=bluish_green)
