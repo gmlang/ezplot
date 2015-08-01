@@ -11,14 +11,15 @@
 #' @examples
 #' plt_dist(cars, "speed")
 plt_dist = function(dat, varname) {
+        bluish_green = "#009E73"
         par(mfrow = c(2,2))
         hist(dat[, varname], main="histogram", xlab=varname, probability=TRUE, 
-             col="#569BBD")
+             col=bluish_green)
         boxplot(dat[,varname], outchar=TRUE, main="boxplot", cex=0.7, 
-                xlab=varname, col="#569BBD")
-        plot(density(dat[,varname]), type="l", main="Smoothed density", lwd=2,
-             xlab=varname, ylab="density estimate", col="#569BBD")
-        qqnorm(dat[,varname], col="#569BBD", cex=0.7, pch=19)
+                xlab=varname, col=bluish_green)
+        plot(density(dat[,varname]), type="l", main="Smoothed density", lwd=3,
+             xlab=varname, ylab="density estimate", col=bluish_green)
+        qqnorm(dat[,varname], col=bluish_green, cex=0.9, pch=19)
         qqline(dat[,varname])
         par(mfrow=c(1,1))
 }
