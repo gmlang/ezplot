@@ -11,14 +11,14 @@
 draw = function(type) {
         # code string for histogram
         hist_code = 'if (fillby == "") {
-                        p = p + ggplot2::geom_histogram(fill = palette("blue"), alpha=.5, binwidth=binw, position="identity")
+                        p = p + ggplot2::geom_histogram(fill = cb_color("sky_blue"), alpha=.5, binwidth=binw, position="identity")
                      } else { 
                         p = p + ggplot2::geom_histogram(ggplot2::aes_string(fill=fillby), alpha=.5, binwidth=binw, position="identity")
                      }'
         
         # code string for density
         density_code = 'if (fillby == "") {
-                                p = p + ggplot2::geom_density(color = palette("blue"), alpha=.3)
+                                p = p + ggplot2::geom_density(color = cb_color("sky_blue"), alpha=.3)
                         } else {
                                 p = p + ggplot2::geom_density(ggplot2::aes_string(color=fillby), alpha=.3)
                         }'
@@ -89,7 +89,7 @@ mk_distplot = function(df) {
                         if (add_vline_mean) {
                                 avg = mean(df[[xvar]], na.rm=T)
                                 p = p + ggplot2::geom_vline(ggplot2::aes_string(xintercept = avg),
-                                                            color = palette("red"), size = 1,
+                                                            color = cb_color("reddish_purple"), size = 1,
                                                             linetype = "dashed")                        
                         }
                         
@@ -97,7 +97,7 @@ mk_distplot = function(df) {
                         if (add_vline_median) {
                                 med = median(df[[xvar]], na.rm=T)
                                 p = p + ggplot2::geom_vline(ggplot2::aes_string(xintercept = med),
-                                                            color = palette("green"), size = 1,
+                                                            color = cb_color("bluish_green"), size = 1,
                                                             linetype = "dashed")
                         }
                 } else {
