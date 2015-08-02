@@ -10,27 +10,31 @@ mk_barplot(df)
 \item{df}{data frame containing variables to be visualized.}
 }
 \value{
-\code{function(xvar, yvar, fillby, xlab="", ylab="", main="", legend=T)}
+\code{function(xvar, yvar, fillby, xorder, barpos,
+               xlab="", ylab="", main="", legend=T,
+               barlab, barlab_use_pct, decimals, barlab_at_top, barlab_size,
+               dodged_lab_w, dodged_lab_h)}
 \itemize{
      \item xvar     :  string, the x variable.
      \item yvar     :  string, the y variable.
      \item fillby   :  string, the variable used for coloring the bars.
+     \item xorder   :  string, "alphanumeric", "ascend" or "descend". It specifies how the categories are ordered on the x-axis. Default is "alphanumeric".
+     \item barpos   :  string, "stack" or "dodge" bars. Default is "stack".
      \item xlab     :  string, the x-axis label.
      \item ylab     :  string, the y-axis label.
      \item main     :  string, the title of the plot.
      \item legend   :  logical, whether to show the legend. Default is TRUE.
      \item barlab   :  string, the name of the variable that contains the bar labels. Default is NULL.
+     \item barlab_use_pct: logical, whether to use pct format for the bar labels. Default is FALSE.
+     \item decimals      : number of decimal places for percent labels, default is 2.
      \item barlab_at_top : logical, whether to place the labels at the top or middle of the bars or. Default is FALSE, meaning at the middle.
      \item barlab_size   : numeric, the size of the bar label text. Default is 3.
-     \item barlab_use_pct: logical, whether to use pct format for the bar labels. Default is FALSE.
-     \item barpos        : string, "stack" or "dodge", specify to show bars stacked or dodged. Default is "stack".
      \item dodged_lab_w  : numeric, the width between the dodged bar labels. Default is 1.
      \item dodged_lab_h  : numeric, the height between the dodged bar labels. Default is 1. Often not used.
-     \item ...      : arguments to be passed to format_as_pct()
 }
 }
 \description{
-\code{mk_barplot()} takes a data frame as input and returns a function that
+\code{mk_barplot} takes a data frame as input and returns a function that
 can be used to make barplots on variables in the data frame.
 }
 \examples{

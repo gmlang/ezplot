@@ -1,29 +1,33 @@
 #' @title Create a function that draws ggplot2 barplots
 #
 #' @description
-#' \code{mk_barplot()} takes a data frame as input and returns a function that 
+#' \code{mk_barplot} takes a data frame as input and returns a function that 
 #' can be used to make barplots on variables in the data frame.
 #' 
 #' @param df data frame containing variables to be visualized.
 #' 
 #' @return
-#' \code{function(xvar, yvar, fillby, xlab="", ylab="", main="", legend=T)}
+#' \code{function(xvar, yvar, fillby, xorder, barpos, 
+#'                xlab="", ylab="", main="", legend=T,
+#'                barlab, barlab_use_pct, decimals, barlab_at_top, barlab_size,
+#'                dodged_lab_w, dodged_lab_h)}
 #' \itemize{
 #'      \item xvar     :  string, the x variable.
 #'      \item yvar     :  string, the y variable.
 #'      \item fillby   :  string, the variable used for coloring the bars.
+#'      \item xorder   :  string, "alphanumeric", "ascend" or "descend". It specifies how the categories are ordered on the x-axis. Default is "alphanumeric".
+#'      \item barpos   :  string, "stack" or "dodge" bars. Default is "stack".
 #'      \item xlab     :  string, the x-axis label.
 #'      \item ylab     :  string, the y-axis label.
 #'      \item main     :  string, the title of the plot. 
 #'      \item legend   :  logical, whether to show the legend. Default is TRUE.
 #'      \item barlab   :  string, the name of the variable that contains the bar labels. Default is NULL.
+#'      \item barlab_use_pct: logical, whether to use pct format for the bar labels. Default is FALSE.
+#'      \item decimals      : number of decimal places for percent labels, default is 2.      
 #'      \item barlab_at_top : logical, whether to place the labels at the top or middle of the bars or. Default is FALSE, meaning at the middle. 
 #'      \item barlab_size   : numeric, the size of the bar label text. Default is 3. 
-#'      \item barlab_use_pct: logical, whether to use pct format for the bar labels. Default is FALSE.
-#'      \item barpos        : string, "stack" or "dodge", specify to show bars stacked or dodged. Default is "stack".
 #'      \item dodged_lab_w  : numeric, the width between the dodged bar labels. Default is 1.
 #'      \item dodged_lab_h  : numeric, the height between the dodged bar labels. Default is 1. Often not used.
-#'      \item ...      : arguments to be passed to format_as_pct()
 #' }
 #' 
 #' @seealso \code{\link{scale_axis}} for adding different scales to the axes. \code{\link{add_bar_label_pos}} for adding label positions to the input data frame.
@@ -73,23 +77,32 @@
 #' scale_axis(p, "y", use_pct=T)
 #' scale_axis(p, "y", use_pct=T, pct_jump=0.1)
 mk_barplot = function(df) {
-        function(xvar, yvar, fillby, xlab="", ylab="", main="", legend=T, 
-                 barlab=NULL, barlab_at_top=F, barlab_size=3, 
-                 barlab_use_pct=F, barpos="stack", dodged_lab_w=1, 
-                 dodged_lab_h=1, ...) {
-                                
+        function(xvar, yvar, fillby, xorder="alphanumeric", barpos="stack", 
+                 xlab="", ylab="", main="", legend=T, 
+                 barlab=NULL, barlab_use_pct=F, decimals=2,
+                 barlab_at_top=F, barlab_size=3, 
+                 dodged_lab_w=1, dodged_lab_h=1) {
+                            
+                if (xorder == "ascend")
+                        df[[xvar]] = reorder(df[[xvar]], df[[yvar]])
+                if (xorder == "descend")
+                        df[[xvar]] = reorder(df[[xvar]], -df[[yvar]])
+                
                 p = ggplot2::ggplot(df, ggplot2::aes_string(x = xvar, y = yvar, 
-                                                            fill = fillby)) + 
+                                                            fill = fillby,
+                                                            order = fillby)) + 
                         ggplot2::geom_bar(stat = "identity", 
                                           position = barpos) + 
                         ggplot2::labs(x = xlab, y = ylab, title = main) +
-                        ggplot2::theme_bw()
+                        ggplot2::theme_bw() +
+                        ggplot2::guides(fill = ggplot2::guide_legend(reverse=TRUE))
 
                 if (!legend) p = p + ggplot2::guides(fill = FALSE)
                 
                 if (!is.null(barlab)) {  
                         if (barlab_use_pct) 
-                                df$bar_label = format_as_pct(df[[barlab]], ...)
+                                df$bar_label = format_as_pct(df[[barlab]], 
+                                                             digits=decimals+2)
                         else df$bar_label = df[[barlab]]
                         
                         if (barlab_at_top)
@@ -117,18 +130,26 @@ mk_barplot = function(df) {
 }
 
 
-## old working
-# mk_barplot = function(df) {
-#         function(xvar, yvar, fillby, xlab="", ylab="", main="", legend=T) {
+# ## old working
+# mk_barplot2 = function(df) {
+#         function(xvar, yvar, fillby, xlab="", ylab="", main="", legend=T,
+#                  xorder="alphanumeric") {
+#                 if (xorder == "ascend")
+#                         df[[xvar]] = reorder(df[[xvar]], df[[yvar]])
+#                 if (xorder == "descend")
+#                         df[[xvar]] = reorder(df[[xvar]], -df[[yvar]])
+#                 
 #                 p = ggplot2::ggplot(df, ggplot2::aes_string(x = xvar, y = yvar, 
-#                                                             fill = fillby)) + 
+#                                                             fill = fillby, 
+#                                                             order = fillby)) + 
 #                         ggplot2::geom_bar(stat = "identity") + 
 #                         ggplot2::labs(x = xlab, y = ylab, title = main) +
-#                         ggplot2::theme_bw()
+#                         ggplot2::theme_bw() +
+#                         ggplot2::guides(fill = guide_legend(reverse=TRUE))
 #                                         
 #                 if (!legend) p = p + ggplot2::guides(fill = FALSE)
 #                 
 #                 p
 #         }
 # }
-
+# 
