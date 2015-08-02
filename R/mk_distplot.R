@@ -18,7 +18,7 @@ draw = function(type) {
         
         # code string for density
         density_code = 'if (fillby == "") {
-                                p = p + ggplot2::geom_density(color = cb_color("sky_blue"), alpha=.3)
+                                p = p + ggplot2::geom_density(color = cb_color("blue"), alpha=.3, size=1)
                         } else {
                                 p = p + ggplot2::geom_density(ggplot2::aes_string(color=fillby), alpha=.3)
                         }'
