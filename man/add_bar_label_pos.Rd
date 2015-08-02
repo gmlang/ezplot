@@ -19,16 +19,13 @@ add_bar_label_pos(dat)
 }
 }
 \description{
-\code{add_bar_label_pos()} can be used to prep data before making bar charts.
+\code{add_bar_label_pos} can be used to prep data before making bar charts.
 It takes a data frame as input and returns a function that can be used to
 append columns to the same data frame. Specifically, the output function can
 be used to add two extra columns to the original data frame, namely, pos_top
 and pos_mid, where pos_top specify the positions when labeling the bars at
 the top, and pos_mid specify the positions when labeling the bars at the
 middle.
-of the mid points of the y variable (often Frequency or Percent that is
-displayed on the y-axis in a bar chart) grouped by the x variable (a
-categorical variable displayed on the x-axis in a bar chart).
 }
 \examples{
 # make some fake data
