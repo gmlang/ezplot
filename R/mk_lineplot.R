@@ -42,7 +42,7 @@ mk_lineplot = function(df) {
                  pt_size=2) {
 
                 if (fillby == "") {
-                        col = palette("blue")
+                        col = cb_color("blue")
                         p = ggplot2::ggplot(df, ggplot2::aes_string(x=xvar, y=yvar)) + 
                                 ggplot2::geom_line(ggplot2::aes(group = 1), 
                                                    color=col, size=linew) +  
