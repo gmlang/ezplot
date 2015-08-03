@@ -2,39 +2,34 @@
 % Please edit documentation in R/scale_axis.R
 \name{scale_axis}
 \alias{scale_axis}
-\title{Add different scales to either axis of a ggplot2 plot.}
+\title{Use a different scale on either axis of a ggplot2 plot.}
 \usage{
-scale_axis(p, axis = "y", use_comma = F, use_log = F, use_log10 = F,
-  use_pct = F, pct_max = 1, pct_jump = 0.2)
+scale_axis(p, axis = "y", scale = NULL, pct_max = 1, pct_jump = 0.2)
 }
 \arguments{
-\item{p}{ggplot2 object.}
+\item{p}{A ggplot2 object.}
 
-\item{axis}{string of value "x" or "y". Default = "y".}
+\item{axis}{A string of value "x" or "y". Default = "y".}
 
-\item{use_comma}{logical, whether to use comma scale or not. Default = FALSE.}
+\item{scale}{A string of value "comma", "log", "log10", or "pct". It specifies which scale to use. Default = NULL, which uses the original scale.}
 
-\item{use_log}{logical, whether to use log scale or not. Default = FALSE.}
+\item{pct_max}{A number no bigger than 1. It specifies the max value when using percent format. Default = 1.}
 
-\item{use_log10}{logical, whether to use log10 scale or not. Default = FALSE.}
-
-\item{use_pct}{logical, whether to use percent format or not. Default = FALSE.}
-
-\item{pct_jump}{numeric, intervals at which ticks are displayed when using percent format. Default = 0.2.}
+\item{pct_jump}{A number between 0 and 1. It specifies the interval width between ticks when using percent format. Default = 0.2.}
 }
 \value{
-a ggplot2 object with the new scale added to the selected axis.
+A ggplot2 object with the new scale applied to the input axis.
 }
 \description{
-\code{scale_axis()} takes a ggplot2 object as input and adds to its x-axis or
-y-axis one of the following four scales:
+\code{scale_axis} takes a ggplot2 object as input and applies to its x-axis or
+y-axis one of the following scales:
 \itemize{
-     \item comma: display big numbers in 000,000 format instead of scientific notation.
+     \item comma: display big numbers in 000,000 format.
      \item log  : use log scale.
      \item log10: use log10 scale.
-     \item pct  : use % format, the values must already be decimal.
+     \item pct  : use % format, the values must be between 0 and 1.
 }
-It uses \code{scale_axis_helper()} as a helper.
+It uses \code{scale_axis_helper} as a helper.
 }
 \examples{
 # make some fake data
@@ -42,10 +37,10 @@ library(ezplot)
 plt = mk_scatterplot(films)
 
 p = plt("boxoffice", "budget", pt_alpha=0.5, pt_size=1)
-p = scale_axis(p, "y", use_log10=T)
+p = scale_axis(p, "y", scale = "log10")
 print(p)
 
-p = scale_axis(p, "x", use_log10=T)
+p = scale_axis(p, "x", scale = "log10")
 print(p)
 
 # make some data
@@ -58,7 +53,7 @@ df$pct = df$grade / sum(df$grade)
 
 barplt = mk_barplot(df)
 p = barplt("student", "pct", fillby="student", legend=F)
-scale_axis(p, "y", use_pct=T, pct_jump=0.3)
+scale_axis(p, "y", scale="pct", pct_jump=0.3)
 }
 \seealso{
 \code{\link{scale_axis_helper}}.

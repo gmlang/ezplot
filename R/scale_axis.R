@@ -15,30 +15,28 @@ scale_axis_helper = function(lstr, axis, rstr) {
         parse(text = out_str)
 }
 
-#' @title Add different scales to either axis of a ggplot2 plot.
+#' @title Use a different scale on either axis of a ggplot2 plot.
 #
 #' @description
-#' \code{scale_axis()} takes a ggplot2 object as input and adds to its x-axis or 
-#' y-axis one of the following four scales: 
+#' \code{scale_axis} takes a ggplot2 object as input and applies to its x-axis or 
+#' y-axis one of the following scales: 
 #' \itemize{
-#'      \item comma: display big numbers in 000,000 format instead of scientific notation.
+#'      \item comma: display big numbers in 000,000 format.
 #'      \item log  : use log scale.
 #'      \item log10: use log10 scale.
-#'      \item pct  : use % format, the values must already be decimal.
+#'      \item pct  : use % format, the values must be between 0 and 1.
 #' }
-#' It uses \code{scale_axis_helper()} as a helper. 
+#' It uses \code{scale_axis_helper} as a helper. 
 #' 
 #' @seealso \code{\link{scale_axis_helper}}.
 #' 
-#' @param p ggplot2 object.
-#' @param axis string of value "x" or "y". Default = "y". 
-#' @param use_comma logical, whether to use comma scale or not. Default = FALSE.
-#' @param use_log logical, whether to use log scale or not. Default = FALSE.
-#' @param use_log10 logical, whether to use log10 scale or not. Default = FALSE.
-#' @param use_pct logical, whether to use percent format or not. Default = FALSE.
-#' @param pct_jump numeric, intervals at which ticks are displayed when using percent format. Default = 0.2.
+#' @param p A ggplot2 object.
+#' @param axis A string of value "x" or "y". Default = "y". 
+#' @param scale A string of value "comma", "log", "log10", or "pct". It specifies which scale to use. Default = NULL, which uses the original scale.
+#' @param pct_max A number no bigger than 1. It specifies the max value when using percent format. Default = 1.
+#' @param pct_jump A number between 0 and 1. It specifies the interval width between ticks when using percent format. Default = 0.2.
 #' 
-#' @return a ggplot2 object with the new scale added to the selected axis.      
+#' @return A ggplot2 object with the new scale applied to the input axis.      
 #' @export
 #' @examples
 #' # make some fake data
@@ -46,10 +44,10 @@ scale_axis_helper = function(lstr, axis, rstr) {
 #' plt = mk_scatterplot(films)
 #' 
 #' p = plt("boxoffice", "budget", pt_alpha=0.5, pt_size=1)
-#' p = scale_axis(p, "y", use_log10=T)
+#' p = scale_axis(p, "y", scale = "log10")
 #' print(p)
 #' 
-#' p = scale_axis(p, "x", use_log10=T)
+#' p = scale_axis(p, "x", scale = "log10")
 #' print(p)
 #' 
 #' # make some data
@@ -62,10 +60,8 @@ scale_axis_helper = function(lstr, axis, rstr) {
 #' 
 #' barplt = mk_barplot(df)
 #' p = barplt("student", "pct", fillby="student", legend=F)
-#' scale_axis(p, "y", use_pct=T, pct_jump=0.3)
-scale_axis = function(p, axis="y", use_comma=F, use_log=F, use_log10=F, 
-                      use_pct=F, pct_max=1, pct_jump=0.2) {
-        # axis = "x", "y"
+#' scale_axis(p, "y", scale="pct", pct_jump=0.3)
+scale_axis = function(p, axis="y", scale=NULL, pct_max=1, pct_jump=0.2) {
         x = deparse(substitute(p))
         l = paste(x, "=", x, "+ ggplot2::scale_")
         r_comma = "_continuous(labels = scales::comma)"
@@ -78,14 +74,11 @@ scale_axis = function(p, axis="y", use_comma=F, use_log=F, use_log10=F,
                        pct_max, "), breaks = seq(0,", pct_max, ",", pct_jump, "))")        
         
         pexpr = NULL # need this for it to work when using knitr       
-        if (use_comma)
-                pexpr = scale_axis_helper(l, axis, r_comma)
-        if (use_log)
-                pexpr = scale_axis_helper(l, axis, r_log)
-        if (use_log10)
-                pexpr = scale_axis_helper(l, axis, r_log10)
-        if (use_pct)
-                pexpr = scale_axis_helper(l, axis, r_pct)
+        pexpr = switch(scale,
+                       comma = scale_axis_helper(l, axis, r_comma),
+                       log = scale_axis_helper(l, axis, r_log),
+                       log10 = scale_axis_helper(l, axis, r_log10),
+                       pct = scale_axis_helper(l, axis, r_pct))
         p = eval(pexpr)
         p
 }
