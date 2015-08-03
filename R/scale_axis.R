@@ -1,13 +1,13 @@
-#' @title Helper function used by \code{scale_axis()}. Not for external use.
+#' @title Helper function used by \code{scale_axis}. Not for external use.
 #' 
-#' @description \code{scale_axis_helper()} takes in R code strings, combines them
-#' and returns an expression to be evaluated by \code{scale_axis()}.
+#' @description \code{scale_axis_helper} takes in R code strings, combines them
+#' and returns an expression to be evaluated by \code{scale_axis}.
 #' 
 #' @param lstr string containing the left side of ggplot2 code.
 #' @param axis string of value "x" or "y".
 #' @param rstr string containing the right side of ggplot2 code.
 #' 
-#' @return a R expression to be evaluated by \code{scale_axis()}.  
+#' @return a R expression to be evaluated by \code{scale_axis}.  
 #' 
 #' @seealso \code{\link{scale_axis}}.
 scale_axis_helper = function(lstr, axis, rstr) {
