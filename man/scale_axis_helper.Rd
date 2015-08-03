@@ -2,7 +2,7 @@
 % Please edit documentation in R/scale_axis.R
 \name{scale_axis_helper}
 \alias{scale_axis_helper}
-\title{Helper function used by \code{scale_axis()}. Not for external use.}
+\title{Helper function used by \code{scale_axis}. Not for external use.}
 \usage{
 scale_axis_helper(lstr, axis, rstr)
 }
@@ -14,11 +14,11 @@ scale_axis_helper(lstr, axis, rstr)
 \item{rstr}{string containing the right side of ggplot2 code.}
 }
 \value{
-a R expression to be evaluated by \code{scale_axis()}.
+a R expression to be evaluated by \code{scale_axis}.
 }
 \description{
-\code{scale_axis_helper()} takes in R code strings, combines them
-and returns an expression to be evaluated by \code{scale_axis()}.
+\code{scale_axis_helper} takes in R code strings, combines them
+and returns an expression to be evaluated by \code{scale_axis}.
 }
 \seealso{
 \code{\link{scale_axis}}.
