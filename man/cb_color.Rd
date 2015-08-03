@@ -7,13 +7,18 @@
 cb_color(name)
 }
 \arguments{
-\item{name}{A string representing the name of a color}
+\item{name}{The name of a color or palette. Possible values are 'black',
+       "gray", "grey", "orange", "sky_blue", "bluish_green", "yellow",
+       "blue", "vermilion", "reddish_purple", "cb_gray", "cb_grey", and
+       "cb_black"}
 }
 \value{
-a vector of hex strings
+A vector of hex strings
 }
 \description{
-\code{cb_color} looks up the hex string of 9 colorblind-friendly colors.
+\code{cb_color} looks up the hex string of 9 colorblind-friendly colors given
+by \url{http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/.}
+
 General advice: for thin lines and small objects, darker blue and orange
 are preferable to sky blue and yellow. When combining colors,
 Use "warm" and "cool" colors alternatively. When using two warm colors or

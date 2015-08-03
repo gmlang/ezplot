@@ -1,16 +1,21 @@
 #' @title Colorblind-friendly colors
 #' 
 #' @description
-#' \code{cb_color} looks up the hex string of 9 colorblind-friendly colors.
+#' \code{cb_color} looks up the hex string of 9 colorblind-friendly colors given
+#' by \url{http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/.}
+#' 
 #' General advice: for thin lines and small objects, darker blue and orange 
 #' are preferable to sky blue and yellow. When combining colors, 
 #' Use "warm" and "cool" colors alternatively. When using two warm colors or 
 #' two cool colors, put distinct differences in brightness or saturation.
 #' Avoid combination of colors with low saturation or low brightness. 
 #' 
-#' @param name A string representing the name of a color
+#' @param name The name of a color or palette. Possible values are 'black', 
+#'        "gray", "grey", "orange", "sky_blue", "bluish_green", "yellow",
+#'        "blue", "vermilion", "reddish_purple", "cb_gray", "cb_grey", and 
+#'        "cb_black"
 #' 
-#' @return a vector of hex strings
+#' @return A vector of hex strings
 #' 
 #' @export
 #' 
@@ -34,8 +39,6 @@
 #' # get a palette of 8 colors with black
 #' cb_color("cb_black")
 cb_color = function(name) {
-        # colorblind-friendly palette taken from 
-        # http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/
         black = "#000000"
         gray = grey = "#999999"
         orange = "#E69F00"
