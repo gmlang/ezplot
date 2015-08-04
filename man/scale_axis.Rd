@@ -40,7 +40,7 @@ p = plt("boxoffice", "budget", pt_alpha=0.5, pt_size=1)
 p = scale_axis(p, "y", scale = "log10")
 print(p)
 
-p = scale_axis(p, "x", scale = "log10")
+p = scale_axis(p, "x", scale = "log2")
 print(p)
 
 # make some data

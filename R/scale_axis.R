@@ -47,7 +47,7 @@ scale_axis_helper = function(lstr, axis, rstr) {
 #' p = scale_axis(p, "y", scale = "log10")
 #' print(p)
 #' 
-#' p = scale_axis(p, "x", scale = "log10")
+#' p = scale_axis(p, "x", scale = "log2")
 #' print(p)
 #' 
 #' # make some data
@@ -68,6 +68,9 @@ scale_axis = function(p, axis="y", scale=NULL, pct_max=1, pct_jump=0.2) {
         r_log = "_continuous(trans = scales::log_trans(),
                 breaks = scales::trans_breaks('log', function(x) exp(x)),
                 labels = scales::trans_format('log', scales::math_format('e'^.x)))"
+        r_log2 = "_continuous(trans = scales::log2_trans(),
+                breaks = scales::trans_breaks('log2', function(x) 2^x),
+                labels = scales::trans_format('log2', scales::math_format('2'^.x)))"
         r_log10 = "_log10(breaks = scales::trans_breaks('log10', function(x) 10^x),
                 labels = scales::trans_format('log10', scales::math_format(10^.x)))"
         r_pct = paste0("_continuous(labels = scales::percent, limits = c(0, ",
@@ -77,6 +80,7 @@ scale_axis = function(p, axis="y", scale=NULL, pct_max=1, pct_jump=0.2) {
         pexpr = switch(scale,
                        comma = scale_axis_helper(l, axis, r_comma),
                        log = scale_axis_helper(l, axis, r_log),
+                       log2 = scale_axis_helper(l, axis, r_log2),
                        log10 = scale_axis_helper(l, axis, r_log10),
                        pct = scale_axis_helper(l, axis, r_pct))
         p = eval(pexpr)
