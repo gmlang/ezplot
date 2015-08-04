@@ -2,9 +2,9 @@
 #
 #' @description
 #' \code{mk_barplot} takes a data frame as input and returns a function that 
-#' can be used to make barplots on variables in the data frame.
+#' can be used to make barplots using the variables in the data frame.
 #' 
-#' @param df data frame containing variables to be visualized.
+#' @param df A data frame.
 #' 
 #' @return
 #' \code{function(xvar, yvar, fillby, xorder, barpos, 
@@ -30,7 +30,8 @@
 #'      \item dodged_lab_h  : numeric, the height between the dodged bar labels. Default is 1. Often not used.
 #' }
 #' 
-#' @seealso \code{\link{scale_axis}} for adding different scales to the axes. \code{\link{add_bar_label_pos}} for adding label positions to the input data frame.
+#' @seealso \code{\link{scale_axis}} for adding different scales to the axes. 
+#'          \code{\link{add_bar_label_pos}} for adding label positions to the input data frame.
 #' @export
 #' @examples
 #' # make some fake data
@@ -43,7 +44,7 @@
 #' # draw a barplot
 #' barplt = mk_barplot(df)
 #' barplt("student", "grade", "student") 
-#' barplt("student", "grade", "student", legend=F) 
+#' barplt("student", "grade", "student", xorder="ascend", legend=F)
 #' 
 #' # make some fake data
 #' df2 = read.table(header=TRUE, text='
@@ -74,8 +75,8 @@
 #' # plot a stacked barplot to display the percentages
 #' barplt = mk_barplot(pct)
 #' p = barplt("group", "pct", "level")
-#' scale_axis(p, "y", use_pct=T)
-#' scale_axis(p, "y", use_pct=T, pct_jump=0.1)
+#' scale_axis(p, "y", scale="pct")
+#' scale_axis(p, "y", scale="pct", pct_jump=0.1)
 mk_barplot = function(df) {
         function(xvar, yvar, fillby, xorder="alphanumeric", barpos="stack", 
                  xlab="", ylab="", main="", legend=T, 
