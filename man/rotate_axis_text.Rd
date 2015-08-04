@@ -8,14 +8,22 @@ rotate_axis_text(p, text_angle_x = 45, text_angle_y = 0, hjust_x = NULL,
   hjust_y = NULL, vjust_x = NULL, vjust_y = NULL)
 }
 \arguments{
-\item{p}{ggplot2 object.}
+\item{p}{A ggplot2 object.}
 
-\item{axis_text_angle_x}{the angle of the tick text on x-axis. Default=45.}
+\item{text_angle_x}{Angle of tick text on x-axis. Default=45.}
 
-\item{axis_text_angle_y}{the angle of the tick text on y-axis. Default=0.}
+\item{text_angle_y}{Angle of tick text on y-axis. Default=0.}
+
+\item{hjust_x}{Vertical distance adjustment of the tick text to x-axis. Default=NULL.}
+
+\item{hjust_y}{Horizontal distance adjustment of the tick text to y-axis. Default=NULL.}
+
+\item{vjust_x}{Horizontal distance adjustment of the tick text to x-axis. Default=NULL.}
+
+\item{vjust_y}{Vertical distance adjustment of the tick text to y-axis. Default=NULL.}
 }
 \value{
-a ggplot2 object.
+A ggplot2 object.
 }
 \description{
 Rotate axis tick text
@@ -36,6 +44,6 @@ print(p)
 # rotate the x-axis tick text
 rotate_axis_text(p)
 rotate_axis_text(p, 90)
-rotate_axis_text(p, 90, 30)
+rotate_axis_text(p, 90, 30, vjust_x=-2)
 }
 
