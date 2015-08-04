@@ -7,16 +7,16 @@
 format_as_pct(x, digits = 4)
 }
 \arguments{
-\item{x}{a numeric vector.}
+\item{x}{A numeric vector.}
 
-\item{digits}{integer indicating the number of decimal places to be used.}
+\item{digits}{An integer indicating the number of decimal places to be used.}
 }
 \value{
-a character vector that's just the original vector in percent format.
+A character vector that's just x in percent format.
 }
 \description{
-\code{format_as_pct()} takes a numeric argument \code{x} and returns a
-character vector containing the original numeric vector in percent format.
+\code{format_as_pct} takes a numeric argument and returns a
+character vector of the original numeric vector in percent format.
 }
 \examples{
 a = c(0.84984554, 0.18, 0.9273, 0.128294)
