@@ -1,23 +1,25 @@
-#' @title Enlarges a ggplot2 plot for web display
+#' @title Enlarges a ggplot2 plot for web display.
 #' 
 #' @description
-#' \code{web_display()} takes a ggplot object as input, and enlarges its axis 
+#' \code{web_display} takes a ggplot object as input, and enlarges its axis 
 #' tick text, axis label text, legend title and text, and distance between the 
 #' axis labels and the axis to make it look good for web display.
 #' 
-#' @param p ggplot object
-#' @param axis_text_size number, the size of the tick text. Default = 16.
-#' @param axis_title_size number, the size of the axis labels. Default = rel(2).
-#' @param axis_title_vjust_y number, the distance between y label and y-axis. Default = 1. 
-#' @param legend_pos string, the position of the legend. Default = "right". 
-#' @param legend_title logical, whether to display legend title. Default = TRUE.
-#' @param mar_top number, top margin of the whole plot. Default = 1.
-#' @param mar_right number, right margin of the whole plot. Default = 1.
-#' @param mar_left number, left margin of the whole plot. Default = 1.
-#' @param mar_bottom number, bottom margin of the whole plot. Default = 1.
+#' @param p A ggplot object.
+#' @param axis_text_size A number, size of the tick text. Default = 16.
+#' @param axis_title_size A number, size of the axis labels. Default = rel(2).
+#' @param axis_title_vjust_y A number, distance between y label and y-axis. Default = 1. 
+#' @param legend_pos A string, location of the legend. Default = "right". 
+#' @param legend_title Logical, whether to display legend title. Default = TRUE.
+#' @param mar_top A number, top margin of the whole plot. Default = 1.
+#' @param mar_right A number, right margin of the whole plot. Default = 1.
+#' @param mar_left A number, left margin of the whole plot. Default = 1.
+#' @param mar_bottom A number, bottom margin of the whole plot. Default = 1.
 #' 
-#' @return a ggplot object
+#' @return A ggplot object
+#' 
 #' @export
+#' 
 #' @examples
 #' # make some data
 #' df = read.table(header=TRUE, text='
