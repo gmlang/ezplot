@@ -1,12 +1,11 @@
 #' @title Create a figure of 4 plots to show the distribution of a numeric variable.
 #' 
 #' @description
-#' \code{plt_dist()} takes in a data frame and a variable name, and plots the 
-#' histogram, boxplot, density curve and qqplot of the variable using the base
-#' plot system.
+#' \code{plt_dist} takes in a data frame and a variable name, and plots its 
+#' histogram, boxplot, density curve and normal qqplot using the base plot system.
 #' 
-#' @param dat a data frame or a matrix with colnames.
-#' @param varname a string specifying the name of the variable of interest.
+#' @param dat A data frame or a matrix with colnames.
+#' @param varname A string specifying the name of the variable of interest.
 #' @export
 #' @examples
 #' plt_dist(cars, "speed")

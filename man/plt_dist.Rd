@@ -7,14 +7,13 @@
 plt_dist(dat, varname)
 }
 \arguments{
-\item{dat}{a data frame or a matrix with colnames.}
+\item{dat}{A data frame or a matrix with colnames.}
 
-\item{varname}{a string specifying the name of the variable of interest.}
+\item{varname}{A string specifying the name of the variable of interest.}
 }
 \description{
-\code{plt_dist()} takes in a data frame and a variable name, and plots the
-histogram, boxplot, density curve and qqplot of the variable using the base
-plot system.
+\code{plt_dist} takes in a data frame and a variable name, and plots its
+histogram, boxplot, density curve and normal qqplot using the base plot system.
 }
 \examples{
 plt_dist(cars, "speed")
