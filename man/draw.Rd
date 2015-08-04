@@ -2,7 +2,7 @@
 % Please edit documentation in R/mk_distplot.R
 \name{draw}
 \alias{draw}
-\title{Helper function used by \code{mk_distplot()}. Not for external use.}
+\title{Helper function used by \code{mk_distplot}. Not for external use.}
 \usage{
 draw(type)
 }
@@ -10,11 +10,11 @@ draw(type)
 \item{type}{string of value "histogram" or "density".}
 }
 \value{
-a R expression to be evaluated by \code{mk_distplot()}.
+a R expression to be evaluated by \code{mk_distplot}.
 }
 \description{
-\code{draw()} takes "histogram" or "density" as input and returns
-the corresponding ggplot2 expression to be evaluated by \code{mk_distplot()}.
+\code{draw} takes "histogram" or "density" as input and returns
+the corresponding ggplot2 expression to be evaluated by \code{mk_distplot}.
 }
 \seealso{
 \code{\link{mk_distplot}}.

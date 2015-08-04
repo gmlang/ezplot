@@ -1,11 +1,11 @@
-#' @title Helper function used by \code{mk_distplot()}. Not for external use.
+#' @title Helper function used by \code{mk_distplot}. Not for external use.
 #' 
-#' @description \code{draw()} takes "histogram" or "density" as input and returns 
-#' the corresponding ggplot2 expression to be evaluated by \code{mk_distplot()}.
+#' @description \code{draw} takes "histogram" or "density" as input and returns 
+#' the corresponding ggplot2 expression to be evaluated by \code{mk_distplot}.
 #' 
 #' @param type string of value "histogram" or "density".
 #' 
-#' @return a R expression to be evaluated by \code{mk_distplot()}.  
+#' @return a R expression to be evaluated by \code{mk_distplot}.  
 #' 
 #' @seealso \code{\link{mk_distplot}}.
 draw = function(type) {
@@ -31,25 +31,25 @@ draw = function(type) {
 #' @title Create a function that draws ggplot2 histograms or density plots.
 #' 
 #' @description
-#' \code{mk_distplot()} takes a data frame as input and returns a function that 
-#' can be used to make histograms or density plots on variables in the data frame.
-#' It uses \code{draw()} as a helper. 
+#' \code{mk_distplot} takes a data frame as input and returns a function that can 
+#' be used to make histograms or density plots using variables in the data frame.
+#' It uses \code{draw} as a helper. 
 #' 
 #' @seealso \code{\link{draw}}.
 #' 
-#' @param df data frame containing variables to be visualized.
+#' @param df A data frame.
 #' @return 
 #' \code{function(xvar, fillby="", xlab="", type="histogram", binw=NULL, main="",
-#'                add_vline_mean=F, add_vline_median=F)}
+#'                add_vline_mean=FALSE, add_vline_median=FALSE)}
 #' \itemize{
-#'      \item xvar     :  string, the x variable.
-#'      \item fillby   :  string, the grouping variable. Default is "".
-#'      \item xlab     :  stirng, the x-axis label.
+#'      \item xvar     :  string, x variable.
+#'      \item fillby   :  string, grouping variable. Default = "".
+#'      \item xlab     :  stirng, x-axis label.
 #'      \item type     :  string, "density" or "histogram". Default is "histogram".
-#'      \item binw     :  number, bin width. Default is NULL.
-#'      \item main     :  string, the title of the plot.
-#'      \item add_vline_mean: logical, whether to add a vertical line at the mean. Default=F.
-#'      \item add_vline_median: logical, whether to add a vertical line at the median. Default=F.
+#'      \item binw     :  number, bin width. Default = NULL.
+#'      \item main     :  string, title of the plot.
+#'      \item add_vline_mean: logical, whether to add a vertical line at the mean. Default=FALSE.
+#'      \item add_vline_median: logical, whether to add a vertical line at the median. Default=FALSE.
 #' }
 #' @export
 #' @examples
