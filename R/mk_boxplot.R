@@ -1,20 +1,20 @@
 #' @title Create a function that draws ggplot2 boxplots
 #' 
 #' @description 
-#' \code{mk_boxplot()} takes a data frame as input and returns a function that 
-#' can be used to make boxplots on variables in the data frame.
+#' \code{mk_boxplot} takes a data frame as input and returns a function that 
+#' can be used to make boxplots using variables in the data frame.
 #' 
-#' @param df data frame containing variables to be visualized.
+#' @param df A data frame.
 #' @return 
-#' \code{function(xvar, yvar, xlab="", ylab="", main="", vpos=0, legend=T)}
+#' \code{function(xvar, yvar, xlab="", ylab="", main="", vpos=0, legend=TRUE)}
 #' \itemize{
-#'      \item xvar     :  string, the x variable.
-#'      \item yvar     :  string, the y variable.
-#'      \item xlab     :  string, the x-axis label.
-#'      \item ylab     :  string, the y-axis label.
-#'      \item main     :  string, the title of the plot. 
-#'      \item vpos     :  number, the additional height of the text labels beyond the max y-value of each group.
-#'      \item legend   :  logical, indicating whether to show legend or not. Default is TRUE.
+#'      \item xvar     :  string, x variable.
+#'      \item yvar     :  string, y variable.
+#'      \item xlab     :  string, x-axis label.
+#'      \item ylab     :  string, y-axis label.
+#'      \item main     :  string, title of the plot. 
+#'      \item vpos     :  number, additional height of the text labels beyond the max y-value of each group.
+#'      \item legend   :  logical, show legend or not. Default = TRUE.
 #' }
 #' @export
 #' @examples 
@@ -24,28 +24,28 @@
 #' # plot distributions of budget over the years
 #' title1 = "Annual Distribution of Budget from 1913 to 2014"
 #' p = plt("year", "budget", ylab="budget", main=title1)
-#' p = scale_axis(p, "y", use_comma=T)
+#' p = scale_axis(p, "y", scale="comma")
 #' print(p)
-#' scale_axis(p, use_log10=T)
+#' scale_axis(p, scale="log10")
 #' 
 #' # plot distributions of boxoffice over the years
 #' title2 = "Annual Distribution of Boxoffice from 1913 to 2014"
 #' p = plt("year", "boxoffice", ylab="boxoffice", main=title2)
 #' start = min(films$year)
 #' end = max(films$year)
-#' p = scale_axis(p, "y", use_log10=T)
+#' p = scale_axis(p, "y", scale="log10")
 #' p = p + ggplot2::scale_x_continuous(limits = c(start, end), 
 #'                                     breaks = seq(start, end, 10))
 #' print(p)
 #' 
 #' # plot distributions of boxoffice at each aggregated year level
 #' p = plt("year_cat", "boxoffice", ylab="boxoffice")
-#' p = scale_axis(p, use_log10=T)
+#' p = scale_axis(p, scale="log10")
 #' print(p)
 #' 
 #' # plot distributions of budget at each aggregated year level
 #' p = plt("year_cat", "budget", ylab="boxoffice", legend=F)
-#' scale_axis(p, use_log10=T)
+#' scale_axis(p, scale="log10")
 mk_boxplot = function(df) {
         function(xvar, yvar, xlab="", ylab="", main="", vpos=0, legend=T) {
                 xvar_type = class(df[[xvar]])
