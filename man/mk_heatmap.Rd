@@ -2,33 +2,30 @@
 % Please edit documentation in R/mk_heatmap.R
 \name{mk_heatmap}
 \alias{mk_heatmap}
-\title{Create a function that draws ggplot2 heatmaps}
+\title{Create a function that draws ggplot2 heat maps.}
 \usage{
 mk_heatmap(df)
 }
 \arguments{
-\item{df}{data frame containing variables to be visualized.}
+\item{df}{A data frame.}
 }
 \value{
 \code{function(xvar, yvar, fillby, xlab="", ylab="", main="", base_size = 12,
-               use_theme_gray=T, legend=T)}
+               use_theme_gray=TRUE, legend=TRUE)}
 \itemize{
-     \item xvar     :  string, the x variable.
-     \item yvar     :  string, the y variable.
-     \item fillby   :  string, the variable used for coloring the bars.
-     \item xlab     :  string, the x-axis label.
-     \item ylab     :  string, the y-axis label.
-     \item main     :  string, the title of the plot.
-     \item base_size:  numeric, the size of both axis tick text, default = 12.
-     \item use_theme_gray:  logical, indicating whether to use theme_gray() or theme_minimal(). Default is TRUE.
-     \item legend   :  logical, indicating whether to show the legend. Default is TRUE.
+     \item xvar     :  string, x variable.
+     \item yvar     :  string, y variable.
+     \item fillby   :  string, variable used for coloring the bars.
+     \item xlab     :  string, x-axis label.
+     \item ylab     :  string, y-axis label.
+     \item main     :  string, title of the plot.
+     \item base_size:  numeric, size of tick text for both axes. Default = 12.
+     \item use_theme_gray:  logical, whether to use theme_gray or theme_minimal. Default = TRUE.
+     \item legend   :  logical, whether to show the legend. Default = TRUE.
 }
 }
 \description{
-\code{mk_heatmap()} takes a data frame as input and returns a function that
-can be used to make heatmaps on variables in the data frame.
-}
-\examples{
-# make some fake data
+\code{mk_heatmap} takes a data frame as input and returns a function that
+can be used to make heat maps using variables in the data frame.
 }
 
