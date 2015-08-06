@@ -20,3 +20,60 @@
 #' }
 #' @source \url{http://www.imdb.com/interfaces/}
 "films"
+
+#' @title Aggregated Annual Budget and Boxoffice
+#' 
+#' @description 
+#' A dataset containing the ggregated annual Budget and Boxoffice of 
+#' 5944 films beween 1913 and 2014 from IMDB.com.
+#' 
+#' @format A data frame with 202 rows and 4 variables:
+#' \describe{
+#'      \item{year}{Year of release.}
+#'      \item{type}{"Budget" or "Boxoffice".}
+#'      \item{tot}{Total Amount in US Dollars.}
+#'      \item{avg}{Average Amount in US Dollars.}
+#' }
+"btbo_by_year"
+
+#' @title Boxoffice/Budget Ratio
+#' 
+#' @description 
+#' A dataset containing the Boxoffices/Budget ratio from 1913 to 2014 of 
+#' 5944 films obtained from IMDB.com.
+#' 
+#' @format A data frame with 101 rows and 2 variables:
+#' \describe{
+#'      \item{year}{Year of release.}
+#'      \item{bo_bt_ratio}{Boxoffice/Budget Ratio}
+#' }
+"bo_bt_ratio_by_year"
+
+
+#' @title Aggregated Annual Budget and Boxoffice
+#' 
+#' @description 
+#' A dataset containing the ggregated annual Budget and Boxoffice of 
+#' 5944 films beween 1913 and 2014 from IMDB.com.
+#' 
+#' @format A data frame with 202 rows and 4 variables:
+#' \describe{
+#'      \item{year}{Year of release.}
+#'      \item{type}{"Budget" or "Boxoffice".}
+#'      \item{tot}{Total Amount in US Dollars.}
+#'      \item{avg}{Average Amount in US Dollars.}
+#' }
+"btbo_by_year"
+
+#' @title Boxoffice/Budget Ratio
+#' 
+#' @description 
+#' A dataset containing the Boxoffices/Budget ratio from 1913 to 2014 of 
+#' 5944 films obtained from IMDB.com.
+#' 
+#' @format A data frame with 101 rows and 2 variables:
+#' \describe{
+#'      \item{year}{Year of release.}
+#'      \item{bo_bt_ratio}{Boxoffice/Budget Ratio}
+#' }
+"bo_bt_ratio_by_year"
