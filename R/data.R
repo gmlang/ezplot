@@ -77,3 +77,12 @@
 #'      \item{bo_bt_ratio}{Boxoffice/Budget Ratio}
 #' }
 "bo_bt_ratio_by_year"
+
+#' @title Internet Ads Revenue
+#' 
+#' @description 
+#' A dataset containing internet ads revenue from 2000 to 2014. 
+#' Source: iab.net
+#' 
+#' @format A data frame with 15 rows and 13 variables:
+"ads"
