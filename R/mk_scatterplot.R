@@ -55,14 +55,13 @@ mk_scatterplot = function(df) {
                 
                 if (fillby == "") 
                         p = ggplot2::ggplot(df, ggplot2::aes_string(x=xvar, y=yvar)) +
-                                ggplot2::geom_point(color=cb_color("blue"), 
-                                                    alpha=pt_alpha, 
-                                                    size=pt_size)
+                                ggplot2::geom_jitter(color=cb_color("blue"), 
+                                                     alpha=pt_alpha, 
+                                                     size=pt_size)
                 else 
                         p = ggplot2::ggplot(df, ggplot2::aes_string(x=xvar, y=yvar, 
                                                                     color=fillby)) +
-                                ggplot2::geom_point(alpha=pt_alpha, 
-                                                    size=pt_size) 
+                                ggplot2::geom_jitter(alpha=pt_alpha, size=pt_size) 
                 
                 if (add_line)
                         p = p + ggplot2::geom_smooth(method=lm, se=F, size=linew) 
