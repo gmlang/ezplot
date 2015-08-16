@@ -7,7 +7,7 @@
 draw(type)
 }
 \arguments{
-\item{type}{string of value "histogram" or "density".}
+\item{type}{String of value "histogram" or "density".}
 }
 \value{
 a R expression to be evaluated by \code{mk_distplot}.

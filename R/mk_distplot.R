@@ -3,7 +3,7 @@
 #' @description \code{draw} takes "histogram" or "density" as input and returns 
 #' the corresponding ggplot2 expression to be evaluated by \code{mk_distplot}.
 #' 
-#' @param type string of value "histogram" or "density".
+#' @param type String of value "histogram" or "density".
 #' 
 #' @return a R expression to be evaluated by \code{mk_distplot}.  
 #' 
