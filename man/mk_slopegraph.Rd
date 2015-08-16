@@ -26,6 +26,7 @@ mk_slopegraph(df)
 }
 }
 \description{
-Create a function that draws ggplot2 tufte slopegraphs.
+Inspired and modified after James Keirstead's original script at
+https://github.com/jkeirstead/r-slopegraph
 }
 

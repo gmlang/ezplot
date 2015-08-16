@@ -22,7 +22,8 @@ between the lines. Default = 0.05.}
 A data frame with an additional ypos column.
 }
 \description{
-Calculate slope graph positions based on Edward Tufte's layout.
+inspired and modified after James Keirstead's original script at
+https://github.com/jkeirstead/r-slopegraph
 }
 \seealso{
 \code{\link{slopegraph_data_prep}}

@@ -1,5 +1,8 @@
-#' @title A ggplot2 theme for plotting slopegraphs
+#' @title A ggplot2 theme for plotting slopegraphs. 
 #'
+#' @description Inspired and modified after James Keirstead's original script at 
+#' https://github.com/jkeirstead/r-slopegraph
+#' 
 #' @param base_size Number, base font size
 #' @param base_family String, base font family
 #' 
@@ -33,7 +36,10 @@ theme_slopegraph = function(base_size = 12, base_family = "") {
 
 
 #' @title Create a function that draws ggplot2 tufte slopegraphs.
-#'
+#' 
+#' @description Inspired and modified after James Keirstead's original script at 
+#' https://github.com/jkeirstead/r-slopegraph
+#' 
 #' @param df A data frame.
 #' 
 #' @return

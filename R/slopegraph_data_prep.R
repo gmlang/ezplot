@@ -1,5 +1,8 @@
 #' @title Calculate slope graph positions based on Edward Tufte's layout.
-#'
+#' 
+#' @description inspired and modified after James Keirstead's original script at
+#' https://github.com/jkeirstead/r-slopegraph
+#' 
 #' @param df A data frame with named x, y, and group columns.
 #' @param xvar String, name of the x-axis column.
 #' @param yvar String, name of the y-axis column.
@@ -37,7 +40,8 @@ tufte_sort = function(df, xvar, yvar, min_space=0.05, line_gap_scale = 1) {
 }
 
 
-#' @title Build a slopegraph data set.
+#' @title Build a slopegraph data set. This function is inspired and modified after 
+#' James Keirstead's original script at https://github.com/jkeirstead/r-slopegraph
 #' 
 #' @description
 #' Modify a data frame so that it can be used to plot tufte slopegraph. A tufte

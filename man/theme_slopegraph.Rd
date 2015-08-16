@@ -2,7 +2,7 @@
 % Please edit documentation in R/mk_slopegraph.r
 \name{theme_slopegraph}
 \alias{theme_slopegraph}
-\title{A ggplot2 theme for plotting slopegraphs}
+\title{A ggplot2 theme for plotting slopegraphs.}
 \usage{
 theme_slopegraph(base_size = 12, base_family = "")
 }
@@ -15,6 +15,7 @@ theme_slopegraph(base_size = 12, base_family = "")
 ggplot2 theme
 }
 \description{
-A ggplot2 theme for plotting slopegraphs
+Inspired and modified after James Keirstead's original script at
+https://github.com/jkeirstead/r-slopegraph
 }
 

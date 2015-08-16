@@ -2,7 +2,8 @@
 % Please edit documentation in R/slopegraph_data_prep.R
 \name{slopegraph_data_prep}
 \alias{slopegraph_data_prep}
-\title{Build a slopegraph data set.}
+\title{Build a slopegraph data set. This function is inspired and modified after
+James Keirstead's original script at https://github.com/jkeirstead/r-slopegraph}
 \usage{
 slopegraph_data_prep(df, xvar, yvar, gpvar, min_space = 0.05, ...)
 }
