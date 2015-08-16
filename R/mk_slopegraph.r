@@ -37,10 +37,14 @@ theme_slopegraph = function(base_size = 12, base_family = "") {
 #' @param df A data frame.
 #' 
 #' @return
-#' \code{function(xvar, yvar, gpvar, pt_size=8, font_size=2.5, ...)}
+#' \code{function(xvar, yvar, gpvar, xlab="", ylab="", main="",
+#'                pt_size=8, font_size=2.5, ...)}
 #' \itemize{
 #'      \item xvar     :  string, the x variable.
 #'      \item yvar     :  string, the y variable.
+#'      \item xlab     :  string, x-axis label.
+#'      \item ylab     :  string, y-axis label.
+#'      \item main     :  string, title of the plot. 
 #'      \item gpvar    :  string, the grouping variable.
 #'      \item pt_size  :  numeric, size of points. Default = 8
 #'      \item font_size:  numeric, size of text. Default = 2.5
@@ -50,18 +54,23 @@ theme_slopegraph = function(base_size = 12, base_family = "") {
 #' 
 #' @export
 mk_slopegraph = function(df) {
-        function(xvar, yvar, gpvar, pt_size = 8, font_size = 2.5, ...) {
+        function(xvar, yvar, gpvar, xlab="", ylab="", main="",
+                 pt_size = 8, font_size = 2.5, ...) {
+                
                 idx = df[[xvar]] == head(df[[xvar]], 1)
                 ylabs = df[[gpvar]][idx]
                 yvals = df[["ypos"]][idx]
-                gg = ggplot2::ggplot(df, ggplot2::aes_string(x=xvar, y="ypos")) +
-                        ggplot2::geom_line(ggplot2::aes_string(group=gpvar),
+                
+                p = ggplot2::ggplot(df, ggplot2::aes_string(x=xvar, y="ypos")) +
+                        ggplot2::geom_line(ggplot2::aes_string(group=gpvar), 
                                            color="grey80") +
                         ggplot2::geom_point(color="white", size=pt_size) +
                         ggplot2::geom_text(ggplot2::aes_string(label=yvar),
                                            size=font_size) +
                         ggplot2::scale_y_continuous(name="", breaks=yvals, 
-                                                    labels=ylabs)
-                gg + theme_slopegraph(...)
+                                                    labels=ylabs) +
+                        ggplot2::labs(x = xlab, y = ylab, title = main)
+                
+                p + theme_slopegraph(...)
         }
 }

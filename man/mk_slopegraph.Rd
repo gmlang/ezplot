@@ -10,10 +10,14 @@ mk_slopegraph(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(xvar, yvar, gpvar, pt_size=8, font_size=2.5, ...)}
+\code{function(xvar, yvar, gpvar, xlab="", ylab="", main="",
+               pt_size=8, font_size=2.5, ...)}
 \itemize{
      \item xvar     :  string, the x variable.
      \item yvar     :  string, the y variable.
+     \item xlab     :  string, x-axis label.
+     \item ylab     :  string, y-axis label.
+     \item main     :  string, title of the plot.
      \item gpvar    :  string, the grouping variable.
      \item pt_size  :  numeric, size of points. Default = 8
      \item font_size:  numeric, size of text. Default = 2.5
