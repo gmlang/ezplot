@@ -2,20 +2,28 @@
 % Please edit documentation in R/plt_dist.R
 \name{plt_dist}
 \alias{plt_dist}
-\title{Create a figure of 4 plots to show the distribution of a numeric variable.}
+\title{Create a function that can be used to make a figure of 4 plots showing
+the distribution of a continuous variable.}
 \usage{
-plt_dist(dat, varname)
+plt_dist(dat)
 }
 \arguments{
 \item{dat}{A data frame or a matrix with colnames.}
-
-\item{varname}{A string specifying the name of the variable of interest.}
+}
+\value{
+\code{function(varname)}
+\itemize{
+     \item varname: string, the name of the continuous variable to be plotted
+}
 }
 \description{
-\code{plt_dist} takes in a data frame and a variable name, and plots its
-histogram, boxplot, density curve and normal qqplot using the base plot system.
+\code{plt_dist} takes in a data frame and returns a function that you can pass
+in a variable name of any continuous variable of the data frame and it'll plot
+the histogram, boxplot, density curve and qqplot using the base plot system.
 }
 \examples{
-plt_dist(cars, "speed")
+f = plt_dist(cars)
+f("speed")
+f("dist")
 }
 
