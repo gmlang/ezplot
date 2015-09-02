@@ -33,6 +33,12 @@ a point in the middle.
 }
 \examples{
 library(ezplot)
-plt = mk_intervalplot(films)
+fit = lm(log10(boxoffice) ~ year_cat, data=films)
+pred = predict(fit, films, interval="prediction")
+dat = data.frame(year_cat=films$year_cat, pred)
+plt = mk_intervalplot(dat)
+p = plt("year_cat", "fit", ymin_var="lwr", ymax_var="upr",
+        ylab="log10(boxoffice) prediction")
+p
 }
 
