@@ -3,6 +3,7 @@
 export(add_bar_label_pos)
 export(cb_color)
 export(format_as_pct)
+export(missing_fixer)
 export(mk_areaplot)
 export(mk_barplot)
 export(mk_boxplot)
