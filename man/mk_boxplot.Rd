@@ -16,6 +16,7 @@ mk_boxplot(df)
      \item yvar     :  string, y variable.
      \item xlab     :  string, x-axis label.
      \item ylab     :  string, y-axis label.
+     \item lab_at_top: logical, if T, label the boxplots at the top. Default is TRUE.
      \item main     :  string, title of the plot.
      \item vpos     :  number, additional height of the text labels beyond the max y-value of each group.
      \item legend   :  logical, show legend or not. Default = TRUE.
