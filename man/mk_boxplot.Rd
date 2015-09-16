@@ -10,16 +10,18 @@ mk_boxplot(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(xvar, yvar, xlab="", ylab="", main="", vpos=0, legend=TRUE)}
+\code{function(xvar, yvar, xlab="", ylab="", main="", legend=TRUE,
+               add_label=TRUE, lab_at_top=TRUE, vpos=0)}
 \itemize{
      \item xvar     :  string, x variable.
      \item yvar     :  string, y variable.
      \item xlab     :  string, x-axis label.
      \item ylab     :  string, y-axis label.
-     \item lab_at_top: logical, if T, label the boxplots at the top. Default is TRUE.
      \item main     :  string, title of the plot.
-     \item vpos     :  number, additional height of the text labels beyond the max y-value of each group.
      \item legend   :  logical, show legend or not. Default = TRUE.
+     \item add_label:  logical, whether or not to put number of observations as labels. Default is TRUE.
+     \item lab_at_top: logical, whether to put the labels at the top or bottom. Default is TRUE.
+     \item vpos     :  number, additional height of the text labels beyond the max y-value of each group.
 }
 }
 \description{
