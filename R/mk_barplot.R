@@ -10,7 +10,7 @@
 #' \code{function(xvar, yvar, fillby, xorder, barpos, 
 #'                xlab="", ylab="", main="", legend=T,
 #'                barlab, barlab_use_pct, decimals, barlab_at_top, barlab_size,
-#'                dodged_lab_w, dodged_lab_h)}
+#'                dodged_lab_w)}
 #' \itemize{
 #'      \item xvar     :  string, the x variable.
 #'      \item yvar     :  string, the y variable.
@@ -27,7 +27,6 @@
 #'      \item barlab_at_top : logical, whether to place the labels at the top or middle of the bars or. Default is FALSE, meaning at the middle. 
 #'      \item barlab_size   : numeric, the size of the bar label text. Default is 3. 
 #'      \item dodged_lab_w  : numeric, the width between the dodged bar labels. Default is 1.
-#'      \item dodged_lab_h  : numeric, the height between the dodged bar labels. Default is 1. Often not used.
 #' }
 #' 
 #' @seealso \code{\link{scale_axis}} for adding different scales to the axes. 
@@ -81,8 +80,7 @@ mk_barplot = function(df) {
         function(xvar, yvar, fillby, xorder="alphanumeric", barpos="stack", 
                  xlab="", ylab="", main="", legend=T, 
                  barlab=NULL, barlab_use_pct=F, decimals=2,
-                 barlab_at_top=F, barlab_size=3, 
-                 dodged_lab_w=1, dodged_lab_h=1) {
+                 barlab_at_top=F, barlab_size=3, dodged_lab_w=1) {
                             
                 if (xorder == "ascend")
                         df[[xvar]] = reorder(df[[xvar]], df[[yvar]])
@@ -123,8 +121,7 @@ mk_barplot = function(df) {
                                                                    y = barlab_pos,
                                                                    ymax = paste0("max(", barlab, ")")), 
                                                            size = barlab_size,
-                                                           position=ggplot2::position_dodge(width=dodged_lab_w, 
-                                                                                            height=dodged_lab_h))
+                                                           position=ggplot2::position_dodge(width=dodged_lab_w))
                 }
                 p
         }
