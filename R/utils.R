@@ -48,3 +48,18 @@ missing_fixer = function(na_value) {
                 x
         }
 }
+
+#' @title Check if a number or a numberic vector is wholenumber or not.
+#' 
+#' @param x A number or a numeric vector.
+#' 
+#' @return TRUE or FALSE
+#' 
+#' @export
+#' 
+#' @examples
+#' is_wholenum(-99)
+#' is_wholenum(1)
+#' is_wholenum(0.23)
+is_wholenum = function(x, tol=.Machine$double.eps^0.5) abs(x - round(x)) < tol
+
