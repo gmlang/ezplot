@@ -10,19 +10,25 @@ mk_barplot_tufte(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(xvar, yvar, gpvar, xlab="", ylab="", main="",
-               pt_size=8, font_size=2.5, ...)}
+\code{function(xvar, yvar, xorder="alphanumeric", bar_w=0.25, font_size=14, 
+               font_family="serif", show_axis_ticks=F, ybreak_n=5, ybreak_h=1, 
+               ytick_decimals=0, main="")}
 \itemize{
      \item xvar     :  string, the x variable.
      \item yvar     :  string, the y variable.
-     \item xlab     :  string, x-axis label.
-     \item ylab     :  string, y-axis label.
-     \item main     :  string, title of the plot. 
-     \item gpvar    :  string, the grouping variable.
-     \item pt_size  :  numeric, size of points. Default = 8
-     \item font_size:  numeric, size of text. Default = 2.5
-     \item ...      :  parameters (base_size or base_family) to pass into 
-                       theme_slopegraph()
+     \item xorder   :  string, takes on one of three values: "alphanumeric", 
+                       "ascend", or "descend". It arranges the bars by
+                       their heights accordingly.
+     \item bar_w    :  numeric, width of the bars. Default = 0.25.
+     \item font_size:  numeric, size of text. Default = 14.
+     \item font_family:  string, default = "serif".
+     \item show_axis_ticks:  logical, display axis ticks if TRUE. 
+     \item ybreak_n  :  integer, number of y labels. We'll break the bars at 
+                        into chunks at these positions. Default = 5.
+     \item ybreak_h  :  numeric, the height of each break. Default = 1.
+     \item ytick_decimals  :  integer, the number of decimal places of each
+                              y tick text shown. Default = 0.
+     \item main  :  string, title of the plot.                         
 }
 }
 \description{
