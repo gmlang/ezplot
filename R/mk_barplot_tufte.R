@@ -40,9 +40,11 @@ mk_barplot_tufte = function(df) {
                         df[[xvar]] = reorder(df[[xvar]], -df[[yvar]])
                 
                 # find ymax and ybreaks
-                ymax = floor(max(df[[yvar]]))
+                ymax = max(df[[yvar]])
+                if (ymax > 1) ymax = floor(ymax)
                 ydelta = ymax / ybreak_n
-                if (!is_wholenum(ydelta)) ydelta = round(ydelta, ytick_decimals)
+                if (ymax <= 1 && ytick_decimals==0) ydelta = round(ydelta, 1)
+                else ydelta = round(ydelta, ytick_decimals)
                 ybreaks = seq(0, ymax, ydelta)[-1]
                 
                 # plot
