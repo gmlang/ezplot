@@ -13,13 +13,8 @@
 }}
 \usage{
 btbo_by_year
-
-btbo_by_year
 }
 \description{
-A dataset containing the ggregated annual Budget and Boxoffice of 
-5944 films beween 1913 and 2014 from IMDB.com.
-
 A dataset containing the ggregated annual Budget and Boxoffice of 
 5944 films beween 1913 and 2014 from IMDB.com.
 }

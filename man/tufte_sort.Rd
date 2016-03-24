@@ -4,7 +4,7 @@
 \alias{tufte_sort}
 \title{Calculate slope graph positions based on Edward Tufte's layout.}
 \usage{
-tufte_sort(df, xvar, yvar, min_space = 0.05, line_gap_scale = 1)
+tufte_sort(df, xvar, yvar, gpvar, min_space = 0.05, line_gap_scale = 1)
 }
 \arguments{
 \item{df}{A data frame with named x, y, and group columns.}
@@ -12,6 +12,8 @@ tufte_sort(df, xvar, yvar, min_space = 0.05, line_gap_scale = 1)
 \item{xvar}{String, name of the x-axis column.}
 
 \item{yvar}{String, name of the y-axis column.}
+
+\item{gpvar}{String, name of the group column.}
 
 \item{min_space}{Number, fraction of total data range to use as a minimum gap 
 between the lines. Default = 0.05.}

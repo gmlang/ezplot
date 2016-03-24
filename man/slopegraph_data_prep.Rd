@@ -5,7 +5,7 @@
 \title{Build a slopegraph data set. This function is inspired and modified after 
 James Keirstead's original script at https://github.com/jkeirstead/r-slopegraph}
 \usage{
-slopegraph_data_prep(df, xvar, yvar, gpvar, min_space = 0.05, ...)
+slopegraph_data_prep(df, xvar, yvar, gpvar, ...)
 }
 \arguments{
 \item{df}{A data frame.}
@@ -16,8 +16,8 @@ slopegraph_data_prep(df, xvar, yvar, gpvar, min_space = 0.05, ...)
 
 \item{gpvar}{String, name of the group column.}
 
-\item{min_space}{Number, fraction of total data range to use as a minimum gap 
-between the lines. Default = 0.05.}
+\item{...}{other parameters such as min_space, line_gap_scale the function
+tufte_sort() uses.}
 }
 \value{
 A data frame with an additional ypos column.

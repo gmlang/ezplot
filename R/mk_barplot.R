@@ -90,8 +90,7 @@ mk_barplot = function(df) {
                 p = ggplot2::ggplot(df, ggplot2::aes_string(x = xvar, y = yvar, 
                                                             fill = fillby,
                                                             order = fillby)) + 
-                        ggplot2::geom_bar(stat = "identity", 
-                                          position = barpos) + 
+                        ggplot2::geom_bar(stat = "identity", position = barpos) + 
                         ggplot2::labs(x = xlab, y = ylab, title = main) +
                         ggplot2::theme_bw() +
                         ggplot2::guides(fill = ggplot2::guide_legend(reverse=TRUE))

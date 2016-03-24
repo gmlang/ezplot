@@ -6,13 +6,14 @@
 #' @param df A data frame with named x, y, and group columns.
 #' @param xvar String, name of the x-axis column.
 #' @param yvar String, name of the y-axis column.
+#' @param gpvar String, name of the group column. 
 #' @param min_space Number, fraction of total data range to use as a minimum gap 
 #'                  between the lines. Default = 0.05.
 #' @param line_gap_scale Number, scale factor when calculating ypos. Default = 1.                         
 #' @return A data frame with an additional ypos column.
 #' 
 #' @seealso \code{\link{slopegraph_data_prep}}
-tufte_sort = function(df, xvar, yvar, min_space=0.05, line_gap_scale = 1) {
+tufte_sort = function(df, xvar, yvar, gpvar, min_space=0.05, line_gap_scale = 1) {
         # change to wide format and order by first numeric column (2nd col)
         tmp = tidyr::spread_(df, xvar, yvar)
         tmp = tmp[order(tmp[, 2]), ]
@@ -29,7 +30,8 @@ tufte_sort = function(df, xvar, yvar, min_space=0.05, line_gap_scale = 1) {
         }
         
         # change back to long format
-        tmp = suppressMessages(tidyr::gather_(tmp, key=xvar, value=yvar))
+        tmp = suppressMessages(tidyr::gather_(tmp, key=xvar, value=yvar,
+                                              gather_cols=names(tmp)[names(tmp)!=gpvar]))
         
         # append yshift column and use it to calculate ypos
         tmp = cbind(tmp, yshift = cumsum(yshift))
@@ -58,14 +60,14 @@ tufte_sort = function(df, xvar, yvar, min_space=0.05, line_gap_scale = 1) {
 #' @param xvar String, name of the x-axis column. 
 #' @param yvar String, name of the y-axis column.
 #' @param gpvar String, name of the group column. 
-#' @param min_space Number, fraction of total data range to use as a minimum gap 
-#'                  between the lines. Default = 0.05.
+#' @param ... other parameters such as min_space, line_gap_scale the function
+#'      tufte_sort() uses.
 #' 
 #' @return A data frame with an additional ypos column.
 #' @export
 #' 
 #' @seealso \code{\link{tufte_sort}}
-slopegraph_data_prep = function(df, xvar, yvar, gpvar, min_space=0.05, ...) {
+slopegraph_data_prep = function(df, xvar, yvar, gpvar, ...) {
         # expand grid to ensure every combination has a defined value
         tmp = expand.grid(unique(df[[xvar]]), unique(df[[gpvar]]), 
                           stringsAsFactors=F)
@@ -74,7 +76,7 @@ slopegraph_data_prep = function(df, xvar, yvar, gpvar, min_space=0.05, ...) {
         df[[yvar]][is.na(df[[yvar]])] = 0 # replace NA by 0
         
         # sort df according to tufte display format and return it
-        tufte_sort(df, xvar, yvar, min_space, ...)
+        tufte_sort(df, xvar, yvar, gpvar, ...)
 }
 
 
