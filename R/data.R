@@ -70,3 +70,12 @@
 #'      \item{value}{survival rates, proportion of patients survived}
 #' }
 "cancer"
+
+#' @title NBA Player Performance Statistics
+#' 
+#' @description 
+#' A dataset containing 21 different performance statistics of 50 NBA players
+#' obtained from flowingdata.com.
+#' 
+#' @format A data frame with 50 rows and 21 columns:
+"nba"
