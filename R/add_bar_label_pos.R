@@ -1,5 +1,5 @@
 #' @title Append two columns of label positions to a data frame.
-#
+#' 
 #' @description
 #' If you need to make a bar chart and label its bars, \code{add_bar_label_pos} 
 #' is your friend. It takes a data frame as input and returns a function that 
