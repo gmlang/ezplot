@@ -87,35 +87,37 @@ mk_distplot = function(df) {
                 if (fillby == "") {
                         xmin = min(df[[xvar]], na.rm = T)
                         xmax = max(df[[xvar]], na.rm = T)
+                        avg = round(mean(df[[xvar]], na.rm=T), 2)
+                        med = median(df[[xvar]], na.rm=T)
                         
                         # add vline at the mean
                         if (add_vline_mean) {
-                                avg = round(mean(df[[xvar]], na.rm=T), 2)
                                 p = p + ggplot2::geom_vline(ggplot2::aes(xintercept = avg,
                                                                          color = "mean"),
                                                             size = 1, linetype = "dashed", 
-                                                            show.legend = T) +
-                                        ggplot2::scale_x_continuous(
-                                                breaks = sort(c(seq(xmin, xmax, length.out=5), avg))
-                                                )
+                                                            show.legend = T) 
+                                        # ggplot2::scale_x_continuous(
+                                        #         breaks = sort(c(seq(xmin, xmax, length.out=5), avg))
+                                        #         )
                         }
                         
                         # add vline at the median
                         if (add_vline_median) {
-                                med = median(df[[xvar]], na.rm=T)
                                 p = p + ggplot2::geom_vline(ggplot2::aes(xintercept = med,
                                                                          color = "median"),
                                                             size = 1, linetype = "dashed",
-                                                            show.legend = T) +
-                                        ggplot2::scale_x_continuous(
-                                                breaks = sort(c(seq(xmin, xmax, length.out=5), med))
-                                                )
+                                                            show.legend = T) 
+                                        # ggplot2::scale_x_continuous(
+                                        #         breaks = sort(c(seq(xmin, xmax, length.out=5), med))
+                                        #         )
                         }
                         
                         # add legend 
                         p = p + ggplot2::scale_colour_manual(name="",
-                                                         values=c("mean"=cb_color("reddish_purple"),
-                                                                  "median"=cb_color("bluish_green"))
+                                                         values=c("mean" = cb_color("reddish_purple"),
+                                                                  "median" = cb_color("bluish_green")),
+                                                         labels=c("mean" = paste("mean:", avg),
+                                                                  "median" = paste("median:", med))
                                                          )
                         
                 } else {
