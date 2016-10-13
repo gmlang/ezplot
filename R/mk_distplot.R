@@ -85,21 +85,39 @@ mk_distplot = function(df) {
                 
                 # add vline at the mean or median
                 if (fillby == "") {
+                        xmin = min(df[[xvar]], na.rm = T)
+                        xmax = max(df[[xvar]], na.rm = T)
+                        
                         # add vline at the mean
                         if (add_vline_mean) {
-                                avg = mean(df[[xvar]], na.rm=T)
-                                p = p + ggplot2::geom_vline(ggplot2::aes_string(xintercept = avg),
-                                                            color = cb_color("reddish_purple"), size = 1,
-                                                            linetype = "dashed")                        
+                                avg = round(mean(df[[xvar]], na.rm=T), 2)
+                                p = p + ggplot2::geom_vline(ggplot2::aes(xintercept = avg,
+                                                                         color = "mean"),
+                                                            size = 1, linetype = "dashed", 
+                                                            show.legend = T) +
+                                        ggplot2::scale_x_continuous(
+                                                breaks = sort(c(seq(xmin, xmax, length.out=5), avg))
+                                                )
                         }
                         
                         # add vline at the median
                         if (add_vline_median) {
                                 med = median(df[[xvar]], na.rm=T)
-                                p = p + ggplot2::geom_vline(ggplot2::aes_string(xintercept = med),
-                                                            color = cb_color("bluish_green"), size = 1,
-                                                            linetype = "dashed")
+                                p = p + ggplot2::geom_vline(ggplot2::aes(xintercept = med,
+                                                                         color = "median"),
+                                                            size = 1, linetype = "dashed",
+                                                            show.legend = T) +
+                                        ggplot2::scale_x_continuous(
+                                                breaks = sort(c(seq(xmin, xmax, length.out=5), med))
+                                                )
                         }
+                        
+                        # add legend 
+                        p = p + ggplot2::scale_colour_manual(name="",
+                                                         values=c("mean"=cb_color("reddish_purple"),
+                                                                  "median"=cb_color("bluish_green"))
+                                                         )
+                        
                 } else {
                         lst = split(df[,c(xvar, fillby)], df[[fillby]])
                         
@@ -109,7 +127,8 @@ mk_distplot = function(df) {
                                 means = data.frame(level=names(avg), avg)
                                 p = p + ggplot2::geom_vline(data=means, 
                                                             ggplot2::aes(xintercept = avg, color=level),
-                                                            linetype = "dashed", size=1)   
+                                                            linetype = "dashed", size=1,
+                                                            show.legend = T)
                         }
                         
                         # add vline at the median
@@ -118,7 +137,8 @@ mk_distplot = function(df) {
                                 medians = data.frame(level=names(med), med)
                                 p = p + ggplot2::geom_vline(data=medians, 
                                                             ggplot2::aes(xintercept = med, color=level),
-                                                            linetype = "dashed", size=1)   
+                                                            linetype = "dashed", size=1,
+                                                            show.legend = T)
                         }
                 }
                 p
