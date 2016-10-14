@@ -88,7 +88,7 @@ mk_distplot = function(df) {
                         xmin = min(df[[xvar]], na.rm = T)
                         xmax = max(df[[xvar]], na.rm = T)
                         avg = round(mean(df[[xvar]], na.rm=T), 2)
-                        med = median(df[[xvar]], na.rm=T)
+                        med = round(median(df[[xvar]], na.rm=T), 2)
                         
                         # add vline at the mean
                         if (add_vline_mean) {

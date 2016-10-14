@@ -23,14 +23,14 @@ plt_dist = function(dat) {
                 sky_blue = cb_color("sky_blue")
                 blue = cb_color("blue")
                 par(mfrow = c(2,2))
-                hist(dat[, varname], main="Histogram", xlab=varname, 
+                hist(dat[[varname]], main="Histogram", xlab=varname, 
                      probability=TRUE, ylab="density", col=sky_blue)
-                boxplot(dat[,varname], outchar=TRUE, main="Boxplot", cex=0.7, 
+                boxplot(dat[[varname]], outchar=TRUE, main="Boxplot", cex=0.7, 
                         xlab=varname, ylab="value", col=sky_blue)
-                plot(density(dat[,varname]), type="l", main="Density Plot", lwd=3,
+                plot(density(dat[[varname]]), type="l", main="Density Plot", lwd=3,
                      xlab=varname, ylab="density", col=blue)
-                qqnorm(dat[,varname], col=blue, cex=0.9, pch=19)
-                qqline(dat[,varname])
+                qqnorm(dat[[varname]], col=blue, cex=0.9, pch=19)
+                qqline(dat[[varname]])
                 par(mfrow=c(1,1))
         }
 }
