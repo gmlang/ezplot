@@ -68,6 +68,9 @@ scale_axis = function(p, axis="y", scale=NULL, pct_max=1, pct_jump=0.2) {
         r_log = "_continuous(trans = scales::log_trans(),
                 breaks = scales::trans_breaks('log', function(x) exp(x)),
                 labels = scales::trans_format('log', scales::math_format('e'^.x)))"
+        r_log1p = "_continuous(trans = scales::log1p_trans(),
+                breaks = scales::trans_breaks('log1p', function(x) exp(x+1)),
+                labels = scales::trans_format('log1p', scales::math_format('e'^.x)))"
         r_log2 = "_continuous(trans = scales::log2_trans(),
                 breaks = scales::trans_breaks('log2', function(x) 2^x),
                 labels = scales::trans_format('log2', scales::math_format('2'^.x)))"
@@ -80,6 +83,7 @@ scale_axis = function(p, axis="y", scale=NULL, pct_max=1, pct_jump=0.2) {
         pexpr = switch(scale,
                        comma = scale_axis_helper(l, axis, r_comma),
                        log = scale_axis_helper(l, axis, r_log),
+                       log1p = scale_axis_helper(l, axis, r_log1p),
                        log2 = scale_axis_helper(l, axis, r_log2),
                        log10 = scale_axis_helper(l, axis, r_log10),
                        pct = scale_axis_helper(l, axis, r_pct))
