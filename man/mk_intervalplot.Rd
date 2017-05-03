@@ -41,4 +41,3 @@ p = plt("year_cat", "fit", ymin_var="lwr", ymax_var="upr",
         ylab="log10(boxoffice) prediction")
 p
 }
-

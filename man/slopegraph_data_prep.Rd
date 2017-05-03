@@ -37,4 +37,3 @@ the heavy lifting of the above mentioned tufte slopegraph format.
 \seealso{
 \code{\link{tufte_sort}}
 }
-

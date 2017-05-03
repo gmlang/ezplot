@@ -13,4 +13,3 @@ A dataset containing 21 different performance statistics of 50 NBA players
 obtained from flowingdata.com.
 }
 \keyword{datasets}
-

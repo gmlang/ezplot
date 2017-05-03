@@ -85,4 +85,3 @@ scale_axis(p, "y", scale="pct", pct_jump=0.1)
 \code{\link{scale_axis}} for adding different scales to the axes. 
          \code{\link{add_bar_label_pos}} for adding label positions to the input data frame.
 }
-

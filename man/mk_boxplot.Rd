@@ -58,4 +58,3 @@ print(p)
 p = plt("year_cat", "budget", ylab="boxoffice", legend=F)
 scale_axis(p, scale="log10")
 }
-

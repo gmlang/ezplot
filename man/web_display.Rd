@@ -57,4 +57,3 @@ web_display(p, legend_pos="top")
 web_display(p, legend_pos="none")
 web_display(p, legend_pos="bottom")
 }
-

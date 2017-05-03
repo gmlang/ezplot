@@ -29,4 +29,3 @@ fix_missing_99(c(-99, -999))
 fix_missing_999(c(-99, -999))
 fix_missing_char(c("missing", "male", "female"))
 }
-

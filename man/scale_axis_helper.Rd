@@ -23,4 +23,3 @@ and returns an expression to be evaluated by \code{scale_axis}.
 \seealso{
 \code{\link{scale_axis}}.
 }
-

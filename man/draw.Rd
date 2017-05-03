@@ -19,4 +19,3 @@ the corresponding ggplot2 expression to be evaluated by \code{mk_distplot}.
 \seealso{
 \code{\link{mk_distplot}}.
 }
-

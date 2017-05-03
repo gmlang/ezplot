@@ -38,4 +38,3 @@ plt("year", "rev", fillby = "cat")
 \seealso{
 \code{\link{scale_axis}} for adding different scales to the axes.
 }
-

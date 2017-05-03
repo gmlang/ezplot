@@ -33,4 +33,3 @@ f("year_cat", "make_money")
 \seealso{
 \code{\link{mk_barplot}}.
 }
-

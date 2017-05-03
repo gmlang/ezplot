@@ -57,4 +57,3 @@ p = scale_axis(p, "x", scale = "log2")
 p = scale_axis(p, "y", scale = "log2")
 print(p)
 }
-

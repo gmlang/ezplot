@@ -52,4 +52,3 @@ f("Sepal.Length", fillby="Species", type="density", add_vline_median=T)
 \seealso{
 \code{\link{draw}}.
 }
-

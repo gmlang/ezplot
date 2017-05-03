@@ -45,4 +45,3 @@ cb_color("cb_grey")
 # get a palette of 8 colors with black
 cb_color("cb_black")
 }
-

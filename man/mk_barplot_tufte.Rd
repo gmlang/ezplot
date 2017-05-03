@@ -35,4 +35,3 @@ mk_barplot_tufte(df)
 Inspired and modified after Lukasz Piwek's article at 
 http://motioninsocial.com/tufte/#minimal-barchart
 }
-

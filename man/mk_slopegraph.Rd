@@ -29,4 +29,3 @@ mk_slopegraph(df)
 Inspired and modified after James Keirstead's original script at 
 https://github.com/jkeirstead/r-slopegraph
 }
-

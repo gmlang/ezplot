@@ -45,4 +45,3 @@ plt = mk_lineplot(btbo_by_year)
 title = "Annual Total Budget and Boxoffice from 1913 to 2014"
 plt("year", "tot", "type", ylab="total amount ($billion)", main=title)
 }
-

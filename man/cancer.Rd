@@ -17,4 +17,3 @@ cancer
 A dataset containing the survival rates of 24 different cancers.
 }
 \keyword{datasets}
-

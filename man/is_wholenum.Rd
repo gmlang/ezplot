@@ -17,4 +17,3 @@ is_wholenum(-99)
 is_wholenum(1)
 is_wholenum(0.23)
 }
-

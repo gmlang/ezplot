@@ -17,4 +17,3 @@ A dataset containing the Boxoffices/Budget ratio from 1913 to 2014 of
 5944 films obtained from IMDB.com.
 }
 \keyword{datasets}
-

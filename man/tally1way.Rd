@@ -32,4 +32,3 @@ f("make_money")
 \seealso{
 \code{\link{mk_barplot}}.
 }
-

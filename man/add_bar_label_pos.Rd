@@ -46,4 +46,3 @@ data
 \seealso{
 \code{\link{mk_barplot}}.
 }
-

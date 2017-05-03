@@ -58,4 +58,3 @@ scale_axis(p, "y", scale="pct", pct_jump=0.3)
 \seealso{
 \code{\link{scale_axis_helper}}.
 }
-

@@ -26,4 +26,3 @@ f = plt_dist(cars)
 f("speed")
 f("dist")
 }
-

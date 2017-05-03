@@ -13,4 +13,3 @@ A dataset containing internet ads revenue from 2000 to 2014.
 Source: iab.net
 }
 \keyword{datasets}
-

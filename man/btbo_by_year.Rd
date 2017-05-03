@@ -19,4 +19,3 @@ A dataset containing the ggregated annual Budget and Boxoffice of
 5944 films beween 1913 and 2014 from IMDB.com.
 }
 \keyword{datasets}
-

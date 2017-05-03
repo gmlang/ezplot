@@ -28,4 +28,3 @@ mk_heatmap(df)
 \code{mk_heatmap} takes a data frame as input and returns a function that 
 can be used to make heat maps using variables in the data frame.
 }
-

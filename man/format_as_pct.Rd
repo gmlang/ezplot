@@ -22,4 +22,3 @@ character vector of the original numeric vector in percent format.
 a = c(0.84984554, 0.18, 0.9273, 0.128294)
 format_as_pct(a)
 }
-

@@ -29,4 +29,3 @@ A dataset containing the budgets, boxoffices, ratings and other attributes of
 5944 films from 1913 to 2014 obtained from IMDB.com.
 }
 \keyword{datasets}
-

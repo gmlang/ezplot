@@ -43,4 +43,3 @@ rotate_axis_text(p)
 rotate_axis_text(p, 90)
 rotate_axis_text(p, 90, 30, vjust_x=-2)
 }
-

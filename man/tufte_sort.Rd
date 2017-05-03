@@ -30,4 +30,3 @@ https://github.com/jkeirstead/r-slopegraph
 \seealso{
 \code{\link{slopegraph_data_prep}}
 }
-
