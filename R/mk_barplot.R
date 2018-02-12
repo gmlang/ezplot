@@ -117,8 +117,8 @@ mk_barplot = function(df) {
                                 p = p + ggplot2::geom_text(data=df, 
                                                            ggplot2::aes_string(
                                                                    label = "bar_label",
-                                                                   y = barlab_pos,
-                                                                   ymax = paste0("max(", barlab, ")")), 
+                                                                   y = barlab_pos
+                                                                   ), 
                                                            size = barlab_size,
                                                            position=ggplot2::position_dodge(width=dodged_lab_w))
                 }
