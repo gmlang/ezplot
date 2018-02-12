@@ -61,7 +61,8 @@ scale_axis_helper = function(lstr, axis, rstr) {
 #' barplt = mk_barplot(df)
 #' p = barplt("student", "pct", fillby="student", legend=F)
 #' scale_axis(p, "y", scale="pct", pct_jump=0.3)
-scale_axis = function(p, axis="y", scale=NULL, pct_max=1, pct_jump=0.2) {
+scale_axis = function(p, axis="y", scale=NULL, pct_min=0, pct_max=1, 
+                      pct_jump=0.2) {
         x = deparse(substitute(p))
         l = paste(x, "=", x, "+ ggplot2::scale_")
         r_comma = "_continuous(labels = scales::comma)"
@@ -76,8 +77,9 @@ scale_axis = function(p, axis="y", scale=NULL, pct_max=1, pct_jump=0.2) {
                 labels = scales::trans_format('log2', scales::math_format('2'^.x)))"
         r_log10 = "_log10(breaks = scales::trans_breaks('log10', function(x) 10^x),
                 labels = scales::trans_format('log10', scales::math_format(10^.x)))"
-        r_pct = paste0("_continuous(labels = scales::percent, limits = c(0, ",
-                       pct_max, "), breaks = seq(0,", pct_max, ",", pct_jump, "))")        
+        r_pct = paste0("_continuous(labels = scales::percent, limits = c(",
+                       pct_min, pct_max, "), breaks = seq(",
+                       pct_min, pct_max, ",", pct_jump, "))")        
         
         pexpr = NULL # need this for it to work when using knitr       
         pexpr = switch(scale,

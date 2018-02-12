@@ -4,7 +4,8 @@
 \alias{scale_axis}
 \title{Use a different scale on either axis of a ggplot2 plot.}
 \usage{
-scale_axis(p, axis = "y", scale = NULL, pct_max = 1, pct_jump = 0.2)
+scale_axis(p, axis = "y", scale = NULL, pct_min = 0, pct_max = 1,
+  pct_jump = 0.2)
 }
 \arguments{
 \item{p}{A ggplot2 object.}
