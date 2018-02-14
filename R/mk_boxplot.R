@@ -6,7 +6,7 @@
 #' 
 #' @param df A data frame.
 #' @return 
-#' \code{function(xvar, yvar, xlab="", ylab="", main="", legend=TRUE, 
+#' \code{function(xvar, yvar, fillby="1", xlab="", ylab="", main="", legend=TRUE, 
 #'                add_label=TRUE, lab_at_top=TRUE, vpos=0)}
 #' \itemize{
 #'      \item xvar     :  string, x variable.
@@ -50,12 +50,12 @@
 #' p = plt("year_cat", "budget", ylab="boxoffice", legend=F)
 #' scale_axis(p, scale="log10")
 mk_boxplot = function(df) {
-        function(xvar, yvar, xlab="", ylab="", main="", legend=T, 
+        function(xvar, yvar, fillby="1", xlab="", ylab="", main="", legend=T, 
                  add_label=T, lab_at_top=T, vpos=0) {
                 xvar_type = class(df[[xvar]])
                 # make plot
                 if (xvar_type %in% c("character", "factor"))
-                        p = ggplot2::ggplot(df, ggplot2::aes_string(x=xvar, y=yvar, fill=xvar)) +
+                        p = ggplot2::ggplot(df, ggplot2::aes_string(x=xvar, y=yvar, fill=fillby)) +
                                 ggplot2::geom_boxplot() +
                                 ggplot2::stat_summary(fun.y=mean, geom="point", shape=5, size=2)
                 else

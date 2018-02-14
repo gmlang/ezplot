@@ -10,7 +10,7 @@ mk_boxplot(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(xvar, yvar, xlab="", ylab="", main="", legend=TRUE, 
+\code{function(xvar, yvar, fillby="1", xlab="", ylab="", main="", legend=TRUE, 
                add_label=TRUE, lab_at_top=TRUE, vpos=0)}
 \itemize{
      \item xvar     :  string, x variable.
