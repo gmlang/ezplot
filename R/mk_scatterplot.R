@@ -10,8 +10,8 @@
 #' @param df A data frame.
 #' @return
 #' \code{function(xvar, yvar, fillby = "1", alpha = 0.8, pt_size = 1,
-#'                jitter = FALSE, font_size = 14, xlab = xvar, ylab = yvar,
-#'                ...)}
+#'                jitter = FALSE, font_size = 14, add_cnt_to_legend = T,
+#'                xlab = xvar, ylab = yvar, subtitle = NULL, ...)}
 #' \itemize{
 #'      \item xvar     :  string, name of a categorical variable for x-axis.
 #'      \item yvar     :  string, name of a continuous variable for y-axis.
@@ -26,8 +26,13 @@
 #'                        overlapping points. Default = FALSE.
 #'      \item font_size:  overall font size. Default = 14. The font size of the
 #'                        axes and legend text is a fraction of this value.
+#'      \item add_cnt_to_legend: logical, when TRUE (default), it will show
+#'                    the number of non-missing records for each level in the
+#'                    fillby var.
 #'      \item xlab     :  string, the x-axis label. Default is xvar.
 #'      \item ylab     :  string, the y-axis label. Default is yvar.
+#'      \item subtitle: string, subtitle of the plot. When NULL (default),
+#'                      it'll show the number of records without any missings.
 #'      \item ...      :  other arguments for ggplot2::labs(), for example,
 #'                        title, subtitle, caption and etc.
 #' }
@@ -38,9 +43,15 @@
 #' plt = mk_scatterplot(films)
 #'
 #' plt("budget", "boxoffice")
+#' plt("budget", "boxoffice", subtitle = "Total number of observations: 5,944")
 #' plt("budget", "boxoffice", fillby = "year_cat",  alpha = 0.2,
 #'     title = "Boxoffice and Budget are related, try log scales",
 #'     caption = "Source: IMDB")
+#' plt("budget", "boxoffice", fillby = "year_cat",  alpha = 0.2,
+#'      add_cnt_to_legend = F,
+#'      title = "Boxoffice and Budget are related, try log scales",
+#'      caption = "Source: IMDB")
+#'
 #' plt("year", "rating", font_size = 10, xlab = NULL)
 #' plt("year", "rating", jitter = T, xlab = NULL)
 #'
@@ -56,14 +67,16 @@
 #' plt("V1", "V3")
 mk_scatterplot = function(df) {
         function(xvar, yvar, fillby = "1", alpha = 0.8, pt_size = 1,
-                 jitter = FALSE, font_size = 14, xlab = xvar, ylab = yvar,
-                 ...) {
+                 jitter = FALSE, font_size = 14, add_cnt_to_legend = T,
+                 xlab = xvar, ylab = yvar, subtitle = NULL, ...) {
 
                 # --- Prep  --- #
 
-                # set subtitle
-                tot_n = nrow(na.omit(df[c(xvar, yvar)]))
-                subtit = paste("n =", tot_n)
+                if (is.null(subtitle)) {
+                        # use number of non-NA rows as subtitle
+                        tot_n = nrow(na.omit(df[c(xvar, yvar)]))
+                        subtitle = paste("n =", tot_n)
+                }
 
 
                 # --- Main Plot --- #
@@ -94,23 +107,32 @@ mk_scatterplot = function(df) {
                 if (fillby == 1) { # remove legend
                         p = p + ggplot2::guides(color = FALSE, fill = FALSE)
                 } else {
-                        # count number of non-NA observations for each level of
-                        #       the fillby variable, and make new legend label
-                        #       to include those counts
-                        subdf = na.omit(df[c(xvar, yvar, fillby)])
-                        tmp = dplyr::count(subdf, !!as.name(fillby))
-                        legend_txt = paste(tmp[[fillby]],
-                                           paste0("(n = ", tmp$n, ")"))
 
-                        # use colorblind-friendly colors and update legend label
-                        p = p + ggthemes::scale_color_tableau(
-                                "Color Blind", labels = legend_txt)
+                        if (add_cnt_to_legend) {
+                                # count number of non-NA observations for each
+                                #   level of the fillby variable, and make
+                                #   new legend label to include these counts
+                                subdf = na.omit(df[c(xvar, yvar, fillby)])
+                                tmp = dplyr::count(subdf, !!as.name(fillby))
+                                legend_txt = paste(tmp[[fillby]],
+                                                   paste0("(n = ", tmp$n, ")"))
+
+                                # use colorblind-friendly colors and update
+                                #       legend label
+                                p = p + ggthemes::scale_color_tableau(
+                                        "Color Blind", labels = legend_txt)
+                        } else {
+                                # use colorblind-friendly colors
+                                p = p + ggthemes::scale_color_tableau(
+                                        "Color Blind")
+                        }
+
                 }
 
 
                 # --- Customize Theme --- #
 
-                p + ggplot2::labs(x = xlab, y = ylab, subtitle = subtit, ...) +
+                p + ggplot2::labs(x = xlab, y = ylab, subtitle = subtitle, ...) +
                         cowplot::theme_cowplot(font_size = font_size) +
                         ggplot2::theme(
                                 aspect.ratio = 1,

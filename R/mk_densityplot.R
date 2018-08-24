@@ -34,7 +34,7 @@
 #' plt("Sepal.Length", "Species", font_size = 9)
 #'
 #' plt = mk_densityplot(films)
-#' plt("rating", "year_cat")
+#' plt("rating", "year_cat", subtitle = "Density Plot")
 #' plt("rating", "year") # throws error when yvar is integer or numeric
 #'
 #' p = plt("boxoffice", "year_cat")
@@ -79,8 +79,7 @@ mk_densityplot = function(df) {
 
                 # --- Customize Theme --- #
 
-                p + ggplot2::labs(x = xlab, y = ylab, subtitle = "Density plot",
-                                  ...) +
+                p + ggplot2::labs(x = xlab, y = ylab, ...) +
                         cowplot::theme_cowplot(font_size = font_size) +
                         ggplot2::theme(
                                 aspect.ratio = 1,

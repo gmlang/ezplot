@@ -42,7 +42,7 @@ plt("Sepal.Length", "Species")
 plt("Sepal.Length", "Species", font_size = 9)
 
 plt = mk_densityplot(films)
-plt("rating", "year_cat")
+plt("rating", "year_cat", subtitle = "Density Plot")
 plt("rating", "year") # throws error when yvar is integer or numeric
 
 p = plt("boxoffice", "year_cat")

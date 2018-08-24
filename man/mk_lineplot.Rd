@@ -11,7 +11,8 @@ mk_lineplot(df)
 }
 \value{
 \code{function(xvar, yvar, fillby = "1", pt_size = 1, linew = 0.7,
-               font_size = 14, xlab = xvar, ylab = yvar, ...)}
+               font_size = 14, add_cnt_to_legend = TRUE,
+               xlab = xvar, ylab = yvar, subtitle = NULL, ...)}
 \itemize{
      \item xvar   : string, name of a continuous or categorical variable for
                     x-axis.
@@ -23,8 +24,13 @@ mk_lineplot(df)
      \item linew  : number, width of the line. Default = 0.7.
      \item font_size: overall font size. Default = 14. The font size of the
                       axes and legend text is a fraction of this value.
+     \item add_cnt_to_legend: logical, when TRUE (default), it will show
+                   the number of non-missing records for each level in the
+                   fillby var.
      \item xlab   : string, the x-axis label. Default is xvar.
      \item ylab   : string, the y-axis label. Default is yvar.
+     \item subtitle: string, subtitle of the plot. When NULL (default),
+                     it'll show the number of records without any missings.
      \item ...    : other arguments for ggplot2::labs(), for example,
                     title, subtitle, caption and etc.
 }
@@ -52,11 +58,13 @@ scale_axis(p, scale = "sqrt")
 plt = mk_lineplot(btbo_by_year)
 title = "Annual Total Budget and Boxoffice from 1913 to 2014"
 p = plt("year", "tot", fillby = "type", font_size = 10, xlab = NULL,
-        ylab = "total amount ($billion)", title = title)
+        ylab = "total amount ($billion)", title = title,
+        add_cnt_to_legend = F)
 scale_axis(p, scale = "log")
 
 library(dplyr)
 plt = mk_lineplot(films \%>\% group_by(year_cat) \%>\%
                   summarise(avg_boxoffice = mean(boxoffice)))
-plt("year_cat", "avg_boxoffice", xlab = NULL, ylab = "Mean Boxoffice")
+plt("year_cat", "avg_boxoffice", xlab = NULL, ylab = "Mean Boxoffice",
+    subtitle = "haha")
 }

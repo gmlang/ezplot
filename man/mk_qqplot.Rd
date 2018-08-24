@@ -13,7 +13,7 @@ mk_qqplot(df)
 \code{function(varname, dist = "norm", dparams = list(), detrend = TRUE,
                ci_band_type = "pointwise", font_size = 14,
                xlab = "Theoretical Quantiles", ylab = "Sample Quantiles",
-               ...)}
+               subtitle = NULL, ...)}
 \itemize{
      \item varname : string, name of a continuous variable. We're interested
                      in comparing its empirical distribution with a
@@ -47,6 +47,8 @@ mk_qqplot(df)
                       axes and legend text is a fraction of this value.
      \item xlab    : string, the x-axis label. Default is "Theoretical Quantiles".
      \item ylab    : string, the y-axis label. Default is "Sample Quantiles".
+     \item subtitle: string, subtitle of the plot. When NULL (default),
+                     it'll show a smart subtitle based on other input values.
      \item ...     : other arguments for ggplot2::labs(), for example,
                      title, subtitle, caption and etc.
 }

@@ -9,7 +9,7 @@
 #' \code{function(varname, dist = "norm", dparams = list(), detrend = TRUE,
 #'                ci_band_type = "pointwise", font_size = 14,
 #'                xlab = "Theoretical Quantiles", ylab = "Sample Quantiles",
-#'                ...)}
+#'                subtitle = NULL, ...)}
 #' \itemize{
 #'      \item varname : string, name of a continuous variable. We're interested
 #'                      in comparing its empirical distribution with a
@@ -43,6 +43,8 @@
 #'                       axes and legend text is a fraction of this value.
 #'      \item xlab    : string, the x-axis label. Default is "Theoretical Quantiles".
 #'      \item ylab    : string, the y-axis label. Default is "Sample Quantiles".
+#'      \item subtitle: string, subtitle of the plot. When NULL (default),
+#'                      it'll show a smart subtitle based on other input values.
 #'      \item ...     : other arguments for ggplot2::labs(), for example,
 #'                      title, subtitle, caption and etc.
 #' }
@@ -80,7 +82,7 @@ mk_qqplot = function(df) {
         function(varname, dist = "norm", dparams = list(), detrend = TRUE,
                  ci_band_type = "pointwise", font_size = 14,
                  xlab = "Theoretical Quantiles", ylab = "Sample Quantiles",
-                 ...) {
+                 subtitle = NULL, ...) {
 
                 # --- Prep  --- #
 
@@ -99,8 +101,8 @@ mk_qqplot = function(df) {
                         plot_type = paste("Detrended", plot_type)
                 }
 
-                # make subtitle
-                subtit = paste(plot_type, ssize)
+                # make default subtitle
+                if (is.null(subtitle)) subtitle = paste(plot_type, ssize)
 
 
                 # --- Main Plot --- #
@@ -130,7 +132,7 @@ mk_qqplot = function(df) {
 
                 # --- Customize Theme --- #
 
-                p + ggplot2::labs(x = xlab, y = ylab, subtitle = subtit, ...) +
+                p + ggplot2::labs(x = xlab, y = ylab, subtitle = subtitle, ...) +
                         cowplot::theme_cowplot(font_size = font_size) +
                         ggplot2::theme(
                                 aspect.ratio = 1,
