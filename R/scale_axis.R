@@ -41,10 +41,13 @@ scale_axis_helper = function(lstr, axis, rstr) {
 #'        "log10", "log2", "sqrt", or "exp".
 #'         It specifies which scale to use. Default = "comma".
 #' @param pct_min A number. The min value when using percent scale.
-#'         Default = 0.
-#' @param pct_max A number. The max value when using percent scale. Default = 1.
-#' @param pct_jump A number. The jump hight between ticks when using percent
-#'         scale. Default = 0.2.
+#'         When NULL (default), it'll use the min value of y.
+#' @param pct_max A number. The max value when using percent scale.
+#'         When NULL (default), it'll use the max value of y.
+#' @param pct_jump A number. The equal distance between ticks when using
+#'         percent scale. When NULL (default), it takes the value of
+#'         (pct_max - pct_min) / 10, and this will break the y-axis
+#'         into 10 pieces by placing 11 ticks on it.
 #'
 #' @return A ggplot2 object with the new scale applied to the input axis.
 #' @export
@@ -62,8 +65,11 @@ scale_axis_helper = function(lstr, axis, rstr) {
 #' p = plt("IQ", "score", pt_size = 2)
 #' print(p)
 #' scale_axis(p, scale = "pct")
+#' scale_axis(p, scale = "pct", pct_min = 0)
+#' scale_axis(p, scale = "pct", pct_max = 1.2)
+#' scale_axis(p, scale = "pct", pct_jump = 0.05)
+#' scale_axis(p, scale = "pct", pct_min = 0, pct_max = 1)
 #' scale_axis(p, scale = "pct", pct_max = 1, pct_min = 0, pct_jump = 0.2)
-#'
 #'
 #' plt = mk_scatterplot(films)
 #' p = plt("boxoffice", "budget", alpha=0.5, pt_size=1)
@@ -92,11 +98,18 @@ scale_axis = function(p, axis = "y", scale = "comma",
         r_comma = "_continuous(labels = scales::comma)"
         r_dollar = "_continuous(labels = scales::dollar)"
 
-        r_pct = "_continuous(labels = scales::percent)"
-        if (all(!is.null(c(pct_min, pct_max, pct_jump))))
+        if (scale == "pct") {
+                var = p$labels[[axis]]
+                val_min = min(p$data[[var]], na.rm = T)
+                val_max = max(p$data[[var]], na.rm = T)
+                pct_min = ifelse(is.null(pct_min), val_min, pct_min)
+                pct_max = ifelse(is.null(pct_max), val_max, pct_max)
+                pct_jump = ifelse(is.null(pct_jump), (pct_max - pct_min) / 10,
+                                  pct_jump)
                 r_pct = paste0("_continuous(labels = scales::percent, limits = c(",
-                                pct_min, ",", pct_max, "), breaks = seq(",
-                                pct_min, ",", pct_max, ",", pct_jump, "))")
+                               pct_min, ",", pct_max, "), breaks = seq(",
+                               pct_min, ",", pct_max, ",", pct_jump, "))")
+        }
 
         r_log = "_continuous(trans = scales::log_trans(),
                 breaks = scales::trans_breaks('log', function(x) exp(x), n=10),

@@ -17,12 +17,15 @@ scale_axis(p, axis = "y", scale = "comma", pct_min = NULL,
  It specifies which scale to use. Default = "comma".}
 
 \item{pct_min}{A number. The min value when using percent scale.
-Default = 0.}
+When NULL (default), it'll use the min value of y.}
 
-\item{pct_max}{A number. The max value when using percent scale. Default = 1.}
+\item{pct_max}{A number. The max value when using percent scale.
+When NULL (default), it'll use the max value of y.}
 
-\item{pct_jump}{A number. The jump hight between ticks when using percent
-scale. Default = 0.2.}
+\item{pct_jump}{A number. The equal distance between ticks when using
+percent scale. When NULL (default), it takes the value of
+(pct_max - pct_min) / 10, and this will break the y-axis
+into 10 pieces by placing 11 ticks on it.}
 }
 \value{
 A ggplot2 object with the new scale applied to the input axis.
@@ -57,8 +60,11 @@ plt = mk_scatterplot(df)
 p = plt("IQ", "score", pt_size = 2)
 print(p)
 scale_axis(p, scale = "pct")
+scale_axis(p, scale = "pct", pct_min = 0)
+scale_axis(p, scale = "pct", pct_max = 1.2)
+scale_axis(p, scale = "pct", pct_jump = 0.05)
+scale_axis(p, scale = "pct", pct_min = 0, pct_max = 1)
 scale_axis(p, scale = "pct", pct_max = 1, pct_min = 0, pct_jump = 0.2)
-
 
 plt = mk_scatterplot(films)
 p = plt("boxoffice", "budget", alpha=0.5, pt_size=1)
