@@ -11,7 +11,7 @@
 * ~~qqplot~~
 * ~~test normality by placing histogram and qq normal plot side by side~~
 * ~~heatmap~~
-
+* allow user to choose to dipslay retangular shap instead of square
 
 
 ### horizontal diverging bar plot
