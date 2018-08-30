@@ -95,8 +95,9 @@ mk_barplot_yvar = function(df) {
                                         limits = c(0, 1),
                                         breaks = seq(0, 1, 0.2)) +
                                 ggplot2::geom_text(
-                                        ggplot2::aes(!!as.name(xvar), pct,
-                                                     label = formattable::percent(pct, label_decimals)),
+                                        ggplot2::aes(!!as.name(xvar), !!as.name(yvar),
+                                                     label = formattable::percent(!!as.name(yvar),
+                                                                                  label_decimals)),
                                         data = df_label,
                                         vjust = -0.5,
                                         size = label_size)
