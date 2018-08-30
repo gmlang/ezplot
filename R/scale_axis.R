@@ -100,15 +100,15 @@ scale_axis = function(p, axis = "y", scale = "comma",
 
         if (scale == "pct") {
                 var = p$labels[[axis]]
-                val_min = min(p$data[[var]], na.rm = T)
+                val_min = min(c(0, p$data[[var]]), na.rm = T)
                 val_max = max(p$data[[var]], na.rm = T)
                 pct_min = ifelse(is.null(pct_min), val_min, pct_min)
                 pct_max = ifelse(is.null(pct_max), val_max, pct_max)
                 pct_jump = ifelse(is.null(pct_jump), (pct_max - pct_min) / 10,
                                   pct_jump)
                 r_pct = paste0("_continuous(labels = scales::percent, limits = c(",
-                               pct_min, ",", pct_max, "), breaks = seq(",
-                               pct_min, ",", pct_max, ",", pct_jump, "))")
+                               pct_min, ",", pct_max+pct_jump, "), breaks = seq(",
+                               pct_min, ",", pct_max+pct_jump, ",", pct_jump, "))")
         }
 
         r_log = "_continuous(trans = scales::log_trans(),

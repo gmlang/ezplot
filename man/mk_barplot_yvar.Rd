@@ -13,8 +13,8 @@ mk_barplot_yvar(df)
 }
 \value{
 \code{function(xvar, yvar, fillby = "1", xorder = "alphanumeric",
-               y_as_pct = FALSE, label_decimals = 2, label_size = 3,
-               font_size = 14, xlab = NULL, ylab = yvar, ...)}
+               y_as_pct = FALSE, label_as_pct = FALSE, label_decimals = 2,
+               label_size = 3, font_size = 14, xlab = NULL, ylab = yvar, ...)}
 \itemize{
      \item xvar     :  string, name of a categorical variable for x-axis.
      \item yvar     :  string, name of a continuous variable for y-axis.
@@ -26,6 +26,8 @@ mk_barplot_yvar(df)
                        Default = "alphanumeric".
      \item y_as_pct :  logical, if TRUE, format y-axis and bar labels as %;
                        otherwise, format them as comma. Default is FALSE.
+     \item label_as_pct: logical, if TRUE, format bar labels as %; otherwise,
+                       format them as comma. Default is FALSE.
      \item label_decimals: integer, the number of decimal points shown
                        on the bar labels. Default = 2.
      \item label_size: integer, size of bar label text. Default = 3.
@@ -61,14 +63,15 @@ g("mpaa", "boxoffice", xorder = "descend", font_size = 10,
 g("mpaa", "bo_bt_ratio", fillby = "year_cat", label_decimals = 1)
 
 library(dplyr)
-df = films \%>\% count(mpaa) \%>\% mutate(pct = n / sum(n))
+df = films \%>\% count(mpaa, made_money) \%>\% mutate(pct = n / sum(n))
 g = mk_barplot_yvar(df)
 g("mpaa", "pct")
-g("mpaa", "pct", label_decimals = 1)
+g("mpaa", "pct", label_decimals = 1, xorder = "descend")
 g("mpaa", "pct", y_as_pct = T, font_size = 9)
-g("mpaa", "pct", y_as_pct = T, label_decimals = 3)
-g("mpaa", "pct", y_as_pct = T, xorder = "descend")
+g("mpaa", "pct", y_as_pct = T, label_as_pct = T, label_decimals = 3)
 g("mpaa", "n", ylab = "Count")
+g("mpaa", "pct", fillby = "made_money", label_as_pct = T)
+g("mpaa", "pct", fillby = "made_money", y_as_pct = T, label_as_pct = T)
 }
 \seealso{
 \code{\link{scale_axis}} for adding different scales to the y-axis.
