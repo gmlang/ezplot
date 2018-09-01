@@ -64,18 +64,17 @@ test_normality = function(df) {
                 # --- Main Plot --- #
 
                 p1 = draw_hist(varname, binw = binw, bins = bins,
-                               font_size = font_size,
-                               title = ifelse(is.null(title_hist),
-                                              paste("Empirical Distribution of",
-                                                    varname),
-                                              title_hist)) +
+                               font_size = font_size) %>%
+                        add_labs(title = ifelse(is.null(title_hist),
+                                                paste("Empirical Distribution of", varname),
+                                                title_hist)
+                                 ) +
                         ggplot2::theme(legend.position = "top")
 
                 p2 = draw_qqplot(varname, detrend = detrend,
-                                 font_size = font_size,
-                                 title = ifelse(is.null(title_qqplot),
-                                                paste("Is", varname,
-                                                      "normally distributed?"))
+                                 font_size = font_size) %>%
+                        add_labs(title = ifelse(is.null(title_qqplot),
+                                                paste("Is", varname, "normally distributed?"))
                                  )
 
                 cowplot::plot_grid(p1, p2)

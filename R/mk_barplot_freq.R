@@ -17,8 +17,7 @@
 #'
 #' @return
 #' \code{function(xvar, fillby = "1", xorder = "alphanumeric", show_pct = FALSE,
-#'                label_size = 3, font_size = 14, xlab = NULL, ylab = "Count",
-#'                ...)}
+#'                label_size = 3, font_size = 14)}
 #' \itemize{
 #'      \item xvar     :  string, name of a categorical variable for x-axis.
 #'      \item fillby   :  string, name of a different categorical variable for
@@ -32,10 +31,6 @@
 #'      \item label_size: integer, size of bar label text. Default is 3.
 #'      \item font_size:  overall font size. Default = 14. The font size of the
 #'                        axes and legend text is a fraction of this value.
-#'      \item xlab     :  string, the x-axis label. Default is NULL.
-#'      \item ylab     :  string, the y-axis label. Default is "Count".
-#'      \item ...      :  other arguments for ggplot2::labs(), for example,
-#'                        title, subtitle, caption and etc.
 #' }
 #'
 #' @seealso \code{\link{scale_axis}} for adding different scales to the y-axis.
@@ -67,14 +62,13 @@
 #' f("cut", show_pct = T, fillby = "clarity") +
 #'     ggplot2::theme(legend.position = "bottom") +
 #'     ggplot2::guides(fill = ggplot2::guide_legend(nrow = 1))
-#' f("cut", fillby = "clarity", font_size = 11,
-#'   title = "Fuel efficiency generally decreases with engine size",
-#'   subtitle = "Two seaters (sports cars) are an exception ...",
-#'   caption = "Data from fueleconomy.gov")
+#' p = f("cut", fillby = "clarity", font_size = 11)
+#' add_labs(p, title = "Fuel efficiency generally decreases with engine size",
+#'          subtitle = "Two seaters (sports cars) are an exception ...",
+#'          caption = "Data from fueleconomy.gov")
 mk_barplot_freq = function(df) {
         function(xvar, fillby = "1", xorder = "alphanumeric", show_pct = FALSE,
-                 label_size = 3, font_size = 14, xlab = NULL, ylab = "Count",
-                 ...) {
+                 label_size = 3, font_size = 14) {
 
                 # --- Prep --- #
 
@@ -129,7 +123,7 @@ mk_barplot_freq = function(df) {
                                         limits = c(0, 1),
                                         breaks = seq(0, 1, 0.2))
 
-                        ylab = NULL # because y is percent, no need to label so
+                        ylab = "Relative Frequency (%)"
 
                 } else { # show count on y-axis, and this is default
                         p = p + ggplot2::geom_bar(position = "dodge", alpha = 0.8) +
@@ -148,6 +142,8 @@ mk_barplot_freq = function(df) {
                                         data = df_label, size = label_size,
                                         position = ggplot2::position_dodge(width = 0.9)
                                         )
+
+                        ylab = "Frequency"
                 }
 
 
@@ -162,14 +158,13 @@ mk_barplot_freq = function(df) {
 
                 # --- Customize Theme --- #
 
-                p + ggplot2::labs(x = xlab, y = ylab, ...) +
+                p + ggplot2::labs(x = NULL, y = ylab) +
                         cowplot::theme_cowplot(font_size = font_size) +
                         ggplot2::theme(
-                                aspect.ratio = 1,
-
                                 # rm gray background in header when faceting
                                 strip.background = ggplot2::element_blank()
-                                )
+                        )
+
         }
 }
 

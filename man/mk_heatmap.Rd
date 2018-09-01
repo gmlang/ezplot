@@ -11,7 +11,7 @@ mk_heatmap(df)
 }
 \value{
 \code{function(xvar, yvar, fillby, facet_by = NULL, facet_ncol = 1,
-               palette = "C", font_size = 8, xlab = NULL, ylab = NULL, ...)}
+               palette = "C", font_size = 8)}
 \itemize{
      \item xvar   : string, name of a categorical variable for x-axis.
      \item yvar   : string, name of another categorical variable for y-axis.
@@ -25,10 +25,6 @@ mk_heatmap(df)
                        are "A", "B", "C" (default), "D" and "E".
      \item font_size : overall font size. Default = 8. The font size of the
                        axes and legend text is a fraction of this value.
-     \item xlab   : string, the x-axis label. Default is NULL.
-     \item ylab   : string, the y-axis label. Default is NULL.
-     \item ...    : other arguments for ggplot2::labs(), for example,
-                    title, subtitle, caption and etc.
 }
 }
 \description{
@@ -42,22 +38,23 @@ library(dplyr)
 # --- single heatmap --- #
 
 f = mk_heatmap(films \%>\% count(made_money, year_cat))
-f("year_cat", "made_money", fillby = "n", ylab = "Made money?")
+f("year_cat", "made_money", fillby = "n") \%>\% add_labs(ylab = "Made money?")
 
 df = films \%>\% group_by(action, year_cat) \%>\%
      summarise(avg_rating = mean(rating))
 f = mk_heatmap(df)
-f("year_cat", "action", fillby = "avg_rating", font_size = 14, palette = "D",
-  ylab = "Is action film?",
-  title = "Average ratings of action vs. non-action films")
+f("year_cat", "action", fillby = "avg_rating", font_size = 14, palette = "D") \%>\%
+        add_labs(ylab = "Is action film?",
+                 title = "Average ratings of action vs. non-action films")
 
 f = mk_heatmap(attacks_all_countries)
-f("hour", "wkday", fillby = "n", font_size = 12, xlab = "nth Hour in a day",
-  title = "Events per weekday & time of day")
+f("hour", "wkday", fillby = "n", font_size = 12) \%>\%
+        add_labs(xlab = "nth Hour in a day",
+                 title = "Events per weekday & time of day")
 
 # --- multiple heatmaps --- #
 
 f = mk_heatmap(attacks_by_country)
-f("hour", "wkday", fillby ="n", facet_by = "country", facet_ncol = 2,
-  title = "Events per weekday & time of day by country")
+f("hour", "wkday", fillby ="n", facet_by = "country", facet_ncol = 2) \%>\%
+        add_labs(title = "Events per weekday & time of day by country")
 }

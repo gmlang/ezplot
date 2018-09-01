@@ -10,8 +10,7 @@
 #' @param df A data frame.
 #' @return
 #' \code{function(xvar, yvar, fillby = "1", alpha = 0.8, pt_size = 1,
-#'                jitter = FALSE, font_size = 14, add_cnt_to_legend = T,
-#'                xlab = xvar, ylab = yvar, subtitle = NULL, ...)}
+#'                jitter = FALSE, font_size = 14, add_cnt_to_legend = T)}
 #' \itemize{
 #'      \item xvar     :  string, name of a categorical variable for x-axis.
 #'      \item yvar     :  string, name of a continuous variable for y-axis.
@@ -29,12 +28,6 @@
 #'      \item add_cnt_to_legend: logical, when TRUE (default), it will show
 #'                    the number of non-missing records for each level in the
 #'                    fillby var.
-#'      \item xlab     :  string, the x-axis label. Default is xvar.
-#'      \item ylab     :  string, the y-axis label. Default is yvar.
-#'      \item subtitle: string, subtitle of the plot. When NULL (default),
-#'                      it'll show the number of records without any missings.
-#'      \item ...      :  other arguments for ggplot2::labs(), for example,
-#'                        title, subtitle, caption and etc.
 #' }
 #'
 #' @export
@@ -43,17 +36,17 @@
 #' plt = mk_scatterplot(films)
 #'
 #' plt("budget", "boxoffice")
-#' plt("budget", "boxoffice", subtitle = "Total number of observations: 5,944")
-#' plt("budget", "boxoffice", fillby = "year_cat",  alpha = 0.2,
-#'     title = "Boxoffice and Budget are related, try log scales",
-#'     caption = "Source: IMDB")
-#' plt("budget", "boxoffice", fillby = "year_cat",  alpha = 0.2,
-#'      add_cnt_to_legend = F,
-#'      title = "Boxoffice and Budget are related, try log scales",
-#'      caption = "Source: IMDB")
+#' plt("budget", "boxoffice") %>% add_labs(subtitle = "Total number of observations: 5,944")
+#' plt("budget", "boxoffice", fillby = "year_cat", alpha = 0.2) %>%
+#'     add_labs(title = "Boxoffice and Budget are related, try log scales",
+#'              caption = "Source: IMDB")
 #'
-#' plt("year", "rating", font_size = 10, xlab = NULL)
-#' plt("year", "rating", jitter = T, xlab = NULL)
+#' plt("budget", "boxoffice", fillby = "year_cat", alpha = 0.2, add_cnt_to_legend = F) %>%
+#'     add_labs(title = "Boxoffice and Budget are related, try log scales",
+#'              caption = "Source: IMDB")
+#'
+#' plt("year", "rating", font_size = 10) %>% add_labs(xlab = NULL)
+#' plt("year", "rating", jitter = T) %>% add_labs(xlab = NULL)
 #'
 #' df = data.frame(V1 = c(56, 123, 546, 26, 62, 6, NaN, NA, NA, 15),
 #'                 V2 = c(21, 231, 5, 5, 32, NA, 1, 231, 5, 200),
@@ -67,16 +60,13 @@
 #' plt("V1", "V3")
 mk_scatterplot = function(df) {
         function(xvar, yvar, fillby = "1", alpha = 0.8, pt_size = 1,
-                 jitter = FALSE, font_size = 14, add_cnt_to_legend = T,
-                 xlab = xvar, ylab = yvar, subtitle = NULL, ...) {
+                 jitter = FALSE, font_size = 14, add_cnt_to_legend = T) {
 
                 # --- Prep  --- #
 
-                if (is.null(subtitle)) {
-                        # use number of non-NA rows as subtitle
-                        tot_n = nrow(na.omit(df[c(xvar, yvar)]))
-                        subtitle = paste("n =", tot_n)
-                }
+                # count total number of non-NA rows and use it as subtitle
+                tot_n = nrow(na.omit(df[c(xvar, yvar)]))
+                subtit = paste("n =", tot_n)
 
 
                 # --- Main Plot --- #
@@ -132,13 +122,12 @@ mk_scatterplot = function(df) {
 
                 # --- Customize Theme --- #
 
-                p + ggplot2::labs(x = xlab, y = ylab, subtitle = subtitle, ...) +
+                p + ggplot2::labs(x = xvar, y = yvar, subtitle = subtit) +
                         cowplot::theme_cowplot(font_size = font_size) +
                         ggplot2::theme(
-                                aspect.ratio = 1,
-
                                 # rm gray background in header when faceting
                                 strip.background = ggplot2::element_blank()
-                                )
+                        )
+
         }
 }

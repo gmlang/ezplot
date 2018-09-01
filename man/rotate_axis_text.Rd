@@ -38,10 +38,10 @@ Alex 50')
 
 # draw a barplot
 barplt = mk_barplot(df)
-p = barplt("student", "grade", "student", xlab="Student", ylab="Grade") 
+p = barplt("student", "grade", "student", xlab="Student", ylab="Grade")
 print(p)
 
-# rotate the x-axis tick text 
+# rotate the x-axis tick text
 rotate_axis_text(p)
 rotate_axis_text(p, 90)
 rotate_axis_text(p, 90, 30, vjust_x=-2)

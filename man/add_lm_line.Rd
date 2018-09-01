@@ -8,31 +8,33 @@ add_lm_line(p, alpha = 0.8, linew = 1, eq_xpos = "left",
   eq_ypos = "top", pval_xpos = "right", pval_ypos = "bottom", ...)
 }
 \arguments{
-\item{df}{A data frame.}
+\item{p}{: a ggplot object, must be a scatter plot.}
+
+\item{alpha}{: a number between 0 and 1, transparency level of the best line.
+Smaller value means more transparent. Default = 0.8.}
+
+\item{linew}{: number, width of the line. Default = 1.}
+
+\item{eq_xpos:}{numeric between 0 and 1 or character. x-position of the
+equation label. Default = "left".}
+
+\item{eq_ypos:}{numeric between 0 and 1 or character. y-position of the
+equation label. Default = "top".}
+
+\item{pval_xpos:}{numeric between 0 and 1 or character. x-position of the
+p-value label. Default = "right".}
+
+\item{pval_ypos:}{numeric between 0 and 1 or character. y-position of the
+p-value label. Default = "bottom".}
+
+\item{...:}{other arguments for ggpmisc::stat_poly_eq(). For example,
+coef.digits sets the number of param coef digits,
+rr.digits sets the number of R2 digits,
+label.x.npc and label.y.npc set position of the line equation.}
 }
 \value{
-\code{function(p, alpha = 0.8, linew = 1, eq_xpos = "left", eq_ypos = "top",
-               pval_xpos = "right", pval_ypos = "bottom", ...)}
-\itemize{
-     \item p     : a ggplot object, must be a scatter plot.
-     \item alpha : a number between 0 and 1, transparency level of the
-                   best line. Smaller value means more transparent.
-                   Default = 0.8.
-     \item linew : number, width of the line. Default = 1.
-     \item eq_xpos: numeric between 0 and 1 or character. x-position
-                    of the equation label. Default = "left".
-     \item eq_ypos: numeric between 0 and 1 or character. y-position
-                    of the equation label. Default = "top".
-     \item pval_xpos: numeric between 0 and 1 or character. x-position
-                      of the p-value label. Default = "right".
-     \item pval_ypos: numeric between 0 and 1 or character. y-position
-                      of the p-value label. Default = "bottom".
-     \item ...   : other arguments for ggpmisc::stat_poly_eq(). For example,
-                   coef.digits sets the number of param coef digits,
-                   rr.digits sets the number of R2 digits,
-                   label.x.npc and label.y.npc set the position of the
-                   line equation.
-}
+a ggoplot object with the best line with equation, R-squared and
+        p-value added.
 }
 \description{
 \code{add_lm_line} takes a ggplot object (scatterplot) as input and adds

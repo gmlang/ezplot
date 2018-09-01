@@ -7,9 +7,7 @@
 #' @param df A data frame.
 #' @return
 #' \code{function(varname, dist = "norm", dparams = list(), detrend = TRUE,
-#'                ci_band_type = "pointwise", font_size = 14,
-#'                xlab = "Theoretical Quantiles", ylab = "Sample Quantiles",
-#'                subtitle = NULL, ...)}
+#'                ci_band_type = "pointwise", font_size = 14)}
 #' \itemize{
 #'      \item varname : string, name of a continuous variable. We're interested
 #'                      in comparing its empirical distribution with a
@@ -41,12 +39,6 @@
 #'                       It only works when dist = "norm", and it takes too long to compute for large samples.
 #'      \item font_size: overall font size. Default = 14. The font size of the
 #'                       axes and legend text is a fraction of this value.
-#'      \item xlab    : string, the x-axis label. Default is "Theoretical Quantiles".
-#'      \item ylab    : string, the y-axis label. Default is "Sample Quantiles".
-#'      \item subtitle: string, subtitle of the plot. When NULL (default),
-#'                      it'll show a smart subtitle based on other input values.
-#'      \item ...     : other arguments for ggplot2::labs(), for example,
-#'                      title, subtitle, caption and etc.
 #' }
 #'
 #' @export
@@ -56,33 +48,32 @@
 #' set.seed(0)
 #' smp = data.frame(norm = rnorm(100))
 #' plt = mk_qqplot(smp)
-#' plt("norm") # all points should randomly scatter around y = 0
-#' plt("norm", ci_band_type = "ts", font_size = 10)
-#' plt("norm", detrend = FALSE) # all points should fall inside of CI band
-#' plt("norm", detrend = FALSE, ci_band_type = "ts")
+#' plt("norm") %>% square_fig() # all points should randomly scatter around y = 0
+#' plt("norm", ci_band_type = "ts", font_size = 10) %>% square_fig()
+#' plt("norm", detrend = FALSE) %>% square_fig() # all points should fall inside of CI band
+#' plt("norm", detrend = FALSE, ci_band_type = "ts") %>% square_fig()
 #'
 #' set.seed(23)
 #' smp = data.frame(norm = rnorm(100, mean = 50, sd = 2))
 #' plt = mk_qqplot(smp)
-#' plt("norm") # check if points randomly scatter around y = 0, they should.
-#' plt("norm", detrend = FALSE) # check if most points fall inside of CI band, they should.
+#' plt("norm") %>% square_fig() # check if points randomly scatter around y = 0, they should.
+#' plt("norm", detrend = FALSE) %>% square_fig() # check if most points fall inside of CI band, they should.
 #'
 #' plt = mk_qqplot(airquality)
-#' plt("Ozone", dist = "exp", dparams = list(rate = 0.022),
-#'     title = "The mean ozone levels from the airquality dataset is approximately exponential.",
-#'     caption = "Theoretical Distribution: Exponential with rate 0.022")
-#' plt("Ozone", dist = "exp", dparams = list(rate = 0.022), detrend = F)
+#' plt("Ozone", dist = "exp", dparams = list(rate = 0.022)) %>% square_fig() %>%
+#'     add_labs(title = "The mean ozone levels from the airquality dataset is approximately exponential.",
+#'              caption = "Theoretical Distribution: Exponential with rate 0.022")
+#' plt("Ozone", dist = "exp", dparams = list(rate = 0.022), detrend = F) %>% square_fig()
+#'
 #'
 #' set.seed(2323)
 #' log_bo = sample(log(films$boxoffice), 100)
 #' plt = mk_qqplot(data.frame(log_bo))
-#' plt("log_bo") # if points form a pattern, then not normal. If some points fall outside of CI band, then not normal
-#' plt("log_bo", detrend = F) # if not all points are inside of the blue CI band, the distribution is not normal
+#' plt("log_bo") %>% square_fig() # if points form a pattern, then not normal. If some points fall outside of CI band, then not normal
+#' plt("log_bo", detrend = F) %>% square_fig() # if not all points are inside of the blue CI band, the distribution is not normal
 mk_qqplot = function(df) {
         function(varname, dist = "norm", dparams = list(), detrend = TRUE,
-                 ci_band_type = "pointwise", font_size = 14,
-                 xlab = "Theoretical Quantiles", ylab = "Sample Quantiles",
-                 subtitle = NULL, ...) {
+                 ci_band_type = "pointwise", font_size = 14) {
 
                 # --- Prep  --- #
 
@@ -102,14 +93,13 @@ mk_qqplot = function(df) {
                 }
 
                 # make default subtitle
-                if (is.null(subtitle)) subtitle = paste(plot_type, ssize)
+                subtit = paste(plot_type, ssize)
 
 
                 # --- Main Plot --- #
 
                 p = ggplot2::ggplot(df, ggplot2::aes_string(sample = varname,
                                                             fill = "1"))
-
                 p = p + qqplotr::geom_qq_band(distribution = dist,
                                               detrend = detrend,
                                               dparams = dparams,
@@ -132,14 +122,14 @@ mk_qqplot = function(df) {
 
                 # --- Customize Theme --- #
 
-                p + ggplot2::labs(x = xlab, y = ylab, subtitle = subtitle, ...) +
+                p + ggplot2::labs(x = "Theoretical Quantiles",
+                                  y = "Sample Quantiles",
+                                  subtitle = subtit) +
                         cowplot::theme_cowplot(font_size = font_size) +
                         ggplot2::theme(
-                                aspect.ratio = 1,
-
                                 # rm gray background in header when faceting
                                 strip.background = ggplot2::element_blank()
-                                )
+                        )
 
         }
 }

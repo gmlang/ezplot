@@ -11,8 +11,7 @@
 #' @param df A data frame.
 #' @return
 #' \code{function(xvar, facet_by = NULL, binw = NULL, bins = 30, facet_ncol = 1,
-#'                font_size = 14, add_vline_median = TRUE, add_vline_mean = TRUE,
-#'                xlab = xvar, ylab = "Count", ...)}
+#'                font_size = 14, add_vline_median = TRUE, add_vline_mean = TRUE)}
 #' \itemize{
 #'      \item xvar     : string, name of a continuous variable for x-axis.
 #'      \item facet_by : string, name of a categorical variable for grouping
@@ -34,10 +33,6 @@
 #'                              median of x. Default = TRUE.
 #'      \item add_vline_mean: logical, if TRUE, add a vertical line at the mean
 #'                            of x. Default = TRUE.
-#'      \item xlab     :  string, the x-axis label. Default is xvar.
-#'      \item ylab     :  string, the y-axis label. Default is "Count".
-#'      \item ...      :  other arguments for ggplot2::labs(), for example,
-#'                        title, subtitle, caption and etc.
 #' }
 #' @export
 #' @examples
@@ -45,7 +40,7 @@
 #'
 #' f = mk_histogram(iris)
 #' f("Sepal.Length")
-#' f("Sepal.Length", bins = 100, font_size = 12, xlab = "Sepal Length")
+#' f("Sepal.Length", bins = 100, font_size = 12) %>% add_labs(xlab = "Sepal Length")
 #' f("Sepal.Length", bins = 50, add_vline_mean = F)
 #' f("Sepal.Length", bins = 40, add_vline_median = F)
 #'
@@ -59,8 +54,7 @@
 #' scale_axis(p, "x", scale = "log10")
 mk_histogram = function(df) {
         function(xvar, facet_by = NULL, binw = NULL, bins = 30, facet_ncol = 1,
-                 font_size = 14, add_vline_median = TRUE, add_vline_mean = TRUE,
-                 xlab = xvar, ylab = "Count", ...) {
+                 font_size = 14, add_vline_median = TRUE, add_vline_mean = TRUE) {
 
                 # --- Prep --- #
 
@@ -118,14 +112,13 @@ mk_histogram = function(df) {
 
                 # --- Customize Theme --- #
 
-                p + ggplot2::labs(x = xlab, y = ylab, ...) +
+                p + ggplot2::labs(x = xvar, y = "Frequency") +
                         cowplot::theme_cowplot(font_size = font_size) +
                         ggplot2::theme(
-                                aspect.ratio = 1,
-
                                 # rm gray background in header when faceting
                                 strip.background = ggplot2::element_blank()
-                                )
+                        )
+
         }
 }
 

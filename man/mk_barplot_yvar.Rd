@@ -14,7 +14,7 @@ mk_barplot_yvar(df)
 \value{
 \code{function(xvar, yvar, fillby = "1", xorder = "alphanumeric",
                y_as_pct = FALSE, label_as_pct = FALSE, label_decimals = 2,
-               label_size = 3, font_size = 14, xlab = NULL, ylab = yvar, ...)}
+               label_size = 3, font_size = 14)}
 \itemize{
      \item xvar     :  string, name of a categorical variable for x-axis.
      \item yvar     :  string, name of a continuous variable for y-axis.
@@ -33,10 +33,6 @@ mk_barplot_yvar(df)
      \item label_size: integer, size of bar label text. Default = 3.
      \item font_size : overall font size. Default = 14. The font size of the
                        axes and legend text is a fraction of this value.
-     \item xlab     :  string, the x-axis label. Default is NULL.
-     \item ylab     :  string, the y-axis label. Default is yvar.
-     \item ...      :  other arguments for ggplot2::labs(), for example,
-                       title, subtitle, caption and etc.
 }
 }
 \description{
@@ -54,12 +50,12 @@ ratio (i.e., it's a square). It'll also use color-blind friendly palettes.
 }
 \examples{
 library(ezplot)
-g = mk_barplot_yvar(films)
 
-g("mpaa", "boxoffice", xorder = "descend", font_size = 10,
-  title = "Fuel efficiency generally decreases with engine size",
-  subtitle = "Two seaters (sports cars) are an exception because of ...",
-  caption = "Data from fueleconomy.gov")
+g = mk_barplot_yvar(films)
+p = g("mpaa", "boxoffice", xorder = "descend", font_size = 10)
+add_labs(p, title = "Fuel efficiency generally decreases with engine size",
+         subtitle = "Two seaters (sports cars) are an exception ...",
+         caption = "Data from fueleconomy.gov")
 g("mpaa", "bo_bt_ratio", fillby = "year_cat", label_decimals = 1)
 
 library(dplyr)
@@ -69,7 +65,11 @@ g("mpaa", "pct")
 g("mpaa", "pct", label_decimals = 1, xorder = "descend")
 g("mpaa", "pct", y_as_pct = T, font_size = 9)
 g("mpaa", "pct", y_as_pct = T, label_as_pct = T, label_decimals = 3)
-g("mpaa", "n", ylab = "Count")
+g("mpaa", "pct", y_as_pct = T, label_as_pct = T, label_decimals = 1) \%>\%
+   add_labs(ylab = NULL,
+            title = "There're more R rated films than NC-17, PG and PG-13 combined.",
+            subtitle = "Although a substantial portion of the films have mpaa rating info missing.",
+            caption = "data were scrapped from imdb.com in 2010")
 g("mpaa", "pct", fillby = "made_money", label_as_pct = T)
 g("mpaa", "pct", fillby = "made_money", y_as_pct = T, label_as_pct = T)
 }

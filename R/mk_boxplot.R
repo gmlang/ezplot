@@ -10,7 +10,7 @@
 #' @param df A data frame.
 #' @return
 #' \code{function(xvar, yvar, fillby = "1", notched = FALSE, label_size = 3,
-#'                font_size = 14, xlab = NULL, ylab = yvar, ...)}
+#'                font_size = 14)}
 #' \itemize{
 #'      \item xvar     :  string, name of a categorical variable for x-axis.
 #'      \item yvar     :  string, name of a continuous variable for y-axis.
@@ -22,10 +22,6 @@
 #'      \item label_size: integer, size of bar label text. Default = 3.
 #'      \item font_size : overall font size. Default = 14. The font size of the
 #'                        axes and legend text is a fraction of this value.
-#'      \item xlab     :  string, the x-axis label. Default is NULL.
-#'      \item ylab     :  string, the y-axis label. Default is yvar.
-#'      \item ...      :  other arguments for ggplot2::labs(), for example,
-#'                        title, subtitle, caption and etc.
 #' }
 #' @export
 #' @examples
@@ -42,8 +38,7 @@
 #' f("year", "rating", notched = T)
 #'
 #' f = mk_boxplot(ggplot2::mpg)
-#' f("class", "hwy", xlab = "class", font_size = 9)
-#' f("class", "hwy", fillby = "drv")
+#' f("class", "hwy", fillby = "drv", font_size = 9) %>% add_labs(xlab = "class")
 #'
 #' f("year", "cty", fillby = "drv") # throws error because "year" is integer
 #' mpg = ggplot2::mpg
@@ -54,10 +49,10 @@
 #' df = data.frame(x = rep(c("A", "B"), 5),
 #'                 y = c(56, 123, 546, 26, 62, 6, NaN, NA, NA, 15))
 #' f = mk_boxplot(df)
-#' f("x", "y")
+#' f("x", "y") %>% add_labs(title = "Demo of title", subtitle = "demo of subtitle", caption = "fake data")
 mk_boxplot = function(df) {
         function(xvar, yvar, fillby = "1", notched = FALSE, label_size = 3,
-                 font_size = 14, xlab = NULL, ylab = yvar, ...) {
+                 font_size = 14) {
 
                 # --- Prep --- #
 
@@ -109,13 +104,12 @@ mk_boxplot = function(df) {
 
                 # --- Customize Theme --- #
 
-                p + ggplot2::labs(x = xlab, y = ylab, ...) +
+                p + ggplot2::labs(x = NULL, y = yvar) +
                         cowplot::theme_cowplot(font_size = font_size) +
                         ggplot2::theme(
-                                aspect.ratio = 1,
-
                                 # rm gray background in header when faceting
                                 strip.background = ggplot2::element_blank()
-                                )
+                        )
+
         }
 }

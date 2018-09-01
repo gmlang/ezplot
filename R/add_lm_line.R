@@ -9,30 +9,25 @@
 #' If the input scatterplot object has 1+ colored points, it will add 1+ lines
 #' with each line corresponding to a color.
 #'
-#' @param df A data frame.
-#' @return
-#' \code{function(p, alpha = 0.8, linew = 1, eq_xpos = "left", eq_ypos = "top",
-#'                pval_xpos = "right", pval_ypos = "bottom", ...)}
-#' \itemize{
-#'      \item p     : a ggplot object, must be a scatter plot.
-#'      \item alpha : a number between 0 and 1, transparency level of the
-#'                    best line. Smaller value means more transparent.
-#'                    Default = 0.8.
-#'      \item linew : number, width of the line. Default = 1.
-#'      \item eq_xpos: numeric between 0 and 1 or character. x-position
-#'                     of the equation label. Default = "left".
-#'      \item eq_ypos: numeric between 0 and 1 or character. y-position
-#'                     of the equation label. Default = "top".
-#'      \item pval_xpos: numeric between 0 and 1 or character. x-position
-#'                       of the p-value label. Default = "right".
-#'      \item pval_ypos: numeric between 0 and 1 or character. y-position
-#'                       of the p-value label. Default = "bottom".
-#'      \item ...   : other arguments for ggpmisc::stat_poly_eq(). For example,
-#'                    coef.digits sets the number of param coef digits,
-#'                    rr.digits sets the number of R2 digits,
-#'                    label.x.npc and label.y.npc set the position of the
-#'                    line equation.
-#' }
+#' @param p : a ggplot object, must be a scatter plot.
+#' @param alpha : a number between 0 and 1, transparency level of the best line.
+#'                Smaller value means more transparent. Default = 0.8.
+#' @param linew : number, width of the line. Default = 1.
+#' @param eq_xpos: numeric between 0 and 1 or character. x-position of the
+#'                 equation label. Default = "left".
+#' @param eq_ypos: numeric between 0 and 1 or character. y-position of the
+#'                 equation label. Default = "top".
+#' @param pval_xpos: numeric between 0 and 1 or character. x-position of the
+#'                   p-value label. Default = "right".
+#' @param pval_ypos: numeric between 0 and 1 or character. y-position of the
+#'                   p-value label. Default = "bottom".
+#' @param ...: other arguments for ggpmisc::stat_poly_eq(). For example,
+#'             coef.digits sets the number of param coef digits,
+#'             rr.digits sets the number of R2 digits,
+#'             label.x.npc and label.y.npc set position of the line equation.
+#'
+#' @return a ggoplot object with the best line with equation, R-squared and
+#'         p-value added.
 #'
 #' @export
 #' @examples

@@ -13,8 +13,7 @@ mk_barplot_freq(df)
 }
 \value{
 \code{function(xvar, fillby = "1", xorder = "alphanumeric", show_pct = FALSE,
-               label_size = 3, font_size = 14, xlab = NULL, ylab = "Count",
-               ...)}
+               label_size = 3, font_size = 14)}
 \itemize{
      \item xvar     :  string, name of a categorical variable for x-axis.
      \item fillby   :  string, name of a different categorical variable for
@@ -28,10 +27,6 @@ mk_barplot_freq(df)
      \item label_size: integer, size of bar label text. Default is 3.
      \item font_size:  overall font size. Default = 14. The font size of the
                        axes and legend text is a fraction of this value.
-     \item xlab     :  string, the x-axis label. Default is NULL.
-     \item ylab     :  string, the y-axis label. Default is "Count".
-     \item ...      :  other arguments for ggplot2::labs(), for example,
-                       title, subtitle, caption and etc.
 }
 }
 \description{
@@ -72,10 +67,10 @@ f("cut", show_pct = T, font_size = 9)
 f("cut", show_pct = T, fillby = "clarity") +
     ggplot2::theme(legend.position = "bottom") +
     ggplot2::guides(fill = ggplot2::guide_legend(nrow = 1))
-f("cut", fillby = "clarity", font_size = 11,
-  title = "Fuel efficiency generally decreases with engine size",
-  subtitle = "Two seaters (sports cars) are an exception ...",
-  caption = "Data from fueleconomy.gov")
+p = f("cut", fillby = "clarity", font_size = 11)
+add_labs(p, title = "Fuel efficiency generally decreases with engine size",
+         subtitle = "Two seaters (sports cars) are an exception ...",
+         caption = "Data from fueleconomy.gov")
 }
 \seealso{
 \code{\link{scale_axis}} for adding different scales to the y-axis.

@@ -11,8 +11,7 @@ mk_densityplot(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(xvar, yvar, cut_tail = 0.005, font_size = 14,
-               xlab = xvar, ylab = NULL, ...)}
+\code{function(xvar, yvar, cut_tail = 0.005, font_size = 14)}
 \itemize{
      \item xvar : string, name of a continuous variable for x-axis.
      \item yvar : string, name of a categorical variable for y-axis. It's
@@ -24,10 +23,6 @@ mk_densityplot(df)
                       Default = 0.005, so 0.5% or below are removed.
      \item font_size: overall font size. Default = 14. The font size of the
                       axes and legend text is a fraction of this value.
-     \item xlab     : string, the x-axis label. Default is xvar.
-     \item ylab     : string, the y-axis label. Default is NULL.
-     \item ...      : other arguments for ggplot2::labs(), for example,
-                      title, subtitle, caption and etc.
 }
 }
 \description{
@@ -42,7 +37,7 @@ plt("Sepal.Length", "Species")
 plt("Sepal.Length", "Species", font_size = 9)
 
 plt = mk_densityplot(films)
-plt("rating", "year_cat", subtitle = "Density Plot")
+plt("rating", "year_cat") \%>\% add_labs(subtitle = "Density Plot")
 plt("rating", "year") # throws error when yvar is integer or numeric
 
 p = plt("boxoffice", "year_cat")
@@ -52,6 +47,7 @@ p = plt("bo_bt_ratio", "year_cat", font_size = 10)
 scale_axis(p, "x", scale = "log10")
 p = plt("bo_bt_ratio", "year_cat", cut_tail = 10^-4)
 scale_axis(p, "x", scale = "log10")
-p = plt("bo_bt_ratio", "year_cat", cut_tail = 10^-1.65, xlab = "Boxoffice / Budget Ratio")
+p = plt("bo_bt_ratio", "year_cat", cut_tail = 10^-1.65) \%>\%
+        add_labs(xlab = "Boxoffice / Budget Ratio")
 scale_axis(p, "x", scale = "log10")
 }

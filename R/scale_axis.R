@@ -142,6 +142,5 @@ scale_axis = function(p, axis = "y", scale = "comma",
                        sqrt = scale_axis_helper(l, axis, r_sqrt),
                        exp = scale_axis_helper(l, axis, r_exp)
                        )
-        p = eval(pexpr)
-        p
+        eval(pexpr)
 }

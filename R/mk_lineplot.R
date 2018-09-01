@@ -12,8 +12,7 @@
 #' @param df A data frame.
 #' @return
 #' \code{function(xvar, yvar, fillby = "1", pt_size = 1, linew = 0.7,
-#'                font_size = 14, add_cnt_to_legend = TRUE,
-#'                xlab = xvar, ylab = yvar, subtitle = NULL, ...)}
+#'                font_size = 14, add_cnt_to_legend = TRUE)}
 #' \itemize{
 #'      \item xvar   : string, name of a continuous or categorical variable for
 #'                     x-axis.
@@ -28,12 +27,6 @@
 #'      \item add_cnt_to_legend: logical, when TRUE (default), it will show
 #'                    the number of non-missing records for each level in the
 #'                    fillby var.
-#'      \item xlab   : string, the x-axis label. Default is xvar.
-#'      \item ylab   : string, the y-axis label. Default is yvar.
-#'      \item subtitle: string, subtitle of the plot. When NULL (default),
-#'                      it'll show the number of records without any missings.
-#'      \item ...    : other arguments for ggplot2::labs(), for example,
-#'                     title, subtitle, caption and etc.
 #' }
 #'
 #' @export
@@ -42,36 +35,34 @@
 #'
 #' # plot boxoffice/budget ratio over the years
 #' plt = mk_lineplot(bo_bt_ratio_by_year)
-#' title = "Boxoffice/Budget Ratio from 1913 to 2014"
-#' p = plt("year", "bo_bt_ratio", xlab = NULL, ylab="boxoffice/budget ratio",
-#'         title = title, caption = "data source: IMBD")
-#' scale_axis(p, scale = "sqrt")
+#' p = plt("year", "bo_bt_ratio")
+#' print(p)
+#' add_labs(p, xlab = NULL, ylab = "boxoffice/budget ratio",
+#'          title = "Boxoffice/Budget Ratio from 1913 to 2014",
+#'          caption = "data source: IMBD")
 #'
 #' # plot total budget and boxoffice over the years
 #' plt = mk_lineplot(btbo_by_year)
-#' title = "Annual Total Budget and Boxoffice from 1913 to 2014"
-#' p = plt("year", "tot", fillby = "type", font_size = 10, xlab = NULL,
-#'         ylab = "total amount ($billion)", title = title,
-#'         add_cnt_to_legend = F)
+#' p = plt("year", "tot", fillby = "type", font_size = 10, add_cnt_to_legend = F)
+#' p = add_labs(p, xlab = NULL, ylab = "total amount ($billion)",
+#'              title = "Annual Total Budget and Boxoffice from 1913 to 2014",
+#'              subtitle = NULL)
 #' scale_axis(p, scale = "log")
 #'
 #' library(dplyr)
 #' plt = mk_lineplot(films %>% group_by(year_cat) %>%
 #'                   summarise(avg_boxoffice = mean(boxoffice)))
-#' plt("year_cat", "avg_boxoffice", xlab = NULL, ylab = "Mean Boxoffice",
-#'     subtitle = "haha")
+#' p = plt("year_cat", "avg_boxoffice")
+#' add_labs(p, xlab = NULL, ylab = "Mean Boxoffice", subtitle = "haha")
 mk_lineplot = function(df) {
         function(xvar, yvar, fillby = "1", pt_size = 1, linew = 0.7,
-                 font_size = 14, add_cnt_to_legend = T,
-                 xlab = xvar, ylab = yvar, subtitle = NULL, ...) {
+                 font_size = 14, add_cnt_to_legend = TRUE) {
 
                 # --- Prep  --- #
 
-                if (is.null(subtitle)) {
-                        # use number of non-NA rows as subtitle
-                        tot_n = nrow(na.omit(df[c(xvar, yvar)]))
-                        subtitle = paste("n =", tot_n)
-                }
+                # count total number of non-NA rows and use it as subtitle
+                tot_n = nrow(na.omit(df[c(xvar, yvar)]))
+                subtit = paste("n =", tot_n)
 
 
                 # --- Main Plot --- #
@@ -125,13 +116,12 @@ mk_lineplot = function(df) {
 
                 # --- Customize Theme --- #
 
-                p + ggplot2::labs(x = xlab, y = ylab, subtitle = subtitle, ...) +
+                p + ggplot2::labs(x = xvar, y = yvar, subtitle = subtit) +
                         cowplot::theme_cowplot(font_size = font_size) +
                         ggplot2::theme(
-                                aspect.ratio = 1,
-
                                 # rm gray background in header when faceting
                                 strip.background = ggplot2::element_blank()
                                 )
+
         }
 }

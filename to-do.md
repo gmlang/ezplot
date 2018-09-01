@@ -11,8 +11,8 @@
 * ~~qqplot~~
 * ~~test normality by placing histogram and qq normal plot side by side~~
 * ~~heatmap~~
-* allow user to choose to dipslay retangular shap instead of square
-* refactor the code for xlab, ylab, title, ... into its own function
+* ~~allow user to choose to dipslay retangular shap instead of square~~
+* ~~refactor the code for xlab, ylab, title, ... into its own function~~
 
 
 ### horizontal diverging bar plot
