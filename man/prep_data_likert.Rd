@@ -4,14 +4,14 @@
 \alias{prep_data_likert}
 \title{Helper function for \code{mk_likertplot}. Not for external use.}
 \usage{
-prep_data_likert(df, xvar, yvar, fillby, fillby_lvls, xorder)
+prep_data_likert(df, xvar, yvar, fillby, fillby_lvls, yorder)
 }
 \arguments{
 \item{df}{data frame of the original data.}
 
-\item{xvar}{string, name of x categorical (character or factor) variable.}
+\item{xvar}{string, name of x numeric variable.}
 
-\item{yvar}{string, name of y numeric variable.}
+\item{yvar}{string, name of y categorical (character or factor) variable.}
 
 \item{fillby}{string, name of a second categorical variable for sub-dividing
 and coloring the bars.}
@@ -19,10 +19,10 @@ and coloring the bars.}
 \item{fillby_lvls}{character vector, levels of the fillby variable that the
 fillby variable should be ordered accordingly.}
 
-\item{xorder}{string, possible values are "alphanumeric", "descend" or
-"ascend". If "alphanumeric", order x levels in alphanumerical order
-along y-axis. If "ascend"/"descend", order x levels in ascending/descending
-order of the sum of absolute y-values along y-axis.}
+\item{yorder}{string, possible values are "alphanumeric", "descend" or
+"ascend". If "alphanumeric", order y levels in alphanumerical order
+along y-axis. If "ascend"/"descend", order y levels in ascending/descending
+order of the sum of absolute x-values along y-axis.}
 }
 \value{
 a list of 2 data frames (df_neg and df_pos), breaks and labels for

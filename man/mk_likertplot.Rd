@@ -12,20 +12,20 @@ mk_likertplot(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(xvar, yvar, fillby, fillby_lvls, xorder = "alphanumeric",
-               y_as_pct = FALSE, font_size = 14)}
+\code{function(xvar, yvar, fillby, fillby_lvls, yorder = "alphanumeric",
+               x_as_pct = FALSE, font_size = 14)}
 \itemize{
-     \item xvar     :  string, name of a categorical variable for x-axis.
-     \item yvar     :  string, name of a continuous variable for y-axis.
+     \item xvar     :  string, name of a continuous variable for x-axis.
+     \item yvar     :  string, name of a categorical variable for y-axis.
      \item fillby   :  string, name of a different categorical variable for
                        sub-dividing and coloring the bars.
      \item fillby_lvls: character vector, levels of fillby variable that the
                         fillby variable should be ordered accordingly.
-     \item xorder   :  string, "alphanumeric", "ascend" or "descend". It
+     \item yorder   :  string, "alphanumeric", "ascend" or "descend". It
                        specifies how categories are ordered on the y-axis.
                        Default = "alphanumeric".
-     \item y_as_pct :  logical, if TRUE, format y-axis and bar labels as %;
-                       otherwise, format them as comma. Default is FALSE.
+     \item x_as_pct :  logical, if TRUE, format x-axis as %;
+                       otherwise, format it as comma. Default is FALSE.
      \item font_size : overall font size. Default = 14. The font size of the
                        axes and legend text is a fraction of this value.
 }
@@ -34,26 +34,25 @@ mk_likertplot(df)
 \code{mk_likertplot} takes a data frame as input and returns a function for
 making likert plots (a.k.a., horizontal diverging bar plots) with any
 categorical variable from the data frame on the y-axis and the value of
-any continuous variable on the x-axis, with bars
-colored by a 2nd categorical fillby variable. The resulting plot can have
-bars ordered from top to bottom in alphanumerical, ascending or descending
-order.
+any continuous variable on the x-axis, with bars colored by a 2nd
+categorical fillby variable. The resulting plot can have bars ordered from
+top to bottom in alphanumerical, ascending or descending order.
 }
 \examples{
 library(tidyr)
 df = ab3 \%>\% gather(opinion, pct, -Country)
 lvls = unique(df$opinion)
 plt = mk_likertplot(df)
-plt("Country", "pct", fillby = "opinion", fillby_lvls = lvls)
-plt("Country", "pct", fillby = "opinion", fillby_lvls = lvls, y_as_pct = T) \%>\%
-    add_labs(ylab = NULL, title = "Confidence estimates for twelve countries' economy")
+plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls)
+plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls, x_as_pct = T) \%>\%
+    add_labs(xlab = NULL, title = "Confidence estimates for twelve countries' economy")
 
 library(dplyr)
 df = films \%>\% count(mpaa, made_money)
 plt = mk_likertplot(df)
-plt("mpaa", "n", fillby = "made_money", fillby_lvls = c("no", "yes"))
-plt("mpaa", "n", fillby = "made_money", fillby_lvls = c("no", "yes"), xorder = "ascend")
-plt("mpaa", "n", fillby = "made_money", fillby_lvls = c("no", "yes"), xorder = "descend")
+plt("n", "mpaa", fillby = "made_money", fillby_lvls = c("no", "yes"))
+plt("n", "mpaa", fillby = "made_money", fillby_lvls = c("no", "yes"), yorder = "ascend")
+plt("n", "mpaa", fillby = "made_money", fillby_lvls = c("no", "yes"), yorder = "descend")
 
 library(dplyr)
 df = data.frame(item = rep(LETTERS[1:5], 4),
@@ -68,12 +67,12 @@ plt = mk_likertplot(df \%>\% filter(slope == "North"))
 
 # works with both negative and positive values
 #     sppInv < 0 when type is "introduced", and > 0 when type is "native"
-plt("item", "sppInv", fillby = "type", fillby_lvls = c("introduced", "native"))
+plt("sppInv", "item", fillby = "type", fillby_lvls = c("introduced", "native"))
 
 # also works with only positive values
 #     spp > 0 always
-plt("item", "spp", fillby = "type", fillby_lvls = c("introduced", "native"), xorder = "ascend")
+plt("spp", "item", fillby = "type", fillby_lvls = c("introduced", "native"))
 }
 \seealso{
-\code{\link{scale_axis}} for adding different scales to the y-axis.
+\code{\link{scale_axis}} for adding different scales to the x-axis.
 }

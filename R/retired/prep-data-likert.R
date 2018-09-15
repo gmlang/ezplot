@@ -8,41 +8,41 @@
 #' bar chart.
 #'
 #' @param df data frame of the original data.
-#' @param xvar string, name of x numeric variable.
-#' @param yvar string, name of y categorical (character or factor) variable.
+#' @param xvar string, name of x categorical (character or factor) variable.
+#' @param yvar string, name of y numeric variable.
 #' @param fillby string, name of a second categorical variable for sub-dividing
 #'   and coloring the bars.
 #' @param fillby_lvls character vector, levels of the fillby variable that the
 #'   fillby variable should be ordered accordingly.
-#' @param yorder string, possible values are "alphanumeric", "descend" or
-#'   "ascend". If "alphanumeric", order y levels in alphanumerical order
-#'   along y-axis. If "ascend"/"descend", order y levels in ascending/descending
-#'   order of the sum of absolute x-values along y-axis.
+#' @param xorder string, possible values are "alphanumeric", "descend" or
+#'   "ascend". If "alphanumeric", order x levels in alphanumerical order
+#'   along y-axis. If "ascend"/"descend", order x levels in ascending/descending
+#'   order of the sum of absolute y-values along y-axis.
 #'
 #' @return a list of 2 data frames (df_neg and df_pos), breaks and labels for
 #' the continuous axis, and palette for coloring the bars (pal).
 #'
 #' @seealso \code{\link{prep_data_likert}}.
-prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls, yorder) {
+prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls, xorder) {
 
-        # --- order y levels
+        # --- order x levels
         #       We're doing things opposite here (for example,
         #       when asked to order them in descending order, we implement in
         #       ascending order) because we're drawing plot horizontally.
         # ---
 
-        if (yorder == "alphanumeric")
-                df[[yvar]] = factor(df[[yvar]],
-                                    sort(unique(df[[yvar]]), decreasing = T)
+        if (xorder == "alphanumeric")
+                df[[xvar]] = factor(df[[xvar]],
+                                    sort(unique(df[[xvar]]), decreasing = T)
                                     )
-        if (yorder == "descend")
-                # reorder y levels in descending order of total abs(x) val
-                df[[yvar]] = reorder(df[[yvar]], abs(df[[xvar]]),
-                                     function(x) sum(x, na.rm = T))
-        if (yorder == "ascend")
-                # reorder y levels in ascending order of total abs(x) val
-                df[[yvar]] = reorder(df[[yvar]], abs(df[[xvar]]),
-                                     function(x) -sum(x, na.rm = T))
+        if (xorder == "descend")
+                # reorder x levels in descending order of total abs(y) val
+                df[[xvar]] = reorder(df[[xvar]], abs(df[[yvar]]),
+                                     function(y) sum(y, na.rm = T))
+        if (xorder == "ascend")
+                # reorder x levels in ascending order of total abs(y) val
+                df[[xvar]] = reorder(df[[xvar]], abs(df[[yvar]]),
+                                     function(y) -sum(y, na.rm = T))
 
         # --- split df into 3 subsets: negative, positive and middle based on
         #     fillby_lvls
@@ -73,54 +73,54 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls, yorder) {
                 #       and neg sets
                 df_mid = dplyr::filter(
                         df, !!as.name(fillby) == fillby_lvls[idx_mid_lvl])
-                df_mid[[xvar]] = df_mid[[xvar]] / 2
+                df_mid[[yvar]] = df_mid[[yvar]] / 2
                 df_neg = rbind(df_neg, df_mid)
                 df_pos = rbind(df_mid, df_pos)
         }
 
 
-        # --- fill x values of missing ylevels with 0 --- #
+        # --- fill y values of missing xlevels with 0 --- #
 
-        ylvls_in_neg_not_pos = setdiff(unique(df_neg[[yvar]]),
-                                       unique(df_pos[[yvar]]))
-        if (length(ylvls_in_neg_not_pos) > 0)
+        xlvls_in_neg_not_pos = setdiff(unique(df_neg[[xvar]]),
+                                       unique(df_pos[[xvar]]))
+        if (length(xlvls_in_neg_not_pos) > 0)
                 df_pos = rbind(
                         df_pos,
-                        setNames(expand.grid(ylvls_in_neg_not_pos,
-                                             fillby_lvls[idx_pos_lvls], 0),
-                                 c(yvar, fillby, xvar))
+                        setNames(expand.grid(xlvls_in_neg_not_pos,
+                                             fillby_lvls[idx_pos_lvls], 0), # alt: NA
+                                 c(xvar, fillby, yvar))
                         )
 
-        ylvls_in_pos_not_neg = setdiff(unique(df_pos[[yvar]]),
-                                       unique(df_neg[[yvar]]))
-        if (length(ylvls_in_pos_not_neg) > 0)
+        xlvls_in_pos_not_neg = setdiff(unique(df_pos[[xvar]]),
+                                       unique(df_neg[[xvar]]))
+        if (length(xlvls_in_pos_not_neg) > 0)
                 df_neg = rbind(
                         df_neg,
-                        setNames(expand.grid(ylvls_in_pos_not_neg,
-                                             fillby_lvls[idx_neg_lvls], 0),
-                                 c(yvar, fillby, xvar))
+                        setNames(expand.grid(xlvls_in_pos_not_neg,
+                                             fillby_lvls[idx_neg_lvls], 0), # alt: NA
+                                 c(xvar, fillby, yvar))
                         )
 
-        # --- change x values of the negative set to negative if not already so
-        #     create limits, breaks and labels for the continuous axis
+        # --- change y values of the negative set to negative if not already so
+        #     create ybreaks and ylabels
         # ---
 
         use_pos_label_for_neg_axis = F
 
-        if (all(df_neg[[xvar]] >= 0)) {
-                df_neg[[xvar]] = -1 * df_neg[[xvar]]
+        if (all(df_neg[[yvar]] >= 0)) {
+                df_neg[[yvar]] = -1 * df_neg[[yvar]]
                 use_pos_label_for_neg_axis = T
         }
 
-        xneg = dplyr::pull(
+        yneg = dplyr::pull(
                 dplyr::summarise(
-                        dplyr::group_by(df_neg, !!as.name(yvar)),
-                        x = sum(!!as.name(xvar))), x)
-        xpos = dplyr::pull(
+                        dplyr::group_by(df_neg, !!as.name(xvar)),
+                        y = sum(!!as.name(yvar))), y)
+        ypos = dplyr::pull(
                 dplyr::summarise(
-                        dplyr::group_by(df_pos, !!as.name(yvar)),
-                        x = sum(!!as.name(xvar))), x)
-        con_axis_breaks = pretty(c(xneg, xpos), n = 10)
+                        dplyr::group_by(df_pos, !!as.name(xvar)),
+                        y = sum(!!as.name(yvar))), y)
+        con_axis_breaks = pretty(c(yneg, ypos), n = 10)
         if (use_pos_label_for_neg_axis) con_axis_labs = abs(con_axis_breaks)
         else con_axis_labs = con_axis_breaks
         con_axis_limits = c(min(con_axis_breaks), max(con_axis_breaks))
@@ -138,9 +138,7 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls, yorder) {
 
 
         # return
-        list(df_neg = df_neg, df_pos = df_pos,
-             con_axis_limits = con_axis_limits,
-             con_axis_breaks = con_axis_breaks,
-             con_axis_labs = con_axis_labs,
+        list(df_neg = df_neg, df_pos = df_pos, con_axis_limits = con_axis_limits,
+             con_axis_breaks = con_axis_breaks, con_axis_labs = con_axis_labs,
              pal = pal)
 }

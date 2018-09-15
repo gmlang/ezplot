@@ -19,10 +19,12 @@
 ### less used 
 * dot plot
 * Dumbbell plot
+* lollipop plot (ggalt)
 
 ### whole pkg
 * ~~add versions of dependent packages~~
 * add plot showing power and sample size relationship
 * add facet_by
+* add horizontal version of plot: [ggstance](https://github.com/lionel-/ggstance)
  
 
