@@ -101,3 +101,16 @@
 #' @format A data frame with 1680 rows and 5 columns:
 #' @source \url{https://github.com/hrbrmstr/facetedcountryheatmaps/tree/master/data}
 "attacks_by_country"
+
+#' @title Arab Baromteter Wave III Survey
+#'
+#' @description
+#' A dataset containing estimates for twelve countries on a Likert-type rating
+#' of confidence in the future economy. Respondents were asked,
+#' "What do you think will be the economic situation in your country during the
+#' next few years (3-5 years) compared to the current situation?"
+#'
+#' Dataset is obtained from http://rnotr.com/likert/ggplot/barometer/likert-plots/.
+#'
+#' @format A data frame with 12 rows and 6 columns:
+"ab3"
