@@ -85,7 +85,7 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls, yorder) {
                                        unique(df_pos[[yvar]]))
         if (length(ylvls_in_neg_not_pos) > 0)
                 df_pos = rbind(
-                        df_pos,
+                        df_pos[c(yvar, fillby, xvar)],
                         setNames(expand.grid(ylvls_in_neg_not_pos,
                                              fillby_lvls[idx_pos_lvls], 0),
                                  c(yvar, fillby, xvar))
@@ -95,7 +95,7 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls, yorder) {
                                        unique(df_neg[[yvar]]))
         if (length(ylvls_in_pos_not_neg) > 0)
                 df_neg = rbind(
-                        df_neg,
+                        df_neg[c(yvar, fillby, xvar)],
                         setNames(expand.grid(ylvls_in_pos_not_neg,
                                              fillby_lvls[idx_neg_lvls], 0),
                                  c(yvar, fillby, xvar))

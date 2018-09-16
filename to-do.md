@@ -14,17 +14,14 @@
 * ~~allow user to choose to dipslay retangular shap instead of square~~
 * ~~refactor the code for xlab, ylab, title, ... into its own function~~
 * ~~Likert plot (aka, diverging stacked barplot)~~
-
-
-### less used 
-* dot plot
-* Dumbbell plot
+* ~~horizontal barplot (ggstance)~~
 * lollipop plot (ggalt)
+* Dumbbell plot (ggalt)
+
 
 ### whole pkg
 * ~~add versions of dependent packages~~
 * add plot showing power and sample size relationship
 * add facet_by
-* add horizontal version of plot: [ggstance](https://github.com/lionel-/ggstance)
  
 

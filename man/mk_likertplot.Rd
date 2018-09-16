@@ -48,11 +48,12 @@ plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls, x_as_pct = T) \%>\
     add_labs(xlab = NULL, title = "Confidence estimates for twelve countries' economy")
 
 library(dplyr)
-df = films \%>\% count(mpaa, made_money)
+df = films \%>\% count(mpaa, made_money) \%>\% group_by(mpaa) \%>\% mutate(pct = n/sum(n)) \%>\% ungroup()
 plt = mk_likertplot(df)
 plt("n", "mpaa", fillby = "made_money", fillby_lvls = c("no", "yes"))
 plt("n", "mpaa", fillby = "made_money", fillby_lvls = c("no", "yes"), yorder = "ascend")
 plt("n", "mpaa", fillby = "made_money", fillby_lvls = c("no", "yes"), yorder = "descend")
+plt("pct", "mpaa", fillby = "made_money", fillby_lvls = c("no", "yes"), x_as_pct = T)
 
 library(dplyr)
 df = data.frame(item = rep(LETTERS[1:5], 4),
