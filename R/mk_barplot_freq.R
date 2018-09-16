@@ -8,10 +8,10 @@
 #' x-axis and frequency counts (or percents) of its levels on the y-axis.
 #' The output function can also produce dodged (for counts) or stacked
 #' (for percents) bar charts when supplied a second categorical variable, a
-#' fillby variable. The resulting bar chart will have bars ordered from tallest
-#' to shortest by default, and labeled with both counts and percents. Plus,
-#' it'll have a clean theme, clear fonts, and a 1:1 aspect ratio (i.e., it'll be
-#' a square). It'll also use color-blind friendly palettes.
+#' fillby variable. The resulting bar chart will have bars ordered by the
+#' alphanumerical order of the x levels and labeled with both counts and
+#' percents by default. Plus, it'll have a clean theme and clean fonts.
+#' It'll also use color-blind friendly palettes.
 #'
 #' @param df A data frame.
 #'
@@ -21,7 +21,7 @@
 #' \itemize{
 #'      \item xvar     :  string, name of a categorical variable for x-axis.
 #'      \item fillby   :  string, name of a different categorical variable for
-#'                        breaking down the counts or percents of each bar.
+#'                        subdividing and coloring the bars.
 #'                        Default is "1", meaning no such variable is supplied.
 #'      \item xorder   :  string, "alphanumeric", "ascend" or "descend". It
 #'                        specifies how categories are ordered on the x-axis.
@@ -29,6 +29,7 @@
 #'      \item show_pct :  logical, if TRUE, show percent on y-axis;
 #'                        otherwise, show count. Default is FALSE.
 #'      \item label_size: integer, size of bar label text. Default is 3.
+#'                        Hide bar labels when its value is 0.
 #'      \item font_size:  overall font size. Default = 14. The font size of the
 #'                        axes and legend text is a fraction of this value.
 #' }
@@ -48,6 +49,8 @@
 #' f("made_money", fillby = "year_cat")
 #' f("made_money", fillby = "year_cat", xorder = "descend")
 #' f("year_cat", fillby = "mpaa")
+#' # use label_size = 0 to remove bar labels
+#' f("year_cat", fillby = "mpaa", label_size = 0)
 #'
 #' f("mpaa", show_pct = T)
 #' f("mpaa", show_pct = T, xorder = "descend")
@@ -100,10 +103,8 @@ mk_barplot_freq = function(df) {
                                                 data = df_label, vjust = -0.5,
                                                 size = label_size) +
                                         ggplot2::geom_text(
-                                                ggplot2::aes(
-                                                        !!as.name(xvar),
-                                                        mid_pos_y,
-                                                        label = scales::comma(n)),
+                                                ggplot2::aes(!!as.name(xvar), mid_pos,
+                                                             label = scales::comma(n)),
                                                 data = df_label,
                                                 size = label_size)
                         } else { # stacked bars of pcts by fillby var
@@ -119,15 +120,15 @@ mk_barplot_freq = function(df) {
                         }
 
                         p = p + ggplot2::scale_y_continuous(
-                                        labels = scales::percent,
                                         limits = c(0, 1),
-                                        breaks = seq(0, 1, 0.2))
+                                        breaks = seq(0, 1, 0.1),
+                                        labels = scales::percent
+                                        )
 
                         ylab = "Relative Frequency (%)"
 
                 } else { # show count on y-axis, and this is default
                         p = p + ggplot2::geom_bar(position = "dodge", alpha = 0.8) +
-                                ggplot2::scale_y_continuous(labels = scales::comma) +
                                 ggplot2::geom_text(
                                         ggplot2::aes(!!as.name(xvar), n,
                                                      label = scales::comma(n)),
@@ -137,11 +138,17 @@ mk_barplot_freq = function(df) {
                                         position = ggplot2::position_dodge(width = 0.9)
                                         ) +
                                 ggplot2::geom_text(
-                                        ggplot2::aes(!!as.name(xvar), mid_pos_y,
+                                        ggplot2::aes(!!as.name(xvar), mid_pos,
                                                      label = formattable::percent(pct, 1)),
                                         data = df_label, size = label_size,
                                         position = ggplot2::position_dodge(width = 0.9)
                                         )
+
+                        p = p + ggplot2::scale_y_continuous(
+                                limits = c(0, max(df_label$n, na.rm = T)),
+                                breaks = pretty(c(0, df_label$n), 10),
+                                labels = scales::comma
+                                )
 
                         ylab = "Frequency"
                 }

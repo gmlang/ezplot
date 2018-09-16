@@ -2,28 +2,27 @@
 % Please edit documentation in R/get_bar_labels_freq.R
 \name{get_bar_labels_freq}
 \alias{get_bar_labels_freq}
-\title{Helper function for \code{barplot_freq}. Not for external use.}
+\title{Helper function for \code{mk_barplot_freq}. Not for external use.}
 \usage{
-get_bar_labels_freq(df, xvar, fillby, show_pct_on_y)
+get_bar_labels_freq(df, var, fillby, show_pct)
 }
 \arguments{
 \item{df}{data frame of the original data where bar charts are made of.}
 
-\item{xvar}{string, name of x categorical variable.}
+\item{var}{string, name of the categorical variable to be counted.}
 
 \item{fillby}{string, name of a second categorical variable used for
-sub-dividing the count or percent and coloring the bars.}
+sub-dividing and coloring the bars.}
 
-\item{show_pct_on_y}{logical, if TRUE, show percent on y-axis. Otherwise,
-show count. Default is FALSE.}
+\item{show_pct}{logical, if TRUE, calculate bars middle position using pct.
+Otherwise, calculate bars middle position using count. Default is FALSE.}
 }
 \value{
 a data frame containing bar labels and their positions
 }
 \description{
-\code{get_bar_labels_freq} takes in the original data frame, the
-x and fillby variable. It returns a data frame of labels and their postions
-for \code{barplot_freq}.
+\code{get_bar_labels_freq} takes in the original data frame, and
+returns a data frame of labels and their postions for \code{mk_barplot_freq}.
 }
 \seealso{
 \code{\link{mk_barplot_freq}}.

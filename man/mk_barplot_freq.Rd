@@ -17,7 +17,7 @@ mk_barplot_freq(df)
 \itemize{
      \item xvar     :  string, name of a categorical variable for x-axis.
      \item fillby   :  string, name of a different categorical variable for
-                       breaking down the counts or percents of each bar.
+                       subdividing and coloring the bars.
                        Default is "1", meaning no such variable is supplied.
      \item xorder   :  string, "alphanumeric", "ascend" or "descend". It
                        specifies how categories are ordered on the x-axis.
@@ -25,6 +25,7 @@ mk_barplot_freq(df)
      \item show_pct :  logical, if TRUE, show percent on y-axis;
                        otherwise, show count. Default is FALSE.
      \item label_size: integer, size of bar label text. Default is 3.
+                       Hide bar labels when its value is 0.
      \item font_size:  overall font size. Default = 14. The font size of the
                        axes and legend text is a fraction of this value.
 }
@@ -35,10 +36,10 @@ making bar charts with any categorical variable from the data frame on the
 x-axis and frequency counts (or percents) of its levels on the y-axis.
 The output function can also produce dodged (for counts) or stacked
 (for percents) bar charts when supplied a second categorical variable, a
-fillby variable. The resulting bar chart will have bars ordered from tallest
-to shortest by default, and labeled with both counts and percents. Plus,
-it'll have a clean theme, clear fonts, and a 1:1 aspect ratio (i.e., it'll be
-a square). It'll also use color-blind friendly palettes.
+fillby variable. The resulting bar chart will have bars ordered by the
+alphanumerical order of the x levels and labeled with both counts and
+percents by default. Plus, it'll have a clean theme and clean fonts.
+It'll also use color-blind friendly palettes.
 }
 \examples{
 library(ezplot)
@@ -53,6 +54,8 @@ f("mpaa", fillby = "made_money")
 f("made_money", fillby = "year_cat")
 f("made_money", fillby = "year_cat", xorder = "descend")
 f("year_cat", fillby = "mpaa")
+# use label_size = 0 to remove bar labels
+f("year_cat", fillby = "mpaa", label_size = 0)
 
 f("mpaa", show_pct = T)
 f("mpaa", show_pct = T, xorder = "descend")

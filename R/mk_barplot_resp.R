@@ -1,42 +1,42 @@
 #' @title Create a function for making publishable ggplot2 barplots, showing
-#' single or cumulative values of a continuous variable by a categorical
-#' variable or 2 categorical variables.
+#' single or cumulative values of a continuous variable by 1 or 2 categorical
+#' variables.
 #'
 #' @description
-#' \code{mk_barplot_yvar} takes a data frame as input and returns a function for
+#' \code{mk_barplot_resp} takes a data frame as input and returns a function for
 #' making bar charts with any categorical variable from the data frame on the
 #' x-axis and the value (or cumulative values) of any continuous variable on
 #' the y-axis. The output function can also produce dodged bar charts when
 #' supplied a second categorical variable, a fillby variable. The resulting
-#' bar chart will have bars ordered from tallest to shortest, and labeled with
-#' the y values. If the y values are decimals, user can specify the number of
+#' bar chart will have bars ordered ordered by the alphanumerical order
+#' of the x levels by default, and labeled with the cumulative y values.
+#' If the y values are decimals, user can specify the number of
 #' decimals to display on the bar labels. If the y values are between 0 and 1,
 #' user can choose to format the y-axis and the bar labels as percent (%). Plus,
-#' the resulting plot will have a clean theme, clear fonts, and a 1:1 aspect
-#' ratio (i.e., it's a square). It'll also use color-blind friendly palettes.
+#' the resulting plot will have a clean theme and clear fonts.
+#' It'll also use color-blind friendly palettes.
 #'
 #' @param df A data frame.
 #'
 #' @return
 #' \code{function(xvar, yvar, fillby = "1", xorder = "alphanumeric",
-#'                y_as_pct = FALSE, label_as_pct = FALSE, label_decimals = 2,
-#'                label_size = 3, font_size = 14)}
+#'                show_pct = FALSE, label_decimals = 2, label_size = 3,
+#'                font_size = 14)}
 #' \itemize{
 #'      \item xvar     :  string, name of a categorical variable for x-axis.
 #'      \item yvar     :  string, name of a continuous variable for y-axis.
 #'      \item fillby   :  string, name of a different categorical variable for
-#'                        breaking down the y values of each bar. Default = "1",
+#'                        subdividing and coloring the bars. Default = "1",
 #'                        meaning no such variable is supplied.
 #'      \item xorder   :  string, "alphanumeric", "ascend" or "descend". It
 #'                        specifies how categories are ordered on the x-axis.
 #'                        Default = "alphanumeric".
-#'      \item y_as_pct :  logical, if TRUE, format y-axis and bar labels as %;
+#'      \item show_pct :  logical, if TRUE, format y-axis and bar labels as %;
 #'                        otherwise, format them as comma. Default is FALSE.
-#'      \item label_as_pct: logical, if TRUE, format bar labels as %; otherwise,
-#'                        format them as comma. Default is FALSE.
 #'      \item label_decimals: integer, the number of decimal points shown
 #'                        on the bar labels. Default = 2.
 #'      \item label_size: integer, size of bar label text. Default = 3.
+#'                        Hide bar labels when its value is 0.
 #'      \item font_size : overall font size. Default = 14. The font size of the
 #'                        axes and legend text is a fraction of this value.
 #' }
@@ -46,31 +46,29 @@
 #' @examples
 #' library(ezplot)
 #'
-#' g = mk_barplot_yvar(films)
+#' g = mk_barplot_resp(films)
 #' p = g("mpaa", "boxoffice", xorder = "descend", font_size = 10)
 #' add_labs(p, title = "Fuel efficiency generally decreases with engine size",
 #'          subtitle = "Two seaters (sports cars) are an exception ...",
 #'          caption = "Data from fueleconomy.gov")
-#' g("mpaa", "bo_bt_ratio", fillby = "year_cat", label_decimals = 1)
+#' # use label_size = 0 to remove labels
+#' g("mpaa", "bo_bt_ratio", fillby = "year_cat", label_decimals = 1, label_size = 0)
 #'
 #' library(dplyr)
 #' df = films %>% count(mpaa, made_money) %>% mutate(pct = n / sum(n))
-#' g = mk_barplot_yvar(df)
+#' g = mk_barplot_resp(df)
 #' g("mpaa", "pct")
 #' g("mpaa", "pct", label_decimals = 1, xorder = "descend")
-#' g("mpaa", "pct", y_as_pct = T, font_size = 9)
-#' g("mpaa", "pct", y_as_pct = T, label_as_pct = T, label_decimals = 3)
-#' g("mpaa", "pct", y_as_pct = T, label_as_pct = T, label_decimals = 1) %>%
+#' g("mpaa", "pct", show_pct = T, label_decimals = 3, font_size = 9) %>%
 #'    add_labs(ylab = NULL,
 #'             title = "There're more R rated films than NC-17, PG and PG-13 combined.",
 #'             subtitle = "Although a substantial portion of the films have mpaa rating info missing.",
 #'             caption = "data were scrapped from imdb.com in 2010")
-#' g("mpaa", "pct", fillby = "made_money", label_as_pct = T)
-#' g("mpaa", "pct", fillby = "made_money", y_as_pct = T, label_as_pct = T)
-mk_barplot_yvar = function(df) {
+#' g("mpaa", "pct", fillby = "made_money", show_pct = T)
+mk_barplot_resp = function(df) {
         function(xvar, yvar, fillby = "1", xorder = "alphanumeric",
-                 y_as_pct = FALSE, label_as_pct = FALSE,
-                 label_decimals = 2, label_size = 3, font_size = 14) {
+                 show_pct = FALSE, label_decimals = 2, label_size = 3,
+                 font_size = 14) {
 
                 # --- Prep --- #
 
@@ -84,7 +82,8 @@ mk_barplot_yvar = function(df) {
                                              function(y) sum(y, na.rm = T))
 
                 # get data frame of bar labels and positions
-                df_label = get_bar_labels_yvar(df, xvar, yvar, fillby)
+                df_label = get_bar_labels_resp(df, xvar, yvar, fillby)
+
 
                 # --- Main Plot --- #
 
@@ -92,20 +91,24 @@ mk_barplot_yvar = function(df) {
                         ggplot2::geom_bar(ggplot2::aes_string(weight = yvar),
                                           position = "dodge", alpha = 0.8)
 
-                if (y_as_pct) {
+                if (show_pct) { # y_as_pct
                         p = p + ggplot2::scale_y_continuous(
-                                        labels = scales::percent,
-                                        limits = c(0, 1),
-                                        breaks = seq(0, 1, 0.1)
-                                        )
+                                limits = c(0, 1),
+                                breaks = seq(0, 1, 0.1),
+                                labels = scales::percent
+                                )
                 } else {
                         p = p + ggplot2::scale_y_continuous(
-                                        labels = scales::comma)
+                                limits = c(min(c(0, df_label[[yvar]]), na.rm=T),
+                                           max(df_label[[yvar]], na.rm = T)),
+                                breaks = pretty(c(0, df_label[[yvar]]), 10),
+                                labels = scales::comma
+                                )
                 }
 
                 # --- Format bar label --- #
 
-                if (label_as_pct) {
+                if (show_pct) { # label_as_pct
                         p = p + ggplot2::geom_text(
                                         ggplot2::aes(!!as.name(xvar),
                                                      !!as.name(yvar),
