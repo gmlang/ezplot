@@ -1,3 +1,9 @@
+# --- This version is a direct implementation using ggplot2.
+#     Con: accept cat var as xvar and con var as yvar, this is not user-friendly
+#          as the output plot will have the con var on x-axis and the cat var on
+#          y-axis. User has to do mental switch: x is y and y is x --- #
+
+
 #' @title Helper function for \code{mk_likertplot}. Not for external use.
 #'
 #' @description \code{prep_data_likert} takes in the original data frame, the

@@ -20,7 +20,7 @@
 #'
 #' @return
 #' \code{function(xvar, yvar, fillby = "1", yorder = "alphanumeric",
-#'                show_pct = FALSE, label_decimals = 2, label_size = 3,
+#'                show_pct = FALSE, label_decimals = 1, label_size = 3,
 #'                font_size = 14)}
 #' \itemize{
 #'      \item xvar     :  string, name of a continuous variable for x-axis.
@@ -34,7 +34,7 @@
 #'      \item show_pct :  logical, if TRUE, format x-axis and bar labels as %;
 #'                        otherwise, format them as comma. Default is FALSE.
 #'      \item label_decimals: integer, the number of decimal points shown
-#'                        on the bar labels. Default = 2.
+#'                        on the bar labels. Default = 1.
 #'      \item label_size: integer, size of bar label text. Default = 3.
 #'                        Hide bar labels when its value is 0.
 #'      \item font_size : overall font size. Default = 14. The font size of the
@@ -43,31 +43,10 @@
 #'
 #' @seealso \code{\link{scale_axis}} for adding different scales to the y-axis.
 #' @export
-#' @examples
-#' library(ezplot)
-#'
-#' g = mk_barploth_resp(films)
-#' p = g("boxoffice", "mpaa", yorder = "descend", font_size = 10)
-#' add_labs(p, title = "Fuel efficiency generally decreases with engine size",
-#'          subtitle = "Two seaters (sports cars) are an exception ...",
-#'          caption = "Data from fueleconomy.gov")
-#' # use label_size = 0 to remove labels
-#' g("bo_bt_ratio", "mpaa", fillby = "year_cat", label_decimals = 1, label_size = 0)
-#'
-#' library(dplyr)
-#' df = films %>% count(mpaa, made_money) %>% mutate(pct = n / sum(n))
-#' g = mk_barploth_resp(df)
-#' g("pct", "mpaa")
-#' g("pct", "mpaa", label_decimals = 1, yorder = "descend")
-#' g("pct", "mpaa", show_pct = T, label_decimals = 3, font_size = 9) %>%
-#'    add_labs(ylab = NULL,
-#'             title = "There're more R rated films than NC-17, PG and PG-13 combined.",
-#'             subtitle = "Although a substantial portion of the films have mpaa rating info missing.",
-#'             caption = "data were scrapped from imdb.com in 2010")
-#' g("pct", "mpaa", fillby = "made_money", show_pct = T)
+#' @examples inst/examples/ex-mk_barploth_resp.R
 mk_barploth_resp = function(df) {
         function(xvar, yvar, fillby = "1", yorder = "alphanumeric",
-                 show_pct = FALSE, label_decimals = 2, label_size = 3,
+                 show_pct = FALSE, label_decimals = 1, label_size = 3,
                  font_size = 14) {
 
                 # --- Prep --- #
@@ -98,63 +77,60 @@ mk_barploth_resp = function(df) {
 
                 # --- Main Plot --- #
 
-                p = ggplot2::ggplot(df, ggplot2::aes_string(
-                                        y = yvar, weight = xvar, fill = fillby)
-                                    ) +
+                p = ggplot(df, aes_string(y = yvar, weight = xvar,
+                                          fill = fillby)) +
                         ggstance::geom_barh(position = "dodgev", alpha = 0.8)
 
                 if (show_pct) {
-                        p = p + ggplot2::scale_x_continuous(
-                                        limits = c(0, 1),
-                                        breaks = seq(0, 1, 0.1),
-                                        labels = scales::percent
-                                        )
+                        # format continuous axis
+                        p = p + scale_x_continuous(expand = c(0, 0),
+                                                   limits = c(0, 1),
+                                                   breaks = seq(0, 1, 0.1),
+                                                   labels = scales::percent
+                                                   )
+
+                        # get bar label text
+                        bar_labels = formattable::percent(df_label[[xvar]],
+                                                          label_decimals)
+
                 } else {
-                        p = p + ggplot2::scale_x_continuous(
-                                        limits = c(min(c(0, df_label[[xvar]])),
-                                                   max(df_label[[xvar]])),
-                                        breaks = pretty(c(0, df_label[[xvar]]),
-                                                        10),
-                                        labels = scales::comma
-                                        )
+                        # format continuous axis
+                        axis_breaks = pretty(c(0, df_label[[xvar]]), 10)
+                        delta_size = axis_breaks[2] - axis_breaks[1]
+                        all_bigger_than1 = all(setdiff(abs(axis_breaks), 0) > 1)
+                        if (all_bigger_than1)
+                                con_axis_labs = scales::comma(axis_breaks)
+                        else con_axis_labs = axis_breaks
+                        p = p + scale_x_continuous(
+                                expand = c(0, 0),
+                                limits = c(min(axis_breaks),
+                                           max(axis_breaks) + delta_size),
+                                breaks = axis_breaks,
+                                labels = con_axis_labs
+                                )
+
+                        # get bar label text
+                        bar_labels = scales::comma(
+                                df_label[[xvar]],
+                                accuracy = ifelse(all_bigger_than1,
+                                                  1, 1/10^label_decimals)
+                                )
                 }
 
                 # --- Format bar label --- #
 
-                if (show_pct) {
-                        p = p + ggplot2::geom_text(
-                                        ggplot2::aes(mid_pos,
-                                                     !!as.name(yvar),
-                                                     label = formattable::percent(
-                                                             !!as.name(xvar),
-                                                             label_decimals)
-                                                     ),
-                                        data = df_label,
-                                        size = label_size,
-                                        position = ggstance::position_dodge2v(
-                                                height = 0.9)
-                                        )
-                } else {
-                        p = p + ggplot2::geom_text(
-                                        ggplot2::aes(mid_pos,
-                                                     !!as.name(yvar),
-                                                     label = scales::comma(
-                                                             round(!!as.name(xvar),
-                                                                   label_decimals))
-                                                     ),
-                                        data = df_label,
-                                        size = label_size,
-                                        position = ggstance::position_dodge2v(
-                                                height = 0.9)
-                                        )
-
-                }
+                p = p + geom_text(aes(mid_pos, !!as.name(yvar),
+                                      label = bar_labels),
+                                  data = df_label, size = label_size,
+                                  position = ggstance::position_dodge2v(
+                                          height = 0.9)
+                                  )
 
 
                 # --- Format Legend --- #
 
                 if (fillby == "1") { # remove legend
-                        p = p + ggplot2::guides(color = FALSE, fill = FALSE)
+                        p = p + guides(color = FALSE, fill = FALSE)
                 } else { # use colorblind-friendly colors
                         p = p + ggthemes::scale_fill_tableau("Color Blind")
                 }
@@ -162,12 +138,7 @@ mk_barploth_resp = function(df) {
 
                 # --- Customize Theme --- #
 
-                p + ggplot2::labs(x = xvar, y = NULL) +
-                        cowplot::theme_cowplot(font_size = font_size) +
-                        ggplot2::theme(
-                                # rm gray background in header when faceting
-                                strip.background = ggplot2::element_blank()
-                        )
+                p + labs(x = xvar, y = NULL) + theme_no_yaxis(font_size)
 
         }
 }

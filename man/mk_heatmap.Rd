@@ -32,29 +32,5 @@ mk_heatmap(df)
 can be used to make heat maps using variables in the data frame.
 }
 \examples{
-library(ezplot)
-library(dplyr)
-
-# --- single heatmap --- #
-
-f = mk_heatmap(films \%>\% count(made_money, year_cat))
-f("year_cat", "made_money", fillby = "n") \%>\% add_labs(ylab = "Made money?")
-
-df = films \%>\% group_by(action, year_cat) \%>\%
-     summarise(avg_rating = mean(rating))
-f = mk_heatmap(df)
-f("year_cat", "action", fillby = "avg_rating", font_size = 14, palette = "D") \%>\%
-        add_labs(ylab = "Is action film?",
-                 title = "Average ratings of action vs. non-action films")
-
-f = mk_heatmap(attacks_all_countries)
-f("hour", "wkday", fillby = "n", font_size = 12) \%>\%
-        add_labs(xlab = "nth Hour in a day",
-                 title = "Events per weekday & time of day")
-
-# --- multiple heatmaps --- #
-
-f = mk_heatmap(attacks_by_country)
-f("hour", "wkday", fillby ="n", facet_by = "country", facet_ncol = 2) \%>\%
-        add_labs(title = "Events per weekday & time of day by country")
+inst/examples/ex-mk_heatmap.R
 }

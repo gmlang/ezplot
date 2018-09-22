@@ -13,7 +13,7 @@ mk_barploth_freq(df)
 }
 \value{
 \code{function(yvar, fillby = "1", yorder = "alphanumeric", show_pct = FALSE,
-               label_size = 3, font_size = 14)}
+               label_decimals = 1, label_size = 3, font_size = 14)}
 \itemize{
      \item yvar     :  string, name of a categorical variable for y-axis.
      \item fillby   :  string, name of a different categorical variable for
@@ -24,6 +24,8 @@ mk_barploth_freq(df)
                        Default is "alphanumeric".
      \item show_pct :  logical, if TRUE, show percent on y-axis;
                        otherwise, show count. Default is FALSE.
+     \item label_decimals: integer, the number of decimal points shown
+                       on the bar labels. Default = 1.
      \item label_size: integer, size of bar label text. Default is 3.
                        Hide bar labels when its value is 0.
      \item font_size:  overall font size. Default = 14. The font size of the
@@ -43,40 +45,7 @@ it'll have a clean theme and clear fonts.
 It'll also use color-blind friendly palettes.
 }
 \examples{
-library(ezplot)
-f = mk_barploth_freq(films)
-
-f("mpaa")
-f("mpaa", yorder = "descend")
-f("year_cat", font_size = 10)
-f("year_cat", fillby = "made_money")
-
-# use label_size = 0 to remove the bar labels
-f("year_cat", fillby = "made_money", yorder = "descend", label_size = 0)
-f("mpaa", fillby = "made_money")
-f("made_money", fillby = "year_cat")
-f("made_money", fillby = "year_cat", yorder = "descend", label_size = 0)
-f("year_cat", fillby = "mpaa")
-
-f("mpaa", show_pct = T)
-f("mpaa", show_pct = T, yorder = "descend")
-f("mpaa", fillby = "made_money", show_pct = T)
-f("mpaa", fillby = "made_money", show_pct = T, yorder = "descend")
-f("year_cat", fillby = "made_money", show_pct = T)
-f("year_cat", fillby = "mpaa", show_pct = T)
-
-f = mk_barploth_freq(ggplot2::diamonds)
-f("cut")
-f("cut", show_pct = T, font_size = 9)
-f("cut", show_pct = T, fillby = "clarity") +
-    ggplot2::theme(legend.position = "bottom") +
-    ggplot2::guides(fill = ggplot2::guide_legend(nrow = 1))
-
-# use label_size = 0 to remove the bar labels
-p = f("cut", fillby = "clarity", font_size = 11, label_size = 0)
-add_labs(p, title = "Fuel efficiency generally decreases with engine size",
-         subtitle = "Two seaters (sports cars) are an exception ...",
-         caption = "Data from fueleconomy.gov")
+inst/examples/ex-mk_barploth_freq.R
 }
 \seealso{
 \code{\link{scale_axis}} for adding different scales to the y-axis.

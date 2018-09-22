@@ -1,3 +1,8 @@
+# --- This version is a direct implementation using ggplot2.
+#     Con: accept cat var as xvar and con var as yvar, this is not user-friendly
+#          as the output plot will have the con var on x-axis and the cat var on
+#          y-axis. User has to do mental switch: x is y and y is x --- #
+
 #' @title Create a function for making publishable ggplot2 likert plot (a.k.a.,
 #' horizontal diverging bar plot), showing values of a continuous variable by a
 #' 2 categorical variables.

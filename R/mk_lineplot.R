@@ -30,30 +30,7 @@
 #' }
 #'
 #' @export
-#' @examples
-#' library(ezplot)
-#'
-#' # plot boxoffice/budget ratio over the years
-#' plt = mk_lineplot(bo_bt_ratio_by_year)
-#' p = plt("year", "bo_bt_ratio")
-#' print(p)
-#' add_labs(p, xlab = NULL, ylab = "boxoffice/budget ratio",
-#'          title = "Boxoffice/Budget Ratio from 1913 to 2014",
-#'          caption = "data source: IMBD")
-#'
-#' # plot total budget and boxoffice over the years
-#' plt = mk_lineplot(btbo_by_year)
-#' p = plt("year", "tot", fillby = "type", font_size = 10, add_cnt_to_legend = F)
-#' p = add_labs(p, xlab = NULL, ylab = "total amount ($billion)",
-#'              title = "Annual Total Budget and Boxoffice from 1913 to 2014",
-#'              subtitle = NULL)
-#' scale_axis(p, scale = "log")
-#'
-#' library(dplyr)
-#' plt = mk_lineplot(films %>% group_by(year_cat) %>%
-#'                   summarise(avg_boxoffice = mean(boxoffice)))
-#' p = plt("year_cat", "avg_boxoffice")
-#' add_labs(p, xlab = NULL, ylab = "Mean Boxoffice", subtitle = "haha")
+#' @examples inst/examples/ex-mk_lineplot.R
 mk_lineplot = function(df) {
         function(xvar, yvar, fillby = "1", pt_size = 1, linew = 0.7,
                  font_size = 14, add_cnt_to_legend = TRUE) {
@@ -64,34 +41,30 @@ mk_lineplot = function(df) {
                 tot_n = nrow(na.omit(df[c(xvar, yvar)]))
                 subtit = paste("n =", tot_n)
 
-
                 # --- Main Plot --- #
 
-                p = ggplot2::ggplot(df, ggplot2::aes_string(xvar, yvar,
-                                                            color = fillby)) +
-                        ggplot2::geom_line(ggplot2::aes_string(group = fillby),
-                                           size = linew, alpha = 0.8) +
-                        ggplot2::geom_point(size = pt_size, alpha = 0.8)
+                p = ggplot(df, aes_string(xvar, yvar, color = fillby)) +
+                        geom_line(aes_string(group = fillby),
+                                  size = linew, alpha = 0.8) +
+                        geom_point(size = pt_size, alpha = 0.8)
 
-                # break y-axis into 10 pieces from ymin to ymax
+                # break y-axis into 10 pieces
                 ybreaks = pretty(df[[yvar]], n = 10)
-                p = p + ggplot2::scale_y_continuous(
-                                breaks = ybreaks,
-                                limits = c(min(ybreaks), max(ybreaks))
-                                )
+                p = p + scale_y_continuous(breaks = ybreaks,
+                                           limits = range(ybreaks))
                 if (any(class(df[[xvar]]) %in% c("integer", "numeric"))) {
-                        # break x-axis into 10 pieces from ymin to ymax
+                        # break x-axis into 10 pieces
                         xbreaks = pretty(df[[xvar]], n = 10)
-                        p = p + ggplot2::scale_x_continuous(
+                        p = p + scale_x_continuous(
                                 breaks = xbreaks,
-                                limits = c(min(xbreaks), max(xbreaks))
-                        )
+                                limits = range(xbreaks)
+                                )
                 }
 
                 # --- Format Legend --- #
 
                 if (fillby == "1") { # remove legend
-                        p = p + ggplot2::guides(color = FALSE, fill = FALSE)
+                        p = p + guides(color = FALSE, fill = FALSE)
                 } else {
                         if (add_cnt_to_legend) {
                                 # count number of non-NA observations for each
@@ -116,12 +89,9 @@ mk_lineplot = function(df) {
 
                 # --- Customize Theme --- #
 
-                p + ggplot2::labs(x = xvar, y = yvar, subtitle = subtit) +
-                        cowplot::theme_cowplot(font_size = font_size) +
-                        ggplot2::theme(
-                                # rm gray background in header when faceting
-                                strip.background = ggplot2::element_blank()
-                                )
+                p + labs(x = xvar, y = yvar, subtitle = subtit) +
+                        theme_cowplot(font_size)
+
 
         }
 }

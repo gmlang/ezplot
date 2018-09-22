@@ -37,22 +37,7 @@
 #' }
 #'
 #' @export
-#' @examples
-#' library(ezplot)
-#'
-#' f = test_normality(iris)
-#' f("Sepal.Length")
-#' f("Sepal.Length", bins = 50, detrend = F)
-#'
-#' library(dplyr)
-#' f = test_normality(films %>% filter(made_money == "yes"))
-#' f("boxoffice", font_size = 10)
-#'
-#' # take log of boxoffice first and then re-run
-#' df = films %>% filter(made_money == "yes") %>% mutate(logbo = log(boxoffice))
-#' f = test_normality(df)
-#' f("logbo")
-#' f("logbo", bins = 100, detrend = F)
+#' @examples inst/examples/ex-test_normality.R
 test_normality = function(df) {
 
         draw_hist = mk_histogram(df)
@@ -65,16 +50,19 @@ test_normality = function(df) {
 
                 p1 = draw_hist(varname, binw = binw, bins = bins,
                                font_size = font_size) %>%
+                        square_fig() %>%
                         add_labs(title = ifelse(is.null(title_hist),
-                                                paste("Empirical Distribution of", varname),
+                                                paste("Empirical Distribution of",
+                                                      varname),
                                                 title_hist)
-                                 ) +
-                        ggplot2::theme(legend.position = "top")
+                                 ) + theme(legend.position = "top")
 
                 p2 = draw_qqplot(varname, detrend = detrend,
                                  font_size = font_size) %>%
+                        square_fig() %>%
                         add_labs(title = ifelse(is.null(title_qqplot),
-                                                paste("Is", varname, "normally distributed?"))
+                                                paste("Is", varname,
+                                                      "normally distributed?"))
                                  )
 
                 cowplot::plot_grid(p1, p2)

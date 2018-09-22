@@ -31,23 +31,5 @@ making density plots of any continuous variable (x) from the data frame for
 each group of a categorical variable (y).
 }
 \examples{
-library(ezplot)
-plt = mk_densityplot(iris)
-plt("Sepal.Length", "Species")
-plt("Sepal.Length", "Species", font_size = 9)
-
-plt = mk_densityplot(films)
-plt("rating", "year_cat") \%>\% add_labs(subtitle = "Density Plot")
-plt("rating", "year") # throws error when yvar is integer or numeric
-
-p = plt("boxoffice", "year_cat")
-scale_axis(p, "x", scale = "log10")
-
-p = plt("bo_bt_ratio", "year_cat", font_size = 10)
-scale_axis(p, "x", scale = "log10")
-p = plt("bo_bt_ratio", "year_cat", cut_tail = 10^-4)
-scale_axis(p, "x", scale = "log10")
-p = plt("bo_bt_ratio", "year_cat", cut_tail = 10^-1.65) \%>\%
-        add_labs(xlab = "Boxoffice / Budget Ratio")
-scale_axis(p, "x", scale = "log10")
+inst/examples/ex-mk_densityplot.R
 }

@@ -17,7 +17,7 @@
 #'
 #' @return
 #' \code{function(xvar, fillby = "1", xorder = "alphanumeric", show_pct = FALSE,
-#'                label_size = 3, font_size = 14)}
+#'                label_decimals = 1, label_size = 3, font_size = 14)}
 #' \itemize{
 #'      \item xvar     :  string, name of a categorical variable for x-axis.
 #'      \item fillby   :  string, name of a different categorical variable for
@@ -28,6 +28,8 @@
 #'                        Default is "alphanumeric".
 #'      \item show_pct :  logical, if TRUE, show percent on y-axis;
 #'                        otherwise, show count. Default is FALSE.
+#'      \item label_decimals: integer, the number of decimal points shown
+#'                        on the bar labels. Default = 1.
 #'      \item label_size: integer, size of bar label text. Default is 3.
 #'                        Hide bar labels when its value is 0.
 #'      \item font_size:  overall font size. Default = 14. The font size of the
@@ -36,42 +38,10 @@
 #'
 #' @seealso \code{\link{scale_axis}} for adding different scales to the y-axis.
 #' @export
-#' @examples
-#' library(ezplot)
-#' f = mk_barplot_freq(films)
-#'
-#' f("mpaa")
-#' f("mpaa", xorder = "descend")
-#' f("year_cat", font_size = 10)
-#' f("year_cat", fillby = "made_money")
-#' f("year_cat", fillby = "made_money", xorder = "descend")
-#' f("mpaa", fillby = "made_money")
-#' f("made_money", fillby = "year_cat")
-#' f("made_money", fillby = "year_cat", xorder = "descend")
-#' f("year_cat", fillby = "mpaa")
-#' # use label_size = 0 to remove bar labels
-#' f("year_cat", fillby = "mpaa", label_size = 0)
-#'
-#' f("mpaa", show_pct = T)
-#' f("mpaa", show_pct = T, xorder = "descend")
-#' f("mpaa", fillby = "made_money", show_pct = T)
-#' f("mpaa", fillby = "made_money", show_pct = T, xorder = "descend")
-#' f("year_cat", fillby = "made_money", show_pct = T)
-#' f("year_cat", fillby = "mpaa", show_pct = T)
-#'
-#' f = mk_barplot_freq(ggplot2::diamonds)
-#' f("cut")
-#' f("cut", show_pct = T, font_size = 9)
-#' f("cut", show_pct = T, fillby = "clarity") +
-#'     ggplot2::theme(legend.position = "bottom") +
-#'     ggplot2::guides(fill = ggplot2::guide_legend(nrow = 1))
-#' p = f("cut", fillby = "clarity", font_size = 11)
-#' add_labs(p, title = "Fuel efficiency generally decreases with engine size",
-#'          subtitle = "Two seaters (sports cars) are an exception ...",
-#'          caption = "Data from fueleconomy.gov")
+#' @examples inst/examples/ex-mk_barplot_freq.R
 mk_barplot_freq = function(df) {
         function(xvar, fillby = "1", xorder = "alphanumeric", show_pct = FALSE,
-                 label_size = 3, font_size = 14) {
+                 label_decimals = 1, label_size = 3, font_size = 14) {
 
                 # --- Prep --- #
 
@@ -89,64 +59,60 @@ mk_barplot_freq = function(df) {
 
                 # --- Main Plot --- #
 
-                p = ggplot2::ggplot(df, ggplot2::aes_string(xvar, fill = fillby))
+                p = ggplot(df, aes_string(xvar, fill = fillby))
 
                 if (show_pct) { # show percent instead of counts on y-axis
 
                         if (fillby == "1") { # single bars show pct of each x catgeory
-                                p = p + ggplot2::geom_bar(
-                                                ggplot2::aes(y = ..prop.., group = 1),
-                                                alpha = 0.8) +
-                                        ggplot2::geom_text(
-                                                ggplot2::aes(!!as.name(xvar), pct,
-                                                             label = formattable::percent(pct, 1)),
-                                                data = df_label, vjust = -0.5,
-                                                size = label_size) +
-                                        ggplot2::geom_text(
-                                                ggplot2::aes(!!as.name(xvar), mid_pos,
-                                                             label = scales::comma(n)),
-                                                data = df_label,
-                                                size = label_size)
+                                p = p + geom_bar(aes(y = ..prop.., group = 1),
+                                                 alpha = 0.8) +
+                                        geom_text(aes(!!as.name(xvar), pct,
+                                                      label = formattable::percent(pct, label_decimals)
+                                                      ),
+                                                  data = df_label, vjust = -0.5,
+                                                  size = label_size) +
+                                        geom_text(aes(!!as.name(xvar), mid_pos,
+                                                      label = scales::comma(n)),
+                                                  data = df_label,
+                                                  size = label_size)
                         } else { # stacked bars of pcts by fillby var
-                                p = p + ggplot2::geom_bar(position = "fill",
-                                                          alpha = 0.8) +
-                                        ggplot2::geom_text(
-                                                ggplot2::aes(!!as.name(xvar), pct,
-                                                             label = formattable::percent(pct, 1)),
-                                                data = df_label,
-                                                size = label_size,
-                                                position = ggplot2::position_stack(vjust = 0.5)
-                                        )
+                                p = p + geom_bar(position = "fill",
+                                                 alpha = 0.8) +
+                                        geom_text(aes(!!as.name(xvar), pct,
+                                                      label = formattable::percent(pct, label_decimals)
+                                                      ),
+                                                  data = df_label,
+                                                  size = label_size,
+                                                  position = position_stack(vjust = 0.5)
+                                                  )
                         }
 
-                        p = p + ggplot2::scale_y_continuous(
-                                        limits = c(0, 1),
-                                        breaks = seq(0, 1, 0.1),
-                                        labels = scales::percent
-                                        )
+                        p = p + scale_y_continuous(limits = c(0, 1),
+                                                   breaks = seq(0, 1, 0.1),
+                                                   labels = scales::percent
+                                                   )
 
                         ylab = "Relative Frequency (%)"
 
                 } else { # show count on y-axis, and this is default
-                        p = p + ggplot2::geom_bar(position = "dodge", alpha = 0.8) +
-                                ggplot2::geom_text(
-                                        ggplot2::aes(!!as.name(xvar), n,
-                                                     label = scales::comma(n)),
-                                        data = df_label,
-                                        vjust = -0.5,
-                                        size = label_size,
-                                        position = ggplot2::position_dodge(width = 0.9)
-                                        ) +
-                                ggplot2::geom_text(
-                                        ggplot2::aes(!!as.name(xvar), mid_pos,
-                                                     label = formattable::percent(pct, 1)),
-                                        data = df_label, size = label_size,
-                                        position = ggplot2::position_dodge(width = 0.9)
-                                        )
+                        p = p + geom_bar(position = "dodge", alpha = 0.8) +
+                                geom_text(aes(!!as.name(xvar), n,
+                                              label = scales::comma(n)),
+                                          data = df_label, vjust = -0.5,
+                                          size = label_size,
+                                          position = position_dodge(width = 0.9)
+                                          ) +
+                                geom_text(aes(!!as.name(xvar), mid_pos,
+                                              label = formattable::percent(pct, label_decimals)
+                                              ),
+                                          data = df_label, size = label_size,
+                                          position = position_dodge(width = 0.9)
+                                          )
 
-                        p = p + ggplot2::scale_y_continuous(
-                                limits = c(0, max(df_label$n, na.rm = T)),
-                                breaks = pretty(c(0, df_label$n), 10),
+                        axis_breaks = pretty(c(0, df_label$n), 10)
+                        p = p + scale_y_continuous(
+                                limits = range(axis_breaks),
+                                breaks = axis_breaks,
                                 labels = scales::comma
                                 )
 
@@ -157,7 +123,7 @@ mk_barplot_freq = function(df) {
                 # --- Format Legend --- #
 
                 if (fillby == "1") { # remove legend
-                        p = p + ggplot2::guides(color = FALSE, fill = FALSE)
+                        p = p + guides(color = FALSE, fill = FALSE)
                 } else { # use colorblind-friendly colors
                         p = p + ggthemes::scale_fill_tableau("Color Blind")
                 }
@@ -165,12 +131,7 @@ mk_barplot_freq = function(df) {
 
                 # --- Customize Theme --- #
 
-                p + ggplot2::labs(x = NULL, y = ylab) +
-                        cowplot::theme_cowplot(font_size = font_size) +
-                        ggplot2::theme(
-                                # rm gray background in header when faceting
-                                strip.background = ggplot2::element_blank()
-                        )
+                p + labs(x = NULL, y = ylab) + theme_cowplot(font_size)
 
         }
 }

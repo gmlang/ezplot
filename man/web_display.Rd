@@ -33,27 +33,10 @@ web_display(p, axis_text_size = 16, axis_title_size = ggplot2::rel(2),
 A ggplot object
 }
 \description{
-\code{web_display} takes a ggplot object as input, and enlarges its axis 
-tick text, axis label text, legend title and text, and distance between the 
+\code{web_display} takes a ggplot object as input, and enlarges its axis
+tick text, axis label text, legend title and text, and distance between the
 axis labels and the axis to make it look good for web display.
 }
 \examples{
-# make some data
-df = read.table(header=TRUE, text='
-student grade
-Joe 90
-Mary 75
-Alex 50')
-
-# draw a barplot
-barplt = mk_barplot(df)
-p = barplt("student", "grade", "student", xlab="Student", ylab="Grade") 
-print(p)
-
-# make the barplot web-ready
-web_display(p)
-web_display(p, legend_title=FALSE)
-web_display(p, legend_pos="top")
-web_display(p, legend_pos="none")
-web_display(p, legend_pos="bottom")
+inst/examples/ex-web_display.R
 }

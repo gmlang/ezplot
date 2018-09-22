@@ -13,7 +13,7 @@ mk_barplot_resp(df)
 }
 \value{
 \code{function(xvar, yvar, fillby = "1", xorder = "alphanumeric",
-               show_pct = FALSE, label_decimals = 2, label_size = 3,
+               show_pct = FALSE, label_decimals = 1, label_size = 3,
                font_size = 14)}
 \itemize{
      \item xvar     :  string, name of a categorical variable for x-axis.
@@ -27,7 +27,7 @@ mk_barplot_resp(df)
      \item show_pct :  logical, if TRUE, format y-axis and bar labels as %;
                        otherwise, format them as comma. Default is FALSE.
      \item label_decimals: integer, the number of decimal points shown
-                       on the bar labels. Default = 2.
+                       on the bar labels. Default = 1.
      \item label_size: integer, size of bar label text. Default = 3.
                        Hide bar labels when its value is 0.
      \item font_size : overall font size. Default = 14. The font size of the
@@ -49,27 +49,7 @@ the resulting plot will have a clean theme and clear fonts.
 It'll also use color-blind friendly palettes.
 }
 \examples{
-library(ezplot)
-
-g = mk_barplot_resp(films)
-p = g("mpaa", "boxoffice", xorder = "descend", font_size = 10)
-add_labs(p, title = "Fuel efficiency generally decreases with engine size",
-         subtitle = "Two seaters (sports cars) are an exception ...",
-         caption = "Data from fueleconomy.gov")
-# use label_size = 0 to remove labels
-g("mpaa", "bo_bt_ratio", fillby = "year_cat", label_decimals = 1, label_size = 0)
-
-library(dplyr)
-df = films \%>\% count(mpaa, made_money) \%>\% mutate(pct = n / sum(n))
-g = mk_barplot_resp(df)
-g("mpaa", "pct")
-g("mpaa", "pct", label_decimals = 1, xorder = "descend")
-g("mpaa", "pct", show_pct = T, label_decimals = 3, font_size = 9) \%>\%
-   add_labs(ylab = NULL,
-            title = "There're more R rated films than NC-17, PG and PG-13 combined.",
-            subtitle = "Although a substantial portion of the films have mpaa rating info missing.",
-            caption = "data were scrapped from imdb.com in 2010")
-g("mpaa", "pct", fillby = "made_money", show_pct = T)
+inst/examples/ex-mk_barplot_resp.R
 }
 \seealso{
 \code{\link{scale_axis}} for adding different scales to the y-axis.

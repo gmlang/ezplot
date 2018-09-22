@@ -33,41 +33,7 @@
 #'
 #' @seealso \code{\link{scale_axis}} for adding different scales to the x-axis.
 #' @export
-#' @examples
-#' library(tidyr)
-#' df = ab3 %>% gather(opinion, pct, -Country)
-#' lvls = unique(df$opinion)
-#' plt = mk_likertplot(df)
-#' plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls)
-#' plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls, x_as_pct = T) %>%
-#'     add_labs(xlab = NULL, title = "Confidence estimates for twelve countries' economy")
-#'
-#' library(dplyr)
-#' df = films %>% count(mpaa, made_money) %>% group_by(mpaa) %>% mutate(pct = n/sum(n)) %>% ungroup()
-#' plt = mk_likertplot(df)
-#' plt("n", "mpaa", fillby = "made_money", fillby_lvls = c("no", "yes"))
-#' plt("n", "mpaa", fillby = "made_money", fillby_lvls = c("no", "yes"), yorder = "ascend")
-#' plt("n", "mpaa", fillby = "made_money", fillby_lvls = c("no", "yes"), yorder = "descend")
-#' plt("pct", "mpaa", fillby = "made_money", fillby_lvls = c("no", "yes"), x_as_pct = T)
-#'
-#' library(dplyr)
-#' df = data.frame(item = rep(LETTERS[1:5], 4),
-#'                 slope = c(rep("North", 10), rep("South", 10)),
-#'                 type = rep(c(rep("native", 5), rep("introduced", 5)), 2),
-#'                 spp = as.integer(abs(rnorm(20, 5, 2))))
-#' df = df %>% mutate(spp = ifelse(type == "introduced", spp+1, spp),
-#'                    sppInv = ifelse(type == "native", spp, spp*-1))
-#'
-#' # plot for only North
-#' plt = mk_likertplot(df %>% filter(slope == "North"))
-#'
-#' # works with both negative and positive values
-#' #     sppInv < 0 when type is "introduced", and > 0 when type is "native"
-#' plt("sppInv", "item", fillby = "type", fillby_lvls = c("introduced", "native"))
-#'
-#' # also works with only positive values
-#' #     spp > 0 always
-#' plt("spp", "item", fillby = "type", fillby_lvls = c("introduced", "native"))
+#' @examples inst/examples/ex-mk_likertplot.R
 mk_likertplot = function(df) {
         function(xvar, yvar, fillby, fillby_lvls, yorder = "alphanumeric",
                  x_as_pct = FALSE, font_size = 14) {
@@ -85,43 +51,42 @@ mk_likertplot = function(df) {
 
                 # --- Main Plot --- #
 
-                p = ggplot2::ggplot() +
-                        ggplot2::aes_string(x = xvar, y = yvar, fill = fillby) +
+                p = ggplot() + aes_string(x = xvar, y = yvar, fill = fillby) +
                         ggstance::geom_colh(data = df_neg, alpha = 0.8) +
-                        ggstance::geom_colh(data = df_pos, alpha = 0.8,
-                                            position = ggstance::position_stackv(reverse = T)
-                                            ) +
-                        ggplot2::geom_vline(xintercept = 0, color = "white") +
-                        ggplot2::scale_fill_manual(labels = fillby_lvls,
-                                                   breaks = fillby_lvls,
-                                                   values = pal)
+                        ggstance::geom_colh(
+                                data = df_pos, alpha = 0.8,
+                                position = ggstance::position_stackv(reverse =T)
+                                ) +
+                        geom_vline(xintercept = 0, color = "white") +
+                        scale_fill_manual(labels = fillby_lvls,
+                                          breaks = fillby_lvls,
+                                          values = pal)
 
-                # --- Format y-axis --- #
+                # --- Format x-axis --- #
 
                 if (x_as_pct) {
-                        p = p + ggplot2::scale_x_continuous(
+                        xbreaks = seq(-1, 1, 0.2)
+                        p = p + scale_x_continuous(
                                 limits = c(-1, 1),
-                                breaks = seq(-1, 1, 0.2),
-                                labels = formattable::percent(
-                                        abs(seq(-1, 1, 0.2)), 0)
+                                breaks = xbreaks,
+                                labels = formattable::percent(abs(xbreaks), 0)
                                 )
                 } else {
-                        p = p + ggplot2::scale_x_continuous(
+                        all_bigger_than1 = all(setdiff(abs(con_axis_labs),0) >1)
+                        if (all_bigger_than1)
+                                con_axis_labs = scales::comma(con_axis_labs)
+                        p = p + scale_x_continuous(
                                 limits = con_axis_limits,
                                 breaks = con_axis_breaks,
-                                labels = scales::comma(con_axis_labs)
+                                labels = con_axis_labs
                                 )
                 }
 
 
                 # --- Customize Theme --- #
 
-                p + ggplot2::labs(x = xvar, y = NULL) +
-                        cowplot::theme_cowplot(font_size = font_size) +
-                        ggplot2::theme(
-                                # rm gray background in header when faceting
-                                strip.background = ggplot2::element_blank()
-                        )
+                p + labs(x = xvar, y = NULL) + theme_cowplot(font_size)
+
         }
 }
 

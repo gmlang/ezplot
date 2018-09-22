@@ -42,22 +42,7 @@ function can also produce faceted histograms when supplied a categorical
 variable, a facet_by variable, for grouping.
 }
 \examples{
-library(ezplot)
-
-f = mk_histogram(iris)
-f("Sepal.Length")
-f("Sepal.Length", bins = 100, font_size = 12) \%>\% add_labs(xlab = "Sepal Length")
-f("Sepal.Length", bins = 50, add_vline_mean = F)
-f("Sepal.Length", bins = 40, add_vline_median = F)
-
-f("Sepal.Length", binw = 0.3)
-# we can also specify a function for calculating binwidth
-f("Sepal.Length", facet_by = "Species", facet_ncol = 3, font_size = 8,
-  binw = function(x) 2*IQR(x) / (length(x)^(1/3)))
-
-f = mk_histogram(films)
-p = f("boxoffice")
-scale_axis(p, "x", scale = "log10")
+inst/examples/ex-mk_histogram.R
 }
 \seealso{
 \code{\link{get_summ_stats}}.

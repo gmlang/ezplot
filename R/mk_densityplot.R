@@ -22,26 +22,7 @@
 #'                       axes and legend text is a fraction of this value.
 #' }
 #' @export
-#' @examples
-#' library(ezplot)
-#' plt = mk_densityplot(iris)
-#' plt("Sepal.Length", "Species")
-#' plt("Sepal.Length", "Species", font_size = 9)
-#'
-#' plt = mk_densityplot(films)
-#' plt("rating", "year_cat") %>% add_labs(subtitle = "Density Plot")
-#' plt("rating", "year") # throws error when yvar is integer or numeric
-#'
-#' p = plt("boxoffice", "year_cat")
-#' scale_axis(p, "x", scale = "log10")
-#'
-#' p = plt("bo_bt_ratio", "year_cat", font_size = 10)
-#' scale_axis(p, "x", scale = "log10")
-#' p = plt("bo_bt_ratio", "year_cat", cut_tail = 10^-4)
-#' scale_axis(p, "x", scale = "log10")
-#' p = plt("bo_bt_ratio", "year_cat", cut_tail = 10^-1.65) %>%
-#'         add_labs(xlab = "Boxoffice / Budget Ratio")
-#' scale_axis(p, "x", scale = "log10")
+#' @examples inst/examples/ex-mk_densityplot.R
 mk_densityplot = function(df) {
         function(xvar, yvar, cut_tail = 0.005, font_size = 14) {
 
@@ -53,33 +34,28 @@ mk_densityplot = function(df) {
 
                 # --- Main Plot --- #
 
-                p = ggplot2::ggplot(
-                        df, ggplot2::aes_string(xvar, yvar, group = yvar)) +
+                p = ggplot(
+                        df, aes_string(xvar, yvar, group = yvar)) +
                         ggridges::stat_density_ridges(
-                                ggplot2::aes(fill = 0.5 - abs(0.5 - ..ecdf..)),
+                                aes(fill = 0.5 - abs(0.5 - ..ecdf..)),
                                 geom = "density_ridges_gradient", calc_ecdf = T,
                                 rel_min_height = cut_tail, scale = 1) +
-                        ggplot2::scale_fill_viridis_c(direction = -1) +
+                        scale_fill_viridis_c(direction = -1) +
                         # # expand the lower limit of x by 0, upper limit by 0
-                        # ggplot2::scale_x_continuous(expand = c(0, 0)) +
+                        # scale_x_continuous(expand = c(0, 0)) +
                         # expand the lower limit of y by 0.05, upper limit by 0
-                        ggplot2::scale_y_discrete(expand = c(0.05, 0))
+                        scale_y_discrete(expand = c(0.05, 0))
 
 
                 # --- Format Legend --- #
 
                 # remove legend
-                p = p + ggplot2::guides(color = FALSE, fill = FALSE)
+                p = p + guides(color = FALSE, fill = FALSE)
 
 
                 # --- Customize Theme --- #
 
-                p + ggplot2::labs(x = xvar, y = NULL) +
-                        cowplot::theme_cowplot(font_size = font_size) +
-                        ggplot2::theme(
-                                # rm gray background in header when faceting
-                                strip.background = ggplot2::element_blank()
-                        )
+                p + labs(x = xvar, y = NULL) + theme_cowplot(font_size)
         }
 }
 

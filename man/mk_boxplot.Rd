@@ -33,29 +33,5 @@ also produce dodged boxplots when supplied a second categorical variable, a
 fillby variable.
 }
 \examples{
-library(dplyr)
-library(ezplot)
-
-f = mk_boxplot(films)
-f("year_cat", "rating", notched = T, font_size = 10)
-f("year_cat", "rating", fillby = "made_money", notched = T)
-
-f = mk_boxplot(films \%>\% filter(year \%in\% 2010:2014))
-f("year", "rating", notched = T) # throws error because "year" is integer
-f = mk_boxplot(films \%>\% filter(year \%in\% 2010:2014) \%>\% mutate(year = factor(year)))
-f("year", "rating", notched = T)
-
-f = mk_boxplot(ggplot2::mpg)
-f("class", "hwy", fillby = "drv", font_size = 9) \%>\% add_labs(xlab = "class")
-
-f("year", "cty", fillby = "drv") # throws error because "year" is integer
-mpg = ggplot2::mpg
-mpg$year = as.character(mpg$year)
-f = mk_boxplot(mpg)
-f("year", "cty", fillby = "drv")
-
-df = data.frame(x = rep(c("A", "B"), 5),
-                y = c(56, 123, 546, 26, 62, 6, NaN, NA, NA, 15))
-f = mk_boxplot(df)
-f("x", "y") \%>\% add_labs(title = "Demo of title", subtitle = "demo of subtitle", caption = "fake data")
+inst/examples/ex-mk_boxplot.R
 }

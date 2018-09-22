@@ -15,9 +15,10 @@
 * ~~refactor the code for xlab, ylab, title, ... into its own function~~
 * ~~Likert plot (aka, diverging stacked barplot)~~
 * ~~horizontal barplot (ggstance)~~
+* put all examples under /inst. See [here](https://github.com/jrnold/ggthemes/tree/master/inst)
 * lollipop plot (ggalt)
 * Dumbbell plot (ggalt)
-
+* update scale_axis to work with the pipe operator, and preserve the current ticks and distances
 
 ### whole pkg
 * ~~add versions of dependent packages~~
@@ -25,3 +26,5 @@
 * add facet_by
  
 
+### lollipop ref
+[url](https://uc-r.github.io/lollipop)

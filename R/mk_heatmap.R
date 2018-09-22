@@ -25,64 +25,29 @@
 #' }
 #'
 #' @export
-#' @examples
-#' library(ezplot)
-#' library(dplyr)
-#'
-#' # --- single heatmap --- #
-#'
-#' f = mk_heatmap(films %>% count(made_money, year_cat))
-#' f("year_cat", "made_money", fillby = "n") %>% add_labs(ylab = "Made money?")
-#'
-#' df = films %>% group_by(action, year_cat) %>%
-#'      summarise(avg_rating = mean(rating))
-#' f = mk_heatmap(df)
-#' f("year_cat", "action", fillby = "avg_rating", font_size = 14, palette = "D") %>%
-#'         add_labs(ylab = "Is action film?",
-#'                  title = "Average ratings of action vs. non-action films")
-#'
-#' f = mk_heatmap(attacks_all_countries)
-#' f("hour", "wkday", fillby = "n", font_size = 12) %>%
-#'         add_labs(xlab = "nth Hour in a day",
-#'                  title = "Events per weekday & time of day")
-#'
-#' # --- multiple heatmaps --- #
-#'
-#' f = mk_heatmap(attacks_by_country)
-#' f("hour", "wkday", fillby ="n", facet_by = "country", facet_ncol = 2) %>%
-#'         add_labs(title = "Events per weekday & time of day by country")
+#' @examples inst/examples/ex-mk_heatmap.R
 mk_heatmap = function(df) {
         function(xvar, yvar, fillby, facet_by = NULL, facet_ncol = 1,
                  palette = "C", font_size = 8) {
 
                 # --- Main Plot --- #
 
-                p = ggplot2::ggplot(df, ggplot2::aes_string(x = xvar, y = yvar,
-                                                            fill = fillby)) +
-                        ggplot2::geom_tile(color = "white", size = 0.1) +
-                        ggplot2::scale_fill_viridis_c(
+                p = ggplot(df, aes_string(x = xvar, y = yvar, fill = fillby)) +
+                        geom_tile(color = "white", size = 0.1) +
+                        scale_fill_viridis_c(
                                 name = fillby, label = scales::comma,
                                 option = palette, direction = -1) +
-                        ggplot2::coord_equal()
+                        coord_equal()
 
                 # --- Facet --- #
 
                 if (!is.null(facet_by))
-                        p = p + ggplot2::facet_wrap(
-                                ggplot2::vars(!!as.name(facet_by)),
-                                ncol = facet_ncol)
+                        p = p + facet_wrap(vars(!!as.name(facet_by)),
+                                           ncol = facet_ncol)
 
                 # --- Customize Theme --- #
 
-                p + ggplot2::labs(x = NULL, y = NULL) +
-                        cowplot::theme_cowplot(font_size = font_size) +
-                        ggplot2::theme(
-                                axis.line = ggplot2::element_blank(),
-                                axis.ticks = ggplot2::element_blank(),
-
-                                # rm gray background in header when faceting
-                                strip.background = ggplot2::element_blank()
-                        )
+                p + labs(x = NULL, y = NULL) + theme_no_xyaxes(font_size)
 
         }
 }

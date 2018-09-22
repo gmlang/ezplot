@@ -31,11 +31,10 @@ the continuous axis, and palette for coloring the bars (pal).
 \description{
 \code{prep_data_likert} takes in the original data frame, the
 x, y and fillby variable, the supplied levels of the fillby variable, and
-instruction on how to order the x levels. It returns a list of 2 data frames
-(df_neg and df_pos), along with some plot elements to be used as input to
-\code{mk_likertplot} for making a likert chart, a.k.a., horizontal diverging
-bar chart.
+instruction on how to order the y levels. It returns a list of 2 data frames
+(df_neg and df_pos), along with some plot elements for making a likert chart,
+a.k.a., horizontal diverging bar chart.
 }
 \seealso{
-\code{\link{prep_data_likert}}.
+\code{\link{mk_likertplot}}.
 }

@@ -35,23 +35,7 @@
 #'                            of x. Default = TRUE.
 #' }
 #' @export
-#' @examples
-#' library(ezplot)
-#'
-#' f = mk_histogram(iris)
-#' f("Sepal.Length")
-#' f("Sepal.Length", bins = 100, font_size = 12) %>% add_labs(xlab = "Sepal Length")
-#' f("Sepal.Length", bins = 50, add_vline_mean = F)
-#' f("Sepal.Length", bins = 40, add_vline_median = F)
-#'
-#' f("Sepal.Length", binw = 0.3)
-#' # we can also specify a function for calculating binwidth
-#' f("Sepal.Length", facet_by = "Species", facet_ncol = 3, font_size = 8,
-#'   binw = function(x) 2*IQR(x) / (length(x)^(1/3)))
-#'
-#' f = mk_histogram(films)
-#' p = f("boxoffice")
-#' scale_axis(p, "x", scale = "log10")
+#' @examples inst/examples/ex-mk_histogram.R
 mk_histogram = function(df) {
         function(xvar, facet_by = NULL, binw = NULL, bins = 30, facet_ncol = 1,
                  font_size = 14, add_vline_median = TRUE, add_vline_mean = TRUE) {
@@ -64,60 +48,49 @@ mk_histogram = function(df) {
 
                 # --- Main Plot --- #
 
-                p = ggplot2::ggplot(df, ggplot2::aes_string(xvar, fill = "1")) +
-                        ggplot2::geom_histogram(binwidth = binw, bins = bins,
-                                                alpha = 0.8)
+                p = ggplot(df, aes_string(xvar, fill = "1")) +
+                        geom_histogram(binwidth = binw, bins = bins, alpha =0.8)
 
                 if (add_vline_median)
-                        p = p + ggplot2::geom_vline(
-                                        ggplot2::aes(xintercept = med,
-                                                     color = "median"),
-                                        data = df_stats,
-                                        size = 1,
-                                        linetype = "dashed",
-                                        show.legend = T)
+                        p = p + geom_vline(
+                                        aes(xintercept = med, color = "median"),
+                                        data = df_stats, size = 1,
+                                        linetype = "dashed", show.legend = T
+                                        )
 
                 if (add_vline_mean)
-                        p = p + ggplot2::geom_vline(
-                                        ggplot2::aes(xintercept = avg,
-                                                     color = "mean"),
-                                        data = df_stats,
-                                        size = 1,
-                                        linetype = "dashed",
-                                        show.legend = T)
+                        p = p + geom_vline(
+                                        aes(xintercept = avg, color = "mean"),
+                                        data = df_stats, size = 1,
+                                        linetype = "dashed", show.legend = T
+                                        )
 
                 # --- Facet --- #
 
                 if (!is.null(facet_by))
-                        p = p + ggplot2::facet_wrap(
-                                ggplot2::vars(!!as.name(facet_by)),
-                                ncol = facet_ncol,
-                                scales = "free_x")
+                        p = p + facet_wrap(vars(!!as.name(facet_by)),
+                                           ncol = facet_ncol,
+                                           scales = "free_x")
 
 
                 # --- Format Legend --- #
 
                 # add legend to indicate median and mean
-                p = p + ggplot2::scale_color_manual(
-                            name = "",
-                            values = c(median = "#fc7d0b", mean = "#a3acb9"),
-                            labels = c(median = paste("median:",
-                                                      round(df_stats$med, 2)),
-                                       mean = paste("mean:",
-                                                    round(df_stats$avg, 2)))
-                            ) +
+                p = p + scale_color_manual(
+                        name = "",
+                        values = c(median = "#fc7d0b", mean = "#a3acb9"),
+                        labels = c(median = paste("median:",
+                                                  round(df_stats$med, 2)),
+                                   mean = paste("mean:",
+                                                round(df_stats$avg, 2)))
+                        ) +
                         # but remove legend of the blue fill of the bars
-                        ggplot2::guides(fill = FALSE)
+                        guides(fill = FALSE)
 
 
                 # --- Customize Theme --- #
 
-                p + ggplot2::labs(x = xvar, y = "Frequency") +
-                        cowplot::theme_cowplot(font_size = font_size) +
-                        ggplot2::theme(
-                                # rm gray background in header when faceting
-                                strip.background = ggplot2::element_blank()
-                        )
+                p + labs(x = xvar, y = "Frequency") + theme_cowplot(font_size)
 
         }
 }

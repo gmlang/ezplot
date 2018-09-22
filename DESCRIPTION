@@ -9,8 +9,7 @@ Description: A collection of wrapper functions that allow you to easily make
     tick text, adjust the distances between the axises labels and the axises.
     It frees you from knowing the details of ggplot2 commands.
 Depends:
-    R (>= 3.1.2),
-    methods
+    R (>= 3.1.2)
 License: GNU General Public License v2.0
 LazyData: true
 Imports:

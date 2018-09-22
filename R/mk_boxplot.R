@@ -24,32 +24,7 @@
 #'                        axes and legend text is a fraction of this value.
 #' }
 #' @export
-#' @examples
-#' library(dplyr)
-#' library(ezplot)
-#'
-#' f = mk_boxplot(films)
-#' f("year_cat", "rating", notched = T, font_size = 10)
-#' f("year_cat", "rating", fillby = "made_money", notched = T)
-#'
-#' f = mk_boxplot(films %>% filter(year %in% 2010:2014))
-#' f("year", "rating", notched = T) # throws error because "year" is integer
-#' f = mk_boxplot(films %>% filter(year %in% 2010:2014) %>% mutate(year = factor(year)))
-#' f("year", "rating", notched = T)
-#'
-#' f = mk_boxplot(ggplot2::mpg)
-#' f("class", "hwy", fillby = "drv", font_size = 9) %>% add_labs(xlab = "class")
-#'
-#' f("year", "cty", fillby = "drv") # throws error because "year" is integer
-#' mpg = ggplot2::mpg
-#' mpg$year = as.character(mpg$year)
-#' f = mk_boxplot(mpg)
-#' f("year", "cty", fillby = "drv")
-#'
-#' df = data.frame(x = rep(c("A", "B"), 5),
-#'                 y = c(56, 123, 546, 26, 62, 6, NaN, NA, NA, 15))
-#' f = mk_boxplot(df)
-#' f("x", "y") %>% add_labs(title = "Demo of title", subtitle = "demo of subtitle", caption = "fake data")
+#' @examples inst/examples/ex-mk_boxplot.R
 mk_boxplot = function(df) {
         function(xvar, yvar, fillby = "1", notched = FALSE, label_size = 3,
                  font_size = 14) {
@@ -58,45 +33,42 @@ mk_boxplot = function(df) {
 
                 if (any(class(df[[xvar]]) %in% c("integer", "numeric")))
                         stop(paste("The x variable,", paste0(xvar, ","),
-                                   "is integer or numeric. Change to factor or character."))
+                                   "is integer or numeric. Change to factor or character.")
+                             )
 
                 # --- Main Plot --- #
 
-                p = ggplot2::ggplot(df, ggplot2::aes_string(xvar, yvar)) +
-                        ggplot2::geom_boxplot(
-                                ggplot2::aes_string(fill = fillby),
-                                alpha = 0.8, notch = notched)
+                p = ggplot(df, aes_string(xvar, yvar)) +
+                        geom_boxplot(aes_string(fill = fillby),
+                                     alpha = 0.8, notch = notched)
 
                 # draw mean as spade shape
-                p = p + ggplot2::stat_summary(
-                                ggplot2::aes_string(group = fillby),
-                                fun.y = mean,
-                                geom = "point", size = 1, shape = 5,
-                                position = ggplot2::position_dodge(0.75)
-                                )
+                p = p + stat_summary(aes_string(group = fillby),
+                                     fun.y = mean, geom = "point", size = 1,
+                                     shape = 5, position = position_dodge(0.75)
+                                     )
 
                 # show number of observations above ymax
                 #       (drops NAs and show correct counts automatically)
                 get_n = function(x) data.frame(y = max(x),
-                                               label = paste("n =", length(x)))
-                p = p + ggplot2::stat_summary(
-                                ggplot2::aes_string(group = fillby),
-                                fun.data = get_n, geom = "text",
-                                size = label_size, vjust = -0.8,
-                                position = ggplot2::position_dodge(0.75)
-                                )
+                                               label = paste("n =", length(x))
+                                               )
+                p = p + stat_summary(aes_string(group = fillby),
+                                     fun.data = get_n, geom = "text",
+                                     size = label_size, vjust = -0.8,
+                                     position = position_dodge(0.75)
+                                     )
 
                 # break y-axis into 10 pieces from ymin to ymax
                 ybreaks = pretty(df[[yvar]], n = 10)
-                p = p + ggplot2::scale_y_continuous(
-                                breaks = ybreaks,
-                                limits = c(min(ybreaks), max(ybreaks))
-                                )
+                p = p + scale_y_continuous(breaks = ybreaks,
+                                           limits = range(ybreaks)
+                                           )
 
                 # --- Format Legend --- #
 
                 if (fillby == "1") { # remove legend
-                        p = p + ggplot2::guides(color = FALSE, fill = FALSE)
+                        p = p + guides(color = FALSE, fill = FALSE)
                 } else { # use colorblind-friendly colors
                         p = p + ggthemes::scale_fill_tableau("Color Blind")
                 }
@@ -104,12 +76,7 @@ mk_boxplot = function(df) {
 
                 # --- Customize Theme --- #
 
-                p + ggplot2::labs(x = NULL, y = yvar) +
-                        cowplot::theme_cowplot(font_size = font_size) +
-                        ggplot2::theme(
-                                # rm gray background in header when faceting
-                                strip.background = ggplot2::element_blank()
-                        )
+                p + labs(x = NULL, y = yvar) + theme_cowplot(font_size)
 
         }
 }
