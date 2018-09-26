@@ -23,72 +23,79 @@
 #' @param scale A string of value "comma", "dollar", "pct", "log", "log1p",
 #'        "log10", "log2", "sqrt", or "exp".
 #'         It specifies which scale to use. Default = "comma".
+#' @param pct_min A number. The min value when using percent scale.
+#'         When NULL (default), it'll use the min value of y.
+#' @param pct_max A number. The max value when using percent scale.
+#'         When NULL (default), it'll use the max value of y.
+#' @param pct_jump A number. The equal distance between ticks when using
+#'         percent scale. When NULL (default), it takes the value of
+#'         (pct_max - pct_min) / 10, and this will break the y-axis
+#'         into 10 pieces by placing 11 ticks on it.
 #'
 #' @return A ggplot2 object with the new scale applied to the input axis.
 #' @export
 #' @examples inst/examples/ex-scale_axis.R
-scale_axis = function(p, axis = "y", scale = "comma") {
+scale_axis = function(p, axis = "y", scale = "comma",
+                      pct_min = NULL, pct_max = NULL, pct_jump = NULL) {
 
-        var = p$labels[[axis]]
-        # val_min = min(c(0, p$data[[var]]), na.rm = T)
-        # val_max = max(p$data[[var]], na.rm = T)
-        axis_breaks = pretty(c(0, p$data[[var]]), 10)
-        # delta = axis_breaks[2] - axis_breaks[1]
+        if (scale == "pct") {
+                var = p$labels[[axis]]
+                val_min = min(c(0, p$data[[var]]), na.rm = T)
+                val_max = max(p$data[[var]], na.rm = T)
+                pct_min = ifelse(is.null(pct_min), val_min, pct_min)
+                pct_max = ifelse(is.null(pct_max), val_max, pct_max)
+                pct_jump = ifelse(is.null(pct_jump), (pct_max - pct_min) / 10,
+                                  pct_jump)
+        }
 
         if (axis == "y") {
                 switch(scale,
-                       comma = p + scale_y_continuous(
-                               limits = range(axis_breaks),
-                               breaks = axis_breaks,
-                               labels = scales::comma),
-                       dollar = p + scale_y_continuous(
-                               limits = range(axis_breaks),
-                               breaks = axis_breaks,
-                               labels = scales::dollar),
+                       comma = p + scale_y_continuous(labels = scales::comma),
+                       dollar = p + scale_y_continuous(labels = scales::dollar),
                        pct = p + scale_y_continuous(
-                               limits = range(axis_breaks),
-                               breaks = axis_breaks,
-                               labels = scales::percent
+                               labels = scales::percent,
+                               limits = c(pct_min, pct_max + pct_jump),
+                               breaks = seq(pct_min, pct_max+pct_jump, pct_jump)
                                ),
                        log = p + scale_y_continuous(
                                trans = scales::log_trans(),
                                breaks = scales::trans_breaks(
-                                       'log', function(x) exp(x), n = 8),
+                                       'log', function(x) exp(x), n=10),
                                labels = scales::trans_format(
                                        'log', scales::math_format(e^.x))
                                ),
                        log1p = p + scale_y_continuous(
                                trans = scales::log1p_trans(),
                                breaks = scales::trans_breaks(
-                                       'log1p', function(x) exp(x+1), n = 8),
+                                       'log1p', function(x) exp(x+1), n=10),
                                labels = scales::trans_format(
                                        'log1p', scales::math_format(
                                                e^.x, function(x) round(x, 2)))
                                ),
                        log10 = p + scale_y_log10(
                                breaks = scales::trans_breaks(
-                                       'log10', function(x) 10^x, n = 8),
+                                       'log10', function(x) 10^x, n=10),
                                labels = scales::trans_format(
                                        'log10', scales::math_format(10^.x))
                                ),
                        log2 = p + scale_y_continuous(
                                trans = scales::log2_trans(),
                                breaks = scales::trans_breaks(
-                                       'log2', function(x) 2^x, n = 8),
+                                       'log2', function(x) 2^x, n=10),
                                labels = scales::trans_format(
                                        'log2', scales::math_format(2^.x))
                                ),
                        sqrt = p + scale_y_continuous(
                                trans = scales::sqrt_trans(),
                                breaks = scales::trans_breaks(
-                                       'sqrt', function(x) x^2, n = 8),
+                                       'sqrt', function(x) x^2, n=10),
                                labels = scales::trans_format(
                                        'sqrt', scales::math_format(.x^2))
                                ),
                        exp = p + scale_y_continuous(
                                trans = scales::exp_trans(),
                                breaks = scales::trans_breaks(
-                                       'exp', function(x) log(x), n = 8),
+                                       'exp', function(x) log(x), n=10),
                                labels = scales::trans_format(
                                        'exp', scales::math_format(ln(.x)))
                                )
@@ -97,58 +104,52 @@ scale_axis = function(p, axis = "y", scale = "comma") {
         } else {
 
                 switch(scale,
-                       comma = p + scale_x_continuous(
-                               limits = range(axis_breaks),
-                               breaks = axis_breaks,
-                               labels = scales::comma),
-                       dollar = p + scale_x_continuous(
-                               limits = range(axis_breaks),
-                               breaks = axis_breaks,
-                               labels = scales::dollar),
+                       comma = p + scale_x_continuous(labels = scales::comma),
+                       dollar = p + scale_x_continuous(labels = scales::dollar),
                        pct = p + scale_x_continuous(
-                               limits = range(axis_breaks),
-                               breaks = axis_breaks,
-                               labels = scales::percent
+                               labels = scales::percent,
+                               limits = c(pct_min, pct_max + pct_jump),
+                               breaks = seq(pct_min, pct_max+pct_jump, pct_jump)
                                ),
                        log = p + scale_x_continuous(
                                trans = scales::log_trans(),
                                breaks = scales::trans_breaks(
-                                       'log', function(x) exp(x), n = 8),
+                                       'log', function(x) exp(x), n=10),
                                labels = scales::trans_format(
                                        'log', scales::math_format(e^.x))
                                ),
                        log1p = p + scale_x_continuous(
                                trans = scales::log1p_trans(),
                                breaks = scales::trans_breaks(
-                                       'log1p', function(x) exp(x+1), n = 8),
+                                       'log1p', function(x) exp(x+1), n=10),
                                labels = scales::trans_format(
                                        'log1p', scales::math_format(
                                                e^.x, function(x) round(x, 2)))
                                ),
                        log10 = p + scale_x_log10(
                                breaks = scales::trans_breaks(
-                                       'log10', function(x) 10^x, n = 8),
+                                       'log10', function(x) 10^x, n=10),
                                labels = scales::trans_format(
                                        'log10', scales::math_format(10^.x))
                                ),
                        log2 = p + scale_x_continuous(
                                trans = scales::log2_trans(),
                                breaks = scales::trans_breaks(
-                                       'log2', function(x) 2^x, n = 8),
+                                       'log2', function(x) 2^x, n=10),
                                labels = scales::trans_format(
                                        'log2', scales::math_format(2^.x))
                                ),
                        sqrt = p + scale_x_continuous(
                                trans = scales::sqrt_trans(),
                                breaks = scales::trans_breaks(
-                                       'sqrt', function(x) x^2, n = 8),
+                                       'sqrt', function(x) x^2, n=10),
                                labels = scales::trans_format(
                                        'sqrt', scales::math_format(.x^2))
                                ),
                        exp = p + scale_x_continuous(
                                trans = scales::exp_trans(),
                                breaks = scales::trans_breaks(
-                                       'exp', function(x) log(x), n = 8),
+                                       'exp', function(x) log(x), n=10),
                                labels = scales::trans_format(
                                        'exp', scales::math_format(ln(.x)))
                                )

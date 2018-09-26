@@ -4,8 +4,7 @@
 \alias{scale_axis}
 \title{Use a different scale on either axis of a ggplot2 plot.}
 \usage{
-scale_axis(p, axis = "y", scale = "comma", pct_min = NULL,
-  pct_max = NULL, pct_jump = NULL)
+scale_axis(p, axis = "y", scale = "comma")
 }
 \arguments{
 \item{p}{A ggplot2 object.}
@@ -15,17 +14,6 @@ scale_axis(p, axis = "y", scale = "comma", pct_min = NULL,
 \item{scale}{A string of value "comma", "dollar", "pct", "log", "log1p",
 "log10", "log2", "sqrt", or "exp".
  It specifies which scale to use. Default = "comma".}
-
-\item{pct_min}{A number. The min value when using percent scale.
-When NULL (default), it'll use the min value of y.}
-
-\item{pct_max}{A number. The max value when using percent scale.
-When NULL (default), it'll use the max value of y.}
-
-\item{pct_jump}{A number. The equal distance between ticks when using
-percent scale. When NULL (default), it takes the value of
-(pct_max - pct_min) / 10, and this will break the y-axis
-into 10 pieces by placing 11 ticks on it.}
 }
 \value{
 A ggplot2 object with the new scale applied to the input axis.
@@ -47,45 +35,7 @@ or y-axis one of the following scales:
 It uses \code{scale_axis_helper} as a helper.
 }
 \examples{
-library(ezplot)
-
-#' # make some data
-df = read.table(header=TRUE, text='
-IQ score
-125 0.86
-110 0.72
-108 0.64')
-
-plt = mk_scatterplot(df)
-p = plt("IQ", "score", pt_size = 2)
-print(p)
-scale_axis(p, scale = "pct")
-scale_axis(p, scale = "pct", pct_min = 0)
-scale_axis(p, scale = "pct", pct_max = 1.2)
-scale_axis(p, scale = "pct", pct_jump = 0.05)
-scale_axis(p, scale = "pct", pct_min = 0, pct_max = 1)
-scale_axis(p, scale = "pct", pct_max = 1, pct_min = 0, pct_jump = 0.2)
-
-plt = mk_scatterplot(films)
-p = plt("boxoffice", "budget", alpha=0.5, pt_size=1)
-print(p)
-scale_axis(p)
-scale_axis(p, scale = "dollar")
-p = scale_axis(p, scale = "log10")
-print(p)
-p = scale_axis(p, "x", scale = "log2")
-print(p)
-
-library(dplyr)
-plt = mk_scatterplot(films \%>\% filter(bo_bt_ratio < 1))
-p = plt("votes", "bo_bt_ratio", alpha=0.5, pt_size=1)
-print(p)
-scale_axis(p, scale = "sqrt")
-scale_axis(p, scale = "exp")
-scale_axis(p, "x", scale = "log")
-scale_axis(p, "x", scale = "log2")
-scale_axis(p, "x", scale = "log10")
-scale_axis(p, "x", scale = "log1p")
+inst/examples/ex-scale_axis.R
 }
 \seealso{
 \code{\link{scale_axis_helper}}.

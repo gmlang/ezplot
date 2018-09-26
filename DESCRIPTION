@@ -17,10 +17,11 @@ Imports:
     scales (>= 0.5.0),
     dplyr (>= 0.7.6),
     formattable (>= 0.2.0.1),
-    cowplot (>= 0.9.3),
+    cowplot (>= 0.9.99),
     ggthemes (>= 4.0.0),
     ggpmisc (>= 0.3.0),
     ggridges (>= 0.5.0),
     qqplotr (>= 0.0.3),
-    ggstance (>= 0.3.1)
+    ggstance (>= 0.3.1),
+    ggalt (>= 0.6.1)
 RoxygenNote: 6.1.0

@@ -4,10 +4,8 @@ library(dplyr)
 f = mk_boxplot(films)
 f("year_cat", "rating", notched = T, font_size = 10)
 f("year_cat", "rating", fillby = "made_money", notched = T)
-p = f("year_cat", "boxoffice")
-scale_axis(p, scale = "log10") %>% print()
-p = f("year_cat", "budget")
-scale_axis(p, scale = "log1p") %>% print()
+f("year_cat", "boxoffice") %>% scale_axis(scale = "log10")
+f("year_cat", "budget") %>% scale_axis(scale = "log1p")
 
 f = mk_boxplot(films %>% filter(year %in% 2010:2014))
 f("year", "rating", notched = T) # throws error because "year" is integer

@@ -13,6 +13,4 @@ f("Sepal.Length", facet_by = "Species", facet_ncol = 3, font_size = 8,
   binw = function(x) 2*IQR(x) / (length(x)^(1/3)))
 
 f = mk_histogram(films)
-p = f("boxoffice")
-p = scale_axis(p, "x", scale = "log10")
-print(p)
+f("boxoffice") %>% scale_axis(axis = "x", scale = "log10")
