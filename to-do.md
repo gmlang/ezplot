@@ -20,12 +20,10 @@
 * ~~update scale_axis to work with the pipe operator~~ 
 * ~~update scale_axis to preserve current ticks and distances~~
 * ~~Dumbbell plot~~
-* intervalplot
-* slopegraph
+* plot of power and sample size relationship
 
 ### whole pkg
 * ~~add versions of dependent packages~~
-* add plot showing power and sample size relationship
 * add facet_by
  
 
