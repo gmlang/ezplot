@@ -10,7 +10,7 @@ f("made_money", fillby = "year_cat", yorder = "descend", label_size = 0) %>%
         add_labs(ylab = "made money or not")
 f("year_cat", fillby = "mpaa", label_size = 0)
 
-f("mpaa", show_pct = T, yorder = "descend")
+f("mpaa", show_pct = T, yorder = "ascend")
 f("mpaa", fillby = "made_money", show_pct = T, yorder = "descend")
 f("year_cat", fillby = "made_money", show_pct = T)
 f("year_cat", fillby = "mpaa", show_pct = T, label_size = 0)

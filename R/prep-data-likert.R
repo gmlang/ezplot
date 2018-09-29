@@ -36,11 +36,11 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls, yorder) {
         if (yorder == "descend")
                 # reorder y levels in descending order of total abs(x) val
                 df[[yvar]] = reorder(df[[yvar]], abs(df[[xvar]]),
-                                     function(x) sum(x, na.rm = T))
+                                     sum, na.rm = T)
         if (yorder == "ascend")
                 # reorder y levels in ascending order of total abs(x) val
-                df[[yvar]] = reorder(df[[yvar]], abs(df[[xvar]]),
-                                     function(x) -sum(x, na.rm = T))
+                df[[yvar]] = reorder(df[[yvar]], -abs(df[[xvar]]),
+                                     sum, na.rm = T)
 
         # --- split df into 3 subsets: negative, positive and middle based on
         #     fillby_lvls
@@ -125,8 +125,8 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls, yorder) {
 
         # --- pick good bar colors --- #
 
-        if (nlvls == 2) { # use colorblind friendly red and green
-                pal = c("#CC79A7", "#009E73")
+        if (nlvls == 2) { # use colorblind friendly blue and orange
+                pal = c("#fc7d0b", "#1170aa")
         } else {
                 pal = RColorBrewer::brewer.pal(nlvls, "RdBu")
                 if (!is.null(idx_mid_lvl)) # make middle level gray

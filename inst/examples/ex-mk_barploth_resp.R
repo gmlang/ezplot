@@ -2,7 +2,8 @@ library(ezplot)
 library(dplyr)
 
 g = mk_barploth_resp(films)
-p = g("boxoffice", "mpaa", yorder = "descend", font_size = 10)
+p = g("boxoffice", "mpaa", yorder = "ascend", font_size = 10,
+      label_decimals = 0)
 add_labs(p, title = "Fuel efficiency generally decreases with engine size",
          subtitle = "Two seaters (sports cars) are an exception ...",
          caption = "Data from fueleconomy.gov")
@@ -30,6 +31,6 @@ g("pct", "mpaa", fillby = "made_money", show_pct = T)
 
 df = ggplot2::diamonds %>% count(clarity) %>% mutate(pct = n / sum(n))
 g = mk_barploth_resp(df)
-g("n", "clarity")
+g("n", "clarity", label_decimals = 0)
 g("pct", "clarity", label_decimals = 2)
-g("pct", "clarity", label_decimals = 1, show_pct = T)
+g("pct", "clarity", show_pct = T)

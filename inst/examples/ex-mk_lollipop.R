@@ -2,15 +2,15 @@ library(ezplot)
 library(dplyr)
 
 g = mk_lollipop(films)
-p = g("boxoffice", "mpaa", yorder = "descend", font_size = 10)
+p = g("boxoffice", "mpaa", yorder = "descend", font_size = 10,
+      label_decimals = 0)
 add_labs(p, title = "Fuel efficiency generally decreases with engine size",
          subtitle = "Two seaters (sports cars) are an exception ...",
          caption = "Data from fueleconomy.gov")
 
 df = films %>% count(mpaa, made_money) %>% mutate(pct = n / sum(n))
 g = mk_lollipop(df)
-g("pct", "mpaa")
-g("pct", "mpaa", label_decimals = 1, yorder = "descend")
+g("pct", "mpaa", yorder = "descend")
 
 # use label_size = 0 to remove label text
 g("pct", "mpaa", show_pct = T, font_size = 9, label_size = 0) %>%

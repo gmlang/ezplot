@@ -97,16 +97,14 @@ mk_barplot_resp = function(df) {
                         # get bar label text
                         bar_labels = scales::comma(
                                 df_label[[yvar]],
-                                accuracy = ifelse(all_bigger_than1,
-                                                  1, 1/10^label_decimals)
+                                accuracy = 1/10^label_decimals
                                 )
                 }
 
                 # --- Format bar label --- #
 
-                p = p + geom_text(aes(!!as.name(xvar), !!as.name(yvar),
-                                      label = bar_labels),
-                                  data = df_label,
+                p = p + geom_text(aes_string(xvar, yvar), data = df_label,
+                                  label = bar_labels,
                                   vjust = -0.5, size = label_size,
                                   position = position_dodge(width = 0.9)
                                   )

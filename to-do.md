@@ -19,7 +19,7 @@
 * ~~lollipop plot ~~
 * ~~update scale_axis to work with the pipe operator~~ 
 * ~~update scale_axis to preserve current ticks and distances~~
-* Dumbbell plot (ggalt)
+* ~~Dumbbell plot~~
 * intervalplot
 * slopegraph
 

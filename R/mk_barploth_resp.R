@@ -61,13 +61,12 @@ mk_barploth_resp = function(df) {
                                             sort(unique(df[[yvar]]),
                                                  decreasing = T))
                 if (yorder == "descend")
-                        # reorder y levels in descending order of their counts
-                        df[[yvar]] = reorder(df[[yvar]], df[[yvar]],
-                                             function(y) length(y))
+                        df[[yvar]] = reorder(df[[yvar]], df[[xvar]],
+                                             sum, na.rm = T)
+
                 if (yorder == "ascend")
-                        # reorder y levels in ascending order of their counts
-                        df[[yvar]] = reorder(df[[yvar]], df[[yvar]],
-                                             function(y) -length(y))
+                        df[[yvar]] = reorder(df[[yvar]], -df[[xvar]],
+                                             sum, na.rm = T)
 
 
                 # get data frame of bar labels and positions
@@ -112,16 +111,16 @@ mk_barploth_resp = function(df) {
                         # get bar label text
                         bar_labels = scales::comma(
                                 df_label[[xvar]],
-                                accuracy = ifelse(all_bigger_than1,
-                                                  1, 1/10^label_decimals)
+                                accuracy = 1/10^label_decimals
                                 )
                 }
 
                 # --- Format bar label --- #
 
-                p = p + geom_text(aes(mid_pos, !!as.name(yvar),
-                                      label = bar_labels),
-                                  data = df_label, size = label_size,
+                p = p + geom_text(aes(mid_pos, !!as.name(yvar)),
+                                  data = df_label,
+                                  label = bar_labels,
+                                  size = label_size,
                                   position = ggstance::position_dodge2v(
                                           height = 0.9)
                                   )

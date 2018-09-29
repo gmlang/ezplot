@@ -32,15 +32,13 @@ mk_lollipop(df)
 }
 \description{
 \code{mk_lollipop} takes a data frame as input and returns a function
-for making bar charts with any categorical variable from the data frame on
-the y-axis and the value (or cumulative values) of any continuous variable on
-the x-axis. The output function can also produce dodged bar charts when
-supplied a second categorical variable, a fillby variable. The resulting
-bar chart will have bars ordered ordered by the alphanumerical order
-of the y levels by default, and labeled with the cumulative x values.
-If the x values are decimals, user can specify the number of
-decimals to display on the bar labels. If the x values are between 0 and 1,
-user can choose to format the x-axis and the bar labels as percent (%). Plus,
+for making horizontal lollipop charts with any categorical variable from the
+data frame on y-axis and the value (or cumulative values) of any continuous
+variable on x-axis. The resulting chart will have the y levels ordered
+alphanumerically by default. It'll label the stems of lollipops with the
+cumulative x values. If the x values are decimals, user can specify the
+number of decimals to display. If the x values are between 0 and 1,
+user can choose to format the x-axis and the labels as percent (%). Finally,
 the resulting plot will have a clean theme and clear fonts.
 It'll also use color-blind friendly palettes.
 }

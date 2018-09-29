@@ -27,13 +27,9 @@ prep_data_lollipop = function(df, xvar, yvar, yorder) {
                 df[[yvar]] = factor(df[[yvar]],
                                     sort(unique(df[[yvar]]), decreasing = T))
         if (yorder == "descend")
-                # reorder y levels in descending order of their counts
-                df[[yvar]] = reorder(df[[yvar]], df[[yvar]],
-                                     function(y) length(y))
+                df[[yvar]] = reorder(df[[yvar]], df[[xvar]], sum, na.rm = T)
         if (yorder == "ascend")
-                # reorder y levels in ascending order of their counts
-                df[[yvar]] = reorder(df[[yvar]], df[[yvar]],
-                                     function(y) -length(y))
+                df[[yvar]] = reorder(df[[yvar]], -df[[xvar]], sum, na.rm = T)
 
 
         # aggregate x over ylevels
