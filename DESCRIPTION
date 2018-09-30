@@ -1,0 +1,27 @@
+Package: ezplot
+Title: A collection of functions for making common statistical charts in ggplot2
+Version: 1.0.0
+Authors@R: 'Guangming Lang <gmlang@cabaceo.com> [aut, cre]'
+Description: A collection of wrapper functions that allow you to easily make
+    statistical charts in ggplot2. Specifically, it supports the following
+    types of plots: boxplot, barplot, lineplot, histogram, density plot, and
+    scatter plot. It also allows you to easily resize and rotate the axis
+    tick text, adjust the distances between the axises labels and the axises.
+    It frees you from knowing the details of ggplot2 commands.
+Depends:
+    R (>= 3.1.2)
+License: GNU General Public License v2.0
+LazyData: true
+Imports:
+    ggplot2 (>= 3.0.0),
+    scales (>= 0.5.0),
+    dplyr (>= 0.7.6),
+    formattable (>= 0.2.0.1),
+    cowplot (>= 0.9.99),
+    ggthemes (>= 4.0.0),
+    ggpmisc (>= 0.3.0),
+    ggridges (>= 0.5.0),
+    qqplotr (>= 0.0.3),
+    ggstance (>= 0.3.1),
+    ggalt (>= 0.6.1)
+RoxygenNote: 6.1.0
