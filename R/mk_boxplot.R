@@ -9,10 +9,11 @@
 #'
 #' @param df A data frame.
 #' @return
-#' \code{function(xvar, yvar, fillby = "1", notched = FALSE, label_size = 3,
-#'                font_size = 14)}
+#' \code{function(xvar = "1", yvar, fillby = "1", notched = FALSE,
+#'                label_size = 3, font_size = 14)}
 #' \itemize{
-#'      \item xvar     :  string, name of a categorical variable for x-axis.
+#'      \item xvar     : string, name of a categorical variable for x-axis.
+#'                       Default = "1", just draw a boxplot of yvar by itself.
 #'      \item yvar     :  string, name of a continuous variable for y-axis.
 #'      \item fillby   :  string, name of a different categorical variable for
 #'                        breaking down the y values of each box. Default = "1",
@@ -26,7 +27,7 @@
 #' @export
 #' @examples inst/examples/ex-mk_boxplot.R
 mk_boxplot = function(df) {
-        function(xvar, yvar, fillby = "1", notched = FALSE, label_size = 3,
+        function(xvar = "1", yvar, fillby = "1", notched = FALSE, label_size = 3,
                  font_size = 14) {
 
                 # --- Prep --- #
