@@ -1,6 +1,6 @@
 library(ezplot)
 
-df = read.csv("inst/power_n_ssize_agegroup.csv")
+df = readr::read_rds("inst/power_n_ssize_gender.rds")
 plt = mk_facet_lineplot(df)
 
 # grouping var can be numeric

@@ -20,10 +20,13 @@
 * ~~update scale_axis to work with the pipe operator~~ 
 * ~~update scale_axis to preserve current ticks and distances~~
 * ~~Dumbbell plot~~
-* plot of power and sample size relationship
+* ~~plot of power and sample size relationship~~
+* facet plot for barchart, histogram, boxplot and etc.
+
+
 
 ### whole pkg
 * ~~add versions of dependent packages~~
-* add facet_by
+
  
 
