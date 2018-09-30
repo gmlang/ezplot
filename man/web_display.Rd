@@ -33,6 +33,7 @@ web_display(p, axis_text_size = 16, axis_title_size = ggplot2::rel(2),
 A ggplot object
 }
 \description{
+<<<<<<< HEAD
 \code{web_display} takes a ggplot object as input, and enlarges its axis 
 tick text, axis label text, legend title and text, and distance between the 
 axis labels and the axis to make it look good for web display.
@@ -56,4 +57,12 @@ web_display(p, legend_title=FALSE)
 web_display(p, legend_pos="top")
 web_display(p, legend_pos="none")
 web_display(p, legend_pos="bottom")
+=======
+\code{web_display} takes a ggplot object as input, and enlarges its axis
+tick text, axis label text, legend title and text, and distance between the
+axis labels and the axis to make it look good for web display.
+}
+\examples{
+inst/examples/ex-web_display.R
+>>>>>>> v1.0.0
 }

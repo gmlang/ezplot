@@ -2,7 +2,11 @@
 % Please edit documentation in R/mk_scatterplot.R
 \name{mk_scatterplot}
 \alias{mk_scatterplot}
+<<<<<<< HEAD
 \title{Create a function that draws ggplot2 scatterplots.}
+=======
+\title{Create a function for making publishable ggplot2 scatterplots.}
+>>>>>>> v1.0.0
 \usage{
 mk_scatterplot(df)
 }
@@ -10,6 +14,7 @@ mk_scatterplot(df)
 \item{df}{A data frame.}
 }
 \value{
+<<<<<<< HEAD
 \code{function(xvar, yvar, fillby="", xlab="", ylab="", main="", add_line=FALSE,
                linew=1, pt_alpha=0.5, pt_size=1)}
 \itemize{
@@ -56,4 +61,36 @@ p = plt("budget", "boxoffice", fillby="made_money", xlab="budget",
 p = scale_axis(p, "x", scale = "log2")
 p = scale_axis(p, "y", scale = "log2")
 print(p)
+=======
+\code{function(xvar, yvar, fillby = "1", alpha = 0.8, pt_size = 1,
+               jitter = FALSE, font_size = 14, add_cnt_to_legend = T)}
+\itemize{
+     \item xvar     :  string, name of a categorical variable for x-axis.
+     \item yvar     :  string, name of a continuous variable for y-axis.
+     \item fillby   :  string, name of a different categorical variable for
+                       grouping and coloring the points. Default = "1",
+                       meaning no such variable is supplied.
+     \item alpha    :  a number between 0 and 1, transparency level of the
+                       point colors. Smaller value means more transparent.
+                       Default = 0.8.
+     \item pt_size  :  number, size of the points. Default = 1.
+     \item jitter   :  logical, jitter points if TRUE. Used when there're
+                       overlapping points. Default = FALSE.
+     \item font_size:  overall font size. Default = 14. The font size of the
+                       axes and legend text is a fraction of this value.
+     \item add_cnt_to_legend: logical, when TRUE (default), it will show
+                   the number of non-missing records for each level in the
+                   fillby var.
+}
+}
+\description{
+\code{mk_scatterplot} takes a data frame as input and returns a function for
+making scatterplots with any continuous variables from the data frame on the
+x and y axes. When supplied a categorical fillby variable, the output
+function will produce scatterplots where the points are colored differently
+according to the levels of the fillby variable.
+}
+\examples{
+inst/examples/ex-mk_scatterplot.R
+>>>>>>> v1.0.0
 }

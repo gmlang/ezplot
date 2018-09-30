@@ -2,7 +2,11 @@
 % Please edit documentation in R/mk_lineplot.R
 \name{mk_lineplot}
 \alias{mk_lineplot}
+<<<<<<< HEAD
 \title{Create a function that draws ggplot2 line plots.}
+=======
+\title{Create a function for making publishable ggplot2 line plots.}
+>>>>>>> v1.0.0
 \usage{
 mk_lineplot(df)
 }
@@ -10,6 +14,7 @@ mk_lineplot(df)
 \item{df}{A data frame.}
 }
 \value{
+<<<<<<< HEAD
 \code{function(xvar, yvar, fillby="", xlab="", ylab="", main="", linew=0.7, 
                pt_size=2)}
 \itemize{
@@ -44,4 +49,35 @@ scale_axis(p, scale="log10")
 plt = mk_lineplot(btbo_by_year)
 title = "Annual Total Budget and Boxoffice from 1913 to 2014"
 plt("year", "tot", "type", ylab="total amount ($billion)", main=title)
+=======
+\code{function(xvar, yvar, fillby = "1", pt_size = 1, linew = 0.7,
+               font_size = 14, add_cnt_to_legend = TRUE)}
+\itemize{
+     \item xvar   : string, name of a continuous or categorical variable for
+                    x-axis.
+     \item yvar   : string, name of a continuous variable for y-axis.
+     \item fillby : string, name of a categorical variable for
+                    grouping and coloring the lines. Default = "1", meaning
+                    no such variable is supplied.
+     \item pt_size: number, size of the points. Default = 1.
+     \item linew  : number, width of the line. Default = 0.7.
+     \item font_size: overall font size. Default = 14. The font size of the
+                      axes and legend text is a fraction of this value.
+     \item add_cnt_to_legend: logical, when TRUE (default), it will show
+                   the number of non-missing records for each level in the
+                   fillby var.
+}
+}
+\description{
+\code{mk_lineplot} takes a data frame as input and returns a function for
+making lineplots with any continuous variables from the data frame on the y
+axis, and any continuous or categorical variables from the data frame on the
+x axis. The x variable often measures time, for example, years. When supplied
+a categorical fillby variable, the output function will produce lineplots
+where lines are colored differently according to the levels of the fillby
+variable.
+}
+\examples{
+inst/examples/ex-mk_lineplot.R
+>>>>>>> v1.0.0
 }

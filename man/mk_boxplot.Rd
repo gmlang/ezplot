@@ -2,7 +2,11 @@
 % Please edit documentation in R/mk_boxplot.R
 \name{mk_boxplot}
 \alias{mk_boxplot}
+<<<<<<< HEAD
 \title{Create a function that draws ggplot2 boxplots}
+=======
+\title{Create a function for making publishable ggplot2 boxplots.}
+>>>>>>> v1.0.0
 \usage{
 mk_boxplot(df)
 }
@@ -10,6 +14,7 @@ mk_boxplot(df)
 \item{df}{A data frame.}
 }
 \value{
+<<<<<<< HEAD
 \code{function(xvar, yvar, fillby="1", xlab="", ylab="", main="", legend=TRUE, 
                add_label=TRUE, lab_at_top=TRUE, vpos=0)}
 \itemize{
@@ -57,4 +62,30 @@ print(p)
 # plot distributions of budget at each aggregated year level
 p = plt("year_cat", "budget", ylab="boxoffice", legend=F)
 scale_axis(p, scale="log10")
+=======
+\code{function(xvar, yvar, fillby = "1", notched = FALSE, label_size = 3,
+               font_size = 14)}
+\itemize{
+     \item xvar     :  string, name of a categorical variable for x-axis.
+     \item yvar     :  string, name of a continuous variable for y-axis.
+     \item fillby   :  string, name of a different categorical variable for
+                       breaking down the y values of each box. Default = "1",
+                       meaning no such variable is supplied.
+     \item notched  :  logical, draw notched boxplots when TRUE;
+                       otherwise, draw regular boxplots. Default = FALSE.
+     \item label_size: integer, size of bar label text. Default = 3.
+     \item font_size : overall font size. Default = 14. The font size of the
+                       axes and legend text is a fraction of this value.
+}
+}
+\description{
+\code{mk_boxplot} takes a data frame as input and returns a function for
+making boxplots with any categorical variable from the data frame on the
+x-axis and any continuous variable on the y-axis. The output function can
+also produce dodged boxplots when supplied a second categorical variable, a
+fillby variable.
+}
+\examples{
+inst/examples/ex-mk_boxplot.R
+>>>>>>> v1.0.0
 }

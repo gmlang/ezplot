@@ -10,6 +10,7 @@ mk_heatmap(df)
 \item{df}{A data frame.}
 }
 \value{
+<<<<<<< HEAD
 \code{function(xvar, yvar, fillby, xlab="", ylab="", main="", base_size = 12, 
                use_theme_gray=TRUE, legend=TRUE)}
 \itemize{
@@ -28,3 +29,29 @@ mk_heatmap(df)
 \code{mk_heatmap} takes a data frame as input and returns a function that 
 can be used to make heat maps using variables in the data frame.
 }
+=======
+\code{function(xvar, yvar, fillby, facet_by = NULL, facet_ncol = 1,
+               palette = "C", font_size = 8)}
+\itemize{
+     \item xvar   : string, name of a categorical variable for x-axis.
+     \item yvar   : string, name of another categorical variable for y-axis.
+     \item fillby : string, name of a continuous variable, and its values
+                    are used to color the tiles.
+     \item facet_by: string, name of a categorical variable for grouping and
+                     creating facets. Default = NULL.
+     \item facet_ncol: number of columns when facetting. Default = 1.
+                       Only works when facet_by is not NULL.
+     \item palette   : string, the colormap option to use. Possible values
+                       are "A", "B", "C" (default), "D" and "E".
+     \item font_size : overall font size. Default = 8. The font size of the
+                       axes and legend text is a fraction of this value.
+}
+}
+\description{
+\code{mk_heatmap} takes a data frame as input and returns a function that
+can be used to make heat maps using variables in the data frame.
+}
+\examples{
+inst/examples/ex-mk_heatmap.R
+}
+>>>>>>> v1.0.0

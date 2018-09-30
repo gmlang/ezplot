@@ -9,7 +9,11 @@
 ads
 }
 \description{
+<<<<<<< HEAD
 A dataset containing internet ads revenue from 2000 to 2014. 
+=======
+A dataset containing internet ads revenue from 2000 to 2014.
+>>>>>>> v1.0.0
 Source: iab.net
 }
 \keyword{datasets}

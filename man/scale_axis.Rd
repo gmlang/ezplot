@@ -4,24 +4,35 @@
 \alias{scale_axis}
 \title{Use a different scale on either axis of a ggplot2 plot.}
 \usage{
+<<<<<<< HEAD
 scale_axis(p, axis = "y", scale = NULL, pct_min = 0, pct_max = 1,
   pct_jump = 0.2)
+=======
+scale_axis(p, axis = "y", scale = "comma")
+>>>>>>> v1.0.0
 }
 \arguments{
 \item{p}{A ggplot2 object.}
 
 \item{axis}{A string of value "x" or "y". Default = "y".}
 
+<<<<<<< HEAD
 \item{scale}{A string of value "comma", "log", "log10", or "pct". It specifies which scale to use. Default = NULL, which uses the original scale.}
 
 \item{pct_max}{A number no bigger than 1. It specifies the max value when using percent format. Default = 1.}
 
 \item{pct_jump}{A number between 0 and 1. It specifies the interval width between ticks when using percent format. Default = 0.2.}
+=======
+\item{scale}{A string of value "comma", "dollar", "pct", "log", "log1p",
+"log10", "log2", "sqrt", or "exp".
+ It specifies which scale to use. Default = "comma".}
+>>>>>>> v1.0.0
 }
 \value{
 A ggplot2 object with the new scale applied to the input axis.
 }
 \description{
+<<<<<<< HEAD
 \code{scale_axis} takes a ggplot2 object as input and applies to its x-axis or 
 y-axis one of the following scales: 
 \itemize{
@@ -29,10 +40,25 @@ y-axis one of the following scales:
      \item log  : use log scale.
      \item log10: use log10 scale.
      \item pct  : use % format, the values must be between 0 and 1.
+=======
+\code{scale_axis} takes a ggplot2 object as input and applies to its x-axis
+or y-axis one of the following scales:
+\itemize{
+    \item comma  : show numbers in 000,000 format.
+    \item dollar : show $ in front of numbers.
+    \item pct    : use % format.
+    \item log    : use log transformation.
+    \item log1p  : use log(x+1) transformation.
+    \item log10  : use log10 transformation.
+    \item log2   : use log2 transformation.
+    \item sqrt   : use squared root transformation.
+    \item exp    : use exponential transformation.
+>>>>>>> v1.0.0
 }
 It uses \code{scale_axis_helper} as a helper.
 }
 \examples{
+<<<<<<< HEAD
 # make some fake data
 library(ezplot)
 plt = mk_scatterplot(films)
@@ -55,6 +81,9 @@ df$pct = df$grade / sum(df$grade)
 barplt = mk_barplot(df)
 p = barplt("student", "pct", fillby="student", legend=F)
 scale_axis(p, "y", scale="pct", pct_jump=0.3)
+=======
+inst/examples/ex-scale_axis.R
+>>>>>>> v1.0.0
 }
 \seealso{
 \code{\link{scale_axis_helper}}.

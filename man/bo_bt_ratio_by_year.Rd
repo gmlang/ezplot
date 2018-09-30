@@ -13,7 +13,11 @@
 bo_bt_ratio_by_year
 }
 \description{
+<<<<<<< HEAD
 A dataset containing the Boxoffices/Budget ratio from 1913 to 2014 of 
+=======
+A dataset containing the Boxoffices/Budget ratio from 1913 to 2014 of
+>>>>>>> v1.0.0
 5944 films obtained from IMDB.com.
 }
 \keyword{datasets}

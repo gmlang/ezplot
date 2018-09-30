@@ -15,7 +15,11 @@
 btbo_by_year
 }
 \description{
+<<<<<<< HEAD
 A dataset containing the ggregated annual Budget and Boxoffice of 
+=======
+A dataset containing the ggregated annual Budget and Boxoffice of
+>>>>>>> v1.0.0
 5944 films beween 1913 and 2014 from IMDB.com.
 }
 \keyword{datasets}

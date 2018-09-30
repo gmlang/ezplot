@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 #' @title Films data downloaded from IMDB 
 #' 
 #' @description 
 #' A dataset containing the budgets, boxoffices, ratings and other attributes of
 #' 5944 films from 1913 to 2014 obtained from IMDB.com.
 #' 
+=======
+#' @title Films data downloaded from IMDB
+#'
+#' @description
+#' A dataset containing the budgets, boxoffices, ratings and other attributes of
+#' 5944 films from 1913 to 2014 obtained from IMDB.com.
+#'
+>>>>>>> v1.0.0
 #' @format A data frame with 5944 rows and 53 variables:
 #' \describe{
 #'      \item{title}{Title of the movie.}
@@ -22,11 +31,19 @@
 "films"
 
 #' @title Aggregated Annual Budget and Boxoffice
+<<<<<<< HEAD
 #' 
 #' @description 
 #' A dataset containing the ggregated annual Budget and Boxoffice of 
 #' 5944 films beween 1913 and 2014 from IMDB.com.
 #' 
+=======
+#'
+#' @description
+#' A dataset containing the ggregated annual Budget and Boxoffice of
+#' 5944 films beween 1913 and 2014 from IMDB.com.
+#'
+>>>>>>> v1.0.0
 #' @format A data frame with 202 rows and 4 variables:
 #' \describe{
 #'      \item{year}{Year of release.}
@@ -37,11 +54,19 @@
 "btbo_by_year"
 
 #' @title Boxoffice/Budget Ratio
+<<<<<<< HEAD
 #' 
 #' @description 
 #' A dataset containing the Boxoffices/Budget ratio from 1913 to 2014 of 
 #' 5944 films obtained from IMDB.com.
 #' 
+=======
+#'
+#' @description
+#' A dataset containing the Boxoffices/Budget ratio from 1913 to 2014 of
+#' 5944 films obtained from IMDB.com.
+#'
+>>>>>>> v1.0.0
 #' @format A data frame with 101 rows and 2 variables:
 #' \describe{
 #'      \item{year}{Year of release.}
@@ -50,19 +75,34 @@
 "bo_bt_ratio_by_year"
 
 #' @title Internet Ads Revenue
+<<<<<<< HEAD
 #' 
 #' @description 
 #' A dataset containing internet ads revenue from 2000 to 2014. 
 #' Source: iab.net
 #' 
+=======
+#'
+#' @description
+#' A dataset containing internet ads revenue from 2000 to 2014.
+#' Source: iab.net
+#'
+>>>>>>> v1.0.0
 #' @format A data frame with 15 rows and 13 variables:
 "ads"
 
 #' @title Cancer Survival Rates
+<<<<<<< HEAD
 #' 
 #' @description 
 #' A dataset containing the survival rates of 24 different cancers.
 #' 
+=======
+#'
+#' @description
+#' A dataset containing the survival rates of 24 different cancers.
+#'
+>>>>>>> v1.0.0
 #' @format A data frame with 96 rows and 3 variables:
 #' \describe{
 #'      \item{group}{Different cancer types}
@@ -72,6 +112,7 @@
 "cancer"
 
 #' @title NBA Player Performance Statistics
+<<<<<<< HEAD
 #' 
 #' @description 
 #' A dataset containing 21 different performance statistics of 50 NBA players
@@ -79,3 +120,56 @@
 #' 
 #' @format A data frame with 50 rows and 21 columns:
 "nba"
+=======
+#'
+#' @description
+#' A dataset containing 21 different performance statistics of 50 NBA players
+#' obtained from flowingdata.com.
+#'
+#' @format A data frame with 50 rows and 21 columns:
+"nba"
+
+#' @title Internet attacks data, aggregated over all countries
+#'
+#' @description
+#' A dataset containing logs of internet attacks of all countries for each hour
+#' of a day during a fixed period. It's derived from this raw data source:
+#' https://github.com/hrbrmstr/facetedcountryheatmaps/tree/master/data
+#'
+#' @format A data frame with 168 rows and 3 columns:
+#' @source \url{https://github.com/hrbrmstr/facetedcountryheatmaps/tree/master/data}
+"attacks_all_countries"
+
+#' @title Internet attacks data by each country
+#'
+#' @description
+#' A dataset containing logs of internet attacks by country for each hour
+#' of a day during a fixed period. It's derived from this raw data source:
+#' https://github.com/hrbrmstr/facetedcountryheatmaps/tree/master/data
+#'
+#' @format A data frame with 1680 rows and 5 columns:
+#' @source \url{https://github.com/hrbrmstr/facetedcountryheatmaps/tree/master/data}
+"attacks_by_country"
+
+#' @title Arab Baromteter Wave III Survey
+#'
+#' @description
+#' A dataset containing estimates for twelve countries on a Likert-type rating
+#' of confidence in the future economy. Respondents were asked,
+#' "What do you think will be the economic situation in your country during the
+#' next few years (3-5 years) compared to the current situation?"
+#'
+#' Dataset is obtained from http://rnotr.com/likert/ggplot/barometer/likert-plots/.
+#'
+#' @format A data frame with 12 rows and 6 columns:
+"ab3"
+
+#' @title Fake data for testing mk_facet_lineplot()
+#'
+#' @description
+#' A dataset containing fake powers and sample sizes when testing main effect
+#' between male and female. See inst/examples/ex-mk_facet_lineplot.R
+#'
+#' @format A data frame with 448 rows and 5 columns:
+"power_n_ssize_gender"
+>>>>>>> v1.0.0
