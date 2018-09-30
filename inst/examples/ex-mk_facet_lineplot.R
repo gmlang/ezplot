@@ -1,6 +1,5 @@
 library(ezplot)
 
-load("inst/power_n_ssize_gender.rda")
 plt = mk_facet_lineplot(power_n_ssize_gender)
 
 # grouping var can be numeric
@@ -14,8 +13,6 @@ add_labs(p, xlab = bquote(delta),
          title = "Powers & Sample sizes when Testing Main Effect: Gender, Male vs. Female",
          subtitle = "Number of cells per animal",
          caption = cap)
-
-
 
 # grouping var can be character/factor
 df = power_n_ssize_gender

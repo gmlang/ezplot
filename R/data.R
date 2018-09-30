@@ -114,3 +114,12 @@
 #'
 #' @format A data frame with 12 rows and 6 columns:
 "ab3"
+
+#' @title Fake data for testing mk_facet_lineplot()
+#'
+#' @description
+#' A dataset containing fake powers and sample sizes when testing main effect
+#' between male and female. See inst/examples/ex-mk_facet_lineplot.R
+#'
+#' @format A data frame with 448 rows and 5 columns:
+"power_n_ssize_gender"
