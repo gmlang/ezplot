@@ -1,7 +1,7 @@
 library(ezplot)
 
-df = readr::read_rds("inst/power_n_ssize_gender.rds")
-plt = mk_facet_lineplot(df)
+load("inst/power_n_ssize_gender.rda")
+plt = mk_facet_lineplot(power_n_ssize_gender)
 
 # grouping var can be numeric
 plt("delta", "Power", xvar_top = "csize", yvar_rt = "ssize", gpby = "rho")
@@ -18,6 +18,7 @@ add_labs(p, xlab = bquote(delta),
 
 
 # grouping var can be character/factor
+df = power_n_ssize_gender
 df$rho = as.character(df$rho)
 plt = mk_facet_lineplot(df)
 plt("delta", "Power", xvar_top = "csize", yvar_rt = "ssize", gpby = "rho")
