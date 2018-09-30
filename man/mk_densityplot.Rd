@@ -11,11 +11,11 @@ mk_densityplot(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(xvar, yvar, cut_tail = 0.005, font_size = 14)}
+\code{function(xvar, yvar = "1", cut_tail = 0.005, font_size = 14)}
 \itemize{
      \item xvar : string, name of a continuous variable for x-axis.
      \item yvar : string, name of a categorical variable for y-axis. It's
-                  used to group x. Its type must be character or factor.
+                  used to group x. Default is "1", meaning no groups.
      \item cut_tail : a number between 0 and 1. Lines with heights below this
                       cutoff will be removed. The cutoff is relative to the
                       overall maximum, so cut_tail = 0.01 would remove
