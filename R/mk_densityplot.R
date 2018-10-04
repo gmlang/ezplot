@@ -13,11 +13,11 @@
 #'      \item xvar : string, name of a continuous variable for x-axis.
 #'      \item yvar : string, name of a categorical variable for y-axis. It's
 #'                   used to group x. Default is "1", meaning no groups.
-#'      \item cut_tail : a number between 0 and 1. Lines with heights below this
-#'                       cutoff will be removed. The cutoff is relative to the
-#'                       overall maximum, so cut_tail = 0.01 would remove
-#'                       everything that is 1% or less than the highest point.
-#'                       Default = 0.005, so 0.5% or below are removed.
+#'      \item cut_tail: a number between 0 and 1. Lines with heights below this
+#'                      cutoff will be removed. The cutoff is relative to the
+#'                      overall maximum, so cut_tail = 0.01 would remove
+#'                      everything that is 1 percent or less than the highest point.
+#'                      Default = 0.005, so 0.5 percent or less are removed.
 #'      \item font_size: overall font size. Default = 14. The font size of the
 #'                       axes and legend text is a fraction of this value.
 #' }
