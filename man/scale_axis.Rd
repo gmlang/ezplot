@@ -24,7 +24,7 @@ or y-axis one of the following scales:
 \itemize{
     \item comma  : show numbers in 000,000 format.
     \item dollar : show $ in front of numbers.
-    \item pct    : use % format.
+    \item pct    : use percent format.
     \item log    : use log transformation.
     \item log1p  : use log(x+1) transformation.
     \item log10  : use log10 transformation.
@@ -32,11 +32,7 @@ or y-axis one of the following scales:
     \item sqrt   : use squared root transformation.
     \item exp    : use exponential transformation.
 }
-It uses \code{scale_axis_helper} as a helper.
 }
 \examples{
 inst/examples/ex-scale_axis.R
-}
-\seealso{
-\code{\link{scale_axis_helper}}.
 }

@@ -6,7 +6,7 @@
 #' \itemize{
 #'     \item comma  : show numbers in 000,000 format.
 #'     \item dollar : show $ in front of numbers.
-#'     \item pct    : use % format.
+#'     \item pct    : use percent format.
 #'     \item log    : use log transformation.
 #'     \item log1p  : use log(x+1) transformation.
 #'     \item log10  : use log10 transformation.
@@ -14,9 +14,6 @@
 #'     \item sqrt   : use squared root transformation.
 #'     \item exp    : use exponential transformation.
 #' }
-#' It uses \code{scale_axis_helper} as a helper.
-#'
-#' @seealso \code{\link{scale_axis_helper}}.
 #'
 #' @param p A ggplot2 object.
 #' @param axis A string of value "x" or "y". Default = "y".
