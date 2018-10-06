@@ -13,6 +13,10 @@ p = plt("IQ", "score", pt_size = 2)
 print(p)
 scale_axis(p, scale = "pct")
 
+# also works if we rename y first and then apply pct scale
+p = add_labs(p, ylab = "sc")
+scale_axis(p, scale = "pct")
+
 plt = mk_scatterplot(films)
 p = plt("boxoffice", "budget", alpha=0.5, pt_size=1)
 print(p)

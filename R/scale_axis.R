@@ -26,11 +26,8 @@
 #' @examples inst/examples/ex-scale_axis.R
 scale_axis = function(p, axis = "y", scale = "comma") {
 
-        var = p$labels[[axis]]
-        # val_min = min(c(0, p$data[[var]]), na.rm = T)
-        # val_max = max(p$data[[var]], na.rm = T)
+        var = as.character(p$mapping[[axis]])[[2]]
         axis_breaks = pretty(c(0, p$data[[var]]), 10)
-        # delta = axis_breaks[2] - axis_breaks[1]
 
         if (axis == "y") {
                 switch(scale,
