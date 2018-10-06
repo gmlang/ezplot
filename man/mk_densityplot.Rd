@@ -11,7 +11,8 @@ mk_densityplot(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(xvar, yvar = "1", cut_tail = 0.005, font_size = 14)}
+\code{function(xvar, yvar = "1", cut_tail = 0.005, color_direction = -1,
+               font_size = 14)}
 \itemize{
      \item xvar : string, name of a continuous variable for x-axis.
      \item yvar : string, name of a categorical variable for y-axis. It's
@@ -21,6 +22,9 @@ mk_densityplot(df)
                      overall maximum, so cut_tail = 0.01 would remove
                      everything that is 1 percent or less than the highest point.
                      Default = 0.005, so 0.5 percent or less are removed.
+     \item color_direction: 1 or -1. Sets the order of colors in the scale.
+              If 1, colors are ordered from darkest to lightest.
+              If -1 (default), ordered from lightest to darkest.
      \item font_size: overall font size. Default = 14. The font size of the
                       axes and legend text is a fraction of this value.
 }

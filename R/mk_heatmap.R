@@ -8,7 +8,8 @@
 #'
 #' @return
 #' \code{function(xvar, yvar, fillby, facet_by = NULL, facet_ncol = 1,
-#'                palette = "C", font_size = 8)}
+#'                palette = "C", color_direction = -1,
+#'                format_legend_as_comma = FALSE,  font_size = 8)}
 #' \itemize{
 #'      \item xvar   : string, name of a categorical variable for x-axis.
 #'      \item yvar   : string, name of another categorical variable for y-axis.
@@ -20,6 +21,12 @@
 #'                        Only works when facet_by is not NULL.
 #'      \item palette   : string, the colormap option to use. Possible values
 #'                        are "A", "B", "C" (default), "D" and "E".
+#'      \item color_direction: 1 or -1. Sets the order of colors in the scale.
+#'               If 1, colors are ordered from darkest to lightest.
+#'               If -1 (default), ordered from lightest to darkest.
+#'      \item format_legend_as_comma: logical. If TRUE, display numbers like
+#'               2000 as 2,000 on legend. If FALSE (default), display numbers as
+#'               they are.
 #'      \item font_size : overall font size. Default = 8. The font size of the
 #'                        axes and legend text is a fraction of this value.
 #' }
@@ -28,16 +35,25 @@
 #' @examples inst/examples/ex-mk_heatmap.R
 mk_heatmap = function(df) {
         function(xvar, yvar, fillby, facet_by = NULL, facet_ncol = 1,
-                 palette = "C", font_size = 8) {
+                 palette = "C", color_direction = -1,
+                 format_legend_as_comma = FALSE, font_size = 8) {
 
                 # --- Main Plot --- #
 
                 p = ggplot(df, aes_string(x = xvar, y = yvar, fill = fillby)) +
-                        geom_tile(color = "white", size = 0.1) +
-                        scale_fill_viridis_c(
+                        geom_tile(color = "white", size = 0.1)
+
+                if (format_legend_as_comma) {
+                        p = p + scale_fill_viridis_c(
                                 name = fillby, label = scales::comma,
-                                option = palette, direction = -1) +
-                        coord_equal()
+                                option = palette, direction = color_direction)
+                } else {
+                        p = p + scale_fill_viridis_c(
+                                name = fillby, option = palette,
+                                direction = color_direction)
+                }
+
+                p = p + coord_equal()
 
                 # --- Facet --- #
 

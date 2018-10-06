@@ -5,7 +5,8 @@ plt = mk_densityplot(iris)
 plt("Sepal.Length", "Species")
 
 plt = mk_densityplot(films)
-plt("rating", "year_cat", font_size = 9) %>% add_labs(title = "Density Plot")
+plt("rating", "year_cat", color_direction = 1, font_size = 9) %>%
+        add_labs(title = "Density Plot")
 plt("rating", "year") # throws error when yvar is integer or numeric
 
 plt("boxoffice", "year_cat") %>% scale_axis(axis = "x", scale = "log10")

@@ -10,8 +10,10 @@ f("year_cat", "made_money", fillby = "n") %>% add_labs(ylab = "Made money?")
 df = films %>% group_by(action, year_cat) %>%
         summarise(avg_rating = mean(rating))
 f = mk_heatmap(df)
+
+# order colors from lightest to darkest by setting color_direction = 1
 f("year_cat", "action", fillby = "avg_rating", font_size = 14,
-  palette = "D") %>%
+  palette = "D", color_direction = 1) %>%
         add_labs(ylab = "Is action film?",
                  title = "Average ratings of action vs. non-action films")
 
