@@ -12,8 +12,8 @@ df = films %>% group_by(action, year_cat) %>%
 f = mk_heatmap(df)
 
 # order colors from lightest to darkest by setting color_direction = 1
-f("year_cat", "action", fillby = "avg_rating", font_size = 14,
-  palette = "D", color_direction = 1) %>%
+f("year_cat", "action", fillby = "avg_rating", legend_title = "Avg Rating",
+  font_size = 14, palette = "D", color_direction = 1) %>%
         add_labs(ylab = "Is action film?",
                  title = "Average ratings of action vs. non-action films")
 

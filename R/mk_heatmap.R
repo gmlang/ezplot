@@ -8,7 +8,7 @@
 #'
 #' @return
 #' \code{function(xvar, yvar, fillby, facet_by = NULL, facet_ncol = 1,
-#'                palette = "C", color_direction = -1,
+#'                palette = "C", color_direction = -1, legend_title = NULL,
 #'                format_legend_as_comma = FALSE,  font_size = 8)}
 #' \itemize{
 #'      \item xvar   : string, name of a categorical variable for x-axis.
@@ -24,6 +24,8 @@
 #'      \item color_direction: 1 or -1. Sets the order of colors in the scale.
 #'               If 1, colors are ordered from darkest to lightest.
 #'               If -1 (default), ordered from lightest to darkest.
+#'      \item legend_title: string, legend title. If NULL (default), use the
+#'               name of the fillby variable.
 #'      \item format_legend_as_comma: logical. If TRUE, display numbers like
 #'               2000 as 2,000 on legend. If FALSE (default), display numbers as
 #'               they are.
@@ -35,7 +37,7 @@
 #' @examples inst/examples/ex-mk_heatmap.R
 mk_heatmap = function(df) {
         function(xvar, yvar, fillby, facet_by = NULL, facet_ncol = 1,
-                 palette = "C", color_direction = -1,
+                 palette = "C", color_direction = -1, legend_title = NULL,
                  format_legend_as_comma = FALSE, font_size = 8) {
 
                 # --- Main Plot --- #
@@ -54,6 +56,12 @@ mk_heatmap = function(df) {
                 }
 
                 p = p + coord_equal()
+
+                # --- Format Legend --- #
+
+                if (!is.null(legend_title))
+                        p = p + guides(fill = guide_legend(title = legend_title))
+
 
                 # --- Facet --- #
 
