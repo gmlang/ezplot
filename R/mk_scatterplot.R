@@ -10,8 +10,8 @@
 #' @param df A data frame.
 #' @return
 #' \code{function(xvar, yvar, fillby = "1", alpha = 0.8, pt_size = 1,
-#'                jitter = FALSE, legend_title = fillby, add_cnt_to_legend = TRUE,
-#'                font_size = 14)}
+#'                jitter = FALSE, add_cnt_to_legend = TRUE,
+#'                legend_title = fillby, legend_pos = "right", font_size = 14)}
 #' \itemize{
 #'      \item xvar     :  string, name of a categorical variable for x-axis.
 #'      \item yvar     :  string, name of a continuous variable for y-axis.
@@ -24,11 +24,12 @@
 #'      \item pt_size  :  number, size of the points. Default = 1.
 #'      \item jitter   :  logical, jitter points if TRUE. Used when there're
 #'                        overlapping points. Default = FALSE.
-#'      \item legend_title: string, legend title. Default uses the name of the
-#'               fillby variable.
 #'      \item add_cnt_to_legend: logical, when TRUE (default), it will show
 #'                    the number of non-missing records for each level in the
 #'                    fillby var.
+#'      \item legend_title: string, legend title. Default uses the name of the
+#'               fillby variable.
+#'      \item legend_pos:   string, legend position. Default = "right".
 #'      \item font_size:  overall font size. Default = 14. The font size of the
 #'                        axes and legend text is a fraction of this value.
 #' }
@@ -37,8 +38,8 @@
 #' @examples inst/examples/ex-mk_scatterplot.R
 mk_scatterplot = function(df) {
         function(xvar, yvar, fillby = "1", alpha = 0.8, pt_size = 1,
-                 jitter = FALSE, legend_title = fillby, add_cnt_to_legend = TRUE,
-                 font_size = 14) {
+                 jitter = FALSE, add_cnt_to_legend = TRUE,
+                 legend_title = fillby, legend_pos = "right", font_size = 14) {
 
                 # --- Prep  --- #
 
@@ -65,6 +66,13 @@ mk_scatterplot = function(df) {
                         scale_x_continuous(breaks = xbreaks,
                                            limits = range(xbreaks))
 
+
+                # --- Customize Theme --- #
+
+                p = p + labs(x = xvar, y = yvar, subtitle = subtit) +
+                        theme_cowplot(font_size)
+
+
                 # --- Format Legend --- #
 
                 if (fillby == 1) { # remove legend
@@ -89,15 +97,10 @@ mk_scatterplot = function(df) {
                                 p = p + ggthemes::scale_color_tableau(
                                         "Color Blind", name = legend_title)
                         }
-
+                        p = p + theme(legend.position = legend_pos)
                 }
 
-
-                # --- Customize Theme --- #
-
-                p + labs(x = xvar, y = yvar, subtitle = subtit) +
-                        theme_cowplot(font_size)
-
+                p
 
         }
 }

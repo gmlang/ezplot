@@ -1,4 +1,5 @@
 library(ezplot)
+library(dplyr)
 
 plt = mk_scatterplot(films)
 plt("budget", "boxoffice")
@@ -9,7 +10,7 @@ plt("budget", "boxoffice", fillby = "year_cat", alpha = 0.2, legend_title = NULL
              caption = "Source: IMDB")
 
 plt("budget", "boxoffice", fillby = "year_cat", alpha = 0.2,
-    legend_title = NULL, add_cnt_to_legend = F) %>%
+    legend_title = NULL, add_cnt_to_legend = F, legend_pos = "bottom") %>%
     add_labs(title = "Boxoffice and Budget are related, try log scales",
              caption = "Source: IMDB")
 plt("year", "rating", font_size = 10) %>% add_labs(xlab = NULL)
