@@ -4,12 +4,12 @@ plt = mk_scatterplot(films)
 plt("budget", "boxoffice")
 plt("budget", "boxoffice") %>%
         add_labs(subtitle = "Total number of observations: 5,944")
-plt("budget", "boxoffice", fillby = "year_cat", alpha = 0.2) %>%
+plt("budget", "boxoffice", fillby = "year_cat", alpha = 0.2, legend_title = NULL) %>%
     add_labs(title = "Boxoffice and Budget are related, try log scales",
              caption = "Source: IMDB")
 
 plt("budget", "boxoffice", fillby = "year_cat", alpha = 0.2,
-    add_cnt_to_legend = F) %>%
+    legend_title = NULL, add_cnt_to_legend = F) %>%
     add_labs(title = "Boxoffice and Budget are related, try log scales",
              caption = "Source: IMDB")
 plt("year", "rating", font_size = 10) %>% add_labs(xlab = NULL)

@@ -10,7 +10,7 @@
 #' @param df A data frame.
 #' @return
 #' \code{function(xvar = "1", yvar, fillby = "1", notched = FALSE,
-#'                label_size = 3, font_size = 14)}
+#'                legend_title = fillby, label_size = 3, font_size = 14)}
 #' \itemize{
 #'      \item xvar     : string, name of a categorical variable for x-axis.
 #'                       Default = "1", just draw a boxplot of yvar by itself.
@@ -20,6 +20,8 @@
 #'                        meaning no such variable is supplied.
 #'      \item notched  :  logical, draw notched boxplots when TRUE;
 #'                        otherwise, draw regular boxplots. Default = FALSE.
+#'      \item legend_title: string, legend title. Default is the name of the
+#'                          fillby variable.
 #'      \item label_size: integer, size of bar label text. Default = 3.
 #'      \item font_size : overall font size. Default = 14. The font size of the
 #'                        axes and legend text is a fraction of this value.
@@ -27,8 +29,8 @@
 #' @export
 #' @examples inst/examples/ex-mk_boxplot.R
 mk_boxplot = function(df) {
-        function(xvar = "1", yvar, fillby = "1", notched = FALSE, label_size = 3,
-                 font_size = 14) {
+        function(xvar = "1", yvar, fillby = "1", notched = FALSE,
+                 legend_title = fillby, label_size = 3, font_size = 14) {
 
                 # --- Prep --- #
 
@@ -71,7 +73,8 @@ mk_boxplot = function(df) {
                 if (fillby == "1") { # remove legend
                         p = p + guides(color = FALSE, fill = FALSE)
                 } else { # use colorblind-friendly colors
-                        p = p + ggthemes::scale_fill_tableau("Color Blind")
+                        p = p + ggthemes::scale_fill_tableau(
+                                "Color Blind", name = legend_title)
                 }
 
 

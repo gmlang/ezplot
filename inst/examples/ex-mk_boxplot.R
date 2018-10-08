@@ -4,6 +4,8 @@ library(dplyr)
 f = mk_boxplot(films)
 f("year_cat", "rating", notched = T, font_size = 10)
 f("year_cat", "rating", fillby = "made_money", notched = T)
+f("year_cat", "rating", fillby = "made_money", legend_title = "Is profitable?",
+  notched = T)
 f("year_cat", "boxoffice") %>% scale_axis(scale = "log10")
 f("year_cat", "budget") %>% scale_axis(scale = "log1p")
 

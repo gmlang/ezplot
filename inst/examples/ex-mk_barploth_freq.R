@@ -5,13 +5,15 @@ f("mpaa", yorder = "descend")
 f("mpaa", fillby = "made_money", label_decimals = 0)
 f("year_cat", font_size = 10)
 # use label_size = 0 to remove the bar labels
-f("year_cat", fillby = "made_money", yorder = "descend", label_size = 0)
-f("made_money", fillby = "year_cat", yorder = "descend", label_size = 0) %>%
-        add_labs(ylab = "made money or not")
+f("year_cat", fillby = "made_money", yorder = "descend", label_size = 0,
+  legend_title = "Is profitable?")
+f("made_money", fillby = "year_cat", yorder = "descend", label_size = 0,
+  legend_title = NULL) %>% add_labs(ylab = "made money or not")
 f("year_cat", fillby = "mpaa", label_size = 0)
 
 f("mpaa", show_pct = T, yorder = "ascend")
-f("mpaa", fillby = "made_money", show_pct = T, yorder = "descend")
+f("mpaa", fillby = "made_money", show_pct = T, yorder = "descend",
+  legend_title = "Is profitable?")
 f("year_cat", fillby = "made_money", show_pct = T)
 f("year_cat", fillby = "mpaa", show_pct = T, label_size = 0)
 

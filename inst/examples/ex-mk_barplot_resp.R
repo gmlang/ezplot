@@ -9,8 +9,8 @@ add_labs(p, title = "Fuel efficiency generally decreases with engine size",
          caption = "Data from fueleconomy.gov")
 
 # use label_size = 0 to remove labels
-g("mpaa", "bo_bt_ratio", fillby = "year_cat", label_size = 0) %>%
-        add_labs(ylab = "boxoffice / budget ratio")
+g("mpaa", "bo_bt_ratio", fillby = "year_cat", label_size = 0,
+  legend_title = NULL) %>% add_labs(ylab = "boxoffice / budget")
 
 df = films %>% count(mpaa, made_money) %>% mutate(pct = n / sum(n))
 g = mk_barplot_resp(df)
@@ -22,6 +22,8 @@ g("mpaa", "pct", show_pct = T, label_decimals = 2, font_size = 9) %>%
              subtitle = "Although a substantial portion of the films have mpaa rating info missing.",
              caption = "data were scrapped from imdb.com in 2010")
 g("mpaa", "pct", fillby = "made_money", show_pct = T)
+g("mpaa", "pct", fillby = "made_money", show_pct = T,
+  legend_title = "Is Profitable?")
 
 
 df = films %>% count(made_money)

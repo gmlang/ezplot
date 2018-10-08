@@ -17,7 +17,7 @@ g("boxoffice_in_mil", "mpaa", yorder = "descend", font_size = 10) %>%
                  )
 
 # use label_size = 0 to remove labels
-g("bo_bt_ratio", "mpaa", fillby = "year_cat", label_size = 0)
+g("bo_bt_ratio", "mpaa", fillby = "year_cat", label_size = 0, legend_title = NULL)
 
 df = films %>% count(mpaa, made_money) %>% mutate(pct = n / sum(n))
 g = mk_barploth_resp(df)
@@ -28,6 +28,8 @@ g("pct", "mpaa", label_decimals = 2, show_pct = T, font_size = 9) %>%
             subtitle = "Although a substantial portion of the films have mpaa rating info missing.",
             caption = "data were scrapped from imdb.com in 2010")
 g("pct", "mpaa", fillby = "made_money", show_pct = T)
+g("pct", "mpaa", fillby = "made_money", show_pct = T,
+  legend_title = "Is profitable?")
 
 df = ggplot2::diamonds %>% count(clarity) %>% mutate(pct = n / sum(n))
 g = mk_barploth_resp(df)

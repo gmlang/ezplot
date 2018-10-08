@@ -12,7 +12,8 @@
 #' @param df A data frame.
 #' @return
 #' \code{function(xvar, yvar, fillby = "1", pt_size = 1, linew = 0.7,
-#'                font_size = 14, add_cnt_to_legend = TRUE)}
+#'                legend_title = fillby, add_cnt_to_legend = TRUE,
+#'                font_size = 14)}
 #' \itemize{
 #'      \item xvar   : string, name of a continuous or categorical variable for
 #'                     x-axis.
@@ -22,18 +23,21 @@
 #'                     no such variable is supplied.
 #'      \item pt_size: number, size of the points. Default = 1.
 #'      \item linew  : number, width of the line. Default = 0.7.
-#'      \item font_size: overall font size. Default = 14. The font size of the
-#'                       axes and legend text is a fraction of this value.
+#'      \item legend_title: string, legend title. Default uses the name of the
+#'               fillby variable.
 #'      \item add_cnt_to_legend: logical, when TRUE (default), it will show
 #'                    the number of non-missing records for each level in the
 #'                    fillby var.
+#'      \item font_size: overall font size. Default = 14. The font size of the
+#'                       axes and legend text is a fraction of this value.
 #' }
 #'
 #' @export
 #' @examples inst/examples/ex-mk_lineplot.R
 mk_lineplot = function(df) {
         function(xvar, yvar, fillby = "1", pt_size = 1, linew = 0.7,
-                 font_size = 14, add_cnt_to_legend = TRUE) {
+                 legend_title = fillby, add_cnt_to_legend = TRUE,
+                 font_size = 14) {
 
                 # --- Prep  --- #
 
@@ -78,11 +82,12 @@ mk_lineplot = function(df) {
                                 # use colorblind-friendly colors and update
                                 #       legend label
                                 p = p + ggthemes::scale_color_tableau(
-                                        "Color Blind", labels = legend_txt)
+                                        "Color Blind", name = legend_title,
+                                        labels = legend_txt)
                         } else {
                                 # use colorblind-friendly colors
                                 p = p + ggthemes::scale_color_tableau(
-                                        "Color Blind")
+                                        "Color Blind", name = legend_title)
                         }
                 }
 

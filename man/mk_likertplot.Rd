@@ -13,7 +13,7 @@ mk_likertplot(df)
 }
 \value{
 \code{function(xvar, yvar, fillby, fillby_lvls, yorder = "alphanumeric",
-               x_as_pct = FALSE, font_size = 14)}
+               x_as_pct = FALSE, legend_title = fillby, font_size = 14)}
 \itemize{
      \item xvar     :  string, name of a continuous variable for x-axis.
      \item yvar     :  string, name of a categorical variable for y-axis.
@@ -26,6 +26,8 @@ mk_likertplot(df)
                        Default = "alphanumeric".
      \item x_as_pct :  logical, if TRUE, format x-axis as %;
                        otherwise, format it as comma. Default is FALSE.
+     \item legend_title: string, legend title. Default is the name of the
+                         fillby variable.
      \item font_size : overall font size. Default = 14. The font size of the
                        axes and legend text is a fraction of this value.
 }

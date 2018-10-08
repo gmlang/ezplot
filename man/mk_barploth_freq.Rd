@@ -13,7 +13,8 @@ mk_barploth_freq(df)
 }
 \value{
 \code{function(yvar, fillby = "1", yorder = "alphanumeric", show_pct = FALSE,
-               label_decimals = 1, label_size = 3, font_size = 14)}
+               label_decimals = 1, label_size = 3, legend_title = fillby,
+               font_size = 14)}
 \itemize{
      \item yvar     :  string, name of a categorical variable for y-axis.
      \item fillby   :  string, name of a different categorical variable for
@@ -28,6 +29,8 @@ mk_barploth_freq(df)
                        on the bar labels. Default = 1.
      \item label_size: integer, size of bar label text. Default is 3.
                        Hide bar labels when its value is 0.
+     \item legend_title: string, legend title. Default is the name of the
+                         fillby variable.
      \item font_size:  overall font size. Default = 14. The font size of the
                        axes and legend text is a fraction of this value.
 }

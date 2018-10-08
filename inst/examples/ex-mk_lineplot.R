@@ -10,7 +10,10 @@ add_labs(p, xlab = NULL, ylab = "boxoffice/budget ratio",
 
 # plot total budget and boxoffice over the years
 plt = mk_lineplot(btbo_by_year)
-p = plt("year", "tot", fillby = "type", font_size = 10, add_cnt_to_legend = F)
+plt("year", "tot", fillby = "type")
+plt("year", "tot", fillby = "type", legend_title = NULL)
+p = plt("year", "tot", fillby = "type", legend_title = NULL,
+        add_cnt_to_legend = F, font_size = 10)
 p = add_labs(p, xlab = NULL, ylab = "total amount ($billion)",
              title = "Annual Total Budget and Boxoffice from 1913 to 2014",
              subtitle = NULL)

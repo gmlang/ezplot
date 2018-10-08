@@ -18,5 +18,6 @@ add_labs(p, xlab = bquote(delta),
 df = power_n_ssize_gender
 df$rho = as.character(df$rho)
 plt = mk_facet_lineplot(df)
-plt("delta", "Power", xvar_top = "csize", yvar_rt = "ssize", gpby = "rho")
+plt("delta", "Power", xvar_top = "csize", yvar_rt = "ssize", gpby = "rho",
+    legend_title = bquote(rho))
 

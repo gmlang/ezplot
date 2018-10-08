@@ -17,7 +17,8 @@
 #'
 #' @return
 #' \code{function(xvar, fillby = "1", xorder = "alphanumeric", show_pct = FALSE,
-#'                label_decimals = 1, label_size = 3, font_size = 14)}
+#'                label_decimals = 1, label_size = 3, legend_title = fillby,
+#'                font_size = 14)}
 #' \itemize{
 #'      \item xvar     :  string, name of a categorical variable for x-axis.
 #'      \item fillby   :  string, name of a different categorical variable for
@@ -32,6 +33,8 @@
 #'                        on the bar labels. Default = 1.
 #'      \item label_size: integer, size of bar label text. Default is 3.
 #'                        Hide bar labels when its value is 0.
+#'      \item legend_title: string, legend title. Default is the name of the
+#'                          fillby variable.
 #'      \item font_size:  overall font size. Default = 14. The font size of the
 #'                        axes and legend text is a fraction of this value.
 #' }
@@ -41,7 +44,8 @@
 #' @examples inst/examples/ex-mk_barplot_freq.R
 mk_barplot_freq = function(df) {
         function(xvar, fillby = "1", xorder = "alphanumeric", show_pct = FALSE,
-                 label_decimals = 1, label_size = 3, font_size = 14) {
+                 label_decimals = 1, label_size = 3, legend_title = fillby,
+                 font_size = 14) {
 
                 # --- Prep --- #
 
@@ -125,7 +129,8 @@ mk_barplot_freq = function(df) {
                 if (fillby == "1") { # remove legend
                         p = p + guides(color = FALSE, fill = FALSE)
                 } else { # use colorblind-friendly colors
-                        p = p + ggthemes::scale_fill_tableau("Color Blind")
+                        p = p + ggthemes::scale_fill_tableau(
+                                "Color Blind", name = legend_title)
                 }
 
 
