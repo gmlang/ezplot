@@ -12,7 +12,7 @@ mk_heatmap(df)
 \value{
 \code{function(xvar, yvar, fillby, facet_by = NULL, facet_ncol = 1,
                palette = "C", color_direction = -1, legend_title = fillby,
-               format_legend_as_comma = FALSE,  font_size = 8)}
+               format_legend_as_comma = FALSE, font_size = 8)}
 \itemize{
      \item xvar   : string, name of a categorical variable for x-axis.
      \item yvar   : string, name of another categorical variable for y-axis.

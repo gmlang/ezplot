@@ -14,7 +14,8 @@
 #'
 #' @return
 #' \code{function(xvar, yvar, fillby, fillby_lvls, yorder = "alphanumeric",
-#'                x_as_pct = FALSE, legend_title = fillby, font_size = 14)}
+#'                x_as_pct = FALSE, legend_title = fillby, legend_pos = "right",
+#'                font_size = 14)}
 #' \itemize{
 #'      \item xvar     :  string, name of a continuous variable for x-axis.
 #'      \item yvar     :  string, name of a categorical variable for y-axis.
@@ -29,6 +30,7 @@
 #'                        otherwise, format it as comma. Default is FALSE.
 #'      \item legend_title: string, legend title. Default is the name of the
 #'                          fillby variable.
+#'      \item legend_pos:   string, legend position. Default = "right".
 #'      \item font_size : overall font size. Default = 14. The font size of the
 #'                        axes and legend text is a fraction of this value.
 #' }
@@ -38,7 +40,8 @@
 #' @examples inst/examples/ex-mk_likertplot.R
 mk_likertplot = function(df) {
         function(xvar, yvar, fillby, fillby_lvls, yorder = "alphanumeric",
-                 x_as_pct = FALSE, legend_title = fillby, font_size = 14) {
+                 x_as_pct = FALSE, legend_title = fillby, legend_pos = "right",
+                 font_size = 14) {
 
                 # --- Prep --- #
 
@@ -88,7 +91,8 @@ mk_likertplot = function(df) {
 
                 # --- Customize Theme --- #
 
-                p + labs(x = xvar, y = NULL) + theme_cowplot(font_size)
+                p + labs(x = xvar, y = NULL) + theme_cowplot(font_size) +
+                        theme(legend.position = legend_pos)
 
         }
 }

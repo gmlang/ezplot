@@ -7,14 +7,14 @@ lvls = unique(df$opinion)
 plt = mk_likertplot(df)
 plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls)
 plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls,
-    x_as_pct = T, legend_title = "Responses") %>%
+    x_as_pct = T, legend_title = "Responses", legend_pos = "top") %>%
     add_labs(xlab = NULL, title = "Confidence estimates for twelve countries' economy")
 
 df = films %>% count(mpaa, made_money) %>% group_by(mpaa) %>%
         mutate(pct = n/sum(n)) %>% ungroup()
 plt = mk_likertplot(df)
 plt("n", "mpaa", fillby = "made_money", fillby_lvls = c("no", "yes"),
-    yorder = "ascend")
+    yorder = "ascend", legend_pos = "left")
 plt("pct", "mpaa", fillby = "made_money", fillby_lvls = c("no", "yes"),
     legend_title = "Is Profitable?", x_as_pct = T)
 
@@ -30,7 +30,8 @@ plt = mk_likertplot(df %>% filter(slope == "North"))
 
 # works with both negative and positive values
 #     sppInv < 0 when type is "introduced", and > 0 when type is "native"
-plt("sppInv", "item", fillby = "type", fillby_lvls = c("introduced", "native"))
+plt("sppInv", "item", fillby = "type", fillby_lvls = c("introduced", "native"),
+    legend_pos = "bottom")
 
 # also works with only positive values
 #     spp > 0 always

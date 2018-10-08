@@ -19,7 +19,7 @@
 #' @return
 #' \code{function(yvar, fillby = "1", yorder = "alphanumeric", show_pct = FALSE,
 #'                label_decimals = 1, label_size = 3, legend_title = fillby,
-#'                font_size = 14)}
+#'                legend_pos = "right", font_size = 14)}
 #' \itemize{
 #'      \item yvar     :  string, name of a categorical variable for y-axis.
 #'      \item fillby   :  string, name of a different categorical variable for
@@ -36,6 +36,7 @@
 #'                        Hide bar labels when its value is 0.
 #'      \item legend_title: string, legend title. Default is the name of the
 #'                          fillby variable.
+#'      \item legend_pos:   string, legend position. Default = "right".
 #'      \item font_size:  overall font size. Default = 14. The font size of the
 #'                        axes and legend text is a fraction of this value.
 #' }
@@ -46,7 +47,7 @@
 mk_barploth_freq = function(df) {
         function(yvar, fillby = "1", yorder = "alphanumeric", show_pct = FALSE,
                  label_decimals = 1, label_size = 3, legend_title = fillby,
-                 font_size = 14) {
+                 legend_pos = "right", font_size = 14) {
 
                 # --- Prep --- #
 
@@ -142,20 +143,22 @@ mk_barploth_freq = function(df) {
                 }
 
 
+                # --- Customize Theme --- #
+
+                p = p + labs(x = xlab, y = NULL) + theme_no_yaxis(font_size)
+
+
                 # --- Format Legend --- #
 
                 if (fillby == "1") { # remove legend
                         p = p + guides(color = FALSE, fill = FALSE)
                 } else { # use colorblind-friendly colors
                         p = p + ggthemes::scale_fill_tableau(
-                                "Color Blind", name = legend_title)
+                                "Color Blind", name = legend_title) +
+                                theme(legend.position = legend_pos)
                 }
 
-
-                # --- Customize Theme --- #
-
-                p + labs(x = xlab, y = NULL) + theme_no_yaxis(font_size)
-
+                p
         }
 }
 

@@ -21,7 +21,7 @@
 #' @return
 #' \code{function(xvar, yvar, fillby = "1", xorder = "alphanumeric",
 #'                show_pct = FALSE, label_decimals = 1, label_size = 3,
-#'                legend_title = fillby, font_size = 14)}
+#'                legend_title = fillby, legend_pos = "right", font_size = 14)}
 #' \itemize{
 #'      \item xvar     :  string, name of a categorical variable for x-axis.
 #'      \item yvar     :  string, name of a continuous variable for y-axis.
@@ -39,6 +39,7 @@
 #'                        Hide bar labels when its value is 0.
 #'      \item legend_title: string, legend title. Default is the name of the
 #'                          fillby variable.
+#'      \item legend_pos:   string, legend position. Default = "right".
 #'      \item font_size : overall font size. Default = 14. The font size of the
 #'                        axes and legend text is a fraction of this value.
 #' }
@@ -49,7 +50,7 @@
 mk_barplot_resp = function(df) {
         function(xvar, yvar, fillby = "1", xorder = "alphanumeric",
                  show_pct = FALSE, label_decimals = 1, label_size = 3,
-                 legend_title = fillby, font_size = 14) {
+                 legend_title = fillby, legend_pos = "right", font_size = 14) {
 
                 # --- Prep --- #
 
@@ -111,19 +112,22 @@ mk_barplot_resp = function(df) {
                                   position = position_dodge(width = 0.9)
                                   )
 
+                # --- Customize Theme --- #
+
+                p = p + labs(x = NULL, y = yvar) + theme_cowplot(font_size)
+
+
                 # --- Format Legend --- #
 
                 if (fillby == "1") { # remove legend
                         p = p + guides(color = FALSE, fill = FALSE)
                 } else { # use colorblind-friendly colors
                         p = p + ggthemes::scale_fill_tableau(
-                                "Color Blind", name = legend_title)
+                                "Color Blind", name = legend_title) +
+                                theme(legend.position = legend_pos)
                 }
 
-
-                # --- Customize Theme --- #
-
-                p + labs(x = NULL, y = yvar) + theme_cowplot(font_size)
+                p
 
         }
 }

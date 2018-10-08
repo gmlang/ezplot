@@ -5,7 +5,7 @@ plt = mk_facet_lineplot(power_n_ssize_gender)
 # grouping var can be numeric
 plt("delta", "Power", xvar_top = "csize", yvar_rt = "ssize", gpby = "rho")
 p = plt("delta", "Power", xvar_top = "csize", yvar_rt = "ssize", gpby = "rho",
-        ylab_rt = "Sample Size", legend_title = bquote(rho))
+        ylab_rt = "Sample Size", legend_title = bquote(rho), legend_pos = "left")
 print(p)
 cap = "delta: outcome difference between male and female;
          rho: correlation coefficient within animal."
@@ -19,5 +19,5 @@ df = power_n_ssize_gender
 df$rho = as.character(df$rho)
 plt = mk_facet_lineplot(df)
 plt("delta", "Power", xvar_top = "csize", yvar_rt = "ssize", gpby = "rho",
-    legend_title = bquote(rho))
+    legend_title = bquote(rho), legend_pos = "bottom")
 

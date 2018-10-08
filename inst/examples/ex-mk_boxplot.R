@@ -5,7 +5,7 @@ f = mk_boxplot(films)
 f("year_cat", "rating", notched = T, font_size = 10)
 f("year_cat", "rating", fillby = "made_money", notched = T)
 f("year_cat", "rating", fillby = "made_money", legend_title = "Is profitable?",
-  notched = T)
+  legend_pos = "bottom", notched = T)
 f("year_cat", "boxoffice") %>% scale_axis(scale = "log10")
 f("year_cat", "budget") %>% scale_axis(scale = "log1p")
 
@@ -19,14 +19,16 @@ f("year", "rating", notched = T)
 
 
 f = mk_boxplot(ggplot2::mpg)
-f("class", "hwy", fillby = "drv", font_size = 9) %>% add_labs(xlab = "class")
+f("class", "hwy", fillby = "drv", font_size = 9, legend_pos = "top") %>%
+        add_labs(xlab = "class")
 f("year", "cty", fillby = "drv") # throws error because "year" is integer
 
 # change year to character first and then run
 mpg = ggplot2::mpg
 mpg$year = as.character(mpg$year)
 f = mk_boxplot(mpg)
-f("year", "cty", fillby = "drv")
+f("year", "cty", fillby = "drv", legend_title = "type of wheel drive",
+  legend_pos = "left")
 
 
 df = data.frame(x = rep(c("A", "B"), 5),

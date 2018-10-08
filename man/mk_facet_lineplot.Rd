@@ -11,8 +11,8 @@ mk_facet_lineplot(df)
 }
 \value{
 \code{function(xvar, yvar, xvar_top, yvar_rt, gpby = "1", ylab_rt = NULL,
-               legend_title = gpby, palette = "D", linew = 0.7,
-               font_size = 14)}
+               palette = "D", linew = 0.7, legend_title = gpby,
+               legend_pos = "right", font_size = 14)}
 \itemize{
      \item xvar    : string, name of a continuous var for the bottom x-axis.
      \item yvar    : string, name of a continuous var for the left y-axis.
@@ -23,11 +23,12 @@ mk_facet_lineplot(df)
                      variable is supplied.
      \item ylab_rt : string, 2nd y-axis label. If NULL (default), use the
                      value of yvar_rt.
-     \item legend_title: string, legend title. Default is the name of the
-                         gpby variable.
      \item palette : string, the colormap option to use. Possible values are
                      "A", "B", "C", "D" (default) and "E".
      \item linew   : number, width of the line. Default = 0.7.
+     \item legend_title: string, legend title. Default is the name of the
+                         gpby variable.
+     \item legend_pos:   string, legend position. Default = "right".
      \item font_size : overall font size. Default = 14. The font size of the
                        axes and legend text is a fraction of this value.
 }

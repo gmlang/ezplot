@@ -14,7 +14,7 @@ mk_barploth_resp(df)
 \value{
 \code{function(xvar, yvar, fillby = "1", yorder = "alphanumeric",
                show_pct = FALSE, label_decimals = 1, label_size = 3,
-               legend_title = fillby, font_size = 14)}
+               legend_title = fillby, legend_pos = "right", font_size = 14)}
 \itemize{
      \item xvar     :  string, name of a continuous variable for x-axis.
      \item yvar     :  string, name of a categorical variable for y-axis.
@@ -32,6 +32,7 @@ mk_barploth_resp(df)
                        Hide bar labels when its value is 0.
      \item legend_title: string, legend title. Default is the name of the
                          fillby variable.
+     \item legend_pos:   string, legend position. Default = "right".
      \item font_size : overall font size. Default = 14. The font size of the
                        axes and legend text is a fraction of this value.
 }

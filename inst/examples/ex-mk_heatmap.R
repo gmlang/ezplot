@@ -34,14 +34,15 @@ head(dat)
 
 # make heatmap
 f = mk_heatmap(dat)
-f("stats", "Name", fillby = "val_scaled") %>%
+f("stats", "Name", fillby = "val_scaled", legend_title = "scaled stats") %>%
         rotate_axis_text(text_angle_x = 90, vjust_x = 0.5)
 
 
 # --- multiple heatmaps --- #
 
 f = mk_heatmap(attacks_by_country)
-f("hour", "wkday", fillby ="n", facet_by = "country", facet_ncol = 2) %>%
+f("hour", "wkday", fillby ="n", facet_by = "country", facet_ncol = 2,
+  legend_title = "Count") %>%
         add_labs(title = "Events per weekday & time of day by country")
 
 

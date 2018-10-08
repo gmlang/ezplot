@@ -10,7 +10,8 @@
 #' @param df A data frame.
 #' @return
 #' \code{function(xvar = "1", yvar, fillby = "1", notched = FALSE,
-#'                legend_title = fillby, label_size = 3, font_size = 14)}
+#'                legend_title = fillby, legend_pos = "right",
+#'                label_size = 3, font_size = 14)}
 #' \itemize{
 #'      \item xvar     : string, name of a categorical variable for x-axis.
 #'                       Default = "1", just draw a boxplot of yvar by itself.
@@ -22,6 +23,7 @@
 #'                        otherwise, draw regular boxplots. Default = FALSE.
 #'      \item legend_title: string, legend title. Default is the name of the
 #'                          fillby variable.
+#'      \item legend_pos:   string, legend position. Default = "right".
 #'      \item label_size: integer, size of bar label text. Default = 3.
 #'      \item font_size : overall font size. Default = 14. The font size of the
 #'                        axes and legend text is a fraction of this value.
@@ -30,7 +32,8 @@
 #' @examples inst/examples/ex-mk_boxplot.R
 mk_boxplot = function(df) {
         function(xvar = "1", yvar, fillby = "1", notched = FALSE,
-                 legend_title = fillby, label_size = 3, font_size = 14) {
+                 legend_title = fillby, legend_pos = "right",
+                 label_size = 3, font_size = 14) {
 
                 # --- Prep --- #
 
@@ -68,19 +71,22 @@ mk_boxplot = function(df) {
                                            limits = range(ybreaks)
                                            )
 
+                # --- Customize Theme --- #
+
+                p = p + labs(x = NULL, y = yvar) + theme_cowplot(font_size)
+
+
                 # --- Format Legend --- #
 
                 if (fillby == "1") { # remove legend
                         p = p + guides(color = FALSE, fill = FALSE)
                 } else { # use colorblind-friendly colors
                         p = p + ggthemes::scale_fill_tableau(
-                                "Color Blind", name = legend_title)
+                                "Color Blind", name = legend_title) +
+                                theme(legend.position = legend_pos)
                 }
 
-
-                # --- Customize Theme --- #
-
-                p + labs(x = NULL, y = yvar) + theme_cowplot(font_size)
+                p
 
         }
 }
