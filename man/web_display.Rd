@@ -5,8 +5,8 @@
 \title{Enlarges a ggplot2 plot for web display.}
 \usage{
 web_display(p, axis_text_size = 16, axis_title_size = ggplot2::rel(2),
-  axis_title_vjust_y = 1, legend_pos = "right", legend_title = T,
-  mar_top = 1, mar_right = 1, mar_left = 1, mar_bottom = 1)
+  axis_title_vjust_y = 1, mar_top = 1, mar_right = 1, mar_left = 1,
+  mar_bottom = 1)
 }
 \arguments{
 \item{p}{A ggplot object.}
@@ -16,10 +16,6 @@ web_display(p, axis_text_size = 16, axis_title_size = ggplot2::rel(2),
 \item{axis_title_size}{A number, size of the axis labels. Default = rel(2).}
 
 \item{axis_title_vjust_y}{A number, distance between y label and y-axis. Default = 1.}
-
-\item{legend_pos}{A string, location of the legend. Default = "right".}
-
-\item{legend_title}{Logical, whether to display legend title. Default = TRUE.}
 
 \item{mar_top}{A number, top margin of the whole plot. Default = 1.}
 
