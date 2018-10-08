@@ -11,8 +11,8 @@ mk_lineplot(df)
 }
 \value{
 \code{function(xvar, yvar, fillby = "1", pt_size = 1, linew = 0.7,
-               legend_title = fillby, add_cnt_to_legend = TRUE,
-               font_size = 14)}
+               add_cnt_to_legend = TRUE, legend_title = fillby,
+               legend_pos = "right", font_size = 14)}
 \itemize{
      \item xvar   : string, name of a continuous or categorical variable for
                     x-axis.
@@ -22,11 +22,12 @@ mk_lineplot(df)
                     no such variable is supplied.
      \item pt_size: number, size of the points. Default = 1.
      \item linew  : number, width of the line. Default = 0.7.
-     \item legend_title: string, legend title. Default uses the name of the
-              fillby variable.
      \item add_cnt_to_legend: logical, when TRUE (default), it will show
                    the number of non-missing records for each level in the
                    fillby var.
+     \item legend_title: string, legend title. Default uses the name of the
+              fillby variable.
+     \item legend_pos:   string, legend position. Default = "right".
      \item font_size: overall font size. Default = 14. The font size of the
                       axes and legend text is a fraction of this value.
 }
