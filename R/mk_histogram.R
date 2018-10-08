@@ -11,7 +11,8 @@
 #' @param df A data frame.
 #' @return
 #' \code{function(xvar, facet_by = NULL, binw = NULL, bins = 30, facet_ncol = 1,
-#'                font_size = 14, add_vline_median = TRUE, add_vline_mean = TRUE)}
+#'                add_vline_median = TRUE, add_vline_mean = TRUE,
+#'                legend_pos = "right", font_size = 14)}
 #' \itemize{
 #'      \item xvar     : string, name of a continuous variable for x-axis.
 #'      \item facet_by : string, name of a categorical variable for grouping
@@ -27,18 +28,20 @@
 #'                       http://andrewgelman.com/2009/10/23/variations_on_t/
 #'      \item facet_ncol: number of columns when facetting. Default = 1.
 #'                      Only works when facet_by is not NULL.
-#'      \item font_size : overall font size. Default = 14. The font size of the
-#'                        axes and legend text is a fraction of this value.
 #'      \item add_vline_median: logical, if TRUE, add a vertical line at the
 #'                              median of x. Default = TRUE.
 #'      \item add_vline_mean: logical, if TRUE, add a vertical line at the mean
 #'                            of x. Default = TRUE.
+#'      \item legend_pos: string, legend position. Default = "right".
+#'      \item font_size : overall font size. Default = 14. The font size of the
+#'                        axes and legend text is a fraction of this value.
 #' }
 #' @export
 #' @examples inst/examples/ex-mk_histogram.R
 mk_histogram = function(df) {
         function(xvar, facet_by = NULL, binw = NULL, bins = 30, facet_ncol = 1,
-                 font_size = 14, add_vline_median = TRUE, add_vline_mean = TRUE) {
+                 add_vline_median = TRUE, add_vline_mean = TRUE,
+                 legend_pos = "right", font_size = 14) {
 
                 # --- Prep --- #
 
@@ -73,6 +76,12 @@ mk_histogram = function(df) {
                                            scales = "free_x")
 
 
+                # --- Customize Theme --- #
+
+                p = p + labs(x = xvar, y = "Frequency") +
+                        theme_cowplot(font_size)
+
+
                 # --- Format Legend --- #
 
                 # add legend to indicate median and mean
@@ -85,12 +94,10 @@ mk_histogram = function(df) {
                                                 round(df_stats$avg, 2)))
                         ) +
                         # but remove legend of the blue fill of the bars
-                        guides(fill = FALSE)
+                        guides(fill = FALSE) +
+                        theme(legend.position = legend_pos)
 
-
-                # --- Customize Theme --- #
-
-                p + labs(x = xvar, y = "Frequency") + theme_cowplot(font_size)
+                p
 
         }
 }

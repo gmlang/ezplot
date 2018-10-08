@@ -2,10 +2,10 @@ library(ezplot)
 
 f = mk_histogram(iris)
 f("Sepal.Length")
-p = f("Sepal.Length", bins = 100, font_size = 12)
+p = f("Sepal.Length", bins = 100, font_size = 12, legend_pos = "top")
 add_labs(p, xlab = "Sepal Length")
 f("Sepal.Length", bins = 50, add_vline_mean = F)
-f("Sepal.Length", bins = 40, add_vline_median = F)
+f("Sepal.Length", bins = 40, add_vline_median = F, legend_pos = "bottom")
 
 f("Sepal.Length", binw = 0.3)
 # we can also specify a function for calculating binwidth
