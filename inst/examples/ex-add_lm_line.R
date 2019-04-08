@@ -8,6 +8,10 @@ add_lm_line(p)
 add_lm_line(p, eq_tb_xpos = "right", pv_r2_ypos = 0.6)
 add_lm_line(p, show = "tb", eq_tb_xpos = "right", pv_r2_ypos = 0.6, digits = 2)
 
+# calc 95% confidence interval of the slope
+moe = moe_lm_param(se = 0.16, n = 5944)
+ci95 = 4.8 + c(-1, 1) * moe
+
 p = scale_axis(p, scale = "log10")
 p = scale_axis(p, "x", scale = "log10")
 add_lm_line(p, coef.digits = 3, rr.digits = 3)

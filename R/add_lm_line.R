@@ -78,7 +78,7 @@ add_lm_line = function(p, alpha = 0.8, linew = 1, show = "eq",
                                 tb.type = "fit.summary",
                                 tb.vars = c("term",
                                             "est" = "estimate",
-                                            "SE" = "std.error",
+                                            "se" = "std.error",
                                             "~italic(t)~stat" = "statistic",
                                             "~italic(p)~val" = "p.value"),
                                 parse = TRUE, # allows italic to work
