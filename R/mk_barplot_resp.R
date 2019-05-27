@@ -94,8 +94,7 @@ mk_barplot_resp = function(df) {
                         p = p + scale_y_continuous(
                                 limits = range(axis_breaks),
                                 breaks = axis_breaks,
-                                labels = con_axis_labs
-                                )
+                                labels = con_axis_labs)
 
                         # get bar label text
                         bar_labels = scales::comma(
@@ -109,7 +108,7 @@ mk_barplot_resp = function(df) {
                 p = p + geom_text(aes_string(xvar, yvar), data = df_label,
                                   label = bar_labels,
                                   vjust = -0.5, size = label_size,
-                                  position = position_dodge(width = 0.9)
+                                  position = position_dodge2(width = 0.9)
                                   )
 
                 # --- Customize Theme --- #

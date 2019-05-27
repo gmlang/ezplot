@@ -1,5 +1,7 @@
 library(ezplot)
 
+films$mpaa = forcats::fct_explicit_na(films$mpaa) # necessary
+
 f = mk_barplot_freq(films)
 f("mpaa")
 f("mpaa", xorder = "descend")

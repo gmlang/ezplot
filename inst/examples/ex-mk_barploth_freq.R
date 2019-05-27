@@ -1,5 +1,7 @@
 library(ezplot)
 
+films$mpaa = forcats::fct_explicit_na(films$mpaa) # necessary
+
 f = mk_barploth_freq(films)
 f("mpaa", yorder = "descend")
 f("mpaa", fillby = "made_money", label_decimals = 0)

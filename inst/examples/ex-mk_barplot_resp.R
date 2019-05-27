@@ -1,6 +1,8 @@
 library(ezplot)
 library(dplyr)
 
+films$mpaa = forcats::fct_explicit_na(films$mpaa) # necessary
+
 g = mk_barplot_resp(films)
 p = g("mpaa", "boxoffice", xorder = "descend", font_size = 10,
       label_decimals = 0)
