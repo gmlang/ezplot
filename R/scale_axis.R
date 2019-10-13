@@ -26,7 +26,8 @@
 #' @examples inst/examples/ex-scale_axis.R
 scale_axis = function(p, axis = "y", scale = "comma") {
 
-        var = as.character(p$mapping[[axis]])[[2]]
+        # var = as.character(p$mapping[[axis]])[[2]]
+        var = dplyr::as_label(p$mapping[[axis]])
         axis_breaks = pretty(c(0, p$data[[var]]), 10)
 
         if (axis == "y") {
