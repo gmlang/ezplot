@@ -31,7 +31,7 @@
 scale_axis = function(p, axis = "y", scale = "breaks10") {
 
         # extract data along x or y axis
-        d = ggplot_build(p)$data[[1]]
+        d = layer_data(p)
         axis_breaks = pretty(c(0, d[[axis]]), 10)
 
         if (axis == "y") {
