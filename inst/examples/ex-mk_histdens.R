@@ -3,7 +3,7 @@ library(dplyr)
 
 # --- histograms --- #
 
-f = mk_histdens(iris)
+f = mk_histdens(iris) # will draw histogram by default
 f("Sepal.Length")
 p = f("Sepal.Length", bins = 100, font_size = 12, legend_pos = "top")
 add_labs(p, xlab = "Sepal Length")
@@ -16,7 +16,7 @@ f("Sepal.Length", facet_by = "Species", facet_ncol = 3, font_size = 8,
   binwidth = function(x) 2*IQR(x) / (length(x)^(1/3)))
 
 f = mk_histdens(films, type = 'histogram')
-f("boxoffice") %>% scale_axis(axis = "x", scale = "log10") %>%
+f("boxoffice", bins = 40) %>% scale_axis(axis = "x", scale = "log10") %>%
         scale_axis(axis = 'y', scale = 'breaks10')
 
 
