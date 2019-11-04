@@ -14,5 +14,5 @@ f("Sepal.Length", facet_by = "Species", facet_ncol = 3, font_size = 8,
 
 f = mk_histogram(films)
 f("boxoffice") %>% scale_axis(axis = "x", scale = "log10") %>%
-        scale_axis(axis = 'y', scale = 'comma')
+        scale_axis(axis = 'y', scale = 'breaks10')
 

@@ -1,21 +1,17 @@
 library(ezplot)
 library(dplyr)
 
-plt = mk_densityplot(iris)
-plt("Sepal.Length", "Species")
+f = mk_densityplot(iris)
+f("Sepal.Length")
+p = f("Sepal.Length", adjust = 0.5, font_size = 12, legend_pos = "top")
+add_labs(p, xlab = "Sepal Length")
+f("Sepal.Length", adjust = 0.3, add_vline_median = F, legend_pos = "bottom")
+f("Sepal.Length", adjust = 5, add_vline_mean = F)
+f("Sepal.Length", facet_by = "Species", facet_ncol = 3, font_size = 8,
+  adjust = 0.9)
 
-plt = mk_densityplot(films)
-plt("rating", "year_cat", color_direction = 1, font_size = 9) %>%
-        add_labs(title = "Density Plot")
-plt("rating", "year") # throws error when yvar is integer or numeric
 
-plt("boxoffice", "year_cat") %>% scale_axis(axis = "x", scale = "log10")
+f = mk_densityplot(films)
+f("boxoffice") %>% scale_axis(axis = "x", scale = "log10") %>%
+        scale_axis(axis = 'y', scale = 'breaks10')
 
-p = plt("bo_bt_ratio", "year_cat", font_size = 10)
-scale_axis(p, "x", scale = "log10")
-p = plt("bo_bt_ratio", "year_cat", cut_tail = 10^-4) %>%
-        add_labs(xlab = "boxoffice / budget ratio")
-p %>% scale_axis(axis = "x", scale = "log10")
-p = plt("bo_bt_ratio", "year_cat", cut_tail = 10^-1.65) %>%
-        add_labs(xlab = "Boxoffice / Budget Ratio")
-scale_axis(p, "x", scale = "log10")
