@@ -14,6 +14,9 @@
 #'     \item sqrt   : use squared root transformation.
 #'     \item exp    : use exponential transformation.
 #' }
+#' If a ggplot object has too few breaks on an axis (to see the max value),
+#' apply the 'comma' scale to that axis will add 10 breaks from the min value
+#' to the max value.
 #'
 #' @param p A ggplot2 object.
 #' @param axis A string of value "x" or "y". Default = "y".
@@ -26,9 +29,9 @@
 #' @examples inst/examples/ex-scale_axis.R
 scale_axis = function(p, axis = "y", scale = "comma") {
 
-        # var = as.character(p$mapping[[axis]])[[2]]
-        var = dplyr::as_label(p$mapping[[axis]])
-        axis_breaks = pretty(c(0, p$data[[var]]), 10)
+        # extract data along x or y axis
+        d = ggplot_build(p)$data[[1]]
+        axis_breaks = pretty(c(0, d[[axis]]), 10)
 
         if (axis == "y") {
                 switch(scale,

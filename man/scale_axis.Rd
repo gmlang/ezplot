@@ -32,6 +32,9 @@ or y-axis one of the following scales:
     \item sqrt   : use squared root transformation.
     \item exp    : use exponential transformation.
 }
+If a ggplot object has too few breaks on an axis (to see the max value),
+apply the 'comma' scale to that axis will add 10 breaks from the min value
+to the max value.
 }
 \examples{
 inst/examples/ex-scale_axis.R
