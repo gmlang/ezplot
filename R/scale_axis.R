@@ -14,20 +14,21 @@
 #'     \item sqrt   : use squared root transformation.
 #'     \item exp    : use exponential transformation.
 #' }
-#' If a ggplot object has too few breaks on an axis (to see the max value),
-#' apply the 'comma' scale to that axis will add 10 breaks from the min value
-#' to the max value.
+#' If a ggplot object has too few breaks on an axis (to see the max value), and
+#' if you don't need to apply any scales to the axis (due to the values are
+#' already in a nice range), you can apply scale='breaks10' to that axis, and
+#' this will add 10 breaks from the min value to the max value on that axis.
 #'
 #' @param p A ggplot2 object.
 #' @param axis A string of value "x" or "y". Default = "y".
-#' @param scale A string of value "comma", "dollar", "pct", "log", "log1p",
-#'        "log10", "log2", "sqrt", or "exp".
-#'         It specifies which scale to use. Default = "comma".
+#' @param scale A string of value "breaks10", "comma", "dollar", "pct", "log",
+#'        "log1p", "log10", "log2", "sqrt", or "exp".
+#'        It specifies which scale to use. Default = "breaks10".
 #'
 #' @return A ggplot2 object with the new scale applied to the input axis.
 #' @export
 #' @examples inst/examples/ex-scale_axis.R
-scale_axis = function(p, axis = "y", scale = "comma") {
+scale_axis = function(p, axis = "y", scale = "breaks10") {
 
         # extract data along x or y axis
         d = ggplot_build(p)$data[[1]]
@@ -35,6 +36,9 @@ scale_axis = function(p, axis = "y", scale = "comma") {
 
         if (axis == "y") {
                 switch(scale,
+                       breaks10 = p + scale_y_continuous(
+                               limits = range(axis_breaks),
+                               breaks = axis_breaks),
                        comma = p + scale_y_continuous(
                                limits = range(axis_breaks),
                                breaks = axis_breaks,

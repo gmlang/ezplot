@@ -4,16 +4,16 @@
 \alias{scale_axis}
 \title{Use a different scale on either axis of a ggplot2 plot.}
 \usage{
-scale_axis(p, axis = "y", scale = "comma")
+scale_axis(p, axis = "y", scale = "breaks10")
 }
 \arguments{
 \item{p}{A ggplot2 object.}
 
 \item{axis}{A string of value "x" or "y". Default = "y".}
 
-\item{scale}{A string of value "comma", "dollar", "pct", "log", "log1p",
-"log10", "log2", "sqrt", or "exp".
- It specifies which scale to use. Default = "comma".}
+\item{scale}{A string of value "breaks10", "comma", "dollar", "pct", "log",
+"log1p", "log10", "log2", "sqrt", or "exp".
+It specifies which scale to use. Default = "breaks10".}
 }
 \value{
 A ggplot2 object with the new scale applied to the input axis.
@@ -32,9 +32,10 @@ or y-axis one of the following scales:
     \item sqrt   : use squared root transformation.
     \item exp    : use exponential transformation.
 }
-If a ggplot object has too few breaks on an axis (to see the max value),
-apply the 'comma' scale to that axis will add 10 breaks from the min value
-to the max value.
+If a ggplot object has too few breaks on an axis (to see the max value), and
+if you don't need to apply any scales to the axis (due to the values are
+already in a nice range), you can apply scale='breaks10' to that axis, and
+this will add 10 breaks from the min value to the max value on that axis.
 }
 \examples{
 inst/examples/ex-scale_axis.R
