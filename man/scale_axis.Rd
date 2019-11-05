@@ -4,7 +4,8 @@
 \alias{scale_axis}
 \title{Use a different scale on either axis of a ggplot2 plot.}
 \usage{
-scale_axis(p, axis = "y", scale = "breaks10")
+scale_axis(p, axis = "y", scale = "breaks10", ydigits = NULL,
+  xdigits = NULL)
 }
 \arguments{
 \item{p}{A ggplot2 object.}
@@ -14,6 +15,10 @@ scale_axis(p, axis = "y", scale = "breaks10")
 \item{scale}{A string of value "breaks10", "comma", "dollar", "pct", "log",
 "log1p", "log10", "log2", "sqrt", or "exp".
 It specifies which scale to use. Default = "breaks10".}
+
+\item{ydigits/xdigits}{The number of digits after the decimal point to display
+on the y or x axis when using the 'pct' scale. Default = NULL, which
+uses the best guess.}
 }
 \value{
 A ggplot2 object with the new scale applied to the input axis.

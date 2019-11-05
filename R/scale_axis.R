@@ -1,3 +1,13 @@
+to_pct = function(x, digits) {
+        # x: numeric vector
+        # digits: number of digits after the decimal in percent (%) format
+        if (is.null(digits)) {
+                scales::percent(x)
+        } else {
+                scales::percent(x, accuracy = 10^(-digits))
+        }
+}
+
 #' @title Use a different scale on either axis of a ggplot2 plot.
 #
 #' @description
@@ -24,11 +34,15 @@
 #' @param scale A string of value "breaks10", "comma", "dollar", "pct", "log",
 #'        "log1p", "log10", "log2", "sqrt", or "exp".
 #'        It specifies which scale to use. Default = "breaks10".
+#' @param ydigits/xdigits The number of digits after the decimal point to display
+#'        on the y or x axis when using the 'pct' scale. Default = NULL, which
+#'        uses the best guess.
 #'
 #' @return A ggplot2 object with the new scale applied to the input axis.
 #' @export
 #' @examples inst/examples/ex-scale_axis.R
-scale_axis = function(p, axis = "y", scale = "breaks10") {
+scale_axis = function(p, axis = "y", scale = "breaks10", ydigits = NULL,
+                      xdigits = NULL) {
 
         # extract data along x or y axis
         d = layer_data(p)
@@ -50,7 +64,7 @@ scale_axis = function(p, axis = "y", scale = "breaks10") {
                        pct = p + scale_y_continuous(
                                limits = range(axis_breaks),
                                breaks = axis_breaks,
-                               labels = scales::percent
+                               labels = function(x) to_pct(x, ydigits)
                                ),
                        log = p + scale_y_continuous(
                                trans = scales::log_trans(),
@@ -110,7 +124,7 @@ scale_axis = function(p, axis = "y", scale = "breaks10") {
                        pct = p + scale_x_continuous(
                                limits = range(axis_breaks),
                                breaks = axis_breaks,
-                               labels = scales::percent
+                               labels = function(x) to_pct(x, xdigits)
                                ),
                        log = p + scale_x_continuous(
                                trans = scales::log_trans(),
