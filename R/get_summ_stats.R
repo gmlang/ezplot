@@ -15,22 +15,14 @@
 #' @seealso \code{\link{mk_histogram}}.
 get_summ_stats = function(df, xvar, facet_by) {
         if (is.null(facet_by)) {
-                return(dplyr::summarise(
-                               df,
-                               med = median(!!as.name(xvar), na.rm = T),
-                               avg = mean(!!as.name(xvar), na.rm = T)
-                               )
-                       )
+                dplyr::summarise(df,
+                                 med = median(!!as.name(xvar), na.rm = T),
+                                 avg = mean(!!as.name(xvar), na.rm = T))
         } else {
-                return(
-                       dplyr::summarise(
-                               dplyr::group_by(df, !!as.name(facet_by)),
-                               med = median(!!as.name(xvar), na.rm = T),
-                               avg = mean(!!as.name(xvar), na.rm = T)
-                               )
-                )
+                dplyr::summarise(dplyr::group_by(df, !!as.name(facet_by)),
+                                 med = median(!!as.name(xvar), na.rm = T),
+                                 avg = mean(!!as.name(xvar), na.rm = T))
         }
-
 }
 
 
