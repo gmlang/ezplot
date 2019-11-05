@@ -28,18 +28,21 @@ f = mk_cdfplot(subset(df, target_outcome==1))
 f('model_rank', colorby = 'obs_set')
 f('model_rank', colorby = 'obs_set', pad = F)
 
-p = f('model_rank', colorby = 'obs_set', add_hline_median = T,
-      legend_title = NULL)
+p = f('model_rank', colorby = 'obs_set', add_hline_median = T, legend_title = NULL)
+print(p)
 p %>% scale_axis(axis = 'y', scale = 'pct') %>%
-        scale_axis(axis = 'x', scale = 'pct') %>%
+        scale_axis(axis = 'x', scale = 'pct')
+p %>% scale_axis(axis = 'y', scale = 'pct', ydigits = 1) %>%
+        scale_axis(axis = 'x', scale = 'pct')
+p %>% scale_axis(axis = 'y', scale = 'pct') %>%
+        scale_axis(axis = 'x', scale = 'pct', xdigits = 0)
+
+square_fig = p %>% scale_axis(axis = 'y', scale = 'pct') %>%
+        scale_axis(axis = 'x', scale = 'pct', xdigits = 0) %>%
+        square_fig()
+square_fig %>%
         add_labs(xlab = "Model Percentile", ylab = "Percent of Target Outcome",
                  title = "Gain Chart") +
         geom_segment(aes(x=0, y=0, xend=0.9, yend=1),
                      color = "gray", linetype="longdash", size=1)
-
-
-
-
-
-
 
