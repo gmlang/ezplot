@@ -25,4 +25,3 @@ moe_lm_param = function(se, n, k = 1, conf_level = .95) {
         sig_level = 1 - conf_level
         qt(1 - sig_level/2, dof) * se
 }
-

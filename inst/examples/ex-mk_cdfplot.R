@@ -7,7 +7,7 @@ library(ggplot2)
 df = data.frame(x = c(rnorm(100, 0, 3), rnorm(100, 0, 10)), gp = gl(2, 100))
 f = mk_cdfplot(df)
 f('x') # default geom is 'step'
-f('x', geom='point')
+f('x', geom = 'point')
 
 range(df$x)
 f('x', pad = FALSE) # do not extend the curve to -Inf and +Inf horizontally
