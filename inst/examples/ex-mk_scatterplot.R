@@ -5,11 +5,11 @@ plt = mk_scatterplot(films)
 plt("budget", "boxoffice")
 plt("budget", "boxoffice") %>%
         add_labs(subtitle = "Total number of observations: 5,944")
-plt("budget", "boxoffice", fillby = "year_cat", alpha = 0.2, legend_title = NULL) %>%
+plt("budget", "boxoffice", colorby = "year_cat", alpha = 0.2, legend_title = NULL) %>%
     add_labs(title = "Boxoffice and Budget are related, try log scales",
              caption = "Source: IMDB")
 
-plt("budget", "boxoffice", fillby = "year_cat", alpha = 0.2,
+plt("budget", "boxoffice", colorby = "year_cat", alpha = 0.8,
     legend_title = NULL, add_cnt_to_legend = F, legend_pos = "bottom") %>%
     add_labs(title = "Boxoffice and Budget are related, try log scales",
              caption = "Source: IMDB")

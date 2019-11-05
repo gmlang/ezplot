@@ -3,19 +3,19 @@
 #' @description
 #' \code{mk_scatterplot} takes a data frame as input and returns a function for
 #' making scatterplots with any continuous variables from the data frame on the
-#' x and y axes. When supplied a categorical fillby variable, the output
+#' x and y axes. When supplied a categorical colorby variable, the output
 #' function will produce scatterplots where the points are colored differently
-#' according to the levels of the fillby variable.
+#' according to the levels of the colorby variable.
 #'
 #' @param df A data frame.
 #' @return
-#' \code{function(xvar, yvar, fillby = "1", alpha = 0.8, pt_size = 1,
+#' \code{function(xvar, yvar, colorby = "1", alpha = 0.8, pt_size = 1,
 #'                jitter = FALSE, add_cnt_to_legend = TRUE,
-#'                legend_title = fillby, legend_pos = "right", font_size = 14)}
+#'                legend_title = colorby, legend_pos = "right", font_size = 14)}
 #' \itemize{
 #'      \item xvar     :  string, name of a categorical variable for x-axis.
 #'      \item yvar     :  string, name of a continuous variable for y-axis.
-#'      \item fillby   :  string, name of a different categorical variable for
+#'      \item colorby   :  string, name of a different categorical variable for
 #'                        grouping and coloring the points. Default = "1",
 #'                        meaning no such variable is supplied.
 #'      \item alpha    :  a number between 0 and 1, transparency level of the
@@ -26,9 +26,9 @@
 #'                        overlapping points. Default = FALSE.
 #'      \item add_cnt_to_legend: logical, when TRUE (default), it will show
 #'                    the number of non-missing records for each level in the
-#'                    fillby var.
+#'                    colorby var.
 #'      \item legend_title: string, legend title. Default uses the name of the
-#'               fillby variable.
+#'               colorby variable.
 #'      \item legend_pos:   string, legend position. Default = "right".
 #'      \item font_size:  overall font size. Default = 14. The font size of the
 #'                        axes and legend text is a fraction of this value.
@@ -37,9 +37,9 @@
 #' @export
 #' @examples inst/examples/ex-mk_scatterplot.R
 mk_scatterplot = function(df) {
-        function(xvar, yvar, fillby = "1", alpha = 0.8, pt_size = 1,
+        function(xvar, yvar, colorby = "1", alpha = 0.8, pt_size = 1,
                  jitter = FALSE, add_cnt_to_legend = TRUE,
-                 legend_title = fillby, legend_pos = "right", font_size = 14) {
+                 legend_title = colorby, legend_pos = "right", font_size = 14) {
 
                 # --- Prep  --- #
 
@@ -50,7 +50,7 @@ mk_scatterplot = function(df) {
 
                 # --- Main Plot --- #
 
-                p = ggplot(df, aes_string(xvar, yvar, color = fillby))
+                p = ggplot(df, aes_string(xvar, yvar, color = colorby))
 
                 if (jitter) p = p + geom_jitter(
                         alpha = alpha, size = pt_size, shape = 16)
@@ -75,16 +75,16 @@ mk_scatterplot = function(df) {
 
                 # --- Format Legend --- #
 
-                if (fillby == 1) { # remove legend
+                if (colorby == 1) { # remove legend
                         p = p + guides(color = FALSE, fill = FALSE)
                 } else {
                         if (add_cnt_to_legend) {
                                 # count number of non-NA observations for each
-                                #   level of the fillby variable, and make
+                                #   level of the colorby variable, and make
                                 #   new legend label to include these counts
-                                subdf = na.omit(df[c(xvar, yvar, fillby)])
-                                tmp = dplyr::count(subdf, !!as.name(fillby))
-                                legend_txt = paste(tmp[[fillby]],
+                                subdf = na.omit(df[c(xvar, yvar, colorby)])
+                                tmp = dplyr::count(subdf, !!as.name(colorby))
+                                legend_txt = paste(tmp[[colorby]],
                                                    paste0("(n = ", tmp$n, ")"))
 
                                 # use colorblind-friendly colors and update
