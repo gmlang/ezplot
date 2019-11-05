@@ -14,30 +14,29 @@
 #' with each line corresponding to a color. When this happens, use the default
 #' \code{show = "eq"} since printing 1+ fit tables doesn't work.
 #'
-#' @param p : a ggplot object, must be a scatter plot.
-#' @param alpha : a number between 0 and 1, transparency level of the best line.
-#'                Smaller value means more transparent. Default = 0.8.
-#' @param linew : number, width of the line. Default = 1.
-#' @param show  : string, "eq" or "tb". If "eq" (default), add the equation of
+#' @param p A ggplot object, must be a scatter plot.
+#' @param alpha A number between 0 and 1, transparency level of the best line.
+#' Smaller value means more transparent. Default = 0.8.
+#' @param linew Number, width of the line. Default = 1.
+#' @param show String, "eq" or "tb". If "eq" (default), add the equation of
 #' the best fit line, the R-squared value, and the p-value of the x term coef.
 #' estimate to the plot. If "tb", add the fit table and the R-squared value to
 #' the plot.
-#' @param eq_tb_xpos: numeric between 0 and 1 or character. x-position of the
+#' @param eq_tb_xpos Numeric between 0 and 1 or character. x-position of the
 #' equation or fit table label. Default = "left".
-#' @param eq_tb_ypos: numeric between 0 and 1 or character. y-position of the
+#' @param eq_tb_ypos Numeric between 0 and 1 or character. y-position of the
 #' equation or fit table label. Default = "top".
-#' @param pv_r2_xpos: numeric between 0 and 1 or character. x-position of the
+#' @param pv_r2_xpos Numeric between 0 and 1 or character. x-position of the
 #' p-value or R-squared value label. Default = "right".
-#' @param pv_r2_ypos: numeric between 0 and 1 or character. y-position of the
+#' @param pv_r2_ypos Numeric between 0 and 1 or character. y-position of the
 #' p-value or R-squared value label. Default = "bottom".
-#' @param ...: other arguments for ggpmisc::stat_poly_eq() or
-#' ggpmisc::stat_fit_tb(). For example, for ggpmisc::stat_poly_eq(),
-#' coef.digits sets the number of digits for coef. estimates,
-#' rr.digits sets the number of digits for R-squared value.
+#' @param ... Other arguments for ggpmisc::stat_poly_eq() or ggpmisc::stat_fit_tb().
+#' For example, for ggpmisc::stat_poly_eq(), coef.digits sets the number of digits
+#' for coef. estimates, rr.digits sets the number of digits for R-squared value.
 #' For ggpmisc::stat_fit_tb(), digits sets the digits for all numbers in the fit
 #' table.
 #'
-#' @return a ggplot scatterplot object with the best line added with detailed
+#' @return A ggplot scatterplot object with the best line added with detailed
 #' labels.
 #'
 #' @export

@@ -6,22 +6,20 @@
 #' values to these parameters, it'll just use the values from the input plot
 #' without making changes.
 #'
-#' @param p      : a ggplot object.
-#' @param xlab   : string, the x-axis label.
-#' @param ylab   : string, the y-axis label.
-#' @param title  : string, title of the plot. You should use the title to
-#'                 concisely state the main insight the plot reveals. Avoid
-#'                 using generic statement as plot title. For example,
-#'                 "Income vs. Employment Length" is a bad title because
-#'                 it just re-state what the y and x axes are.
-#' @param subtitle: string, subtitle of the plot. You can use the subtitle
-#'                  to explain the details of the insight. You can even write
-#'                  one or more short paragraphs if you have to.
-#' @param caption: string, caption of the plot. You can put anything else
-#'                 useful in caption. For example, data source, method referece,
-#'                 url and etc.
+#' @param p A ggplot object.
+#' @param xlab String, the x-axis label.
+#' @param ylab String, the y-axis label.
+#' @param title String, title of the plot. You should use the title to concisely
+#' state the main insight the plot reveals. Avoid using generic statement as
+#' plot title. For example, "Income vs. Employment Length" is a bad title
+#' because it just re-state what the y and x axes are.
+#' @param subtitle String, subtitle of the plot. You can use the subtitle to
+#' explain the details of the insight. You can even write one or more short
+#' paragraphs if you have to.
+#' @param caption String, caption of the plot. You can put anything else useful
+#' in caption. For example, data source, method referece, url and etc.
 #'
-#' @return
+#' @return A ggplot object annotated with xy labels, title, subtitle and caption.
 #'
 #' @export
 #' @examples inst/examples/ex-add_labs.R

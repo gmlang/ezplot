@@ -11,9 +11,9 @@
 #' @return
 #' \code{function(xvar, groupby = "1")}
 #' \itemize{
-#'      \item xvar. String. Name of a continuous variable over which the
+#'      \item xvar. String, name of a continuous variable over which the
 #'      empirical CDF to be calculated.
-#'      \item groupby. String. Name of a categorical variable for subsetting the
+#'      \item groupby. String, name of a categorical variable for subsetting the
 #'      data frame. Default = "1", indicating no such variable is supplied.
 #' }
 #'

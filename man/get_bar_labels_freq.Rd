@@ -7,18 +7,18 @@
 get_bar_labels_freq(df, var, fillby, show_pct)
 }
 \arguments{
-\item{df}{data frame of the original data where bar charts are made of.}
+\item{df}{Data frame of the original data where bar charts are made of.}
 
-\item{var}{string, name of the categorical variable to be counted.}
+\item{var}{String, name of the categorical variable to be counted.}
 
-\item{fillby}{string, name of a second categorical variable used for
+\item{fillby}{String, name of a second categorical variable used for
 sub-dividing and coloring the bars.}
 
-\item{show_pct}{logical, if TRUE, calculate bars middle position using pct.
+\item{show_pct}{Logical, if TRUE, calculate bars middle position using pct.
 Otherwise, calculate bars middle position using count. Default is FALSE.}
 }
 \value{
-a data frame containing bar labels and their positions
+A data frame containing bar labels and their positions
 }
 \description{
 \code{get_bar_labels_freq} takes in the original data frame, and

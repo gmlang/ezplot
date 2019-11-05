@@ -13,20 +13,20 @@
 #'                legend_title = fillby, legend_pos = "right",
 #'                label_size = 3, font_size = 14)}
 #' \itemize{
-#'      \item xvar     : string, name of a categorical variable for x-axis.
-#'                       Default = "1", just draw a boxplot of yvar by itself.
-#'      \item yvar     :  string, name of a continuous variable for y-axis.
-#'      \item fillby   :  string, name of a different categorical variable for
-#'                        breaking down the y values of each box. Default = "1",
-#'                        meaning no such variable is supplied.
-#'      \item notched  :  logical, draw notched boxplots when TRUE;
-#'                        otherwise, draw regular boxplots. Default = FALSE.
-#'      \item legend_title: string, legend title. Default is the name of the
-#'                          fillby variable.
-#'      \item legend_pos:   string, legend position. Default = "right".
-#'      \item label_size: integer, size of bar label text. Default = 3.
-#'      \item font_size : overall font size. Default = 14. The font size of the
-#'                        axes and legend text is a fraction of this value.
+#'      \item xvar. String, name of a categorical variable for x-axis.
+#'      Default = "1", just draw a boxplot of yvar by itself.
+#'      \item yvar. String, name of a continuous variable for y-axis.
+#'      \item fillby. String, name of a different categorical variable for
+#'      breaking down the y values of each box. Default = "1", meaning no such
+#'      variable is supplied.
+#'      \item notched. Logical, draw notched boxplots when TRUE; otherwise,
+#'      draw regular boxplots. Default = FALSE.
+#'      \item legend_title. String, legend title. Default is the name of the
+#'      fillby variable.
+#'      \item legend_pos. String, legend position. Default = "right".
+#'      \item label_size. Integer, size of bar label text. Default = 3.
+#'      \item font_size. Overall font size. Default = 14. The font size of the
+#'      axes and legend text is a fraction of this value.
 #' }
 #' @export
 #' @examples inst/examples/ex-mk_boxplot.R

@@ -10,11 +10,11 @@
 #' the confidence interval. \code{moe_lm_param()} can also be used to find the
 #' margin of error of any parameter estimate of a multiple linear regression.
 #'
-#' @param se. Standard error of a parameter estimate. It can be
-#' read off from the table of fit summary displayed on the scatterplot.
-#' @param n. Sample size.
-#' @param k. Number of predictors. Default = 1 (simple linear regression).
-#' @param conf_level. A number between 0 and 1. Default = 0.95.
+#' @param se Standard error of a parameter estimate. It can be read off from
+#' the table of fit summary displayed on the scatterplot.
+#' @param n Sample size.
+#' @param k Number of predictors. Default = 1 (simple linear regression).
+#' @param conf_level A number between 0 and 1. Default = 0.95.
 #'
 #' @return The margin of error of the a linear regression parameter estimate.
 #'

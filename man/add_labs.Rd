@@ -7,28 +7,26 @@
 add_labs(p, xlab, ylab, title, subtitle, caption)
 }
 \arguments{
-\item{p}{: a ggplot object.}
+\item{p}{A ggplot object.}
 
-\item{xlab}{: string, the x-axis label.}
+\item{xlab}{String, the x-axis label.}
 
-\item{ylab}{: string, the y-axis label.}
+\item{ylab}{String, the y-axis label.}
 
-\item{title}{: string, title of the plot. You should use the title to
-concisely state the main insight the plot reveals. Avoid
-using generic statement as plot title. For example,
-"Income vs. Employment Length" is a bad title because
-it just re-state what the y and x axes are.}
+\item{title}{String, title of the plot. You should use the title to concisely
+state the main insight the plot reveals. Avoid using generic statement as
+plot title. For example, "Income vs. Employment Length" is a bad title
+because it just re-state what the y and x axes are.}
 
-\item{subtitle:}{string, subtitle of the plot. You can use the subtitle
-to explain the details of the insight. You can even write
-one or more short paragraphs if you have to.}
+\item{subtitle}{String, subtitle of the plot. You can use the subtitle to
+explain the details of the insight. You can even write one or more short
+paragraphs if you have to.}
 
-\item{caption:}{string, caption of the plot. You can put anything else
-useful in caption. For example, data source, method referece,
-url and etc.}
+\item{caption}{String, caption of the plot. You can put anything else useful
+in caption. For example, data source, method referece, url and etc.}
 }
 \value{
-
+A ggplot object annotated with xy labels, title, subtitle and caption.
 }
 \description{
 \code{add_labs} takes a ggplot object as input and adds to it user-supplied

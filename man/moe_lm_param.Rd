@@ -8,14 +8,14 @@ estimate.}
 moe_lm_param(se, n, k = 1, conf_level = 0.95)
 }
 \arguments{
-\item{se.}{Standard error of a parameter estimate. It can be
-read off from the table of fit summary displayed on the scatterplot.}
+\item{se}{Standard error of a parameter estimate. It can be read off from
+the table of fit summary displayed on the scatterplot.}
 
-\item{n.}{Sample size.}
+\item{n}{Sample size.}
 
-\item{k.}{Number of predictors. Default = 1 (simple linear regression).}
+\item{k}{Number of predictors. Default = 1 (simple linear regression).}
 
-\item{conf_level.}{A number between 0 and 1. Default = 0.95.}
+\item{conf_level}{A number between 0 and 1. Default = 0.95.}
 }
 \value{
 The margin of error of the a linear regression parameter estimate.

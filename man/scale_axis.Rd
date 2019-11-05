@@ -13,11 +13,11 @@ scale_axis(p, axis = "y", scale = "breaks10", ydigits = NULL,
 \item{axis}{A string of value "x" or "y". Default = "y".}
 
 \item{scale}{A string of value "breaks10", "comma", "dollar", "pct", "log",
-"log1p", "log10", "log2", "sqrt", or "exp".
-It specifies which scale to use. Default = "breaks10".}
+"log1p", "log10", "log2", "sqrt", or "exp". It specifies which scale to use.
+Default = "breaks10".}
 
-\item{ydigits/xdigits}{The number of digits after the decimal point to display
-on the y or x axis when using the 'pct' scale. Default = NULL, which
+\item{ydigits/xdigits}{The number of digits after the decimal point to
+display on the y or x axis when using the 'pct' scale. Default = NULL, which
 uses the best guess.}
 }
 \value{
@@ -27,15 +27,15 @@ A ggplot2 object with the new scale applied to the input axis.
 \code{scale_axis} takes a ggplot2 object as input and applies to its x-axis
 or y-axis one of the following scales:
 \itemize{
-    \item comma  : show numbers in 000,000 format.
-    \item dollar : show $ in front of numbers.
-    \item pct    : use percent format.
-    \item log    : use log transformation.
-    \item log1p  : use log(x+1) transformation.
-    \item log10  : use log10 transformation.
-    \item log2   : use log2 transformation.
-    \item sqrt   : use squared root transformation.
-    \item exp    : use exponential transformation.
+    \item comma . Show numbers in 000,000 format.
+    \item dollar. Show $ in front of numbers.
+    \item pct   . Use percent format.
+    \item log   . Use log transformation.
+    \item log1p . Use log(x+1) transformation.
+    \item log10 . Use log10 transformation.
+    \item log2  . Use log2 transformation.
+    \item sqrt  . Use squared root transformation.
+    \item exp   . Use exponential transformation.
 }
 If a ggplot object has too few breaks on an axis (to see the max value), and
 if you don't need to apply any scales to the axis (due to the values are

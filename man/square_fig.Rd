@@ -2,17 +2,16 @@
 % Please edit documentation in R/square_fig.R
 \name{square_fig}
 \alias{square_fig}
-\title{Change the aspect ratio of a plot}
+\title{Change the aspect ratio of a plot.}
 \usage{
 square_fig(p, aspect_ratio = 1)
 }
 \arguments{
-\item{p}{: a ggplot object.}
+\item{p}{A ggplot object.}
 
-\item{aspect_ratio:}{aspect ratio of the panel, Default = 1, which will make
-x and y the same length and hence the figure a square.
-A value > 1 will make y-axis longer than x-axis.
-A value < 1 will make x-axis longer than y-axis.}
+\item{aspect_ratio}{Aspect ratio of the panel, Default = 1, which will make
+x and y the same length and hence the figure a square. A value > 1 will make
+y-axis longer than x-axis. A value < 1 will make x-axis longer than y-axis.}
 }
 \value{
 a ggplot object of square shape by default or a rectangular

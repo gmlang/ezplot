@@ -11,28 +11,26 @@
 #'                legend_title = colorby, legend_pos = "right",
 #'                label_size = 3, font_size = 14)}
 #' \itemize{
-#'      \item xvar     : string, name of a continuous variable for x-axis.
-#'      \item colorby  : string, name of a categorical variable for grouping x.
-#'                       For each group, a CDF curve will be drawn with a
-#'                       different color. Default = "1", indicating no such
-#'                       variable is supplied.
-#'      \item linew    : number, width of the line. Default = 0.7.
-#'      \item add_hline_median: logical (default = FALSE), if TRUE, add a
-#'                horizontal dashed line at the median ECDF value on the y-axis
-#'                and a vertical dashed line at the corresponding x value.
-#'      \item legend_title: string, legend title. Default is the name of the
-#'                          colorby variable.
-#'      \item legend_pos:   string, legend position. Default = "right".
-#'      \item label_size: integer, size of bar label text. Default = 3.
-#'      \item font_size : overall font size. Default = 14. The font size of the
-#'                        axes and legend text is a fraction of this value.
-#'      \item ...: optional parameters for `stat_ecfd()`. For example, instead of
-#'                 using the default `geom = 'step'`, you can set `geom = 'point'`,
-#'                 which will draw the ecdf in dots instead of stepped line
-#'                 segments. For another example, instead of using the default \
-#'                 `pad = TRUE`, you can set `pad = FALSE` to stop the ecdf curve
-#'                 at its boundaries given by the data instead of extending it
-#'                 to +Inf and -Inf horizontally.
+#'      \item xvar. String, name of a continuous variable for x-axis.
+#'      \item colorby. String, name of a categorical variable for grouping x.
+#'      For each group, a CDF curve will be drawn with a different color.
+#'      Default = "1", indicating no such variable is supplied.
+#'      \item linew. Number, width of the line. Default = 0.7.
+#'      \item add_hline_median. Logical (default = FALSE), if TRUE, add a
+#'      horizontal dashed line at the median ECDF value on the y-axis and a
+#'      vertical dashed line at the corresponding x value.
+#'      \item legend_title. String, legend title. Default is the name of the
+#'      colorby variable.
+#'      \item legend_pos. String, legend position. Default = "right".
+#'      \item label_size. Integer, size of bar label text. Default = 3.
+#'      \item font_size. Overall font size. Default = 14. The font size of the
+#'      axes and legend text is a fraction of this value.
+#'      \item .... Optional parameters for `stat_ecfd()`. For example, instead
+#'      of using the default `geom = 'step'`, you can set `geom = 'point'`,
+#'      which will draw the ecdf in dots instead of stepped line segments. For
+#'      another example, instead of using the default `pad = TRUE`, you can set
+#'      `pad = FALSE` to stop the ecdf curve at its boundaries given by the data
+#'      instead of extending it to +Inf and -Inf horizontally.
 #' }
 #' @export
 #' @examples inst/examples/ex-mk_cdfplot.R

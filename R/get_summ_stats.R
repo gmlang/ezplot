@@ -5,12 +5,12 @@
 #' mean and etc) of x in each group. Used to add lines at these summary stats
 #' for histograms.
 #'
-#' @param df original data frame.
-#' @param xvar string, name of a continuous variable for x-axis.
-#' @param facet_by string, name of a categorical variable for grouping x and
+#' @param df Original data frame.
+#' @param xvar String, name of a continuous variable for x-axis.
+#' @param facet_by String, name of a categorical variable for grouping x and
 #'   creating a facet for each group.
 #'
-#' @return a data frame containing summary stats for each group.
+#' @return A data frame containing summary stats for each group.
 #'
 #' @seealso \code{\link{mk_histogram}}.
 get_summ_stats = function(df, xvar, facet_by) {

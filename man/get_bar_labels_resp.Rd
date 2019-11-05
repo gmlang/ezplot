@@ -7,17 +7,17 @@
 get_bar_labels_resp(df, gp, resp, fillby)
 }
 \arguments{
-\item{df}{data frame of the original data where bar charts are made of.}
+\item{df}{Data frame of the original data where bar charts are made of.}
 
-\item{gp}{string, name of a categorical variable to group the response var.}
+\item{gp}{String, name of a categorical variable to group the response var.}
 
-\item{resp}{string, name of a continuous variable as the response var.}
+\item{resp}{String, name of a continuous variable as the response var.}
 
-\item{fillby}{string, name of a second categorical variable used for
+\item{fillby}{String, name of a second categorical variable used for
 sub-dividing and coloring the bars.}
 }
 \value{
-a data frame containing bar labels and their positions
+A data frame containing bar labels and their positions
 }
 \description{
 \code{get_bar_labels_resp} takes in the original data frame, and

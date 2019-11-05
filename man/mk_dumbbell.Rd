@@ -20,32 +20,33 @@ mk_dumbbell(df)
                dot_guide = TRUE, dot_guide_size = 0.5,
                label_decimals = 1, label_size = 3, font_size = 14)}
 \itemize{
-     \item xvar_left : string, name of a continuous x variable (left pt)
-     \item xvar_right: string, name of a continuous x variable (right pt)
-     \item yvar      : string, name of a categorical variable for y-axis.
-     \item yorder    : string, "alphanumeric", "ascend" or "descend". It
-                       specifies how categories are ordered on the y-axis.
-                       Default = "alphanumeric".
-     \item show_pct  : logical, if TRUE, format x-axis and point labels as %;
-                       otherwise, format them as comma. Default is FALSE.
-     \item color_left: string, color of left point.
-                       Default is a colorblind friendly blue.
-     \item color_right: string, color of right point.
-                        Default is a colorblind friendly orange.
-     \item size_left  : string, size of left point. Default is 3.
-     \item size_right : string, size of right point. Default is 3.
-     \item segline_color: string, color of the line segment connecting left
-            and right points. Default is a gray color.
-     \item segline_size : string, size of the line segment connecting left
-            and right points. Default is 3.
-     \item dot_guide : logical, if TRUE, draw dotted guide line from 0 to left point.
-     \item dot_guide_size : number, size of the dotted guide line. Default is 0.5.
-     \item label_decimals: integer, the number of decimal points shown
-                       on the bar labels. Default = 1.
-     \item label_size: integer, size of bar label text. Default = 3.
-                       Hide bar labels when its value is 0.
-     \item font_size : overall font size. Default = 14. The font size of the
-                       axes and legend text is a fraction of this value.
+     \item xvar_left. String, name of a continuous x variable (left pt)
+     \item xvar_right. String, name of a continuous x variable (right pt)
+     \item yvar. String, name of a categorical variable for y-axis.
+     \item yorder. String, "alphanumeric", "ascend" or "descend". It specifies
+     how categories are ordered on the y-axis. Default = "alphanumeric".
+     \item show_pct. Logical, if TRUE, format x-axis and point labels as %;
+     otherwise, format them as comma. Default is FALSE.
+     \item color_left. String, color of left point. Default is a colorblind
+     friendly blue.
+     \item color_right. String, color of right point. Default is a colorblind
+     friendly orange.
+     \item size_left. String, size of left point. Default is 3.
+     \item size_right. String, size of right point. Default is 3.
+     \item segline_color. String, color of the line segment connecting left
+     and right points. Default is a gray color.
+     \item segline_size. String, size of the line segment connecting left
+     and right points. Default is 3.
+     \item dot_guide. Logical, if TRUE, draw dotted guide line from
+     0 to left point.
+     \item dot_guide_size. Number, size of the dotted guide line.
+     Default is 0.5.
+     \item label_decimals. Integer, the number of decimal points shown on
+     the bar labels. Default = 1.
+     \item label_size. Integer, size of bar label text. Default = 3. Hide bar
+     labels when its value is 0.
+     \item font_size. Overall font size. Default = 14. The font size of the
+     axes and legend text is a fraction of this value.
 }
 }
 \description{

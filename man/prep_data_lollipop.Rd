@@ -7,19 +7,19 @@
 prep_data_lollipop(df, xvar, yvar, yorder)
 }
 \arguments{
-\item{df}{data frame of the original data.}
+\item{df}{Data frame of the original data.}
 
-\item{xvar}{string, name of x numeric variable.}
+\item{xvar}{String, name of x numeric variable.}
 
-\item{yvar}{string, name of y categorical (character or factor) variable.}
+\item{yvar}{String, name of y categorical (character or factor) variable.}
 
-\item{yorder}{string, possible values are "alphanumeric", "descend" or
+\item{yorder}{String, possible values are "alphanumeric", "descend" or
 "ascend". If "alphanumeric", order y levels in alphanumerical order
 along y-axis. If "ascend"/"descend", order y levels in ascending/descending
 order of the sum of absolute x-values along y-axis.}
 }
 \value{
-a data frame for making and labeling a horizontal lollipop chart.
+A data frame for making and labeling a horizontal lollipop chart.
 }
 \description{
 \code{prep_data_lollipop} takes in the original data frame, the

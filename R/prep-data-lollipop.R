@@ -4,15 +4,15 @@
 #' x, y variables, and instruction on how to order the y levels. It returns a
 #' data frame for making and labeling a horizontal lollipop chart.
 #'
-#' @param df data frame of the original data.
-#' @param xvar string, name of x numeric variable.
-#' @param yvar string, name of y categorical (character or factor) variable.
-#' @param yorder string, possible values are "alphanumeric", "descend" or
+#' @param df Data frame of the original data.
+#' @param xvar String, name of x numeric variable.
+#' @param yvar String, name of y categorical (character or factor) variable.
+#' @param yorder String, possible values are "alphanumeric", "descend" or
 #'   "ascend". If "alphanumeric", order y levels in alphanumerical order
 #'   along y-axis. If "ascend"/"descend", order y levels in ascending/descending
 #'   order of the sum of absolute x-values along y-axis.
 #'
-#' @return a data frame for making and labeling a horizontal lollipop chart.
+#' @return A data frame for making and labeling a horizontal lollipop chart.
 #'
 #' @seealso \code{\link{mk_lollipop}}.
 prep_data_lollipop = function(df, xvar, yvar, yorder) {
@@ -36,6 +36,5 @@ prep_data_lollipop = function(df, xvar, yvar, yorder) {
         dplyr::summarise(
                 dplyr::group_by(df, !!as.name(yvar)),
                 !!as.name(xvar) := sum(!!as.name(xvar), na.rm = T),
-                mid_pos = !!as.name(xvar) / 2
-                )
+                mid_pos = !!as.name(xvar) / 2)
 }

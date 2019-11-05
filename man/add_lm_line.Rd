@@ -10,39 +10,38 @@ add_lm_line(p, alpha = 0.8, linew = 1, show = "eq",
   pv_r2_ypos = "bottom", ...)
 }
 \arguments{
-\item{p}{: a ggplot object, must be a scatter plot.}
+\item{p}{A ggplot object, must be a scatter plot.}
 
-\item{alpha}{: a number between 0 and 1, transparency level of the best line.
+\item{alpha}{A number between 0 and 1, transparency level of the best line.
 Smaller value means more transparent. Default = 0.8.}
 
-\item{linew}{: number, width of the line. Default = 1.}
+\item{linew}{Number, width of the line. Default = 1.}
 
-\item{show}{: string, "eq" or "tb". If "eq" (default), add the equation of
+\item{show}{String, "eq" or "tb". If "eq" (default), add the equation of
 the best fit line, the R-squared value, and the p-value of the x term coef.
 estimate to the plot. If "tb", add the fit table and the R-squared value to
 the plot.}
 
-\item{eq_tb_xpos:}{numeric between 0 and 1 or character. x-position of the
+\item{eq_tb_xpos}{Numeric between 0 and 1 or character. x-position of the
 equation or fit table label. Default = "left".}
 
-\item{eq_tb_ypos:}{numeric between 0 and 1 or character. y-position of the
+\item{eq_tb_ypos}{Numeric between 0 and 1 or character. y-position of the
 equation or fit table label. Default = "top".}
 
-\item{pv_r2_xpos:}{numeric between 0 and 1 or character. x-position of the
+\item{pv_r2_xpos}{Numeric between 0 and 1 or character. x-position of the
 p-value or R-squared value label. Default = "right".}
 
-\item{pv_r2_ypos:}{numeric between 0 and 1 or character. y-position of the
+\item{pv_r2_ypos}{Numeric between 0 and 1 or character. y-position of the
 p-value or R-squared value label. Default = "bottom".}
 
-\item{...:}{other arguments for ggpmisc::stat_poly_eq() or
-ggpmisc::stat_fit_tb(). For example, for ggpmisc::stat_poly_eq(),
-coef.digits sets the number of digits for coef. estimates,
-rr.digits sets the number of digits for R-squared value.
+\item{...}{Other arguments for ggpmisc::stat_poly_eq() or ggpmisc::stat_fit_tb().
+For example, for ggpmisc::stat_poly_eq(), coef.digits sets the number of digits
+for coef. estimates, rr.digits sets the number of digits for R-squared value.
 For ggpmisc::stat_fit_tb(), digits sets the digits for all numbers in the fit
 table.}
 }
 \value{
-a ggplot scatterplot object with the best line added with detailed
+A ggplot scatterplot object with the best line added with detailed
 labels.
 }
 \description{

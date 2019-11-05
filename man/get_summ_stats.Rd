@@ -7,15 +7,15 @@
 get_summ_stats(df, xvar, facet_by)
 }
 \arguments{
-\item{df}{original data frame.}
+\item{df}{Original data frame.}
 
-\item{xvar}{string, name of a continuous variable for x-axis.}
+\item{xvar}{String, name of a continuous variable for x-axis.}
 
-\item{facet_by}{string, name of a categorical variable for grouping x and
+\item{facet_by}{String, name of a categorical variable for grouping x and
 creating a facet for each group.}
 }
 \value{
-a data frame containing summary stats for each group.
+A data frame containing summary stats for each group.
 }
 \description{
 \code{get_summ_stats} takes in the original data frame, the

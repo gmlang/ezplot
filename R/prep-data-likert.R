@@ -6,19 +6,19 @@
 #' (df_neg and df_pos), along with some plot elements for making a likert chart,
 #' a.k.a., horizontal diverging bar chart.
 #'
-#' @param df data frame of the original data.
-#' @param xvar string, name of x numeric variable.
-#' @param yvar string, name of y categorical (character or factor) variable.
-#' @param fillby string, name of a second categorical variable for sub-dividing
+#' @param df Data frame of the original data.
+#' @param xvar String, name of x numeric variable.
+#' @param yvar String, name of y categorical (character or factor) variable.
+#' @param fillby String, name of a second categorical variable for sub-dividing
 #'   and coloring the bars.
-#' @param fillby_lvls character vector, levels of the fillby variable that the
+#' @param fillby_lvls Character vector, levels of the fillby variable that the
 #'   fillby variable should be ordered accordingly.
-#' @param yorder string, possible values are "alphanumeric", "descend" or
+#' @param yorder String, possible values are "alphanumeric", "descend" or
 #'   "ascend". If "alphanumeric", order y levels in alphanumerical order
 #'   along y-axis. If "ascend"/"descend", order y levels in ascending/descending
 #'   order of the sum of absolute x-values along y-axis.
 #'
-#' @return a list of 2 data frames (df_neg and df_pos), breaks and labels for
+#' @return A list of 2 data frames (df_neg and df_pos), breaks and labels for
 #' the continuous axis, and palette for coloring the bars (pal).
 #'
 #' @seealso \code{\link{mk_likertplot}}.
