@@ -11,8 +11,7 @@
 #' entire fit table (term, coef. estimate, standard error, tstat and pval) and
 #' the R-squared value.
 #' If the input scatterplot object has 1+ colored points, it will add 1+ lines
-#' with each line corresponding to a color. When this happens (when the
-#' scatterplot is drawn with a fillby variable), use the default
+#' with each line corresponding to a color. When this happens, use the default
 #' \code{show = "eq"} since printing 1+ fit tables doesn't work.
 #'
 #' @param p : a ggplot object, must be a scatter plot.
