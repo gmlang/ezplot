@@ -12,21 +12,13 @@ test_normality(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(varname, binw = NULL, bins = 30, detrend = TRUE,
-               font_size = 14, title_hist = NULL, title_qqplot = NULL)}
+\code{function(varname, detrend = TRUE, font_size = 14,
+               title_hist = NULL, title_qqplot = NULL, ...)}
 \itemize{
      \item varname : string, name of a continuous variable. Its
                      empirical distribution will be plotted as histogram,
                      and its normality will be tested and a qqplot will
                      also be plotted.
-     \item binw    : width of the bins. Can be specified as a number, or
-                     a function that calculates width from x. Default = NULL.
-     \item bins    : number of bins. Overridden by binw. Default = 30. You
-                     almost always want to change the defult. Andrew Gelman
-                     recommends to choose a sufficiently large number to
-                     show how raw data are distributed without any smoothing
-                     as happens when estimating density. See this blog post
-                     for details: http://andrewgelman.com/2009/10/23/variations_on_t/
      \item detrend : logical, Should the resulting Q-Q plot be detrended?
                      If TRUE, it'll be detrended according to the reference
                      Q-Q line. This procedure was described by Thode (2002),
@@ -37,6 +29,15 @@ test_normality(df)
                        axes and legend text is a fraction of this value.
      \item title_hist   :  string, title of histogram. Default = NULL.
      \item title_qqplot :  string, title of qq normal plot. Default = NULL.
+     \item ...: other parameters for making a histogram, for example,
+                `binwidth` (default = NULL), which can be a number, or a
+                function that calculates width from x. Or `bins` (default = 30),
+                which is the number of bins. Overridden by `binwidth`. Its
+                defult value of 30 isn't a good choice. Andrew Gelman recommends
+                to choose a sufficiently large number to show how raw data
+                are distributed without any smoothing as happens when
+                estimating density. See this blog post for details:
+                http://andrewgelman.com/2009/10/23/variations_on_t/
 }
 }
 \description{
