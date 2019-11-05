@@ -107,7 +107,7 @@ mk_cdfplot = function(df) {
                 if (colorby == "1") { # remove legend
                         p = p + guides(color = FALSE, fill = FALSE)
                 } else { # use colorblind-friendly colors
-                        p = p + ggthemes::scale_fill_tableau(
+                        p = p + ggthemes::scale_color_tableau(
                                 "Color Blind", name = legend_title) +
                                 theme(legend.position = legend_pos)
                 }
