@@ -46,7 +46,11 @@ scale_axis = function(p, axis = "y", scale = "breaks10", ydigits = NULL,
 
         # extract data along x or y axis
         d = layer_data(p)
-        axis_breaks = pretty(c(0, d[[axis]]), 10)
+        if (axis %in% names(d)) {
+                axis_breaks = pretty(c(0, d[[axis]]), 10)
+        } else { # xmax or ymax must be there
+                axis_breaks = pretty(c(0, df[[paste0(axis, 'max')]]), 10)
+        }
 
         if (axis == "y") {
                 switch(scale,
