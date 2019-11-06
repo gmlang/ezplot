@@ -48,8 +48,8 @@ scale_axis = function(p, axis = "y", scale = "breaks10", ydigits = NULL,
         d = layer_data(p)
         if (axis %in% names(d)) {
                 axis_breaks = pretty(c(0, d[[axis]]), 10)
-        } else { # xmax or ymax must be there
-                axis_breaks = pretty(c(0, df[[paste0(axis, 'max')]]), 10)
+        } else { # xmax_final or ymax_final must be there, happens for boxplot
+                axis_breaks = pretty(c(0, d[[paste0(axis, 'max_final')]]), 10)
         }
 
         if (axis == "y") {

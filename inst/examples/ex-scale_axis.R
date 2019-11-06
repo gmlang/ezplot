@@ -36,3 +36,9 @@ scale_axis(p, "x", scale = "log")
 scale_axis(p, "x", scale = "log2")
 scale_axis(p, "x", scale = "log10")
 scale_axis(p, "x", scale = "log1p")
+
+
+plt = mk_boxplot(films)
+p = plt(yvar = "budget")
+p = add_labs(p, ylab = "budget ($)", title = "Distribution of Budget")
+scale_axis(p, axis = "y", scale = "dollar")
