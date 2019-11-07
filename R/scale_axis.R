@@ -1,13 +1,3 @@
-to_pct = function(x, digits) {
-        # x: numeric vector
-        # digits: number of digits after the decimal in percent (%) format
-        if (is.null(digits)) {
-                scales::percent(x)
-        } else {
-                scales::percent(x, accuracy = 10^(-digits))
-        }
-}
-
 #' @title Use a different scale on either axis of a ggplot2 plot.
 #
 #' @description
@@ -34,15 +24,13 @@ to_pct = function(x, digits) {
 #' @param scale A string of value "breaks10", "comma", "dollar", "pct", "log",
 #' "log1p", "log10", "log2", "sqrt", or "exp". It specifies which scale to use.
 #' Default = "breaks10".
-#' @param ydigits/xdigits The number of digits after the decimal point to
-#' display on the y or x axis when using the 'pct' scale. Default = NULL, which
-#' uses the best guess.
+#' @param ydigits/xdigits The number of digits after the decimal point to show
+#' on the y or x axis when using the 'pct' scale. Default uses the best guess.
 #'
 #' @return A ggplot2 object with the new scale applied to the input axis.
 #' @export
 #' @examples inst/examples/ex-scale_axis.R
-scale_axis = function(p, axis = "y", scale = "breaks10", ydigits = NULL,
-                      xdigits = NULL) {
+scale_axis = function(p, axis = "y", scale = "breaks10", ydigits, xdigits) {
 
         # extract data along x or y axis
         d = layer_data(p)
@@ -51,6 +39,22 @@ scale_axis = function(p, axis = "y", scale = "breaks10", ydigits = NULL,
         } else { # xmax_final or ymax_final must be there, happens for boxplot
                 axis_breaks = pretty(c(0, d[[paste0(axis, 'max_final')]]), 10)
         }
+
+        # get function that converts numeric to percent format
+        if (missing(ydigits)) {
+                y_to_pct = scales::percent
+        } else {
+                y_to_pct = function(x) scales::percent(x, accuracy=10^(-ydigits))
+        }
+
+        if (missing(xdigits)) {
+                x_to_pct = scales::percent
+        } else {
+                x_to_pct = function(x) scales::percent(x, accuracy=10^(-xdigits))
+        }
+
+
+        # --- Main --- #
 
         if (axis == "y") {
                 switch(scale,
@@ -68,8 +72,7 @@ scale_axis = function(p, axis = "y", scale = "breaks10", ydigits = NULL,
                        pct = p + scale_y_continuous(
                                limits = range(axis_breaks),
                                breaks = axis_breaks,
-                               labels = function(x) to_pct(x, ydigits)
-                               ),
+                               labels = y_to_pct),
                        log = p + scale_y_continuous(
                                trans = scales::log_trans(),
                                breaks = scales::trans_breaks(
@@ -128,8 +131,7 @@ scale_axis = function(p, axis = "y", scale = "breaks10", ydigits = NULL,
                        pct = p + scale_x_continuous(
                                limits = range(axis_breaks),
                                breaks = axis_breaks,
-                               labels = function(x) to_pct(x, xdigits)
-                               ),
+                               labels = x_to_pct),
                        log = p + scale_x_continuous(
                                trans = scales::log_trans(),
                                breaks = scales::trans_breaks(
