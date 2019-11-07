@@ -19,6 +19,8 @@ f('exp_vals') # data from an exponential distribution have a linear CCDF plot
 df = births %>% filter(!is.na(diffs))
 f = test_expdist(df)
 f('diffs', add_vline_median = TRUE,
-  xlab = 'interarrival time (in minutes) between births') # more or less exponential upto 50 minutes
+  title_left = 'CDF of interarrival times between births',
+  title_right = 'Are the sample interarrival times exponential?',
+  xlab = 'Minutes between births') # more or less exponential upto 50 minutes
 
 

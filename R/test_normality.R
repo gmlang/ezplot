@@ -9,7 +9,8 @@
 #'
 #' @param df A data frame.
 #' @return
-#' \code{function(varname, detrend = TRUE, title_left, title_right, ...)}
+#' \code{function(varname, detrend = TRUE, title_left, title_right,
+#'                xlab_left = varname, ...)}
 #' \itemize{
 #'      \item varname. String, name of a continuous variable. Its empirical CDF
 #'      will be plotted along side its normal probability plot.
@@ -21,6 +22,7 @@
 #'      caused by orthogonal distances from Q-Q points to the reference line.
 #'      \item title_left. String, title of the left figure.
 #'      \item title_right. String, title of the right figure.
+#'      \item xlab_left. String, x label of the left figure. Default is varname.
 #'      \item .... Other parameters for making a CDF plot. A common one, for
 #'      example, is `add_vline_median = TRUE`, which will add a vertical line at
 #'      the median. Another common one is `show_label_median = FALSE`, which
@@ -35,11 +37,11 @@ test_normality = function(df) {
         draw_cdf = mk_cdfplot(df)
         draw_qqplot = mk_qqplot(df)
 
-        function(varname, detrend = TRUE, title_left, title_right, ...) {
+        function(varname, detrend = TRUE, title_left, title_right,
+                 xlab_left = varname, ...) {
 
                 if (missing(title_left)) {
-                        tit1 = paste("Empirical Cumulative Distribution of",
-                                     varname)
+                        tit1 = paste("Cumulative Distribution of", varname)
                 } else {
                         tit1 = title_left
                 }
@@ -50,10 +52,9 @@ test_normality = function(df) {
                         tit2 = title_right
                 }
 
-                p1 = draw_cdf(varname, ...) %>%
+                p1 = draw_cdf(varname, legend_pos = "top", ...) %>%
                         square_fig() %>%
-                        add_labs(title = tit1) +
-                        theme(legend.position = "top")
+                        add_labs(title = tit1, xlab = xlab_left)
 
                 p2 = draw_qqplot(varname, detrend = detrend) %>%
                         square_fig() %>%

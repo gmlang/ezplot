@@ -12,7 +12,8 @@ test_normality(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(varname, detrend = TRUE, title_left, title_right, ...)}
+\code{function(varname, detrend = TRUE, title_left, title_right,
+               xlab_left = varname, ...)}
 \itemize{
      \item varname. String, name of a continuous variable. Its empirical CDF
      will be plotted along side its normal probability plot.
@@ -24,6 +25,7 @@ test_normality(df)
      caused by orthogonal distances from Q-Q points to the reference line.
      \item title_left. String, title of the left figure.
      \item title_right. String, title of the right figure.
+     \item xlab_left. String, x label of the left figure. Default is varname.
      \item .... Other parameters for making a CDF plot. A common one, for
      example, is `add_vline_median = TRUE`, which will add a vertical line at
      the median. Another common one is `show_label_median = FALSE`, which
