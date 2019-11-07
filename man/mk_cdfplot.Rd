@@ -10,7 +10,8 @@ mk_cdfplot(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(xvar, colorby = "1", linew = 0.7, add_hline_median = FALSE,
+\code{function(xvar, colorby = "1", linew = 0.7, add_vline_median = FALSE,
+               show_label_median = TRUE,
                legend_title = colorby, legend_pos = "right",
                label_size = 3, font_size = 14)}
 \itemize{
@@ -19,9 +20,12 @@ mk_cdfplot(df)
      For each group, a CDF curve will be drawn with a different color.
      Default = "1", indicating no such variable is supplied.
      \item linew. Number, width of the line. Default = 0.7.
-     \item add_hline_median. Logical (default = FALSE), if TRUE, add a
-     horizontal dashed line at the median ECDF value on the y-axis and a
-     vertical dashed line at the corresponding x value.
+     \item add_vline_median. Logical (default = FALSE), if TRUE, add vertical
+     dashed line segments at the median values going up and touching the
+     CDF curves. To make it easy to look at, also add horizontal dashed line
+     at y=0.5.
+     \item show_label_median. Logical (default = TRUE), if TRUE, show median
+     values along the vertical median lines. Otherwise, don't show.
      \item legend_title. String, legend title. Default is the name of the
      colorby variable.
      \item legend_pos. String, legend position. Default = "right".

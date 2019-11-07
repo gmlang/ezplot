@@ -7,7 +7,8 @@
 #'
 #' @param df A data frame.
 #' @return
-#' \code{function(xvar, colorby = "1", linew = 0.7, add_hline_median = FALSE,
+#' \code{function(xvar, colorby = "1", linew = 0.7, add_vline_median = FALSE,
+#'                show_label_median = TRUE,
 #'                legend_title = colorby, legend_pos = "right",
 #'                label_size = 3, font_size = 14)}
 #' \itemize{
@@ -16,9 +17,12 @@
 #'      For each group, a CDF curve will be drawn with a different color.
 #'      Default = "1", indicating no such variable is supplied.
 #'      \item linew. Number, width of the line. Default = 0.7.
-#'      \item add_hline_median. Logical (default = FALSE), if TRUE, add a
-#'      horizontal dashed line at the median ECDF value on the y-axis and a
-#'      vertical dashed line at the corresponding x value.
+#'      \item add_vline_median. Logical (default = FALSE), if TRUE, add vertical
+#'      dashed line segments at the median values going up and touching the
+#'      CDF curves. To make it easy to look at, also add horizontal dashed line
+#'      at y=0.5.
+#'      \item show_label_median. Logical (default = TRUE), if TRUE, show median
+#'      values along the vertical median lines. Otherwise, don't show.
 #'      \item legend_title. String, legend title. Default is the name of the
 #'      colorby variable.
 #'      \item legend_pos. String, legend position. Default = "right".
@@ -35,7 +39,8 @@
 #' @export
 #' @examples inst/examples/ex-mk_cdfplot.R
 mk_cdfplot = function(df) {
-        function(xvar, colorby = "1", linew = 0.7, add_hline_median = FALSE,
+        function(xvar, colorby = "1", linew = 0.7, add_vline_median = FALSE,
+                 show_label_median = TRUE,
                  legend_title = colorby, legend_pos = "right", label_size = 3,
                  font_size = 14, ...) {
 
@@ -60,8 +65,8 @@ mk_cdfplot = function(df) {
                                            limits = range(ybreaks))
 
 
-                # add lines at the median and its corresponding x value
-                if (add_hline_median) {
+                # add lines
+                if (add_vline_median) {
                         if (colorby == "1") {
                                 med_xs = quantile(df[[xvar]], 0.5)
                         } else {
@@ -79,20 +84,24 @@ mk_cdfplot = function(df) {
                         # draw horizontal segment at y = 0.5
                         p = p + geom_segment(x = -Inf, xend = max(med_xs),
                                              y = 0.5, yend = 0.5,
-                                             alpha = 0.05,
-                                             linetype = "dashed")
+                                             linetype = "dashed",
+                                             color = cb_gray)
 
                         # draw vertical segment at the intersections of y=0.5
                         # and the curves
-                        for (xi in round(med_xs, 2))
+                        for (xi in round(med_xs, 2)) {
                                 p = p + geom_segment(x = xi, xend = xi,
                                                      y = -Inf, yend = 0.5,
-                                                     alpha = 0.05,
-                                                     linetype = "dashed") +
-                                geom_text(x = xi, y = 0.05, label = xi,
-                                          vjust = -0.3, nudge_y = 0.05,
-                                          angle = 90, check_overlap = T,
-                                          color = 'darkgray', show.legend = F)
+                                                     linetype = "dashed",
+                                                     color = cb_gray)
+                                if (show_label_median) {
+                                        p = p + geom_text(
+                                                x = xi, y = 0.05, label = xi,
+                                                vjust = -0.3, nudge_y = 0.05,
+                                                angle = 90, check_overlap = T,
+                                                color = cb_gray, show.legend=F)
+                                }
+                        }
                 }
 
                 # --- Customize Theme --- #
