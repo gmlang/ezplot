@@ -1,0 +1,66 @@
+#' @title Create a function for drawing publishable ggplot2 histogram and
+#' Q-Q normal plots side by side on one canvas. The resulting figure is often
+#' used to test normality of the sample distribution.
+#'
+#' @description
+#' \code{test_normality} takes a data frame as input and returns a function for
+#' drawing histogram and Q-Q normal plot side by side of any continuous variable
+#' from the data frame.
+#'
+#' @param df A data frame.
+#' @return
+#' \code{function(varname, detrend = TRUE, font_size = 14,
+#'                title_hist = NULL, title_qqplot = NULL, ...)}
+#' \itemize{
+#'      \item varname. String, name of a continuous variable. Its empirical
+#'      distribution will be plotted as histogram, and its normality will be
+#'      tested and a qqplot will also be plotted.
+#'      \item detrend. Logical, Should the resulting Q-Q plot be detrended?
+#'      If TRUE, it'll be detrended according to the reference Q-Q line. This
+#'      procedure was described by Thode (2002), and it reduces visual bias
+#'      caused by orthogonal distances from Q-Q points to the reference line.
+#'      Default = TRUE.
+#'      \item font_size. Overall font size. Default = 14. The font size of the
+#'      axes and legend text is a fraction of this value.
+#'      \item title_hist. String, title of histogram. Default = NULL.
+#'      \item title_qqplot. String, title of qq normal plot. Default = NULL.
+#'      \item .... Other parameters for making a histogram, for example,
+#'      `binwidth` (default = NULL), which can be a number, or a function that
+#'      calculates width from x. Or `bins` (default = 30), which is the number
+#'      of bins. Overridden by `binwidth`. Its defult value of 30 isn't a good
+#'      choice. Andrew Gelman recommends to choose a sufficiently large number
+#'      to show how raw data are distributed without any smoothing as happens
+#'      when estimating density. See this blog post for details:
+#'      http://andrewgelman.com/2009/10/23/variations_on_t/
+#' }
+#'
+#' @export
+#' @examples inst/examples/ex-test_normality.R
+test_normality = function(df) {
+
+        draw_hist = mk_histdens(df, 'histogram')
+        draw_qqplot = mk_qqplot(df)
+
+        function(varname, detrend = TRUE, font_size = 14,
+                 title_hist = NULL, title_qqplot = NULL, ...) {
+
+                # --- Main Plot --- #
+
+                p1 = draw_hist(varname, font_size = font_size, ...) %>%
+                        square_fig() %>%
+                        add_labs(title = ifelse(
+                                is.null(title_hist),
+                                paste("Empirical Distribution of", varname),
+                                title_hist)) +
+                        theme(legend.position = "top")
+
+                p2 = draw_qqplot(varname, detrend = detrend,
+                                 font_size = font_size) %>%
+                        square_fig() %>%
+                        add_labs(title = ifelse(
+                                is.null(title_qqplot),
+                                paste("Is", varname, "normally distributed?")))
+
+                cowplot::plot_grid(p1, p2)
+        }
+}

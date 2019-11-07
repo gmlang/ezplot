@@ -2,9 +2,9 @@
 % Please edit documentation in R/test_normality.R
 \name{test_normality}
 \alias{test_normality}
-\title{Create a function for drawing publishable ggplot2 histogram and
-Q-Q normal plots side by side on one canvas. The resulting figure is often
-used to test normality of the sample distribution.}
+\title{Create a function for drawing publishable ggplot2 CDF plot and normal
+probability plot (also called Q-Q normal plot) side by side on one canvas.
+The resulting figure is often used to test normality of the sample distribution.}
 \usage{
 test_normality(df)
 }
@@ -12,34 +12,28 @@ test_normality(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(varname, detrend = TRUE, font_size = 14,
-               title_hist = NULL, title_qqplot = NULL, ...)}
+\code{function(varname, detrend = TRUE, title_left, title_right, ...)}
 \itemize{
-     \item varname. String, name of a continuous variable. Its empirical
-     distribution will be plotted as histogram, and its normality will be
-     tested and a qqplot will also be plotted.
-     \item detrend. Logical, Should the resulting Q-Q plot be detrended?
-     If TRUE, it'll be detrended according to the reference Q-Q line. This
+     \item varname. String, name of a continuous variable. Its empirical CDF
+     will be plotted along side its normal probability plot.
+     \item detrend. Logical (default = TRUE), If TRUE, the normal probability
+     plot will be detrended according to the reference Q-Q line. As a result,
+     if the data points are scattered around the horizontal line y = 0, then
+     we can conclude the data are approximately normal. The detrend
      procedure was described by Thode (2002), and it reduces visual bias
      caused by orthogonal distances from Q-Q points to the reference line.
-     Default = TRUE.
-     \item font_size. Overall font size. Default = 14. The font size of the
-     axes and legend text is a fraction of this value.
-     \item title_hist. String, title of histogram. Default = NULL.
-     \item title_qqplot. String, title of qq normal plot. Default = NULL.
-     \item .... Other parameters for making a histogram, for example,
-     `binwidth` (default = NULL), which can be a number, or a function that
-     calculates width from x. Or `bins` (default = 30), which is the number
-     of bins. Overridden by `binwidth`. Its defult value of 30 isn't a good
-     choice. Andrew Gelman recommends to choose a sufficiently large number
-     to show how raw data are distributed without any smoothing as happens
-     when estimating density. See this blog post for details:
-     http://andrewgelman.com/2009/10/23/variations_on_t/
+     \item title_left. String, title of the left figure.
+     \item title_right. String, title of the right figure.
+     \item .... Other parameters for making a CDF plot. A common one, for
+     example, is `add_vline_median = TRUE`, which will add a vertical line at
+     the median. Another common one is `show_label_median = FALSE`, which
+     will suppress the display of median value along the median vline. See
+     \code{\link{mk_cdfplot}} for a full list of parameters.
 }
 }
 \description{
 \code{test_normality} takes a data frame as input and returns a function for
-drawing histogram and Q-Q normal plot side by side of any continuous variable
+drawing CDF plot and normal probability plot of any continuous variable
 from the data frame.
 }
 \examples{
