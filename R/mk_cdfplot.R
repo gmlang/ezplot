@@ -7,8 +7,8 @@
 #'
 #' @param df A data frame.
 #' @return
-#' \code{function(xvar, colorby = "1", linew = 0.7, add_vline_median = FALSE,
-#'                show_label_median = TRUE,
+#' \code{function(xvar, colorby = "1", complement = FALSE, linew = 0.7,
+#'                add_vline_median = FALSE, show_label_median = TRUE,
 #'                legend_title = colorby, legend_pos = "right",
 #'                label_size = 3, font_size = 14)}
 #' \itemize{
@@ -16,6 +16,8 @@
 #'      \item colorby. String, name of a categorical variable for grouping x.
 #'      For each group, a CDF curve will be drawn with a different color.
 #'      Default = "1", indicating no such variable is supplied.
+#'      \item complement. Logical (default = FALSE), if TRUE, produce a function
+#'      for plotting the complement of CDF.
 #'      \item linew. Number, width of the line. Default = 0.7.
 #'      \item add_vline_median. Logical (default = FALSE), if TRUE, add vertical
 #'      dashed line segments at the median values going up and touching the
@@ -39,8 +41,8 @@
 #' @export
 #' @examples inst/examples/ex-mk_cdfplot.R
 mk_cdfplot = function(df) {
-        function(xvar, colorby = "1", linew = 0.7, add_vline_median = FALSE,
-                 show_label_median = TRUE,
+        function(xvar, colorby = "1", complement = FALSE, linew = 0.7,
+                 add_vline_median = FALSE, show_label_median = TRUE,
                  legend_title = colorby, legend_pos = "right", label_size = 3,
                  font_size = 14, ...) {
 
@@ -59,11 +61,33 @@ mk_cdfplot = function(df) {
                 p = ggplot(df, aes_string(xvar, color = colorby)) +
                         stat_ecdf(size = linew, alpha = 1, ...)
 
+                if (complement) {
+                        # extract data behind cdf plot
+                        d = layer_data(p)
+
+                        # ensures legend label of each curve displayed correctly
+                        if (colorby != '1')
+                                d$group = levels(as.factor(df[[colorby]]))[d$group]
+
+                        # draw 1-cdf on y
+                        p = ggplot(d, aes(x, 1-y, colour = group))
+
+                        # add curves
+                        if (!exists('geom')) {
+                                p = p + geom_step(size = linew, alpha = 1)
+                        } else {
+                                if (geom == 'point') {
+                                        p = p + geom_point(size = linew, alpha = 1)
+                                } else {
+                                        p = p + geom_step(size = linew, alpha = 1)
+                                }
+                        }
+                }
+
                 # break y-axis into 10 pieces from ymin to ymax
                 ybreaks = seq(0, 1, 0.25)
                 p = p + scale_y_continuous(breaks = ybreaks,
                                            limits = range(ybreaks))
-
 
                 # add lines
                 if (add_vline_median) {
@@ -105,8 +129,8 @@ mk_cdfplot = function(df) {
                 }
 
                 # --- Customize Theme --- #
-
-                p = p + labs(x = xvar, y = 'CDF') + theme_cowplot(font_size)
+                ylab = ifelse(complement, 'CCDF', 'CDF')
+                p = p + labs(x = xvar, y = ylab) + theme_cowplot(font_size)
 
 
                 # --- Format Legend --- #

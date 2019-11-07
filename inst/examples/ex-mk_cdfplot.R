@@ -33,8 +33,33 @@ f("diffs", colorby = 'type', pad = F, legend_title = NULL, legend_pos = 'top',
         scale_axis(axis = 'x', scale = 'comma') %>%
         add_labs(xlab = 'Minutes between births')
 
-
 # --- example 3 --- #
+
+f = mk_cdfplot(births %>% filter(!is.na(diffs)))
+
+# plot CDF
+f('diffs', complement = F) %>% scale_axis('x', scale = 'comma')
+
+# plot Complement CDF (CCDF)
+p = f('diffs', complement = T) %>% scale_axis('x', scale = 'comma')
+print(p)
+
+# use a log10-y scale to show CCDF.
+# Linear trend implies the data is exponentially distributed.
+p %>% scale_axis(scale = 'log10') %>%
+        scale_axis('x', scale = 'comma') %>%
+        square_fig()
+
+# plot CDFs of each gender
+f('diffs', colorby = 'sex', complement = F)
+
+# plot CCDFs of each gender
+f('diffs', colorby = 'sex', complement = T) %>%
+        scale_axis(scale = 'log10') %>%
+        square_fig()
+
+
+# --- example 4 --- #
 
 # make fake data
 set.seed(123)

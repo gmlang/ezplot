@@ -10,8 +10,8 @@ mk_cdfplot(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(xvar, colorby = "1", linew = 0.7, add_vline_median = FALSE,
-               show_label_median = TRUE,
+\code{function(xvar, colorby = "1", complement = FALSE, linew = 0.7,
+               add_vline_median = FALSE, show_label_median = TRUE,
                legend_title = colorby, legend_pos = "right",
                label_size = 3, font_size = 14)}
 \itemize{
@@ -19,6 +19,8 @@ mk_cdfplot(df)
      \item colorby. String, name of a categorical variable for grouping x.
      For each group, a CDF curve will be drawn with a different color.
      Default = "1", indicating no such variable is supplied.
+     \item complement. Logical (default = FALSE), if TRUE, produce a function
+     for plotting the complement of CDF.
      \item linew. Number, width of the line. Default = 0.7.
      \item add_vline_median. Logical (default = FALSE), if TRUE, add vertical
      dashed line segments at the median values going up and touching the
