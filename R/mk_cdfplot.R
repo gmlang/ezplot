@@ -8,7 +8,7 @@
 #' @param df A data frame.
 #' @return
 #' \code{function(xvar, colorby = "1", complement = FALSE, linew = 0.7,
-#'                add_vline_median = FALSE, show_label_median = TRUE,
+#'                add_vline_median = FALSE, show_label_median = add_vline_median,
 #'                legend_title = colorby, legend_pos = "right",
 #'                label_size = 3, font_size = 14)}
 #' \itemize{
@@ -23,8 +23,9 @@
 #'      dashed line segments at the median values going up and touching the
 #'      CDF curves. To make it easy to look at, also add horizontal dashed line
 #'      at y=0.5.
-#'      \item show_label_median. Logical (default = TRUE), if TRUE, show median
-#'      values along the vertical median lines. Otherwise, don't show.
+#'      \item show_label_median. Logical (default is the same as the value of
+#'      `add_vline_median`), if TRUE, show median values along the vertical
+#'      median lines. Otherwise, don't show.
 #'      \item legend_title. String, legend title. Default is the name of the
 #'      colorby variable.
 #'      \item legend_pos. String, legend position. Default = "right".
