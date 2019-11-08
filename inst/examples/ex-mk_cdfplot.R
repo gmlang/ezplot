@@ -38,16 +38,16 @@ f("diffs", colorby = 'type', pad = F, legend_title = NULL, legend_pos = 'top',
 f = mk_cdfplot(births %>% filter(!is.na(diffs)))
 
 # plot CDF
-f('diffs', complement = F) %>% scale_axis('x', scale = 'comma')
+f('diffs', complement = F) %>% scale_axis('x')
 
 # plot Complement CDF (CCDF)
-p = f('diffs', complement = T) %>% scale_axis('x', scale = 'comma')
+p = f('diffs', complement = T) %>% scale_axis('x')
 print(p)
 
 # use a log10-y scale to show CCDF.
 # Linear trend implies the data is exponentially distributed.
 p %>% scale_axis(scale = 'log10') %>%
-        scale_axis('x', scale = 'comma') %>%
+        scale_axis('x') %>%
         square_fig()
 
 # plot CDFs of each gender
@@ -74,21 +74,16 @@ f = mk_cdfplot(subset(df, target_outcome==1))
 f('model_rank', colorby = 'obs_set')
 f('model_rank', colorby = 'obs_set', pad = F)
 
-p = f('model_rank', colorby = 'obs_set', add_hline_median = T, legend_title = NULL)
+p = f('model_rank', colorby = 'obs_set', add_vline_median = T, legend_title = NULL)
 print(p)
 p %>% scale_axis(axis = 'y', scale = 'pct') %>%
-        scale_axis(axis = 'x', scale = 'pct')
-p %>% scale_axis(axis = 'y', scale = 'pct', ydigits = 1) %>%
-        scale_axis(axis = 'x', scale = 'pct')
-p %>% scale_axis(axis = 'y', scale = 'pct') %>%
-        scale_axis(axis = 'x', scale = 'pct', xdigits = 0)
-
-square_fig = p %>% scale_axis(axis = 'y', scale = 'pct') %>%
-        scale_axis(axis = 'x', scale = 'pct', xdigits = 0) %>%
-        square_fig()
-square_fig %>%
+        scale_axis(axis = 'x', scale = 'pct') +
+        coord_equal()
+p %>% scale_axis(axis = 'y', scale = 'pct', digits = 1) %>%
+        scale_axis(axis = 'x', scale = 'pct', digits = 1) %>%
         add_labs(xlab = "Model Percentile", ylab = "Percent of Target Outcome",
                  title = "Gain Chart") +
+        coord_equal() +
         geom_segment(aes(x=0, y=0, xend=0.9, yend=1),
                      color = "gray", linetype="longdash", size=1)
 

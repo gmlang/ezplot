@@ -16,8 +16,8 @@ f("Sepal.Length", facet_by = "Species", facet_ncol = 3, font_size = 8,
   binwidth = function(x) 2*IQR(x) / (length(x)^(1/3)))
 
 f = mk_histdens(films, type = 'histogram')
-f("boxoffice", bins = 40) %>% scale_axis(axis = "x", scale = "log10") %>%
-        scale_axis(axis = 'y', scale = 'breaks10')
+f("boxoffice", bins = 40) %>% scale_axis("x", scale = "log10") %>%
+        scale_axis()
 
 
 # --- density plots --- #
@@ -32,9 +32,8 @@ f("Sepal.Length", adjust = 5, add_vline_mean = F)
 p = f("Sepal.Length", facet_by = "Species", facet_ncol = 3, font_size = 8,
       adjust = 0.9, add_vline_median = F, add_vline_mean = F)
 print(p)
-p %>% scale_axis(axis = 'y', scale = 'breaks10')
+scale_axis(p, nticks = 8)
 
 f = mk_histdens(films, type = 'density')
-f("boxoffice") %>% scale_axis(axis = "x", scale = "log10") %>%
-        scale_axis(axis = 'y', scale = 'breaks10')
+f("boxoffice") %>% scale_axis(axis = "x", scale = "log10") %>% scale_axis()
 

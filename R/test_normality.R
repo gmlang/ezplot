@@ -1,6 +1,7 @@
 #' @title Create a function for drawing publishable ggplot2 CDF plot and normal
-#' probability plot (also called Q-Q normal plot) side by side on one canvas.
-#' The resulting figure is often used to test normality of the sample distribution.
+#' probability plot (comparing the sample quantiles to the quantiles of the
+#' standard normal distribution) side by side on one canvas. The resulting
+#' figure is often used to test normality of the sample distribution.
 #'
 #' @description
 #' \code{test_normality} takes a data frame as input and returns a function for

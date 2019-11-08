@@ -9,14 +9,14 @@ p = g("boxoffice", "mpaa", yorder = "ascend", font_size = 10,
 add_labs(p, title = "Fuel efficiency generally decreases with engine size",
          subtitle = "Two seaters (sports cars) are an exception ...",
          caption = "Data from fueleconomy.gov")
+
 films$boxoffice_in_mil = films$boxoffice / 10^6
 g = mk_barploth_resp(films)
 g("boxoffice_in_mil", "mpaa", yorder = "descend", font_size = 10) %>%
         add_labs(xlab = "Boxoffice (in millions USD)",
                  title = "Fuel efficiency generally decreases with engine size",
                  subtitle = "Two seaters (sports cars) are an exception ...",
-                 caption = "Data from fueleconomy.gov"
-                 )
+                 caption = "Data from fueleconomy.gov")
 
 # use label_size = 0 to remove labels
 g("bo_bt_ratio", "mpaa", fillby = "year_cat", label_size = 0,

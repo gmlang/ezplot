@@ -85,7 +85,7 @@ mk_cdfplot = function(df) {
                         }
                 }
 
-                # break y-axis into 10 pieces from ymin to ymax
+                # break y-axis into 4 quarters from 0 to 1
                 ybreaks = seq(0, 1, 0.25)
                 p = p + scale_y_continuous(breaks = ybreaks,
                                            limits = range(ybreaks))

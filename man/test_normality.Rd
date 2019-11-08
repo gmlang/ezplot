@@ -3,8 +3,9 @@
 \name{test_normality}
 \alias{test_normality}
 \title{Create a function for drawing publishable ggplot2 CDF plot and normal
-probability plot (also called Q-Q normal plot) side by side on one canvas.
-The resulting figure is often used to test normality of the sample distribution.}
+probability plot (comparing the sample quantiles to the quantiles of the
+standard normal distribution) side by side on one canvas. The resulting
+figure is often used to test normality of the sample distribution.}
 \usage{
 test_normality(df)
 }

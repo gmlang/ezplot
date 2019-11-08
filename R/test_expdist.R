@@ -1,22 +1,31 @@
 #' @title Create a function for drawing publishable ggplot2 CDF and log10(CCDF)
 #' plots side by side on one canvas. The resulting figure is used to test if
-#' the sample distribution is exponential.
+#' the distribution of the data is exponential.
 #'
 #' @description
 #' \code{test_expdist} takes a data frame as input and returns a function for
 #' drawing CDF plot and log10(CCDF) plot of any continuous variable
 #' from the data frame. CCDF standands for Complement CDF. If log10(CCDF) is
-#' linear, the sample data are exponentially distributed.
+#' linear, the observed data are exponentially distributed.
 #'
 #' @param df A data frame.
 #' @return
-#' \code{function(varname, title_left, title_right, xlab = varname, ...)}
+#' \code{function(varname, xlab = varname, title_left, title_right,
+#'                caption_left, caption_right, xscale_left, ...)}
 #' \itemize{
 #'      \item varname. String, name of a continuous variable. Its empirical CDF
 #'      will be plotted along side its complement CDF.
+#'      \item xlab. String, x label of the left and the right figures.
+#'      Default is varname.
 #'      \item title_left. String, title of the left figure.
 #'      \item title_right. String, title of the right figure.
-#'      \item xlab. String, x label of both left and right figures. Default is varname.
+#'      \item caption_left. String, caption of the left figure.
+#'      \item caption_right. String, caption of the right figure.
+#'      \item xscale_left. String, scale of x-axis of the left figure. Possible
+#'      values are described at \code{\link{scale_axis}}. There's no parameter
+#'      to change the x-scale of the right figure because we need to keep the
+#'      x-axis of CCDF at the original/raw scale in order to detect if the
+#'      distribution is exponential or not.
 #'      \item .... Other parameters for making a CDF plot. A common one, for
 #'      example, is `add_vline_median = TRUE`, which will add a vertical line at
 #'      the median. Another common one is `show_label_median = FALSE`, which
@@ -30,7 +39,10 @@ test_expdist = function(df) {
 
         draw_cdf = mk_cdfplot(df)
 
-        function(varname, title_left, title_right, xlab = varname, ...) {
+        function(varname, xlab = varname, title_left, title_right,
+                 caption_left, caption_right, xscale_left, ...) {
+
+                # --- prep --- #
 
                 if (missing(title_left)) {
                         tit1 = paste("Cumulative Distribution of", varname)
@@ -44,16 +56,32 @@ test_expdist = function(df) {
                         tit2 = title_right
                 }
 
+                if (missing(caption_left)) {
+                        cap1 = NULL
+                } else {
+                        cap1 = caption_left
+                }
+
+                if (missing(caption_right)) {
+                        cap2 = NULL
+                } else {
+                        cap2 = caption_right
+                }
+
+                # --- main --- #
+
                 p1 = draw_cdf(varname, legend_pos = 'top', ...) %>%
-                        square_fig() %>%
-                        add_labs(title = tit1, xlab = xlab)
+                        add_labs(xlab = xlab, title = tit1, caption = cap1)
 
                 p2 = draw_cdf(varname, complement = TRUE, legend_pos = 'top',
                               ...) %>%
                         scale_axis(scale = 'log10') %>%
-                        square_fig() %>%
-                        add_labs(title = tit2, xlab = xlab)
+                        add_labs(xlab = xlab, title = tit2, caption = cap2)
 
-                cowplot::plot_grid(p1, p2)
+                if (!missing(xscale_left))
+                        p1 = scale_axis(p1, 'x', scale = xscale_left, nticks=8)
+
+
+                cowplot::plot_grid(square_fig(p1), square_fig(p2))
         }
 }

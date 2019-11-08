@@ -23,4 +23,5 @@ scale_axis(p, scale = "log")
 plt = mk_lineplot(films %>% group_by(year_cat) %>%
                   summarise(avg_boxoffice = mean(boxoffice)))
 p = plt("year_cat", "avg_boxoffice")
-add_labs(p, xlab = NULL, ylab = "Mean Boxoffice", subtitle = "haha")
+p %>% add_labs(xlab = NULL, ylab = "Mean Boxoffice", subtitle = "haha") %>%
+        scale_axis(scale = 'dollar')

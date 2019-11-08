@@ -2,7 +2,6 @@ library(ezplot)
 library(dplyr)
 
 plt = mk_scatterplot(films)
-plt("budget", "boxoffice")
 plt("budget", "boxoffice") %>%
         add_labs(subtitle = "Total number of observations: 5,944")
 plt("budget", "boxoffice", colorby = "year_cat", alpha = 0.2, legend_title = NULL) %>%

@@ -22,7 +22,7 @@ f("lt", "rt", "trt", label_decimals = 0)
 
 
 
-df = data_frame(country=c("Germany", "France", "Vietnam", "Japan", "Poland",
+df = data.frame(country=c("Germany", "France", "Vietnam", "Japan", "Poland",
                           "Lebanon", "Australia", "South\nKorea", "Canada",
                           "Spain", "Italy", "Peru", "U.S.", "UK", "Mexico",
                           "Chile", "China", "India"),
