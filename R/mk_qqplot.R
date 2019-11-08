@@ -9,30 +9,27 @@
 #' \code{function(varname, dist = "norm", dparams = list(),
 #'                ci_band_type = "pointwise", font_size = 14)}
 #' \itemize{
-#'      \item varname : string, name of a continuous variable. We're interested
-#'                      in comparing its empirical distribution with a
-#'                      theoretical distribution, for example, the standard
-#'                      normal distribution.
-#'      \item dist    : string, theoretical probability distribution function to
-#'                      compare against. These values are supported: "beta",
-#'                      "cauchy", "chisq", "exp", "f", "gamma", "geom", "lnorm",
-#'                      "logis", "norm", "nbinom", "pois", "t", "weibull".
-#'                      Default = "norm".
-#'      \item dparams : list of parameters to the chosen theoretical distribution
-#'                      function. If an empty list is provided (default), the
-#'                      distributional parameters are estimated via MLE.
-#'                      Default = list().
-#'      \item ci_band_type : string, type of the confidence bands to be drawn:
-#'              "pointwise" (default), "boot", "ks", and "ts", where
-#'              * "pointwise" - simultaneous confidence bands based on the normal distribution;
-#'              * "boot" - pointwise confidence bands based on a parametric boostrap;
-#'              * "ks" - simultaneous confidence bands based on an inversion of the Kolmogorov-Smirnov test;
-#'                       It's not tail sensitive so the bands at the tails are really wide. Not good to test
-#'                       if the tails of the empirical distribution follows the given theoretical distribution.
-#'              * "ts" - tail-sensitive confidence bands, as proposed by Aldor-Noiman et al. (2013).
-#'                       It only works when dist = "norm", and it takes too long to compute for large samples.
+#'      \item varname. String, name of a continuous variable. We're interested
+#'      in comparing its empirical distribution with a theoretical distribution,
+#'      for example, the standard normal distribution.
+#'      \item dist. String, theoretical probability distribution function to
+#'      compare against. These values are supported: "beta", "cauchy", "chisq",
+#'      "exp", "f", "gamma", "geom", "lnorm", "logis", "norm" (default),
+#'      "nbinom", "pois", "t", "weibull".
+#'      \item dparams. List of parameters to the chosen theoretical distribution
+#'      function. If an empty list is provided (default), the distributional
+#'      parameters are estimated via MLE. Default = list().
+#'      \item ci_band_type. String, type of the confidence bands to be drawn:
+#'      "pointwise" (default), "boot", "ks", and "ts", where
+#'          * "pointwise" - simultaneous confidence bands based on the normal distribution;
+#'          * "boot" - pointwise confidence bands based on a parametric boostrap;
+#'          * "ks" - simultaneous confidence bands based on an inversion of the Kolmogorov-Smirnov test;
+#'                   It's not tail sensitive so the bands at the tails are really wide. Not good to test
+#'                   if the tails of the empirical distribution follows the given theoretical distribution.
+#'          * "ts" - tail-sensitive confidence bands, as proposed by Aldor-Noiman et al. (2013).
+#'                   It only works when dist = "norm", and it takes too long to compute for large samples.
 #'      \item font_size: overall font size. Default = 14. The font size of the
-#'                       axes and legend text is a fraction of this value.
+#'      axes and legend text is a fraction of this value.
 #' }
 #'
 #' @export
@@ -82,7 +79,6 @@ mk_qqplot = function(df) {
 
                 p + labs(x = "Theoretical Quantiles", y = "Sample Quantiles",
                          subtitle = subtit) + theme_cowplot(font_size)
-
 
         }
 }
