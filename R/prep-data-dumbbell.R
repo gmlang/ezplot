@@ -6,16 +6,16 @@
 #' ordered according to the supplied instruction, and a new column called
 #' diff (difference between the right and left end point xvars) appended.
 #'
-#' @param df data frame of the original data.
-#' @param xvar_left string, name of a numeric variable, left end-point on x.
-#' @param xvar_right string, name of a numeric variable, right end-point on x.
-#' @param yvar string, name of y categorical (character or factor) variable.
-#' @param yorder string, possible values are "alphanumeric", "descend" or
+#' @param df Data frame of the original data.
+#' @param xvar_left String, name of a numeric variable, left end-point on x.
+#' @param xvar_right String, name of a numeric variable, right end-point on x.
+#' @param yvar String, name of y categorical (character or factor) variable.
+#' @param yorder String, possible values are "alphanumeric", "descend" or
 #'   "ascend". If "alphanumeric", order y levels in alphanumerical order
 #'   along y-axis. If "ascend"/"descend", order y levels in ascending/descending
 #'   order of the difference between xvar_right and xvar_left.
 #'
-#' @return the original data frame with y ordered according to instruction and a
+#' @return The original data frame with y ordered according to instruction and a
 #' new column called diff appended.
 #'
 #' @seealso \code{\link{mk_dumbbell}}.

@@ -7,21 +7,21 @@
 prep_data_dumbbell(df, xvar_left, xvar_right, yvar, yorder)
 }
 \arguments{
-\item{df}{data frame of the original data.}
+\item{df}{Data frame of the original data.}
 
-\item{xvar_left}{string, name of a numeric variable, left end-point on x.}
+\item{xvar_left}{String, name of a numeric variable, left end-point on x.}
 
-\item{xvar_right}{string, name of a numeric variable, right end-point on x.}
+\item{xvar_right}{String, name of a numeric variable, right end-point on x.}
 
-\item{yvar}{string, name of y categorical (character or factor) variable.}
+\item{yvar}{String, name of y categorical (character or factor) variable.}
 
-\item{yorder}{string, possible values are "alphanumeric", "descend" or
+\item{yorder}{String, possible values are "alphanumeric", "descend" or
 "ascend". If "alphanumeric", order y levels in alphanumerical order
 along y-axis. If "ascend"/"descend", order y levels in ascending/descending
 order of the difference between xvar_right and xvar_left.}
 }
 \value{
-the original data frame with y ordered according to instruction and a
+The original data frame with y ordered according to instruction and a
 new column called diff appended.
 }
 \description{

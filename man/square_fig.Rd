@@ -14,8 +14,8 @@ x and y the same length and hence the figure a square. A value > 1 will make
 y-axis longer than x-axis. A value < 1 will make x-axis longer than y-axis.}
 }
 \value{
-a ggplot object of square shape by default or a rectangular
-        shape when user decides not to use 1 as aspect ratio.
+A ggplot object of square shape by default or a rectangular shape
+when user decides not to use 1 as aspect ratio.
 }
 \description{
 \code{square_fig} takes a ggplot object as input and changes its shape to

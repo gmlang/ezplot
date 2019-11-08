@@ -27,7 +27,7 @@ Default = 1.}
 \item{mar_bottom}{A number, bottom margin of the whole plot. Default = 1.}
 }
 \value{
-A ggplot object
+A ggplot object.
 }
 \description{
 \code{web_display} takes a ggplot object as input, and enlarges its axis

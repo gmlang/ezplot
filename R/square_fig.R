@@ -10,8 +10,8 @@
 #' x and y the same length and hence the figure a square. A value > 1 will make
 #' y-axis longer than x-axis. A value < 1 will make x-axis longer than y-axis.
 #'
-#' @return a ggplot object of square shape by default or a rectangular
-#'         shape when user decides not to use 1 as aspect ratio.
+#' @return A ggplot object of square shape by default or a rectangular shape
+#' when user decides not to use 1 as aspect ratio.
 #'
 #' @export
 #' @examples inst/examples/ex-square_fig.R

@@ -32,7 +32,7 @@ mk_qqplot(df)
                   if the tails of the empirical distribution follows the given theoretical distribution.
          * "ts" - tail-sensitive confidence bands, as proposed by Aldor-Noiman et al. (2013).
                   It only works when dist = "norm", and it takes too long to compute for large samples.
-     \item font_size: overall font size. Default = 14. The font size of the
+     \item font_size. Overall font size. Default = 14. The font size of the
      axes and legend text is a fraction of this value.
 }
 }

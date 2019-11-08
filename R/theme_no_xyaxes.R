@@ -4,7 +4,7 @@
 #'
 #' @param font_size Overall font size.
 #' @param font_family Font family for plot title, axis titles and labels,
-#'                    legend texts, etc.
+#' legend texts, etc.
 #' @param line_size Line size for axis lines.
 #' @param rel_small Relative size of small text (e.g., axis tick labels)
 #' @param rel_tiny Relative size of tiny text (e.g., caption)

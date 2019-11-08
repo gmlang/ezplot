@@ -15,7 +15,7 @@
 #' @param mar_left A number, left margin of the whole plot. Default = 1.
 #' @param mar_bottom A number, bottom margin of the whole plot. Default = 1.
 #'
-#' @return A ggplot object
+#' @return A ggplot object.
 #'
 #' @export
 #' @examples inst/examples/ex-web_display.R

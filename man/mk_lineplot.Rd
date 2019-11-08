@@ -14,22 +14,19 @@ mk_lineplot(df)
                add_cnt_to_legend = TRUE, legend_title = colorby,
                legend_pos = "right", font_size = 14)}
 \itemize{
-     \item xvar   : string, name of a continuous or categorical variable for
-                    x-axis.
-     \item yvar   : string, name of a continuous variable for y-axis.
-     \item colorby : string, name of a categorical variable for
-                    grouping and coloring the lines. Default = "1", meaning
-                    no such variable is supplied.
-     \item pt_size: number, size of the points. Default = 1.
-     \item linew  : number, width of the line. Default = 0.7.
-     \item add_cnt_to_legend: logical, when TRUE (default), it will show
-                   the number of non-missing records for each level in the
-                   colorby var.
-     \item legend_title: string, legend title. Default uses the name of the
-              colorby variable.
-     \item legend_pos:   string, legend position. Default = "right".
-     \item font_size: overall font size. Default = 14. The font size of the
-                      axes and legend text is a fraction of this value.
+     \item xvar. String, name of a continuous or categorical variable for x-axis.
+     \item yvar. String, name of a continuous variable for y-axis.
+     \item colorby. String, name of a categorical variable for grouping and
+     coloring the lines. Default = "1", meaning no such variable is supplied.
+     \item pt_size. Number, size of the points. Default = 1.
+     \item linew. Number, width of the line. Default = 0.7.
+     \item add_cnt_to_legend. Logical, when TRUE (default), it will show the
+     number of non-missing records for each level in the colorby var.
+     \item legend_title. String, legend title. Default uses the name of the
+     colorby variable.
+     \item legend_pos. String, legend position. Default = "right".
+     \item font_size. Overall font size. Default = 14. The font size of the
+     axes and legend text is a fraction of this value.
 }
 }
 \description{

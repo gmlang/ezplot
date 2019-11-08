@@ -11,26 +11,25 @@
 #'                palette = "C", color_direction = -1, legend_title = fillby,
 #'                format_legend_as_comma = FALSE, font_size = 8)}
 #' \itemize{
-#'      \item xvar   : string, name of a categorical variable for x-axis.
-#'      \item yvar   : string, name of another categorical variable for y-axis.
-#'      \item fillby : string, name of a continuous variable, and its values
-#'                     are used to color the tiles.
-#'      \item facet_by: string, name of a categorical variable for grouping and
-#'                      creating facets. Default = NULL.
-#'      \item facet_ncol: number of columns when facetting. Default = 1.
-#'                        Only works when facet_by is not NULL.
-#'      \item palette   : string, the colormap option to use. Possible values
-#'                        are "A", "B", "C" (default), "D" and "E".
-#'      \item color_direction: 1 or -1. Sets the order of colors in the scale.
-#'               If 1, colors are ordered from darkest to lightest.
-#'               If -1 (default), ordered from lightest to darkest.
-#'      \item legend_title: string, legend title. Default uses the name of the
-#'               fillby variable.
-#'      \item format_legend_as_comma: logical. If TRUE, display numbers like
-#'               2000 as 2,000 on legend. If FALSE (default), display numbers as
-#'               they are.
-#'      \item font_size : overall font size. Default = 8. The font size of the
-#'                        axes and legend text is a fraction of this value.
+#'      \item xvar. String, name of a categorical variable for x-axis.
+#'      \item yvar. String, name of another categorical variable for y-axis.
+#'      \item fillby. String, name of a continuous variable, and its values are
+#'      used to color the tiles.
+#'      \item facet_by. String, name of a categorical variable for grouping and
+#'      creating facets. Default = NULL.
+#'      \item facet_ncol. Number of columns when facetting. Default = 1. Only
+#'      works when facet_by is not NULL.
+#'      \item palette. String, the colormap option to use. Possible values are
+#'      "A", "B", "C" (default), "D" and "E".
+#'      \item color_direction. 1 or -1. Sets the order of colors in the scale.
+#'      If 1, colors are ordered from darkest to lightest. If -1 (default),
+#'      ordered from lightest to darkest.
+#'      \item legend_title. String, legend title. Default uses the name of the
+#'      fillby variable.
+#'      \item format_legend_as_comma. Logical. If TRUE, display numbers like
+#'      2000 as 2,000 on legend. If FALSE (default), display numbers as they are.
+#'      \item font_size. Overall font size. Default = 8. The font size of the
+#'      axes and legend text is a fraction of this value.
 #' }
 #'
 #' @export
