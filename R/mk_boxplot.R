@@ -51,27 +51,26 @@ mk_boxplot = function(df) {
                 # draw mean as spade shape
                 p = p + stat_summary(aes_string(group = fillby),
                                      fun.y = mean, geom = "point", size = 1,
-                                     shape = 5, position = position_dodge(0.75)
-                                     )
+                                     shape = 5, position = position_dodge(0.75))
 
                 # show number of observations above ymax
                 #       (drops NAs and show correct counts automatically)
-                get_n = function(x) data.frame(y = max(x),
-                                               label = paste("n =", length(x))
-                                               )
+                get_n = function(x) {
+                        data.frame(y = max(x), label = paste("n =", length(x)))
+                }
                 p = p + stat_summary(aes_string(group = fillby),
                                      fun.data = get_n, geom = "text",
                                      size = label_size, vjust = -0.8,
-                                     position = position_dodge(0.75)
-                                     )
-
-                # break y-axis into 10 pieces from ymin to ymax
-                ybreaks = pretty(df[[yvar]], n = 10)
-                p = p + scale_y_continuous(breaks = ybreaks,
-                                           limits = range(ybreaks)
-                                           )
+                                     position = position_dodge(0.75))
 
                 # --- Customize Theme --- #
+
+                p = scale_axis(p) # break y-axis into 10 ticks from ymin to ymax
+
+                if (xvar == '1') # remove ticks and value lables of x-axis
+                        p = p + theme(axis.title.x=element_blank(),
+                                      axis.text.x=element_blank(),
+                                      axis.ticks.x=element_blank())
 
                 p = p + labs(x = NULL, y = yvar) + theme_cowplot(font_size)
 
