@@ -16,49 +16,56 @@
 #' }
 #' If a ggplot object has too few breaks on an axis (to see the max value), and
 #' if you don't need to apply any scales to the axis (due to the values are
-#' already in a nice range), you can apply scale='breaks10' to that axis, and
-#' this will add 10 breaks from the min value to the max value on that axis.
+#' already in a nice range), you can apply scale='default' to that axis, and
+#' this will add nticks (a number supplied by you) from the min to the max value
+#' on that axis.
 #'
 #' @param p A ggplot2 object.
 #' @param axis A string of value "x" or "y". Default = "y".
-#' @param scale A string of value "breaks10", "comma", "dollar", "pct", "log",
+#' @param scale A string of value "default", "comma", "dollar", "pct", "log",
 #' "log1p", "log10", "log2", "sqrt", or "exp". It specifies which scale to use.
-#' Default = "breaks10".
-#' @param ydigits/xdigits The number of digits after the decimal point to show
-#' on the y or x axis when using the 'pct' scale. Default uses the best guess.
+#' @param nticks Number of ticks on axis. Default = 10. The actual number of
+#' ticks shown will be 1 or 2 less or more that the number user supplied depends
+#' on the actual limit of the data. This is caused by rounding in computation.
+#' @param digits Number of digits after the decimal point when using the 'pct'
+#' scale. Default uses best guess. It's only effective when `scale = 'pct'`.
 #'
 #' @return A ggplot2 object with the new scale applied to the input axis.
 #' @export
 #' @examples inst/examples/ex-scale_axis.R
-scale_axis = function(p, axis = "y", scale = "breaks10", ydigits, xdigits) {
+scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
 
         # extract data along x or y axis
         d = layer_data(p)
         if (axis %in% names(d)) {
-                axis_breaks = pretty(c(0, d[[axis]]), 10)
-        } else { # xmax_final or ymax_final must be there, happens for boxplot
-                axis_breaks = pretty(c(0, d[[paste0(axis, 'max_final')]]), 10)
+                vec = d[[axis]]
+        } else { # 'xmax_final' or 'ymax_final' and 'xmin_final' or 'ymin_final'
+                 # must be there, happens for boxplot
+                vec = c(d[[paste0(axis, 'min_final')]],
+                        d[[paste0(axis, 'max_final')]])
         }
+
+        if (scale == 'pct') {
+                min_val = 0
+                max_val = 1
+        } else {
+                min_val = min(vec, na.rm = T)
+                max_val = max(vec, na.rm = T)
+        }
+        axis_breaks = pretty(c(min_val, max_val), nticks)
 
         # get function that converts numeric to percent format
-        if (missing(ydigits)) {
-                y_to_pct = scales::percent
+        if (missing(digits)) {
+                to_pct = scales::percent
         } else {
-                y_to_pct = function(x) scales::percent(x, accuracy=10^(-ydigits))
+                to_pct = function(v) scales::percent(v, accuracy = 10^(-digits))
         }
-
-        if (missing(xdigits)) {
-                x_to_pct = scales::percent
-        } else {
-                x_to_pct = function(x) scales::percent(x, accuracy=10^(-xdigits))
-        }
-
 
         # --- Main --- #
 
         if (axis == "y") {
                 switch(scale,
-                       breaks10 = p + scale_y_continuous(
+                       default = p + scale_y_continuous(
                                limits = range(axis_breaks),
                                breaks = axis_breaks),
                        comma = p + scale_y_continuous(
@@ -72,46 +79,46 @@ scale_axis = function(p, axis = "y", scale = "breaks10", ydigits, xdigits) {
                        pct = p + scale_y_continuous(
                                limits = range(axis_breaks),
                                breaks = axis_breaks,
-                               labels = y_to_pct),
+                               labels = to_pct),
                        log = p + scale_y_continuous(
                                trans = scales::log_trans(),
                                breaks = scales::trans_breaks(
-                                       'log', function(x) exp(x), n = 8),
+                                       'log', function(x) exp(x), n = nticks),
                                labels = scales::trans_format(
                                        'log', scales::math_format(e^.x))
                                ),
                        log1p = p + scale_y_continuous(
                                trans = scales::log1p_trans(),
                                breaks = scales::trans_breaks(
-                                       'log1p', function(x) exp(x+1), n = 8),
+                                       'log1p', function(x) exp(x+1), n = nticks),
                                labels = scales::trans_format(
                                        'log1p', scales::math_format(
                                                e^.x, function(x) round(x, 2)))
                                ),
                        log10 = p + scale_y_log10(
                                breaks = scales::trans_breaks(
-                                       'log10', function(x) 10^x, n = 8),
+                                       'log10', function(x) 10^x, n = nticks),
                                labels = scales::trans_format(
                                        'log10', scales::math_format(10^.x))
                                ),
                        log2 = p + scale_y_continuous(
                                trans = scales::log2_trans(),
                                breaks = scales::trans_breaks(
-                                       'log2', function(x) 2^x, n = 8),
+                                       'log2', function(x) 2^x, n = nticks),
                                labels = scales::trans_format(
                                        'log2', scales::math_format(2^.x))
                                ),
                        sqrt = p + scale_y_continuous(
                                trans = scales::sqrt_trans(),
                                breaks = scales::trans_breaks(
-                                       'sqrt', function(x) x^2, n = 8),
+                                       'sqrt', function(x) x^2, n = nticks),
                                labels = scales::trans_format(
                                        'sqrt', scales::math_format(.x^2))
                                ),
                        exp = p + scale_y_continuous(
                                trans = scales::exp_trans(),
                                breaks = scales::trans_breaks(
-                                       'exp', function(x) log(x), n = 8),
+                                       'exp', function(x) log(x), n = nticks),
                                labels = scales::trans_format(
                                        'exp', scales::math_format(ln(.x)))
                                )
@@ -131,46 +138,46 @@ scale_axis = function(p, axis = "y", scale = "breaks10", ydigits, xdigits) {
                        pct = p + scale_x_continuous(
                                limits = range(axis_breaks),
                                breaks = axis_breaks,
-                               labels = x_to_pct),
+                               labels = to_pct),
                        log = p + scale_x_continuous(
                                trans = scales::log_trans(),
                                breaks = scales::trans_breaks(
-                                       'log', function(x) exp(x), n = 8),
+                                       'log', function(x) exp(x), n = nticks),
                                labels = scales::trans_format(
                                        'log', scales::math_format(e^.x))
                                ),
                        log1p = p + scale_x_continuous(
                                trans = scales::log1p_trans(),
                                breaks = scales::trans_breaks(
-                                       'log1p', function(x) exp(x+1), n = 8),
+                                       'log1p', function(x) exp(x+1), n=nticks),
                                labels = scales::trans_format(
                                        'log1p', scales::math_format(
                                                e^.x, function(x) round(x, 2)))
                                ),
                        log10 = p + scale_x_log10(
                                breaks = scales::trans_breaks(
-                                       'log10', function(x) 10^x, n = 8),
+                                       'log10', function(x) 10^x, n = nticks),
                                labels = scales::trans_format(
                                        'log10', scales::math_format(10^.x))
                                ),
                        log2 = p + scale_x_continuous(
                                trans = scales::log2_trans(),
                                breaks = scales::trans_breaks(
-                                       'log2', function(x) 2^x, n = 8),
+                                       'log2', function(x) 2^x, n = nticks),
                                labels = scales::trans_format(
                                        'log2', scales::math_format(2^.x))
                                ),
                        sqrt = p + scale_x_continuous(
                                trans = scales::sqrt_trans(),
                                breaks = scales::trans_breaks(
-                                       'sqrt', function(x) x^2, n = 8),
+                                       'sqrt', function(x) x^2, n = nticks),
                                labels = scales::trans_format(
                                        'sqrt', scales::math_format(.x^2))
                                ),
                        exp = p + scale_x_continuous(
                                trans = scales::exp_trans(),
                                breaks = scales::trans_breaks(
-                                       'exp', function(x) log(x), n = 8),
+                                       'exp', function(x) log(x), n = nticks),
                                labels = scales::trans_format(
                                        'exp', scales::math_format(ln(.x)))
                                )

@@ -4,19 +4,22 @@
 \alias{scale_axis}
 \title{Use a different scale on either axis of a ggplot2 plot.}
 \usage{
-scale_axis(p, axis = "y", scale = "breaks10", ydigits, xdigits)
+scale_axis(p, axis = "y", scale = "default", nticks = 10, digits)
 }
 \arguments{
 \item{p}{A ggplot2 object.}
 
 \item{axis}{A string of value "x" or "y". Default = "y".}
 
-\item{scale}{A string of value "breaks10", "comma", "dollar", "pct", "log",
-"log1p", "log10", "log2", "sqrt", or "exp". It specifies which scale to use.
-Default = "breaks10".}
+\item{scale}{A string of value "default", "comma", "dollar", "pct", "log",
+"log1p", "log10", "log2", "sqrt", or "exp". It specifies which scale to use.}
 
-\item{ydigits/xdigits}{The number of digits after the decimal point to show
-on the y or x axis when using the 'pct' scale. Default uses the best guess.}
+\item{nticks}{Number of ticks on axis. Default = 10. The actual number of
+ticks shown will be 1 or 2 less or more that the number user supplied depends
+on the actual limit of the data. This is caused by rounding in computation.}
+
+\item{digits}{Number of digits after the decimal point when using the 'pct'
+scale. Default uses best guess. It's only effective when `scale = 'pct'`.}
 }
 \value{
 A ggplot2 object with the new scale applied to the input axis.
@@ -37,8 +40,9 @@ or y-axis one of the following scales:
 }
 If a ggplot object has too few breaks on an axis (to see the max value), and
 if you don't need to apply any scales to the axis (due to the values are
-already in a nice range), you can apply scale='breaks10' to that axis, and
-this will add 10 breaks from the min value to the max value on that axis.
+already in a nice range), you can apply scale='default' to that axis, and
+this will add nticks (a number supplied by you) from the min to the max value
+on that axis.
 }
 \examples{
 inst/examples/ex-scale_axis.R
