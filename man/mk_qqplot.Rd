@@ -10,7 +10,7 @@ mk_qqplot(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(varname, dist = "norm", dparams = list(), detrend = TRUE,
+\code{function(varname, dist = "norm", dparams = list(),
                ci_band_type = "pointwise", font_size = 14)}
 \itemize{
      \item varname : string, name of a continuous variable. We're interested
@@ -26,12 +26,6 @@ mk_qqplot(df)
                      function. If an empty list is provided (default), the
                      distributional parameters are estimated via MLE.
                      Default = list().
-     \item detrend : logical, Should the resulting Q-Q plot be detrended?
-                     If TRUE, it'll be detrended according to the reference
-                     Q-Q line. This procedure was described by Thode (2002),
-                     and it reduces visual bias caused by orthogonal
-                     distances from Q-Q points to the reference line.
-                     Default = TRUE.
      \item ci_band_type : string, type of the confidence bands to be drawn:
              "pointwise" (default), "boot", "ks", and "ts", where
              * "pointwise" - simultaneous confidence bands based on the normal distribution;
