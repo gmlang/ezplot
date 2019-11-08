@@ -12,25 +12,18 @@ test_normality(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(varname, detrend = TRUE, title_left, title_right,
-               xlab_left = varname, ...)}
+\code{function(varname, xlab_left = varname, title_left, title_right,
+               caption_left, caption_right, font_size = 14)}
 \itemize{
      \item varname. String, name of a continuous variable. Its empirical CDF
      will be plotted along side its normal probability plot.
-     \item detrend. Logical (default = TRUE), If TRUE, the normal probability
-     plot will be detrended according to the reference Q-Q line. As a result,
-     if the data points are scattered around the horizontal line y = 0, then
-     we can conclude the data are approximately normal. The detrend
-     procedure was described by Thode (2002), and it reduces visual bias
-     caused by orthogonal distances from Q-Q points to the reference line.
+     \item xlab_left. String, x label of the left figure. Default is varname.
      \item title_left. String, title of the left figure.
      \item title_right. String, title of the right figure.
-     \item xlab_left. String, x label of the left figure. Default is varname.
-     \item .... Other parameters for making a CDF plot. A common one, for
-     example, is `add_vline_median = TRUE`, which will add a vertical line at
-     the median. Another common one is `show_label_median = FALSE`, which
-     will suppress the display of median value along the median vline. See
-     \code{\link{mk_cdfplot}} for a full list of parameters.
+     \item caption_left. String, caption of the left figure.
+     \item caption_right. String, caption of the right figure.
+     \item font_size. Overall font size. Default = 14. The font size of the
+     axes and legend text is a fraction of this value. It controls both plots.
 }
 }
 \description{

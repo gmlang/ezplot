@@ -9,37 +9,41 @@
 #'
 #' @param df A data frame.
 #' @return
-#' \code{function(varname, detrend = TRUE, title_left, title_right,
-#'                xlab_left = varname, ...)}
+#' \code{function(varname, xlab_left = varname, title_left, title_right,
+#'                caption_left, caption_right, font_size = 14)}
 #' \itemize{
 #'      \item varname. String, name of a continuous variable. Its empirical CDF
 #'      will be plotted along side its normal probability plot.
-#'      \item detrend. Logical (default = TRUE), If TRUE, the normal probability
-#'      plot will be detrended according to the reference Q-Q line. As a result,
-#'      if the data points are scattered around the horizontal line y = 0, then
-#'      we can conclude the data are approximately normal. The detrend
-#'      procedure was described by Thode (2002), and it reduces visual bias
-#'      caused by orthogonal distances from Q-Q points to the reference line.
+#'      \item xlab_left. String, x label of the left figure. Default is varname.
 #'      \item title_left. String, title of the left figure.
 #'      \item title_right. String, title of the right figure.
-#'      \item xlab_left. String, x label of the left figure. Default is varname.
-#'      \item .... Other parameters for making a CDF plot. A common one, for
-#'      example, is `add_vline_median = TRUE`, which will add a vertical line at
-#'      the median. Another common one is `show_label_median = FALSE`, which
-#'      will suppress the display of median value along the median vline. See
-#'      \code{\link{mk_cdfplot}} for a full list of parameters.
+#'      \item caption_left. String, caption of the left figure.
+#'      \item caption_right. String, caption of the right figure.
+#'      \item font_size. Overall font size. Default = 14. The font size of the
+#'      axes and legend text is a fraction of this value. It controls both plots.
 #' }
 #'
 #' @export
 #' @examples inst/examples/ex-test_normality.R
 test_normality = function(df) {
+        function(varname, xlab_left = varname, title_left, title_right,
+                 caption_left, caption_right, font_size = 14) {
 
-        draw_cdf = mk_cdfplot(df)
-        draw_qqplot = mk_qqplot(df)
+                # --- prep --- #
 
-        function(varname, detrend = TRUE, title_left, title_right,
-                 xlab_left = varname, ...) {
+                # add standardized version of the variable to be plotted since
+                # we'll always want to compare to standard normal distribution
+                # on the Q-Q normal plot
+                stand_varname = paste0('standard_', varname)
+                df[[stand_varname]] =
+                        (df[[varname]] - mean(df[[varname]], na.rm = T)) /
+                                sd(df[[varname]], na.rm = T)
 
+                # make functions for plotting
+                draw_cdf = mk_cdfplot(df)
+                draw_qqplot = mk_qqplot(df)
+
+                # prep figure annotations
                 if (missing(title_left)) {
                         tit1 = paste("Cumulative Distribution of", varname)
                 } else {
@@ -52,13 +56,28 @@ test_normality = function(df) {
                         tit2 = title_right
                 }
 
-                p1 = draw_cdf(varname, legend_pos = "top", ...) %>%
-                        square_fig() %>%
-                        add_labs(title = tit1, xlab = xlab_left)
+                if (missing(caption_left)) {
+                        cap1 = NULL
+                } else {
+                        cap1 = caption_left
+                }
 
-                p2 = draw_qqplot(varname, detrend = detrend) %>%
+                if (missing(caption_right)) {
+                        cap2 = NULL
+                } else {
+                        cap2 = caption_right
+                }
+
+                # --- main --- #
+
+                p1 = draw_cdf(varname, legend_pos = "top",
+                              add_vline_median = TRUE,
+                              font_size = font_size) %>%
                         square_fig() %>%
-                        add_labs(title = tit2)
+                        add_labs(xlab = xlab_left, title = tit1, caption = cap1)
+
+                p2 = draw_qqplot(stand_varname, font_size = font_size) %>%
+                        add_labs(title = tit2, caption = cap2)
 
                 cowplot::plot_grid(p1, p2)
         }
