@@ -49,8 +49,8 @@ scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
                 min_val = 0
                 max_val = 1
         } else {
-                min_val = min(vec, na.rm = T)
-                max_val = max(vec, na.rm = T)
+                min_val = min(vec[is.finite(vec)], na.rm = T)
+                max_val = max(vec[is.finite(vec)], na.rm = T)
         }
         axis_breaks = pretty(c(min_val, max_val), nticks)
 
@@ -127,6 +127,9 @@ scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
         } else {
 
                 switch(scale,
+                       default = p + scale_x_continuous(
+                               limits = range(axis_breaks),
+                               breaks = axis_breaks),
                        comma = p + scale_x_continuous(
                                limits = range(axis_breaks),
                                breaks = axis_breaks,
