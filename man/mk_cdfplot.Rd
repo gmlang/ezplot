@@ -46,8 +46,8 @@ mk_cdfplot(df)
 }
 \description{
 \code{mk_cdfplot} takes a data frame as input and returns a function for
-plotting empirical cumulative distribution function (ECDF) of any variable
-(continuous or categorical) from the data frame.
+plotting empirical cumulative distribution function (ECDF) or its complement
+(CCDF) of a continuous variable from the data frame.
 }
 \examples{
 inst/examples/ex-mk_cdfplot.R

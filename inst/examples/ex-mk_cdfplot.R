@@ -17,7 +17,6 @@ f('x', colorby = 'gp')
 
 rate = nrow(births) / (24 * 60) # number of events occured in a unit time (per minute)
 avg = 1 / rate # mean time between events
-
 model_str = paste0('Model: exponential(rate = ', round(rate, 3), '), ',
                    'mean time between events = ', round(avg, 2))
 
@@ -44,18 +43,18 @@ f('diffs', complement = F) %>% scale_axis('x')
 p = f('diffs', complement = T) %>% scale_axis('x')
 print(p)
 
-# use a log10-y scale to show CCDF.
-# Linear trend implies the data is exponentially distributed.
-p %>% scale_axis(scale = 'log10', nticks = 6) %>%
+# use log-y scale for CCDF, and if linear, data is exponentially distributed.
+p %>% scale_axis(scale = 'log', nticks = 6) %>%
         scale_axis('x') %>%
-        square_fig()
+        square_fig() %>%
+        add_lm_line() # the absolute value of the slope is lambda, the rate of the exponential distribution
 
 # plot CDFs of each gender
 f('diffs', colorby = 'sex', complement = F)
 
 # plot CCDFs of each gender
 f('diffs', colorby = 'sex', complement = T) %>%
-        scale_axis(scale = 'log10') %>%
+        scale_axis(scale = 'log10') %>% # we can also use log10-y scale, then rate = abs(slope) * log10(exp(1))
         square_fig()
 
 
