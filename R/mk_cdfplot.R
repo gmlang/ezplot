@@ -61,7 +61,7 @@ mk_cdfplot = function(df) {
                 # --- Main Plot --- #
 
                 p = ggplot(df, aes_string(xvar, color = colorby)) +
-                        stat_ecdf(size = linew, alpha = 1, ...)
+                        stat_ecdf(size = linew, alpha = 0.8, ...)
 
                 if (complement) {
                         # extract data behind cdf plot
@@ -76,12 +76,12 @@ mk_cdfplot = function(df) {
 
                         # add curves
                         if (!exists('geom')) {
-                                p = p + geom_step(size = linew, alpha = 1)
+                                p = p + geom_step(size = linew, alpha = 0.8)
                         } else {
                                 if (geom == 'point') {
-                                        p = p + geom_point(size = linew, alpha = 1)
+                                        p = p + geom_point(size = linew, alpha = 0.8)
                                 } else {
-                                        p = p + geom_step(size = linew, alpha = 1)
+                                        p = p + geom_step(size = linew, alpha = 0.8)
                                 }
                         }
                 }
