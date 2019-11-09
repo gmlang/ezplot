@@ -22,10 +22,11 @@
 #'      \item add_vline_median. Logical (default = FALSE), if TRUE, add vertical
 #'      dashed line segments at the median values going up and touching the
 #'      CDF curves. To make it easy to look at, also add horizontal dashed line
-#'      at y=0.5.
+#'      at y=0.5. Only effective when `complement = FALSE`.
 #'      \item show_label_median. Logical (default is the same as the value of
 #'      `add_vline_median`), if TRUE, show median values along the vertical
-#'      median lines. Otherwise, don't show.
+#'      median lines. Otherwise, don't show. Only effective when
+#'      `complement = FALSE`.
 #'      \item legend_title. String, legend title. Default is the name of the
 #'      colorby variable.
 #'      \item legend_pos. String, legend position. Default = "right".
@@ -87,11 +88,10 @@ mk_cdfplot = function(df) {
 
                 # break y-axis into 4 quarters from 0 to 1
                 ybreaks = seq(0, 1, 0.25)
-                p = p + scale_y_continuous(breaks = ybreaks,
-                                           limits = range(ybreaks))
+                p = p + scale_y_continuous(breaks = ybreaks, limits = range(ybreaks))
 
-                # add lines
-                if (add_vline_median) {
+                # add vline at median when plotting CDF (not CCDF)
+                if (!complement & add_vline_median) {
                         if (colorby == "1") {
                                 med_xs = quantile(df[[xvar]], 0.5)
                         } else {
@@ -100,11 +100,6 @@ mk_cdfplot = function(df) {
                                         function(elt) quantile(elt[[xvar]], 0.5)
                                         )
                         }
-
-                        # p = p + geom_hline(yintercept = 0.5, size = linew,
-                        #                    linetype = "dashed", alpha = 0.4) +
-                        #         geom_vline(xintercept = med_xs, size = linew,
-                        #                    linetype = "dashed", alpha = 0.4)
 
                         # draw horizontal segment at y = 0.5
                         p = p + geom_segment(x = -Inf, xend = max(med_xs),
@@ -130,6 +125,7 @@ mk_cdfplot = function(df) {
                 }
 
                 # --- Customize Theme --- #
+
                 ylab = ifelse(complement, 'CCDF', 'CDF')
                 p = p + labs(x = xvar, y = ylab) + theme_cowplot(font_size)
 

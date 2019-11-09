@@ -46,7 +46,7 @@ print(p)
 
 # use a log10-y scale to show CCDF.
 # Linear trend implies the data is exponentially distributed.
-p %>% scale_axis(scale = 'log10') %>%
+p %>% scale_axis(scale = 'log10', nticks = 6) %>%
         scale_axis('x') %>%
         square_fig()
 

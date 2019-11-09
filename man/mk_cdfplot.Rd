@@ -25,10 +25,11 @@ mk_cdfplot(df)
      \item add_vline_median. Logical (default = FALSE), if TRUE, add vertical
      dashed line segments at the median values going up and touching the
      CDF curves. To make it easy to look at, also add horizontal dashed line
-     at y=0.5.
+     at y=0.5. Only effective when `complement = FALSE`.
      \item show_label_median. Logical (default is the same as the value of
      `add_vline_median`), if TRUE, show median values along the vertical
-     median lines. Otherwise, don't show.
+     median lines. Otherwise, don't show. Only effective when
+     `complement = FALSE`.
      \item legend_title. String, legend title. Default is the name of the
      colorby variable.
      \item legend_pos. String, legend position. Default = "right".
