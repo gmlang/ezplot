@@ -68,19 +68,29 @@ test_expdist = function(df) {
                         cap2 = caption_right
                 }
 
-                # --- main --- #
+
+                # --- left figure --- #
 
                 p1 = draw_cdf(varname, legend_pos = 'top', ...) %>%
                         add_labs(xlab = xlab, title = tit1, caption = cap1)
+                if (missing(xscale_left)) {
+                        # don't change x scale, only divide x-axis to 8 ticks
+                        p1 = scale_axis(p1, 'x', nticks = 8)
+                } else {
+                        p1 = scale_axis(p1, 'x', scale = xscale_left, nticks=8)
+                }
 
+                # --- right figure --- #
+
+                # don't add median vline for CCDF plot regardless user input
+                if (exists('add_vline_median')) add_vline_median = FALSE
                 p2 = draw_cdf(varname, complement = TRUE, legend_pos = 'top',
                               ...) %>%
-                        scale_axis(scale = 'log10') %>%
+                        # apply log10 scale on y-axis, divide y-axis to 8 ticks
+                        scale_axis(scale = 'log10', nticks = 6) %>%
+                        # don't change x scale, only divide x-axis to 8 ticks
+                        scale_axis('x', nticks = 8) %>%
                         add_labs(xlab = xlab, title = tit2, caption = cap2)
-
-                if (!missing(xscale_left))
-                        p1 = scale_axis(p1, 'x', scale = xscale_left, nticks=8)
-
 
                 cowplot::plot_grid(square_fig(p1), square_fig(p2))
         }
