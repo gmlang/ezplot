@@ -18,19 +18,19 @@ plt_hist('logbo', bins = 200) # longer left tail
 
 # test normality
 f = test_normality(df)
-f("logbo", xlab_left = 'log10(boxoffice)',
+f("logbo", add_vline_median = TRUE,
+  xlab_left = 'log10(boxoffice)',
   title_left = 'CDF of log10(boxoffice)',
   title_right = 'Is log10(boxoffice) normally distributed?',
-  caption_left = 'log10(boxoffice) has a longer left tail than right tail.',
+  caption_left = 'Notice the two curves match well but not exactly.',
   caption_right = 'The middle and right part of log10(boxoffice) \n is close to normal, but the left part is NOT.'
   )
 
 
-# generate 1000 random values from a standard normal distribution
-df = data.frame(standard_norm = rnorm(1000))
+# generate 100 random values from a standard normal distribution
+df = data.frame(standard_norm = rnorm(100))
 f = test_normality(df)
-f('standard_norm',
-  title_left = 'Empirical CDF of 1000 random numbers \n drawn from the standard normal distribution',
+f('standard_norm', linew = 1, add_vline_median = TRUE, show_label_median = FALSE,
+  title_left = 'Empirical CDF of 100 random numbers \n drawn from the standard normal distribution',
   xlab_left = 'x',
-  title_right = 'What a normal probability plot should look like.'
-  )
+  title_right = 'What a normal probability plot looks like.')

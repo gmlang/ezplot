@@ -2,10 +2,7 @@
 % Please edit documentation in R/test_normality.R
 \name{test_normality}
 \alias{test_normality}
-\title{Create a function for drawing publishable ggplot2 CDF plot and normal
-probability plot (comparing the sample quantiles to the quantiles of the
-standard normal distribution) side by side on one canvas. The resulting
-figure is often used to test normality of the sample distribution.}
+\title{Test if some observed data are normally distributed.}
 \usage{
 test_normality(df)
 }
@@ -13,24 +10,36 @@ test_normality(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(varname, xlab_left = varname, title_left, title_right,
-               caption_left, caption_right, font_size = 14)}
+\code{function(varname, linew = 0.7, xlab_left = varname, title_left,
+               title_right, subtitle_left, subtitle_right,
+               caption_left, caption_right, xscale_left, ...)}
 \itemize{
      \item varname. String, name of a continuous variable. Its empirical CDF
      will be plotted along side its normal probability plot.
+     \item linew. Number, width of the line. Default = 0.7.
      \item xlab_left. String, x label of the left figure. Default is varname.
      \item title_left. String, title of the left figure.
      \item title_right. String, title of the right figure.
+     \item subtitle_left. String, subtitle of the left figure.
+     \item subtitle_right. String, subtitle of the right figure.
      \item caption_left. String, caption of the left figure.
      \item caption_right. String, caption of the right figure.
-     \item font_size. Overall font size. Default = 14. The font size of the
-     axes and legend text is a fraction of this value. It controls both plots.
+     \item xscale_left. String, scale of x-axis of the left figure. Possible
+     values are described at \code{\link{scale_axis}}. There's no parameter
+     to change the x-scale of the right figure because the x-axis of the
+     standard normal probability plot always goes from -3 to +3 with 1
+     increment at a time.
 }
 }
 \description{
-\code{test_normality} takes a data frame as input and returns a function for
-drawing CDF plot and normal probability plot of any continuous variable
-from the data frame.
+The normal distribution is the most commonly used probability distribution.
+Many real world data such as height can be modeled via a normal distribution.
+\code{test_normality} takes in a data frame and returns a function for making
+ggplot2 type of CDF and the standard normal probability plots side by side
+on one canvas of any continuous variable from the data frame. If normal
+probability plot is linear, the observed variable is normally distributed
+with mean and standard deviation equal to the sample mean and sample standard
+deviation.
 }
 \examples{
 inst/examples/ex-test_normality.R
