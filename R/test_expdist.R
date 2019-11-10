@@ -1,12 +1,15 @@
-#' @title Create a function for drawing publishable ggplot2 CDF and CCDF (on
-#' log-y scale) plots side by side on one canvas. The resulting figure is used
-#' to test if the data distribution is exponential.
+#' @title Test if some observed data are exponentially distributed.
 #'
 #' @description
-#' \code{test_expdist} takes a data frame as input and returns a function for
-#' making CDF and CCDF (on log-y scale) plots of any continuous variable
-#' from the data frame. CCDF standands for Complement CDF. If CCDF on log-y
-#' scale is linear, the observed data are exponentially distributed.
+#' The exponential distribution is the probability distribution of the time
+#' between events in a process in which events occur continuously and
+#' independently at a constant average rate. Its mean and standard deviation
+#' are equal to the inverse of the average rate.
+#' \code{test_expdist} takes in a data frame and returns a function for making
+#' ggplot2 type of CDF and CCDF (on log-y scale) plots of any continuous
+#' variable from the data frame. CCDF standands for Complement CDF. If CCDF on
+#' log-y scale is linear, the observed variable is exponentially distributed
+#' with a rate equal to the absolute value of the slope.
 #'
 #' @param df A data frame.
 #' @return
@@ -57,7 +60,8 @@ test_expdist = function(df) {
                 fit = lm(y ~ x, data = df_logCCDF)
                 slope = round(setNames(coef(fit)['x'], NULL), 4)
                 rate = abs(slope)
-                avg = round(1 / rate, 2) # mean time between events
+                # avg = round(1 / rate, 2) # mean time between events
+                # std = round(1 / rate, 2) # standard deviation of time between events
 
                 # --- prep args and fig elements --- #
 
@@ -87,9 +91,8 @@ test_expdist = function(df) {
 
                 if (missing(subtitle_left)) {
                         subtit1 = paste0(
-                                'The smooth curve is from Exp(', rate, '), ',
-                                'with mean time between events = ', avg, '.\n',
-                                'The stepwise curve is from the data.')
+                                'The stepwise curve is from the data.\n',
+                                'The smooth curve is from Exp(', rate, ').')
                 } else {
                         subtit1 = subtitle_left
                 }

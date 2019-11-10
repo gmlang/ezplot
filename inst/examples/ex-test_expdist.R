@@ -1,12 +1,6 @@
 library(ezplot)
 library(dplyr)
 
-f = test_expdist(iris)
-f("Sepal.Length")
-f("Sepal.Length", add_vline_median = TRUE, show_label_median = FALSE,
-  caption_left = 'Clearly, sepal length from the sample is not exponential.',
-  subtitle_right = 'Non-linear trend implies data are not exponential')
-
 
 # generate 1000 random values from a exponential distribution of rate 0.2
 df = data.frame(exp_vals = rexp(1000, rate = 0.2))
@@ -23,5 +17,3 @@ f('diffs', add_vline_median = TRUE, xlab = 'Minutes between births',
   linew = 1.5,
   title_left = 'CDF of interarrival times between births',
   title_right = 'Are these interarrival times exponential?')
-
-

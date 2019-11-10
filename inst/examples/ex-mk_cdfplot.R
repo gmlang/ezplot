@@ -48,14 +48,16 @@ print(p)
 p %>% scale_axis(scale = 'log', nticks = 6) %>%
         scale_axis('x') %>%
         square_fig() %>%
-        add_lm_line() # the absolute value of the slope is lambda, the rate of the exponential distribution
+        # the absolute value of the slope is the rate of the exponential distribution
+        add_lm_line(linew = 0.7)
 
 # plot CDFs of each gender
 f('diffs', colorby = 'sex', complement = F)
 
 # plot CCDFs of each gender
 f('diffs', colorby = 'sex', complement = T) %>%
-        scale_axis(scale = 'log10') %>% # we can also use log10-y scale, then rate = abs(slope) * log10(exp(1))
+        # can also use log10-y scale, then rate = abs(slope) * log10(exp(1))
+        scale_axis(scale = 'log10') %>%
         square_fig()
 
 
