@@ -14,7 +14,7 @@
 #' @return
 #' \code{function(varname, linew = 0.7, xlab_left = varname, title_left,
 #'                title_right, subtitle_left, subtitle_right,
-#'                caption_left, caption_right, xscale_left, ...)}
+#'                caption_left, caption_right, ...)}
 #' \itemize{
 #'      \item varname. String, name of a continuous variable. Its empirical CDF
 #'      will be plotted along side its normal probability plot.
@@ -26,11 +26,11 @@
 #'      \item subtitle_right. String, subtitle of the right figure.
 #'      \item caption_left. String, caption of the left figure.
 #'      \item caption_right. String, caption of the right figure.
-#'      \item xscale_left. String, scale of x-axis of the left figure. Possible
-#'      values are described at \code{\link{scale_axis}}. There's no parameter
-#'      to change the x-scale of the right figure because the x-axis of the
-#'      standard normal probability plot always goes from -3 to +3 with 1
-#'      increment at a time.
+#'      \item .... Other parameters for making a CDF plot. A common one, for
+#'      example, is `add_vline_median = TRUE`, which will add a vertical line at
+#'      the median. Another common one is `show_label_median = FALSE`, which
+#'      will suppress the display of median value along the median vline. See
+#'      \code{\link{mk_cdfplot}} for a full list of parameters.
 #' }
 #'
 #' @export
@@ -38,7 +38,7 @@
 test_normality = function(df) {
         function(varname, linew = 0.7, xlab_left = varname, title_left,
                  title_right, subtitle_left, subtitle_right,
-                 caption_left, caption_right, xscale_left, ...) {
+                 caption_left, caption_right, ...) {
 
                 # --- prep data --- #
 
@@ -103,26 +103,24 @@ test_normality = function(df) {
 
                 # --- left figure --- #
 
-                p1 = draw_cdf(varname, legend_pos = 'top', linew = linew, ...) +
-                        stat_function(fun = pnorm,
-                                      args = list(mean = avg, sd = std),
-                                      alpha = 0.8, size = linew,
-                                      # color-blind friendly orange
-                                      color = '#F28E2B')
+                p1 = draw_cdf(varname, legend_pos = 'top', linew = linew, ...)
+                # add curve from model
+                p1 = p1 + stat_function(fun = pnorm,
+                                        args = list(mean = avg, sd = std),
+                                        alpha = 0.8, size = linew,
+                                        # color-blind friendly orange
+                                        color = '#F28E2B')
+                # don't change x scale, only divide x-axis to 8 ticks
+                p1 = scale_axis(p1, 'x', nticks = 8)
                 p1 = add_labs(p1, xlab = xlab_left, title = tit1,
                               subtitle = subtit1, caption = cap1)
-                if (missing(xscale_left)) {
-                        # don't change x scale, only divide x-axis to 8 ticks
-                        p1 = scale_axis(p1, 'x', nticks = 8)
-                } else {
-                        p1 = scale_axis(p1, 'x', scale = xscale_left, nticks=8)
-                }
-
 
                 # --- right figure --- #
+
                 if (!exists('font_size')) font_size = 14
-                p2 = draw_qqplot(stand_varname, font_size = font_size) %>%
-                        add_labs(title = tit2, subtitle = subtit2, caption = cap2)
+                p2 = draw_qqplot(stand_varname, font_size = font_size)
+                p2 = add_labs(p2, title = tit2, subtitle = subtit2,
+                              caption = cap2)
 
                 cowplot::plot_grid(square_fig(p1), square_fig(p2))
         }

@@ -14,8 +14,7 @@
 #' @param df A data frame.
 #' @return
 #' \code{function(varname, linew = 0.7, xlab = varname, title_left, title_right,
-#'                subtitle_left, subtitle_right, caption_left, caption_right,
-#'                xscale_left, ...)}
+#'                subtitle_left, subtitle_right, caption_left, caption_right, ...)}
 #' \itemize{
 #'      \item varname. String, name of a continuous variable. Its empirical CDF
 #'      will be plotted along side its complement CDF.
@@ -28,11 +27,6 @@
 #'      \item subtitle_right. String, subtitle of the right figure.
 #'      \item caption_left. String, caption of the left figure.
 #'      \item caption_right. String, caption of the right figure.
-#'      \item xscale_left. String, scale of x-axis of the left figure. Possible
-#'      values are described at \code{\link{scale_axis}}. There's no parameter
-#'      to change the x-scale of the right figure because we need to keep the
-#'      x-axis of CCDF at the original/raw scale in order to detect if the
-#'      distribution is exponential or not.
 #'      \item .... Other parameters for making a CDF plot. A common one, for
 #'      example, is `add_vline_median = TRUE`, which will add a vertical line at
 #'      the median. Another common one is `show_label_median = FALSE`, which
@@ -40,6 +34,8 @@
 #'      \code{\link{mk_cdfplot}} for a full list of parameters.
 #' }
 #'
+#' @seealso \code{\link{est_params_expdist}} for how the rate of the theoretical
+#' exponential distribution is estimated.
 #' @export
 #' @examples inst/examples/ex-test_expdist.R
 test_expdist = function(df) {
@@ -48,20 +44,12 @@ test_expdist = function(df) {
 
         function(varname, linew = 0.7, xlab = varname, title_left, title_right,
                  subtitle_left, subtitle_right, caption_left, caption_right,
-                 xscale_left, ...) {
+                 ...) {
 
                 # --- prep data --- #
 
-                cdf = get_cdfs(df)(varname)
-                xs = df[[varname]]
-                ys = log(1 - cdf(xs))
-                df_logCCDF = data.frame(x = xs, y = ys) %>%
-                        dplyr::filter(is.finite(y))
-                fit = lm(y ~ x, data = df_logCCDF)
-                slope = round(setNames(coef(fit)['x'], NULL), 4)
-                rate = abs(slope)
-                # avg = round(1 / rate, 2) # mean time between events
-                # std = round(1 / rate, 2) # standard deviation of time between events
+                rate = est_params_expdist(df, varname)
+                slope = -1 * rate
 
                 # --- prep args and fig elements --- #
 
@@ -106,25 +94,24 @@ test_expdist = function(df) {
                         subtit2 = subtitle_right
                 }
 
-                txt = paste('Slope:', slope)
-                txt_pos = setNames(c(pretty(xs, 8)[6], 1), c('x', 'y'))
+                slope_label = paste('Slope:', slope)
+                slope_label_pos = setNames(c(pretty(df[[varname]], 8)[5], 1),
+                                           c('x', 'y'))
 
                 # --- left figure --- #
 
-                p1 = draw_cdf(varname, legend_pos = 'top', linew = linew, ...) +
-                        stat_function(fun = pexp, args = list(rate = rate),
-                                      alpha = 0.8, size = linew,
-                                      color = '#F28E2B' # color-blind friendly orange
-                                      )
+                p1 = draw_cdf(varname, legend_pos = 'top', linew = linew, ...)
+                # add curve from model
+                p1 = p1 + stat_function(fun = pexp,
+                                        args = list(rate = rate),
+                                        alpha = 0.8, size = linew,
+                                        # color-blind friendly orange
+                                        color = '#F28E2B')
+                # don't change x scale, only divide x-axis to 8 ticks
+                p1 = scale_axis(p1, 'x', nticks = 8)
                 p1 = add_labs(p1, xlab = xlab, title = tit1,
                               subtitle = subtit1, caption = cap1)
 
-                if (missing(xscale_left)) {
-                        # don't change x scale, only divide x-axis to 8 ticks
-                        p1 = scale_axis(p1, 'x', nticks = 8)
-                } else {
-                        p1 = scale_axis(p1, 'x', scale = xscale_left, nticks=8)
-                }
 
                 # --- right figure --- #
 
@@ -138,14 +125,16 @@ test_expdist = function(df) {
                         scale_axis('x', nticks = 8) %>%
                         add_labs(xlab = xlab, title = tit2, subtitle = subtit2,
                                  caption = cap2)
-                p2 = p2 + ggplot2::geom_line(stat = "smooth", method = "lm",
-                                             alpha = 0.8, size = linew,
-                                             linetype = 'longdash',
-                                             color = '#F28E2B' # color-blind friendly orange
-                                             ) +
-                        annotate("text", label = txt,
-                                 x = txt_pos['x'], y = txt_pos['y'],
-                                 size = 5)
+                # add line to help the eye to detect linear trend
+                p2 = p2 + geom_line(stat = "smooth", method = "lm",
+                                    alpha = 0.8, size = linew,
+                                    linetype = 'longdash',
+                                    # color-blind friendly orange
+                                    color = '#F28E2B') +
+                        # add text label to show slope value
+                        annotate("text", label = slope_label,
+                                 x = slope_label_pos['x'],
+                                 y = slope_label_pos['y'], size = 5)
 
                 cowplot::plot_grid(square_fig(p1), square_fig(p2))
         }

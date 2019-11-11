@@ -11,8 +11,7 @@ test_expdist(df)
 }
 \value{
 \code{function(varname, linew = 0.7, xlab = varname, title_left, title_right,
-               subtitle_left, subtitle_right, caption_left, caption_right,
-               xscale_left, ...)}
+               subtitle_left, subtitle_right, caption_left, caption_right, ...)}
 \itemize{
      \item varname. String, name of a continuous variable. Its empirical CDF
      will be plotted along side its complement CDF.
@@ -25,11 +24,6 @@ test_expdist(df)
      \item subtitle_right. String, subtitle of the right figure.
      \item caption_left. String, caption of the left figure.
      \item caption_right. String, caption of the right figure.
-     \item xscale_left. String, scale of x-axis of the left figure. Possible
-     values are described at \code{\link{scale_axis}}. There's no parameter
-     to change the x-scale of the right figure because we need to keep the
-     x-axis of CCDF at the original/raw scale in order to detect if the
-     distribution is exponential or not.
      \item .... Other parameters for making a CDF plot. A common one, for
      example, is `add_vline_median = TRUE`, which will add a vertical line at
      the median. Another common one is `show_label_median = FALSE`, which
@@ -50,4 +44,8 @@ exponentially distributed with a rate equal to the absolute value of the slope.
 }
 \examples{
 inst/examples/ex-test_expdist.R
+}
+\seealso{
+\code{\link{est_params_expdist}} for how the rate of the theoretical
+exponential distribution is estimated.
 }

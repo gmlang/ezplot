@@ -2,6 +2,7 @@
 
 export(add_labs)
 export(add_lm_line)
+export(est_params_expdist)
 export(get_cdfs)
 export(mk_barplot_freq)
 export(mk_barplot_resp)
