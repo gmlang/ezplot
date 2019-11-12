@@ -19,15 +19,13 @@
 #' @export
 #' @examples
 #' library(ezplot)
-#' est_params_paretodist(pops, 'pop', digits = 2)
-est_params_paretodist = function(df, varname, digits = 3) {
+#' est_params_pareto(pops, 'pop', digits = 2)
+est_params_pareto = function(df, varname, digits = 3) {
         cdf = get_cdfs(df)(varname)
         xs = df[[varname]]
         ys = 1 - cdf(xs)
-        dat = data.frame(x = xs, y = ys) %>%
-                filter(is.finite(x), is.finite(y)) %>%
-                mutate(x = log10(x), y = log10(y)) %>% # taking log may introduce -Inf
-                filter(is.finite(x), is.finite(y)) # so we need to drop -Inf
+        dat = data.frame(x = log10(xs), y = log10(ys)) %>% # taking log10 may introduce -Inf
+                filter(is.finite(x), is.finite(y)) # which we need to drop
 
         fit = lm(y ~ x, data = dat)
         slope = setNames(coef(fit)['x'], NULL)
