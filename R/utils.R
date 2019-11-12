@@ -27,3 +27,22 @@ moe_lm_param = function(se, n, k = 1, conf_level = .95) {
 }
 
 cb_gray = "#999999"
+
+
+
+#' @title CDF of the Pareto Distribution.
+#'
+#' @description
+#' Cumulative Distribution Function for the pareto distribution with shape
+#' `shape` and location `location`.
+#'
+#' @param q vector of quantiles.
+#' @param shape vector of shapes. Default = 1.
+#' @param location vector of locations. Default = 0.
+#'
+#' @return A vector of probabilities.
+#'
+#' @export
+#' @examples ppareto(seq(1, 5, 1), shape = 3, location = 1)
+ppareto = function(q, shape = 1, location = 0)
+        ifelse(q > location, 1 - (location / q) ^ shape, 0)
