@@ -142,3 +142,17 @@
 #' @source Dunn, "A Simple Dataset for Demonstrating Common Distributions," Journal of Statistics Education v.7, n.3 (1999)
 "births"
 
+#' @title A dataset of towns/cities with their populations in the US.
+#'
+#' @description
+#' The U.S. Census Bureau publishes the population of every incorporated city
+#' and town in the United States. This dataset contains their population
+#' estimates as of July 1, 2012.
+#'
+#' @format A data frame with 19,516 rows and 2 variables.
+#' \describe{
+#'      \item{town}{Name of the town and city.}
+#'      \item{pop}{Population estimate in thousands.}
+#' }
+#' @source http://www.census.gov/popest/data/cities/totals/2012/SUB-EST2012-3.html
+"pops"
