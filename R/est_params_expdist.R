@@ -4,8 +4,8 @@
 #' @description
 #' Given a data frame and the name of a continuous variable from the data frame,
 #' suppose the CCDF of the variable on a log-y scale is linear, then its
-#' distribution can be modeled by an exponential distribution, of which the rate
-#' can be estimated by this function.
+#' distribution can be modeled by the exponential distribution, of which the
+#' rate can be estimated by this function.
 #'
 #' @param df A data frame.
 #' @param varname. String, name of a continuous variable with an empirical

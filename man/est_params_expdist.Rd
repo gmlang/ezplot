@@ -19,8 +19,8 @@ An estimate of the rate of a theoretical exponential distribution.
 \description{
 Given a data frame and the name of a continuous variable from the data frame,
 suppose the CCDF of the variable on a log-y scale is linear, then its
-distribution can be modeled by an exponential distribution, of which the rate
-can be estimated by this function.
+distribution can be modeled by the exponential distribution, of which the
+rate can be estimated by this function.
 }
 \examples{
 library(ezplot)
