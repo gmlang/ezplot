@@ -24,11 +24,12 @@ est_params_paretodist = function(df, varname, digits = 3) {
         cdf = get_cdfs(df)(varname)
         xs = df[[varname]]
         ys = 1 - cdf(xs)
-        df_logCCDF = data.frame(x = log10(xs), y = log10(ys))
-        idx_keep = is.finite(df_logCCDF$y) & is.finite(df_logCCDF$x)
-        df_logCCDF = df_logCCDF[idx_keep,]
+        dat = data.frame(x = xs, y = ys) %>%
+                filter(is.finite(x), is.finite(y)) %>%
+                mutate(x = log10(x), y = log10(y)) %>% # taking log may introduce -Inf
+                filter(is.finite(x), is.finite(y)) %>% # so we need to drop -Inf
 
-        fit = lm(y ~ x, data = df_logCCDF)
+        fit = lm(y ~ x, data = dat)
         slope = setNames(coef(fit)['x'], NULL)
         intercept = setNames(coef(fit)['(Intercept)'], NULL)
 
