@@ -7,7 +7,7 @@ f("Sepal.Length", add_vline_median = TRUE,
 
 df = films %>% filter(made_money == "yes")
 f = test_normality(df)
-f("boxoffice", font_size = 10,
+f("boxoffice", font_size = 10, digits = 0,
   caption_left = 'Boxoffice is heavily right skewed (with a long right tail.)')
 
 # take log10 of boxoffice
@@ -31,5 +31,4 @@ df = data.frame(standard_norm = rnorm(100))
 f = test_normality(df)
 f('standard_norm', linew = 1, add_vline_median = TRUE, show_label_median = FALSE,
   title_left = 'Empirical CDF of 100 random numbers \n drawn from the standard normal distribution',
-  xlab_left = 'x',
-  title_right = 'What a normal probability plot looks like.')
+  xlab_left = 'x', title_right = 'What a normal probability plot looks like.')
