@@ -12,7 +12,7 @@ test_normality(df)
 \value{
 \code{function(varname, linew = 0.7, xlab_left = varname, title_left,
                title_right, subtitle_left, subtitle_right,
-               caption_left, caption_right, ...)}
+               caption_left, caption_right, digits = 2, ...)}
 \itemize{
      \item varname. String, name of a continuous variable. Its empirical CDF
      will be plotted along side its normal probability plot.
@@ -24,6 +24,9 @@ test_normality(df)
      \item subtitle_right. String, subtitle of the right figure.
      \item caption_left. String, caption of the left figure.
      \item caption_right. String, caption of the right figure.
+     \item digits. Integer, the number of digits after the decimal point
+     for the estimated parameter values of the theoretical distribution.
+     Default = 2.
      \item .... Other parameters for making a CDF plot. A common one, for
      example, is `add_vline_median = TRUE`, which will add a vertical line at
      the median. Another common one is `show_label_median = FALSE`, which

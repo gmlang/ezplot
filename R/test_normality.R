@@ -14,7 +14,7 @@
 #' @return
 #' \code{function(varname, linew = 0.7, xlab_left = varname, title_left,
 #'                title_right, subtitle_left, subtitle_right,
-#'                caption_left, caption_right, ...)}
+#'                caption_left, caption_right, digits = 2, ...)}
 #' \itemize{
 #'      \item varname. String, name of a continuous variable. Its empirical CDF
 #'      will be plotted along side its normal probability plot.
@@ -26,6 +26,9 @@
 #'      \item subtitle_right. String, subtitle of the right figure.
 #'      \item caption_left. String, caption of the left figure.
 #'      \item caption_right. String, caption of the right figure.
+#'      \item digits. Integer, the number of digits after the decimal point
+#'      for the estimated parameter values of the theoretical distribution.
+#'      Default = 2.
 #'      \item .... Other parameters for making a CDF plot. A common one, for
 #'      example, is `add_vline_median = TRUE`, which will add a vertical line at
 #'      the median. Another common one is `show_label_median = FALSE`, which
@@ -38,19 +41,23 @@
 test_normality = function(df) {
         function(varname, linew = 0.7, xlab_left = varname, title_left,
                  title_right, subtitle_left, subtitle_right,
-                 caption_left, caption_right, ...) {
+                 caption_left, caption_right, digits = 2, ...) {
 
                 # --- prep data --- #
 
                 # calc sample avg and std
-                avg = round(mean(df[[varname]], na.rm = T), 3)
-                std = round(sd(df[[varname]], na.rm = T), 3)
+                avg = mean(df[[varname]], na.rm = T)
+                std = sd(df[[varname]], na.rm = T)
 
                 # add standardized version of the variable to be plotted since
                 # we'll always want to compare to standard normal distribution
                 # on the Q-Q normal plot
                 stand_varname = paste0('standard_', varname)
                 df[[stand_varname]] = (df[[varname]] - avg) / std
+
+                # round so that we don't display too many digits after decimal
+                avg = round(avg, digits)
+                std = round(std, digits)
 
                 # make functions for plotting
                 draw_cdf = mk_cdfplot(df)
