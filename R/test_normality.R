@@ -110,7 +110,8 @@ test_normality = function(df) {
 
                 # --- left figure --- #
 
-                p1 = draw_cdf(varname, legend_pos = 'top', linew = linew, ...)
+                p1 = draw_cdf(varname, legend_pos = 'top', linew = linew,
+                              pad = FALSE, ...)
                 # add curve from model
                 p1 = p1 + stat_function(fun = pnorm,
                                         args = list(mean = avg, sd = std),

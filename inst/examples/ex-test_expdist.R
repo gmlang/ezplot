@@ -5,7 +5,7 @@ library(dplyr)
 # generate 100 random values from a exponential distribution of rate 0.2
 df = data.frame(val = rexp(100, rate = 0.2))
 f = test_expdist(df)
-f('val', pad = F, xlab = 'x',
+f('val', xlab = 'x',
   title_left = 'Empirical CDF of 100 random numbers \n drawn from Exponential(rate = 0.2)',
   title_right = 'Their CCDF on log-y scale')
 

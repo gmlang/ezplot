@@ -104,7 +104,8 @@ test_expdist = function(df) {
 
                 # --- left figure --- #
 
-                p1 = draw_cdf(varname, legend_pos = 'top', linew = linew, ...)
+                p1 = draw_cdf(varname, legend_pos = 'top', linew = linew,
+                              pad = FALSE, ...)
                 # add curve from model
                 p1 = p1 + stat_function(fun = pexp,
                                         args = list(rate = rate),
@@ -122,7 +123,7 @@ test_expdist = function(df) {
                 # don't add median vline for CCDF plot regardless user input
                 if (exists('add_vline_median')) add_vline_median = FALSE
                 p2 = draw_cdf(varname, complement = TRUE, legend_pos = 'top',
-                              linew = linew, ...) %>%
+                              linew = linew, pad = FALSE, ...) %>%
                         # apply log scale on y-axis, divide y-axis to 8 ticks
                         scale_axis(scale = 'log', nticks = 6) %>%
                         # don't change x scale, only divide x-axis to 8 ticks
