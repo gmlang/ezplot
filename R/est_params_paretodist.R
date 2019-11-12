@@ -27,7 +27,7 @@ est_params_paretodist = function(df, varname, digits = 3) {
         dat = data.frame(x = xs, y = ys) %>%
                 filter(is.finite(x), is.finite(y)) %>%
                 mutate(x = log10(x), y = log10(y)) %>% # taking log may introduce -Inf
-                filter(is.finite(x), is.finite(y)) %>% # so we need to drop -Inf
+                filter(is.finite(x), is.finite(y)) # so we need to drop -Inf
 
         fit = lm(y ~ x, data = dat)
         slope = setNames(coef(fit)['x'], NULL)
