@@ -5,13 +5,16 @@
 \title{Estimate the shape and location parameters of the pareto distribution
 from which the sample data were taken.}
 \usage{
-est_params_paretodist(df, varname, digits = 4)
+est_params_paretodist(df, varname, digits = 3)
 }
 \arguments{
 \item{df}{A data frame.}
 
 \item{varname.}{String, name of a continuous variable with an empirical
 distribution approximately pareto.}
+
+\item{digits.}{Integer, the number of digits after decimal point to keep for
+the estimated parameter values.}
 }
 \value{
 Estimates of the shape and location parameters of a theoretical
@@ -25,6 +28,5 @@ and location parameters can be estimated by this function.
 }
 \examples{
 library(ezplot)
-est_params_paretodist(pops, 'pop')
-est_params_paretodist(pops, 'pop', digits = 5)
+est_params_paretodist(pops, 'pop', digits = 2)
 }

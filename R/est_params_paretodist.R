@@ -10,15 +10,17 @@
 #' @param df A data frame.
 #' @param varname. String, name of a continuous variable with an empirical
 #' distribution approximately pareto.
+#' @param digits. Integer, the number of digits after decimal point to keep for
+#' the estimated parameter values.
+#'
 #' @return Estimates of the shape and location parameters of a theoretical
 #' pareto distribution.
 #'
 #' @export
 #' @examples
 #' library(ezplot)
-#' est_params_paretodist(pops, 'pop')
-#' est_params_paretodist(pops, 'pop', digits = 5)
-est_params_paretodist = function(df, varname, digits = 4) {
+#' est_params_paretodist(pops, 'pop', digits = 2)
+est_params_paretodist = function(df, varname, digits = 3) {
         cdf = get_cdfs(df)(varname)
         xs = df[[varname]]
         ys = 1 - cdf(xs)

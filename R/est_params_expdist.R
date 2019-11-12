@@ -10,14 +10,17 @@
 #' @param df A data frame.
 #' @param varname. String, name of a continuous variable with an empirical
 #' distribution approximately exponential.
+#' @param digits. Integer, the number of digits after decimal point to keep for
+#' the estimated parameter values.
+#'
 #' @return An estimate of the rate of a theoretical exponential distribution.
 #'
 #' @export
 #' @examples
 #' library(ezplot)
 #' est_params_expdist(births, 'diffs')
-#' est_params_expdist(births, 'diffs', digits = 5)
-est_params_expdist = function(df, varname, digits = 4) {
+#' est_params_expdist(births, 'diffs', digits = 4)
+est_params_expdist = function(df, varname, digits = 3) {
         cdf = get_cdfs(df)(varname)
         xs = df[[varname]]
         ys = log(1 - cdf(xs))
