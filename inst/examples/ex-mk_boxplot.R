@@ -2,6 +2,7 @@ library(ezplot)
 library(dplyr)
 
 f = mk_boxplot(films)
+f(yvar = "budget")
 f("year_cat", "rating", notched = T, font_size = 10)
 f("year_cat", "rating", fillby = "made_money", notched = T)
 f("year_cat", "rating", fillby = "made_money", legend_title = "Is profitable?",

@@ -67,12 +67,12 @@ mk_boxplot = function(df) {
 
                 p = scale_axis(p) # break y-axis into 10 ticks from ymin to ymax
 
+                p = p + labs(x = NULL, y = yvar) + theme_cowplot(font_size)
+
                 if (xvar == '1') # remove ticks and value lables of x-axis
                         p = p + theme(axis.title.x=element_blank(),
                                       axis.text.x=element_blank(),
                                       axis.ticks.x=element_blank())
-
-                p = p + labs(x = NULL, y = yvar) + theme_cowplot(font_size)
 
 
                 # --- Format Legend --- #
