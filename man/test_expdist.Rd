@@ -43,8 +43,9 @@ are equal to the inverse of the average rate.
 \code{test_expdist} takes in a data frame and returns a function for making
 ggplot2 type of CDF and CCDF (on log-y scale) plots side by side on one
 canvas of any continuous variable from the data frame. CCDF standands for
-Complement CDF. If CCDF on log-y scale is linear, the observed variable is
-exponentially distributed with a rate equal to the absolute value of the slope.
+Complement CDF. If CCDF on log-y scale is linear, the observed variable can
+be modeled by an exponential distribution with a rate equal to the absolute
+value of the slope.
 }
 \examples{
 inst/examples/ex-test_expdist.R

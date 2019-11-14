@@ -7,7 +7,7 @@ f("Sepal.Length", add_vline_median = TRUE,
 
 df = films %>% filter(made_money == "yes")
 f = test_normality(df)
-f("boxoffice", font_size = 10, digits = 0,
+f("boxoffice", digits = 0, font_size = 10,
   caption_left = 'Boxoffice is heavily right skewed (with a long right tail.)')
 
 # take log10 of boxoffice
@@ -23,10 +23,11 @@ f("log10bo", xlab_left = 'Boxoffice (log10 dollars)',
   title_left = 'CDF of log10(boxoffice)',
   title_right = 'Is log10(boxoffice) normally distributed?',
   caption_left = 'Notice the two curves match well but not exactly.',
-  caption_right = 'The middle and right part of log10(boxoffice) \n is close to normal, but the left part is NOT.'
+  caption_right = 'The middle and right parts of log10(boxoffice) \n is close to normal, but the left part is NOT.'
   )
 
 # generate 100 random values from a standard normal distribution
+set.seed(92031)
 df = data.frame(standard_norm = rnorm(100))
 f = test_normality(df)
 f('standard_norm', linew = 1, add_vline_median = TRUE, show_label_median = FALSE,

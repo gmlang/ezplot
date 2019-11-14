@@ -10,7 +10,8 @@ plt("norm", ci_band_type = "ts", font_size = 10)
 set.seed(23)
 smp = data.frame(norm = rnorm(100, mean = 50, sd = 2))
 plt = mk_qqplot(smp)
-plt("norm") # notice the values shown on the x and y axes
+plt("norm") # the theoretical distributional parameters are estimated via MLE
+plt('norm', dparams = list(mean = 50, sd = 2)) # use true parameters
 
 plt = mk_qqplot(airquality)
 plt("Ozone", dist = "exp", dparams = list(rate = 0.022)) %>%
@@ -19,7 +20,17 @@ plt("Ozone", dist = "exp", dparams = list(rate = 0.022)) %>%
 
 set.seed(2323)
 logbo = sample(log(films$boxoffice), 500)
+plt = mk_qqplot(data.frame(logbo))
+plt("logbo") # the theoretical distributional parameters are estimated via MLE
+plt('logbo', dparams = list(mean = mean(logbo), sd = sd(logbo))) # estimated via sample mean and standard deviation
+
+
+# what if we standardize the log(boxoffice) first
 logbo_standardized = (logbo - mean(logbo)) / sd(logbo)
-plt = mk_qqplot(data.frame(logbo, logbo_standardized))
-plt("logbo")
+plt = mk_qqplot(data.frame(logbo_standardized))
+
+# the plots look different
 plt("logbo_standardized")
+plt("logbo_standardized", dparams = list(mean = 0, sd = 1))
+
+# Remark: in general, the qqplot of x is different from that of (x - mean(x)) / sd(x)

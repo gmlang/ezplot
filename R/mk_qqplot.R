@@ -43,7 +43,8 @@ mk_qqplot = function(df) {
                 # set x y limits based on the range of the sample values
                 # lim = c(floor(min(df[[varname]], na.rm = TRUE)),
                 #         ceiling(max(df[[varname]], na.rm = TRUE)))
-                lim = pretty(df[[varname]])[c(1, 5)]
+                breaks = pretty(df[[varname]])
+                lim = breaks[c(1, length(breaks))]
 
                 # calc sample size
                 tot_n = length(na.omit(df[[varname]]))
