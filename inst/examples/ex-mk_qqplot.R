@@ -24,13 +24,10 @@ plt = mk_qqplot(data.frame(logbo))
 plt("logbo") # the theoretical distributional parameters are estimated via MLE
 plt('logbo', dparams = list(mean = mean(logbo), sd = sd(logbo))) # estimated via sample mean and standard deviation
 
-
 # what if we standardize the log(boxoffice) first
 logbo_standardized = (logbo - mean(logbo)) / sd(logbo)
 plt = mk_qqplot(data.frame(logbo_standardized))
-
-# the plots look different
 plt("logbo_standardized")
 plt("logbo_standardized", dparams = list(mean = 0, sd = 1))
 
-# Remark: in general, the qqplot of x is different from that of (x - mean(x)) / sd(x)
+
