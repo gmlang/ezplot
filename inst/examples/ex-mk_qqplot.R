@@ -18,6 +18,8 @@ plt("Ozone", dist = "exp", dparams = list(rate = 0.022)) %>%
              caption = "Theoretical Distribution: Exponential with rate 0.022")
 
 set.seed(2323)
-log_bo = sample(log(films$boxoffice), 100)
-plt = mk_qqplot(data.frame(log_bo))
-plt("log_bo") # all points fall inside of CI band, approximately normal, especially above 12
+logbo = sample(log(films$boxoffice), 500)
+logbo_standardized = (logbo - mean(logbo)) / sd(logbo)
+plt = mk_qqplot(data.frame(logbo, logbo_standardized))
+plt("logbo")
+plt("logbo_standardized")
