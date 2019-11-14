@@ -38,11 +38,11 @@ test_normality(df)
 The normal distribution is the most commonly used probability distribution.
 Many real world data such as height can be modeled via a normal distribution.
 \code{test_normality} takes in a data frame and returns a function for making
-ggplot2 type of CDF and the standard normal probability plots side by side
+ggplot2 type of CDF plot and the normal probability plot side by side
 on one canvas of any continuous variable from the data frame. If normal
-probability plot is linear, the observed variable is normally distributed
-with mean and standard deviation equal to the sample mean and sample standard
-deviation.
+probability plot is linear, the observed data can be modeled by a normal
+distribution with mean and standard deviation equal to the sample mean and
+standard deviation of the observed data.
 }
 \examples{
 inst/examples/ex-test_normality.R

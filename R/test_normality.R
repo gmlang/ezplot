@@ -4,11 +4,11 @@
 #' The normal distribution is the most commonly used probability distribution.
 #' Many real world data such as height can be modeled via a normal distribution.
 #' \code{test_normality} takes in a data frame and returns a function for making
-#' ggplot2 type of CDF and the standard normal probability plots side by side
+#' ggplot2 type of CDF plot and the normal probability plot side by side
 #' on one canvas of any continuous variable from the data frame. If normal
-#' probability plot is linear, the observed variable is normally distributed
-#' with mean and standard deviation equal to the sample mean and sample standard
-#' deviation.
+#' probability plot is linear, the observed data can be modeled by a normal
+#' distribution with mean and standard deviation equal to the sample mean and
+#' standard deviation of the observed data.
 #'
 #' @param df A data frame.
 #' @return
@@ -48,12 +48,6 @@ test_normality = function(df) {
                 # calc sample avg and std
                 avg = mean(df[[varname]], na.rm = T)
                 std = sd(df[[varname]], na.rm = T)
-
-                # add standardized version of the variable to be plotted since
-                # we'll always want to compare to standard normal distribution
-                # on the Q-Q normal plot
-                stand_varname = paste0('standard_', varname)
-                df[[stand_varname]] = (df[[varname]] - avg) / std
 
                 # round so that we don't display too many digits after decimal
                 avg = round(avg, digits)
@@ -100,10 +94,9 @@ test_normality = function(df) {
 
                 if (missing(subtitle_right)) {
                         subtit2 = paste0(
-                                'If data points are scattered along the line and within the\n',
-                                'confidence band, the data can be approximated by the normal\n',
-                                'distribution with mean = ', avg, ' and standard deviation = ',
-                                std, '.')
+                                'If data points fall along the line and within the confidence band,\n',
+                                'the data can be approximated by the normal distribution with\n',
+                                'mean = ', avg, ' and standard deviation = ', std, '.')
                 } else {
                         subtit2 = subtitle_right
                 }
@@ -125,8 +118,13 @@ test_normality = function(df) {
 
                 # --- right figure --- #
 
-                if (!exists('font_size')) font_size = 14
-                p2 = draw_qqplot(stand_varname, font_size = font_size)
+                rest_args = list(...)
+                if (!'font_size' %in% names(rest_args)) {
+                        font_size = 14
+                } else {
+                        font_size = rest_args[['font_size']]
+                }
+                p2 = draw_qqplot(varname, font_size = font_size)
                 p2 = add_labs(p2, title = tit2, subtitle = subtit2,
                               caption = cap2)
 
