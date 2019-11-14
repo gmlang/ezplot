@@ -1,11 +1,11 @@
-#' @title Test if some observed data are exponentially distributed.
+#' @title Check if observed data can be modeled by an exponential distribution.
 #'
 #' @description
 #' The exponential distribution is the probability distribution of the time
 #' between events in a process in which events occur continuously and
 #' independently at a constant average rate. Its mean and standard deviation
 #' are equal to the inverse of the average rate.
-#' \code{test_expdist} takes in a data frame and returns a function for making
+#' \code{check_expdist} takes in a data frame and returns a function for making
 #' ggplot2 type of CDF and CCDF (on log-y scale) plots side by side on one
 #' canvas of any continuous variable from the data frame. CCDF standands for
 #' Complement CDF. If CCDF on log-y scale is linear, the observed variable can
@@ -42,8 +42,8 @@
 #' @seealso \code{\link{est_params_expdist}} for how the rate of the theoretical
 #' exponential distribution is estimated.
 #' @export
-#' @examples inst/examples/ex-test_expdist.R
-test_expdist = function(df) {
+#' @examples inst/examples/ex-check_expdist.R
+check_expdist = function(df) {
 
         draw_cdf = mk_cdfplot(df)
 
@@ -92,8 +92,7 @@ test_expdist = function(df) {
 
                 if (missing(subtitle_right)) {
                         subtit2 = paste0(
-                                'If the trend is linear, the data can be ',
-                                'approximated by \nthe exponential ',
+                                'If the trend is linear, the data can be modeled by the exponential\n',
                                 'distribution with rate = ', rate, '.')
                 } else {
                         subtit2 = subtitle_right

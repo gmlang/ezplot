@@ -1,10 +1,10 @@
-#' @title Test if some observed data follow the Pareto distribution.
+#' @title Check if observed data can be modeled by a pareto distribution.
 #'
 #' @description
 #' The pareto distribution is a power-law probability distribution that describes
 #' the phenomenon that a large portion of xxx (for example, wealth or income) is
 #' concentrated in a small fraction of the population.
-#' \code{test_pareto} takes in a data frame and returns a function for making
+#' \code{check_pareto} takes in a data frame and returns a function for making
 #' ggplot2 type of CDF and CCDF (on a log10-log10 scale) plots side by side on one
 #' canvas of any continuous variable from the data frame. CCDF standands for
 #' Complement CDF. If CCDF on a log10-log10 scale looks like a straight line, the
@@ -41,8 +41,8 @@
 #' @seealso \code{\link{est_params_pareto}} for how the parameters of the
 #' theoretical pareto distribution are estimated.
 #' @export
-#' @examples inst/examples/ex-test_pareto.R
-test_pareto = function(df) {
+#' @examples inst/examples/ex-check_pareto.R
+check_pareto = function(df) {
 
         draw_cdf = mk_cdfplot(df)
 
@@ -93,9 +93,8 @@ test_pareto = function(df) {
 
                 if (missing(subtitle_right)) {
                         subtit2 = paste0(
-                                'If the trend is linear, the data can be ',
-                                'approximated by the \npareto distribution ',
-                                'with shape = ', params['shape'],
+                                'If the trend is linear, the data can be modeled by the pareto\n',
+                                'distribution with shape = ', params['shape'],
                                 ' and location = ', params['location'], '.')
                 } else {
                         subtit2 = subtitle_right

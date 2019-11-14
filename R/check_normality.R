@@ -1,9 +1,9 @@
-#' @title Test if some observed data are normally distributed.
+#' @title Check if observed data can be modeled by a normal distribution.
 #'
 #' @description
 #' The normal distribution is the most commonly used probability distribution.
 #' Many real world data such as height can be modeled via a normal distribution.
-#' \code{test_normality} takes in a data frame and returns a function for making
+#' \code{check_normality} takes in a data frame and returns a function for making
 #' ggplot2 type of CDF plot and the normal probability plot side by side
 #' on one canvas of any continuous variable from the data frame. If normal
 #' probability plot is linear, the observed data can be modeled by a normal
@@ -37,8 +37,8 @@
 #' }
 #'
 #' @export
-#' @examples inst/examples/ex-test_normality.R
-test_normality = function(df) {
+#' @examples inst/examples/ex-check_normality.R
+check_normality = function(df) {
         function(varname, linew = 0.7, xlab_left = varname, title_left,
                  title_right, subtitle_left, subtitle_right,
                  caption_left, caption_right, digits = 2, ...) {
@@ -95,7 +95,7 @@ test_normality = function(df) {
                 if (missing(subtitle_right)) {
                         subtit2 = paste0(
                                 'If data points fall along the line and within the confidence band,\n',
-                                'the data can be approximated by the normal distribution with\n',
+                                'the data can be modeled by the normal distribution with\n',
                                 'mean = ', avg, ' and standard deviation = ', std, '.')
                 } else {
                         subtit2 = subtitle_right
