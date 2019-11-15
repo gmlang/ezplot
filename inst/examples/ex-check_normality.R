@@ -33,5 +33,5 @@ set.seed(92031)
 df = data.frame(standard_norm = rnorm(100))
 f = check_normality(df)
 f('standard_norm', linew = 1, add_vline_median = TRUE, show_label_median = FALSE,
-  title_left = 'Empirical CDF of 100 random numbers \n drawn from the standard normal distribution',
+  title_left = 'CDF of 100 random numbers from Norm(0, 1)',
   xlab_left = 'x', title_right = 'What a normal probability plot looks like.')

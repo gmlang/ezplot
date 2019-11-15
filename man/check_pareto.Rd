@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_pareto.R
 \name{check_pareto}
 \alias{check_pareto}
-\title{Check if observed data can be modeled by a pareto distribution.}
+\title{Check if observed data can be modeled by the pareto distribution.}
 \usage{
 check_pareto(df)
 }

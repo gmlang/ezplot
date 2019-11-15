@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_expdist.R
 \name{check_expdist}
 \alias{check_expdist}
-\title{Check if observed data can be modeled by an exponential distribution.}
+\title{Check if observed data can be modeled by the exponential distribution.}
 \usage{
 check_expdist(df)
 }
@@ -44,7 +44,7 @@ are equal to the inverse of the average rate.
 ggplot2 type of CDF and CCDF (on log-y scale) plots side by side on one
 canvas of any continuous variable from the data frame. CCDF standands for
 Complement CDF. If CCDF on log-y scale is linear, the observed variable can
-be modeled by an exponential distribution with a rate equal to the absolute
+be modeled by the exponential distribution with a rate equal to the absolute
 value of the slope.
 }
 \examples{

@@ -7,7 +7,7 @@ set.seed(291)
 df = data.frame(val = EnvStats::rpareto(100, shape = 1, location = 2.5))
 f = check_pareto(df)
 f('val', digits = 2, xlab = 'x',
-  title_left = 'Empirical CDF of 100 random numbers \n drawn from Pareto(shape = 1, location = 2.5)',
+  title_left = 'Empirical CDF of 100 random numbers\n from Pareto(shape = 1, location = 2.5)',
   title_right = 'Their CCDF on log10-log10 scale')
 
 

@@ -1,4 +1,4 @@
-#' @title Check if observed data can be modeled by a pareto distribution.
+#' @title Check if observed data can be modeled by the pareto distribution.
 #'
 #' @description
 #' The pareto distribution is a power-law probability distribution that describes

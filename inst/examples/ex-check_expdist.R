@@ -5,7 +5,7 @@ library(dplyr)
 df = data.frame(val = rexp(100, rate = 0.2))
 f = check_expdist(df)
 f('val', xlab = 'x',
-  title_left = 'Empirical CDF of 100 random numbers \n drawn from Exponential(rate = 0.2)',
+  title_left = 'Empirical CDF of 100 random numbers\n from Exponential(rate = 0.2)',
   title_right = 'Their CCDF on log-y scale')
 
 # Is the interarrival times between births exponential?
