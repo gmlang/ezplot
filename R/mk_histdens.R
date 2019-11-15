@@ -9,14 +9,14 @@
 #' @seealso \code{\link{get_summ_stats}}.
 #'
 #' @param df A data frame.
-#' @param type A string. The type of graph to be drawn. Can be either 'histogram'
-#'             or 'density plot'.
 #'
 #' @return
-#' \code{function(xvar, facet_by = NULL, facet_ncol = 1, add_vline_median = TRUE,
-#'                add_vline_mean = TRUE, legend_pos = "right", font_size = 14, ...)}
+#' \code{function(xvar, type = 'histogram', facet_by = NULL, facet_ncol = 1,
+#'                add_vline_median = TRUE, add_vline_mean = TRUE,
+#'                legend_pos = "right", font_size = 14, ...)}
 #' \itemize{
 #'      \item xvar. String, name of a continuous variable for x-axis.
+#'      \item type. String, either 'histogram' (default) or 'density'.
 #'      \item facet_by. String, name of a categorical variable for grouping x
 #'      and creating facets. Default = NULL.
 #'      \item facet_ncol. Number of columns when facetting. Default = 1. Only
@@ -43,8 +43,8 @@
 #' }
 #' @export
 #' @examples inst/examples/ex-mk_histdens.R
-mk_histdens = function(df, type = 'histogram') {
-        function(xvar, facet_by = NULL, facet_ncol = 1,
+mk_histdens = function(df) {
+        function(xvar, type = 'histogram', facet_by = NULL, facet_ncol = 1,
                  add_vline_median = TRUE, add_vline_mean = TRUE,
                  legend_pos = "right", font_size = 14, ...) {
 
@@ -56,12 +56,14 @@ mk_histdens = function(df, type = 'histogram') {
 
                 # --- Main Plot --- #
 
-                p = ggplot(df, aes_string(xvar, fill = "1"))
+                # show kernel estimated density on y-axis even for histogram
+                p = ggplot(df, aes_string(xvar, 'stat(density)', fill = "1"))
 
-                if (type == 'histogram')
+                if (type == 'histogram') {
                         p = p + geom_histogram(alpha = 0.8, ...)
-                if (type == 'density')
+                } else { # if (type == 'density')
                         p = p + geom_density(alpha = 0.8, ...)
+                }
 
                 if (add_vline_median)
                         p = p + geom_vline(
@@ -85,7 +87,7 @@ mk_histdens = function(df, type = 'histogram') {
 
                 # --- Customize Theme --- #
 
-                p = p + labs(x = xvar, y = "Density") + theme_cowplot(font_size)
+                p = p + labs(x = xvar, y = 'Density') + theme_cowplot(font_size)
 
 
                 # --- Format Legend --- #

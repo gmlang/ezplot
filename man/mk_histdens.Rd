@@ -4,19 +4,18 @@
 \alias{mk_histdens}
 \title{Create a function for making publishable ggplot2 histograms or density plots.}
 \usage{
-mk_histdens(df, type = "histogram")
+mk_histdens(df)
 }
 \arguments{
 \item{df}{A data frame.}
-
-\item{type}{A string. The type of graph to be drawn. Can be either 'histogram'
-or 'density plot'.}
 }
 \value{
-\code{function(xvar, facet_by = NULL, facet_ncol = 1, add_vline_median = TRUE,
-               add_vline_mean = TRUE, legend_pos = "right", font_size = 14, ...)}
+\code{function(xvar, type = 'histogram', facet_by = NULL, facet_ncol = 1,
+               add_vline_median = TRUE, add_vline_mean = TRUE,
+               legend_pos = "right", font_size = 14, ...)}
 \itemize{
      \item xvar. String, name of a continuous variable for x-axis.
+     \item type. String, either 'histogram' (default) or 'density'.
      \item facet_by. String, name of a categorical variable for grouping x
      and creating facets. Default = NULL.
      \item facet_ncol. Number of columns when facetting. Default = 1. Only
