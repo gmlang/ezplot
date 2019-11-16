@@ -11,7 +11,7 @@ f('x', geom = 'point')
 
 range(df$x)
 f('x', pad = FALSE) # do not extend the curve to -Inf and +Inf horizontally
-f('x', colorby = 'gp')
+f('x', colorby = 'gp', add_vline_median = T, font_size = 10)
 
 # --- example 2 --- #
 
@@ -76,7 +76,8 @@ f = mk_cdfplot(subset(df, target_outcome==1))
 f('model_rank', colorby = 'obs_set')
 f('model_rank', colorby = 'obs_set', pad = F)
 
-p = f('model_rank', colorby = 'obs_set', add_vline_median = T, legend_title = NULL)
+p = f('model_rank', colorby = 'obs_set', add_vline_median = T,
+      legend_title = NULL, font_size = 12)
 print(p)
 p %>% scale_axis(axis = 'y', scale = 'pct') %>%
         scale_axis(axis = 'x', scale = 'pct') +

@@ -12,8 +12,7 @@ mk_cdfplot(df)
 \value{
 \code{function(xvar, colorby = "1", complement = FALSE, linew = 0.7,
                add_vline_median = FALSE, show_label_median = add_vline_median,
-               legend_title = colorby, legend_pos = "right",
-               label_size = 3, font_size = 14)}
+               legend_title = colorby, legend_pos = "right", font_size = 14)}
 \itemize{
      \item xvar. String, name of a continuous variable for x-axis.
      \item colorby. String, name of a categorical variable for grouping x.
@@ -33,7 +32,6 @@ mk_cdfplot(df)
      \item legend_title. String, legend title. Default is the name of the
      colorby variable.
      \item legend_pos. String, legend position. Default = "right".
-     \item label_size. Integer, size of bar label text. Default = 3.
      \item font_size. Overall font size. Default = 14. The font size of the
      axes and legend text is a fraction of this value.
      \item .... Optional parameters for `stat_ecfd()`. For example, instead
