@@ -101,8 +101,8 @@ check_weibull = function(df) {
                 }
 
                 slope_label = paste0('Slope: ', slope)
-                slope_label_pos = setNames(c(pretty(df[[varname]], 6)[3], 1),
-                                           c('x', 'y'))
+                slope_label_pos = setNames(
+                        c(log(pretty(df[[varname]], 6))[3], 1), c('x', 'y'))
 
                 # --- left figure --- #
 
@@ -115,7 +115,7 @@ check_weibull = function(df) {
                 # add curve from model
                 p1 = p1 + stat_function(fun = pweibull,
                                         args = list(shape = params['shape'],
-                                                    location = params['location']),
+                                                    scale = params['location']),
                                         alpha = 0.8, size = linew,
                                         # color-blind friendly orange
                                         color = '#F28E2B')
@@ -145,6 +145,15 @@ check_weibull = function(df) {
                         annotate("text", label = slope_label,
                                  x = slope_label_pos['x'],
                                  y = slope_label_pos['y'], size = 5)
+
+                # customize theme
+                if (exists('font_size')) {
+                        font_size = list(...)[['font_size']]
+                } else {
+                        font_size = 14
+                }
+                p2 = p2 + labs(x = xlab, y = '-logCCDF') +
+                        theme_cowplot(font_size)
 
                 cowplot::plot_grid(square_fig(p1), square_fig(p2))
         }
