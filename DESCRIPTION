@@ -3,11 +3,9 @@ Title: A collection of functions for making common statistical charts in ggplot2
 Version: 1.0.0
 Authors@R: 'Guangming Lang <gmlang@cabaceo.com> [aut, cre]'
 Description: A collection of wrapper functions that allow you to easily make
-    statistical charts in ggplot2. Specifically, it supports the following
-    types of plots: boxplot, barplot, lineplot, histogram, density plot, and
-    scatter plot. It also allows you to easily resize and rotate the axis
-    tick text, adjust the distances between the axises labels and the axises.
-    It frees you from knowing the details of ggplot2 commands.
+    statistical charts in ggplot2. It also allows you to easily resize and rotate 
+    the axis tick text, adjust the distances between the axises labels and the 
+    axises. It frees you from knowing the details of ggplot2 commands.
 Depends:
     R (>= 3.1.2)
 License: GNU General Public License v2.0
