@@ -81,23 +81,23 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls, yorder) {
 
         ylvls_in_neg_not_pos = setdiff(unique(df_neg[[yvar]]),
                                        unique(df_pos[[yvar]]))
-        if (length(ylvls_in_neg_not_pos) > 0)
-                df_pos = rbind(df_pos,
-                               setNames(expand.grid(ylvls_in_neg_not_pos,
-                                                    fillby_lvls[idx_pos_lvls],
-                                                    rep(0, ncol(df_pos) - 2)),
-                                        names(df_pos))
-                               )
+        if (length(ylvls_in_neg_not_pos) > 0) {
+                add_pos = setNames(expand.grid(ylvls_in_neg_not_pos,
+                                               fillby_lvls[idx_pos_lvls]),
+                                   names(df_pos)[1:2])
+                for (vname in names(df_pos)[-(1:2)]) add_pos[[vname]] = 0
+                df_pos = rbind(df_pos, add_pos)
+        }
 
         ylvls_in_pos_not_neg = setdiff(unique(df_pos[[yvar]]),
                                        unique(df_neg[[yvar]]))
-        if (length(ylvls_in_pos_not_neg) > 0)
-                df_neg = rbind(df_neg,
-                               setNames(expand.grid(ylvls_in_pos_not_neg,
-                                                    fillby_lvls[idx_neg_lvls],
-                                                    rep(0, ncol(df_neg) - 2)),
-                                        names(df_neg))
-                               )
+        if (length(ylvls_in_pos_not_neg) > 0) {
+                add_neg = setNames(expand.grid(ylvls_in_pos_not_neg,
+                                               fillby_lvls[idx_neg_lvls]),
+                                   names(df_neg)[1:2])
+                for (vname in names(df_neg)[-(1:2)]) add_neg[[vname]] = 0
+                df_neg = rbind(df_neg, add_neg)
+        }
 
         # --- change x values of the negative set to negative if not already so
         #     create limits, breaks and labels for the continuous axis
