@@ -52,14 +52,14 @@ mk_likertplot = function(df) {
                                        yorder)
                 df_neg = lst[["df_neg"]]
                 df_pos = lst[["df_pos"]]
+                df_neg_pos = lst[['df_neg_pos']]
                 con_axis_limits = lst[["con_axis_limits"]]
                 con_axis_breaks = lst[["con_axis_breaks"]]
                 con_axis_labs = lst[["con_axis_labs"]]
                 pal = lst[["pal"]]
 
                 # get bar labels
-                df_neg_pos = rbind(df_neg, df_pos)
-                bar_labs = ifelse(df_neg_pos$mid_pos==0, NA, abs(df_neg_pos[[xvar]]))
+                bar_labs = ifelse(df_neg_pos[[xvar]] == 0, NA, abs(df_neg_pos[[xvar]]))
 
                 # --- Main Plot --- #
 
@@ -94,7 +94,7 @@ mk_likertplot = function(df) {
                                 breaks = con_axis_breaks,
                                 labels = con_axis_labs
                                 )
-                        bar_labs = scales::comma(bar_labs)
+                        bar_labs = round(bar_labs, label_decimals)
                 }
 
                 # --- Add Bar Labels --- #

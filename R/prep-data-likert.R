@@ -137,21 +137,24 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls, yorder) {
         names(pal) = fillby_lvls # crucial for correct legend
 
 
-        # calc the x positions of the bar labels
-        df_neg$half_len = df_neg[[xvar]] / 2
-        df_neg = dplyr::mutate(
-                dplyr::group_by(df_neg, !!as.name(yvar)),
-                mid_pos = cumsum(!!as.name(xvar)) - half_len,
-                half_len = NULL)
+        # --- calc the x positions of the bar labels --- #
 
-        df_pos$half_len = df_pos[[xvar]] / 2
-        df_pos = dplyr::mutate(
-                dplyr::group_by(df_pos, !!as.name(yvar)),
-                mid_pos = cumsum(!!as.name(xvar)) - half_len,
-                half_len = NULL)
+        df_neg_pos = rbind(
+                df_neg %>% group_by(!!as.name(yvar)) %>%
+                        arrange(desc(!!as.name(fillby))) %>%
+                        mutate(cumval = cumsum(!!as.name(xvar))) %>%
+                        arrange(!!as.name(fillby)) %>%
+                        mutate(mid_pos = cumval - !!as.name(xvar) / 2),
+                df_pos %>% group_by(!!as.name(yvar)) %>%
+                        mutate(cumval = cumsum(!!as.name(xvar))) %>%
+                        mutate(mid_pos = cumval - !!as.name(xvar) / 2)) %>%
+                group_by(!!as.name(yvar), !!as.name(fillby)) %>%
+                summarise(!!xvar := sum(abs(!!as.name(xvar))),
+                          mid_pos = sum(mid_pos))
 
         # return
         list(df_neg = df_neg, df_pos = df_pos,
+             df_neg_pos = df_neg_pos,
              con_axis_limits = con_axis_limits,
              con_axis_breaks = con_axis_breaks,
              con_axis_labs = con_axis_labs,
