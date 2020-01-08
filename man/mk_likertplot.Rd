@@ -13,8 +13,8 @@ mk_likertplot(df)
 }
 \value{
 \code{function(xvar, yvar, fillby, fillby_lvls, yorder = "alphanumeric",
-               x_as_pct = FALSE, legend_title = fillby, legend_pos = "right",
-               font_size = 14)}
+               x_as_pct = FALSE, label_decimals = 1, label_size = 3,
+               legend_title = fillby, legend_pos = "right", font_size = 14)}
 \itemize{
      \item xvar. String, name of a continuous variable for x-axis.
      \item yvar. String, name of a categorical variable for y-axis.
@@ -26,6 +26,10 @@ mk_likertplot(df)
      specifies how categories are ordered on the y-axis. Default = "alphanumeric".
      \item x_as_pct. Logical, if TRUE, format x-axis as %; otherwise, format
      it as comma. Default is FALSE.
+     \item label_decimals. Integer, the number of decimal points shown on
+     the bar labels. Default = 1.
+     \item label_size. Integer, size of bar label text. Default is 3. Hide
+     bar labels when its value is 0.
      \item legend_title. String, legend title. Default is the name of the
      fillby variable.
      \item legend_pos. String, legend position. Default = "right".

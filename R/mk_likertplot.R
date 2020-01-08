@@ -14,8 +14,8 @@
 #'
 #' @return
 #' \code{function(xvar, yvar, fillby, fillby_lvls, yorder = "alphanumeric",
-#'                x_as_pct = FALSE, legend_title = fillby, legend_pos = "right",
-#'                font_size = 14)}
+#'                x_as_pct = FALSE, label_decimals = 1, label_size = 3,
+#'                legend_title = fillby, legend_pos = "right", font_size = 14)}
 #' \itemize{
 #'      \item xvar. String, name of a continuous variable for x-axis.
 #'      \item yvar. String, name of a categorical variable for y-axis.
@@ -27,6 +27,10 @@
 #'      specifies how categories are ordered on the y-axis. Default = "alphanumeric".
 #'      \item x_as_pct. Logical, if TRUE, format x-axis as %; otherwise, format
 #'      it as comma. Default is FALSE.
+#'      \item label_decimals. Integer, the number of decimal points shown on
+#'      the bar labels. Default = 1.
+#'      \item label_size. Integer, size of bar label text. Default is 3. Hide
+#'      bar labels when its value is 0.
 #'      \item legend_title. String, legend title. Default is the name of the
 #'      fillby variable.
 #'      \item legend_pos. String, legend position. Default = "right".
@@ -39,8 +43,8 @@
 #' @examples inst/examples/ex-mk_likertplot.R
 mk_likertplot = function(df) {
         function(xvar, yvar, fillby, fillby_lvls, yorder = "alphanumeric",
-                 x_as_pct = FALSE, legend_title = fillby, legend_pos = "right",
-                 font_size = 14) {
+                 x_as_pct = FALSE, label_decimals = 1, label_size = 3,
+                 legend_title = fillby, legend_pos = "right", font_size = 14) {
 
                 # --- Prep --- #
 
@@ -52,6 +56,10 @@ mk_likertplot = function(df) {
                 con_axis_breaks = lst[["con_axis_breaks"]]
                 con_axis_labs = lst[["con_axis_labs"]]
                 pal = lst[["pal"]]
+
+                # get bar labels
+                df_neg_pos = rbind(df_neg, df_pos)
+                bar_labs = ifelse(df_neg_pos$mid_pos==0, NA, abs(df_neg_pos[[xvar]]))
 
                 # --- Main Plot --- #
 
@@ -76,6 +84,7 @@ mk_likertplot = function(df) {
                                 breaks = xbreaks,
                                 labels = formattable::percent(abs(xbreaks), 0)
                                 )
+                        bar_labs = formattable::percent(bar_labs, label_decimals)
                 } else {
                         all_bigger_than1 = all(setdiff(abs(con_axis_labs),0) >1)
                         if (all_bigger_than1)
@@ -85,8 +94,14 @@ mk_likertplot = function(df) {
                                 breaks = con_axis_breaks,
                                 labels = con_axis_labs
                                 )
+                        bar_labs = scales::comma(bar_labs)
                 }
 
+                # --- Add Bar Labels --- #
+
+                p = p + geom_text(data = df_neg_pos,
+                                  aes_string('mid_pos', yvar, group = fillby),
+                                  label = bar_labs, size = label_size)
 
                 # --- Customize Theme --- #
 

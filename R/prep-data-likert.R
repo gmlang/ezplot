@@ -62,8 +62,10 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls, yorder) {
 
         df_neg = dplyr::filter(
                 df, !!as.name(fillby) %in% fillby_lvls[idx_neg_lvls])
+        df_neg = df_neg[c(yvar, fillby, xvar)]
         df_pos = dplyr::filter(
                 df, !!as.name(fillby) %in% fillby_lvls[idx_pos_lvls])
+        df_pos = df_pos[c(yvar, fillby, xvar)]
 
         if (!is.null(idx_mid_lvl)) {
                 # if there's odd number of levels, divide the x values of the
@@ -83,7 +85,7 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls, yorder) {
                                        unique(df_pos[[yvar]]))
         if (length(ylvls_in_neg_not_pos) > 0)
                 df_pos = rbind(
-                        df_pos[c(yvar, fillby, xvar)],
+                        df_pos,
                         setNames(expand.grid(ylvls_in_neg_not_pos,
                                              fillby_lvls[idx_pos_lvls], 0),
                                  c(yvar, fillby, xvar))
@@ -93,7 +95,7 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls, yorder) {
                                        unique(df_neg[[yvar]]))
         if (length(ylvls_in_pos_not_neg) > 0)
                 df_neg = rbind(
-                        df_neg[c(yvar, fillby, xvar)],
+                        df_neg,
                         setNames(expand.grid(ylvls_in_pos_not_neg,
                                              fillby_lvls[idx_neg_lvls], 0),
                                  c(yvar, fillby, xvar))
@@ -134,6 +136,19 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls, yorder) {
         }
         names(pal) = fillby_lvls # crucial for correct legend
 
+
+        # calc the x positions of the bar labels
+        df_neg$half_len = df_neg[[xvar]] / 2
+        df_neg = dplyr::mutate(
+                dplyr::group_by(df_neg, !!as.name(yvar)),
+                mid_pos = cumsum(!!as.name(xvar)) - half_len,
+                half_len = NULL)
+
+        df_pos$half_len = df_pos[[xvar]] / 2
+        df_pos = dplyr::mutate(
+                dplyr::group_by(df_pos, !!as.name(yvar)),
+                mid_pos = cumsum(!!as.name(xvar)) - half_len,
+                half_len = NULL)
 
         # return
         list(df_neg = df_neg, df_pos = df_pos,
