@@ -13,8 +13,9 @@
 #' @param df A data frame.
 #'
 #' @return
-#' \code{function(xvar, yvar, fillby, fillby_lvls, yorder = "alphanumeric",
-#'                x_as_pct = FALSE, label_decimals = 1, label_size = 3,
+#' \code{function(xvar, yvar, fillby, fillby_lvls, rawcnt_var = NULL,
+#'                yorder = "alphanumeric", x_as_pct = FALSE,
+#'                label_decimals = 1, label_size = 3,
 #'                legend_title = fillby, legend_pos = "right",
 #'                grid_line_size = 0.4, font_size = 14)}
 #' \itemize{
@@ -24,6 +25,9 @@
 #'      sub-dividing and coloring the bars.
 #'      \item fillby_lvls. Character vector, levels of fillby variable that the
 #'      fillby variable should be ordered accordingly.
+#'      \item rawcnt_var. String, name of the variable that contains the raw
+#'      count behind each tier. Default = NULL because not all input dataframe
+#'      has such a variable.
 #'      \item yorder. String, "alphanumeric", "ascend" or "descend". It
 #'      specifies how categories are ordered on the y-axis. Default = "alphanumeric".
 #'      \item x_as_pct. Logical, if TRUE, format x-axis as %; otherwise, format
@@ -45,15 +49,16 @@
 #' @export
 #' @examples inst/examples/ex-mk_likertplot.R
 mk_likertplot = function(df) {
-        function(xvar, yvar, fillby, fillby_lvls, yorder = "alphanumeric",
-                 x_as_pct = FALSE, label_decimals = 1, label_size = 3,
+        function(xvar, yvar, fillby, fillby_lvls, rawcnt_var = NULL,
+                 yorder = "alphanumeric", x_as_pct = FALSE,
+                 show_rawcnt = FALSE, label_decimals = 1, label_size = 3,
                  legend_title = fillby, legend_pos = "right",
                  grid_line_size = 0, font_size = 14) {
 
                 # --- Prep --- #
 
                 lst = prep_data_likert(df, xvar, yvar, fillby, fillby_lvls,
-                                       yorder)
+                                       rawcnt_var, yorder)
                 df_neg = lst[["df_neg"]]
                 df_pos = lst[["df_pos"]]
                 df_neg_pos = lst[['df_neg_pos']]
@@ -63,8 +68,13 @@ mk_likertplot = function(df) {
                 pal = lst[["pal"]]
 
                 # get bar labels
-                bar_labs = ifelse(df_neg_pos[[xvar]] == 0, NA,
-                                  abs(df_neg_pos[[xvar]]))
+                bar_labs_prime = ifelse(df_neg_pos[[xvar]] == 0, NA,
+                                        abs(df_neg_pos[[xvar]]))
+                if (!is.null(rawcnt_var))
+                        bar_labs_rawcnt = ifelse(
+                                df_neg_pos[[rawcnt_var]] == 0, NA,
+                                df_neg_pos[[rawcnt_var]])
+
 
                 # --- Main Plot --- #
 
@@ -89,7 +99,8 @@ mk_likertplot = function(df) {
                                 breaks = xbreaks,
                                 labels = formattable::percent(abs(xbreaks), 0)
                                 )
-                        bar_labs = formattable::percent(bar_labs, label_decimals)
+                        bar_labs_prime = formattable::percent(
+                                bar_labs_prime, label_decimals)
                 } else {
                         all_bigger_than1 = all(setdiff(abs(con_axis_labs),0) >1)
                         if (all_bigger_than1)
@@ -99,11 +110,19 @@ mk_likertplot = function(df) {
                                 breaks = con_axis_breaks,
                                 labels = con_axis_labs
                                 )
-                        bar_labs = round(bar_labs, label_decimals)
+                        bar_labs_prime = round(bar_labs_prime, label_decimals)
                 }
 
                 # --- Add Bar Labels --- #
 
+                if (show_rawcnt) {
+                        bar_labs = paste(bar_labs_prime,
+                                         paste0('(', bar_labs_rawcnt, ')'),
+                                         sep = '\n')
+                        bar_labs[grepl('NA', bar_labs)] = NA_character_
+                } else {
+                        bar_labs = bar_labs_prime
+                }
                 p = p + geom_text(data = df_neg_pos,
                                   aes_string('mid_pos', yvar, group = fillby),
                                   label = bar_labs, size = label_size)

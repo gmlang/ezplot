@@ -12,8 +12,9 @@ mk_likertplot(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(xvar, yvar, fillby, fillby_lvls, yorder = "alphanumeric",
-               x_as_pct = FALSE, label_decimals = 1, label_size = 3,
+\code{function(xvar, yvar, fillby, fillby_lvls, rawcnt_var = NULL,
+               yorder = "alphanumeric", x_as_pct = FALSE,
+               label_decimals = 1, label_size = 3,
                legend_title = fillby, legend_pos = "right",
                grid_line_size = 0.4, font_size = 14)}
 \itemize{
@@ -23,6 +24,9 @@ mk_likertplot(df)
      sub-dividing and coloring the bars.
      \item fillby_lvls. Character vector, levels of fillby variable that the
      fillby variable should be ordered accordingly.
+     \item rawcnt_var. String, name of the variable that contains the raw
+     count behind each tier. Default = NULL because not all input dataframe
+     has such a variable.
      \item yorder. String, "alphanumeric", "ascend" or "descend". It
      specifies how categories are ordered on the y-axis. Default = "alphanumeric".
      \item x_as_pct. Logical, if TRUE, format x-axis as %; otherwise, format

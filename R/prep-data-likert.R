@@ -13,6 +13,9 @@
 #'   and coloring the bars.
 #' @param fillby_lvls Character vector, levels of the fillby variable that the
 #'   fillby variable should be ordered accordingly.
+#' @param rawcnt_var. String, name of the variable that contains the raw
+#'   count behind each tier. Default = NULL because not all input dataframe
+#'   has such a variable.
 #' @param yorder String, possible values are "alphanumeric", "descend" or
 #'   "ascend". If "alphanumeric", order y levels in alphanumerical order
 #'   along y-axis. If "ascend"/"descend", order y levels in ascending/descending
@@ -22,7 +25,8 @@
 #' the continuous axis, and palette for coloring the bars (pal).
 #'
 #' @seealso \code{\link{mk_likertplot}}.
-prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls, yorder) {
+prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls,
+                            rawcnt_var, yorder) {
 
         # --- order y levels
         #       We're doing things opposite here (for example,
@@ -146,9 +150,19 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls, yorder) {
                 df_pos %>% group_by(!!as.name(yvar)) %>%
                         mutate(cumval = cumsum(!!as.name(xvar))) %>%
                         mutate(mid_pos = cumval - !!as.name(xvar) / 2)) %>%
-                group_by(!!as.name(yvar), !!as.name(fillby)) %>%
-                summarise(!!xvar := sum(abs(!!as.name(xvar))),
-                          mid_pos = sum(mid_pos))
+                group_by(!!as.name(yvar), !!as.name(fillby))
+
+        if (is.null(rawcnt_var)) {
+                df_neg_pos = df_neg_pos %>%
+                        summarise(!!xvar := sum(abs(!!as.name(xvar))),
+                                  mid_pos = sum(mid_pos))
+        } else {
+                df_neg_pos = df_neg_pos %>%
+                        summarise(!!xvar := sum(abs(!!as.name(xvar))),
+                                  mid_pos = sum(mid_pos),
+                                  !!rawcnt_var := sum(!!as.name(rawcnt_var))
+                                  )
+        }
 
         # return
         list(df_neg = df_neg, df_pos = df_pos,

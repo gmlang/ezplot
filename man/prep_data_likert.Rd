@@ -4,7 +4,7 @@
 \alias{prep_data_likert}
 \title{Helper function for \code{mk_likertplot}. Not for external use.}
 \usage{
-prep_data_likert(df, xvar, yvar, fillby, fillby_lvls, yorder)
+prep_data_likert(df, xvar, yvar, fillby, fillby_lvls, rawcnt_var, yorder)
 }
 \arguments{
 \item{df}{Data frame of the original data.}
@@ -23,6 +23,10 @@ fillby variable should be ordered accordingly.}
 "ascend". If "alphanumeric", order y levels in alphanumerical order
 along y-axis. If "ascend"/"descend", order y levels in ascending/descending
 order of the sum of absolute x-values along y-axis.}
+
+\item{rawcnt_var.}{String, name of the variable that contains the raw
+count behind each tier. Default = NULL because not all input dataframe
+has such a variable.}
 }
 \value{
 A list of 2 data frames (df_neg and df_pos), breaks and labels for
