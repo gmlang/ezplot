@@ -11,8 +11,9 @@ mk_heatmap(df)
 }
 \value{
 \code{function(xvar, yvar, fillby, facet_by = NULL, facet_ncol = 1,
-               palette = "C", color_direction = -1, legend_title = fillby,
-               format_legend_as_comma = FALSE, font_size = 8)}
+               palette = "C", color_direction = -1, remove_legend = FALSE,
+               legend_title = fillby, format_legend_as_comma = FALSE,
+               font_size = 8)}
 \itemize{
      \item xvar. String, name of a categorical variable for x-axis.
      \item yvar. String, name of another categorical variable for y-axis.
@@ -27,6 +28,7 @@ mk_heatmap(df)
      \item color_direction. 1 or -1. Sets the order of colors in the scale.
      If 1, colors are ordered from darkest to lightest. If -1 (default),
      ordered from lightest to darkest.
+     \item remove_legend. Logical, hide or show legend. Default = FALSE (show legend).
      \item legend_title. String, legend title. Default uses the name of the
      fillby variable.
      \item format_legend_as_comma. Logical. If TRUE, display numbers like

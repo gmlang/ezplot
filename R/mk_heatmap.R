@@ -8,8 +8,9 @@
 #'
 #' @return
 #' \code{function(xvar, yvar, fillby, facet_by = NULL, facet_ncol = 1,
-#'                palette = "C", color_direction = -1, legend_title = fillby,
-#'                format_legend_as_comma = FALSE, font_size = 8)}
+#'                palette = "C", color_direction = -1, remove_legend = FALSE,
+#'                legend_title = fillby, format_legend_as_comma = FALSE,
+#'                font_size = 8)}
 #' \itemize{
 #'      \item xvar. String, name of a categorical variable for x-axis.
 #'      \item yvar. String, name of another categorical variable for y-axis.
@@ -24,6 +25,7 @@
 #'      \item color_direction. 1 or -1. Sets the order of colors in the scale.
 #'      If 1, colors are ordered from darkest to lightest. If -1 (default),
 #'      ordered from lightest to darkest.
+#'      \item remove_legend. Logical, hide or show legend. Default = FALSE (show legend).
 #'      \item legend_title. String, legend title. Default uses the name of the
 #'      fillby variable.
 #'      \item format_legend_as_comma. Logical. If TRUE, display numbers like
@@ -36,8 +38,9 @@
 #' @examples inst/examples/ex-mk_heatmap.R
 mk_heatmap = function(df) {
         function(xvar, yvar, fillby, facet_by = NULL, facet_ncol = 1,
-                 palette = "C", color_direction = -1, legend_title = fillby,
-                 format_legend_as_comma = FALSE, font_size = 8) {
+                 palette = "C", color_direction = -1, remove_legend = FALSE,
+                 legend_title = fillby, format_legend_as_comma = FALSE,
+                 font_size = 8) {
 
                 # --- Main Plot --- #
 
@@ -47,11 +50,12 @@ mk_heatmap = function(df) {
                 if (format_legend_as_comma) {
                         p = p + scale_fill_viridis_c(
                                 name = legend_title, label = scales::comma,
-                                option = palette, direction = color_direction)
+                                option = palette, direction = color_direction,
+                                alpha = 0.8)
                 } else {
                         p = p + scale_fill_viridis_c(
                                 name = legend_title, option = palette,
-                                direction = color_direction)
+                                direction = color_direction, alpha = 0.8)
                 }
 
                 p = p + coord_equal()
@@ -61,6 +65,12 @@ mk_heatmap = function(df) {
                 if (!is.null(facet_by))
                         p = p + facet_wrap(vars(!!as.name(facet_by)),
                                            ncol = facet_ncol)
+
+                # --- Format Legend --- #
+
+                if (remove_legend)
+                        p = p + guides(color = FALSE, fill = FALSE)
+
 
                 # --- Customize Theme --- #
 
