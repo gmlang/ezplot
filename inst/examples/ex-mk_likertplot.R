@@ -6,7 +6,8 @@ df = ab3 %>% gather(opinion, pct, -Country)
 lvls = unique(df$opinion)
 plt = mk_likertplot(df)
 plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls)
-plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls, label_decimals = 2)
+plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls,
+    label_decimals = 2, grid_line_size = 0.4) # add vertical grid lines
 plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls, label_size = 0) # hide bar labels
 plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls,
     x_as_pct = T, legend_title = "Responses", legend_pos = "top") %>%

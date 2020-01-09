@@ -14,7 +14,8 @@ mk_likertplot(df)
 \value{
 \code{function(xvar, yvar, fillby, fillby_lvls, yorder = "alphanumeric",
                x_as_pct = FALSE, label_decimals = 1, label_size = 3,
-               legend_title = fillby, legend_pos = "right", font_size = 14)}
+               legend_title = fillby, legend_pos = "right",
+               grid_line_size = 0.4, font_size = 14)}
 \itemize{
      \item xvar. String, name of a continuous variable for x-axis.
      \item yvar. String, name of a categorical variable for y-axis.
@@ -33,6 +34,8 @@ mk_likertplot(df)
      \item legend_title. String, legend title. Default is the name of the
      fillby variable.
      \item legend_pos. String, legend position. Default = "right".
+     \item grid_line_size. Number, the width of vertical grid lines.
+     If 0 (default), the vertical grid lines are hidden.
      \item font_size. Overall font size. Default = 14. The font size of the
      axes and legend text is a fraction of this value.
 }
