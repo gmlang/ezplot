@@ -86,7 +86,7 @@ mk_barploth_freq = function(df) {
                                                   data = df_label, hjust = -0.5,
                                                   size = label_size) +
                                         geom_text(aes(mid_pos, !!as.name(yvar),
-                                                      label = scales::comma(n)),
+                                                      label = scales::comma(n, accuracy = 1)),
                                                   data = df_label,
                                                   size = label_size
                                                   )
@@ -114,7 +114,7 @@ mk_barploth_freq = function(df) {
                         p = p + ggstance::geom_barh(position = "dodgev",
                                                     alpha = 0.8) +
                                 geom_text(aes(n, !!as.name(yvar),
-                                              label = scales::comma(n)),
+                                              label = scales::comma(n, accuracy = 1)),
                                           data = df_label, hjust = -0.5,
                                           size = label_size,
                                           position = ggstance::position_dodge2v(

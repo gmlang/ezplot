@@ -5,9 +5,17 @@
 \title{Add the best line with (equation, R-squared, p-value) or
 (fit table, R-squared) to scatterplot.}
 \usage{
-add_lm_line(p, alpha = 0.8, linew = 1, show = "eq",
-  eq_tb_xpos = "left", eq_tb_ypos = "top", pv_r2_xpos = "right",
-  pv_r2_ypos = "bottom", ...)
+add_lm_line(
+  p,
+  alpha = 0.8,
+  linew = 1,
+  show = "eq",
+  eq_tb_xpos = "left",
+  eq_tb_ypos = "top",
+  pv_r2_xpos = "right",
+  pv_r2_ypos = "bottom",
+  ...
+)
 }
 \arguments{
 \item{p}{A ggplot object, must be a scatter plot.}

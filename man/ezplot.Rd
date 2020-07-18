@@ -3,7 +3,6 @@
 \docType{package}
 \name{ezplot}
 \alias{ezplot}
-\alias{ezplot-package}
 \title{ezplot}
 \description{
 This package contains easy-to-use functions for creating the most used

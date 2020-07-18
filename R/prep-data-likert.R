@@ -123,8 +123,9 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls,
                         dplyr::group_by(df_pos, !!as.name(yvar)),
                         x = sum(!!as.name(xvar))), x)
         con_axis_breaks = pretty(c(xneg, xpos), n = 10)
-        if (use_pos_label_for_neg_axis) con_axis_labs = abs(con_axis_breaks)
-        else con_axis_labs = con_axis_breaks
+        if (use_pos_label_for_neg_axis) {
+                con_axis_labs = abs(con_axis_breaks)
+        } else { con_axis_labs = con_axis_breaks }
         con_axis_limits = c(min(con_axis_breaks), max(con_axis_breaks))
 
         # --- pick good bar colors --- #
@@ -148,6 +149,7 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls,
                         arrange(!!as.name(fillby)) %>%
                         mutate(mid_pos = cumval - !!as.name(xvar) / 2),
                 df_pos %>% group_by(!!as.name(yvar)) %>%
+                        arrange(!!as.name(fillby)) %>%
                         mutate(cumval = cumsum(!!as.name(xvar))) %>%
                         mutate(mid_pos = cumval - !!as.name(xvar) / 2)) %>%
                 group_by(!!as.name(yvar), !!as.name(fillby))

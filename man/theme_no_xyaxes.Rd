@@ -4,8 +4,14 @@
 \alias{theme_no_xyaxes}
 \title{A theme for ggplot2 heatmap}
 \usage{
-theme_no_xyaxes(font_size = 14, font_family = "", line_size = 0.5,
-  rel_small = 12/14, rel_tiny = 11/14, rel_large = 16/14)
+theme_no_xyaxes(
+  font_size = 14,
+  font_family = "",
+  line_size = 0.5,
+  rel_small = 12/14,
+  rel_tiny = 11/14,
+  rel_large = 16/14
+)
 }
 \arguments{
 \item{font_size}{Overall font size.}

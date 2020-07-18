@@ -22,4 +22,4 @@ Imports:
     qqplotr (>= 0.0.3),
     ggstance (>= 0.3.1),
     ggalt (>= 0.6.1)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2

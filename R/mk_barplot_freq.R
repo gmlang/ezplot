@@ -76,7 +76,7 @@ mk_barplot_freq = function(df) {
                                                   data = df_label, vjust = -0.5,
                                                   size = label_size) +
                                         geom_text(aes(!!as.name(xvar), mid_pos,
-                                                      label = scales::comma(n)),
+                                                      label = scales::comma(n, accuracy = 1)),
                                                   data = df_label,
                                                   size = label_size)
                         } else { # stacked bars of pcts by fillby var
@@ -101,7 +101,7 @@ mk_barplot_freq = function(df) {
                 } else { # show count on y-axis, and this is default
                         p = p + geom_bar(position = "dodge", alpha = 0.8) +
                                 geom_text(aes(!!as.name(xvar), n,
-                                              label = scales::comma(n)),
+                                              label = scales::comma(n, accuracy = 1)),
                                           data = df_label, vjust = -0.5,
                                           size = label_size,
                                           position = position_dodge(width = 0.9)

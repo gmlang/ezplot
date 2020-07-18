@@ -4,8 +4,15 @@
 \alias{rotate_axis_text}
 \title{Rotate axis tick text and adjust their distances to the axis.}
 \usage{
-rotate_axis_text(p, text_angle_x = 0, text_angle_y = 0,
-  hjust_x = NULL, hjust_y = NULL, vjust_x = NULL, vjust_y = NULL)
+rotate_axis_text(
+  p,
+  text_angle_x = 0,
+  text_angle_y = 0,
+  hjust_x = NULL,
+  hjust_y = NULL,
+  vjust_x = NULL,
+  vjust_y = NULL
+)
 }
 \arguments{
 \item{p}{A ggplot2 object.}
