@@ -4,11 +4,13 @@
 \name{bo_bt_ratio_by_year}
 \alias{bo_bt_ratio_by_year}
 \title{Boxoffice/Budget Ratio}
-\format{A data frame with 101 rows and 2 variables:
+\format{
+A data frame with 101 rows and 2 variables:
 \describe{
      \item{year}{Year of release.}
      \item{bo_bt_ratio}{Boxoffice/Budget Ratio}
-}}
+}
+}
 \usage{
 bo_bt_ratio_by_year
 }

@@ -4,12 +4,14 @@
 \name{cancer}
 \alias{cancer}
 \title{Cancer Survival Rates}
-\format{A data frame with 96 rows and 3 variables:
+\format{
+A data frame with 96 rows and 3 variables:
 \describe{
      \item{group}{Different cancer types}
      \item{year}{x years since cancer onset}
      \item{value}{survival rates, proportion of patients survived}
-}}
+}
+}
 \usage{
 cancer
 }

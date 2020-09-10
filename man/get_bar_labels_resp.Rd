@@ -2,27 +2,29 @@
 % Please edit documentation in R/get_bar_labels_resp.R
 \name{get_bar_labels_resp}
 \alias{get_bar_labels_resp}
-\title{Helper function for \code{mk_barplot_resp}. Not for external use.}
+\title{Helper function for \code{mk_barplot_resp} and \code{mk_barploth_resp}.
+Not for external use.}
 \usage{
 get_bar_labels_resp(df, gp, resp, fillby)
 }
 \arguments{
-\item{df}{Data frame of the original data where bar charts are made of.}
+\item{df}{Data frame of the original data where bar charts are made from.}
 
-\item{gp}{String, name of a categorical variable to group the response var.}
+\item{gp}{String. Name of a categorical variable to group the response var.}
 
-\item{resp}{String, name of a continuous variable as the response var.}
+\item{resp}{String. Name of a continuous variable as the response var.}
 
-\item{fillby}{String, name of a second categorical variable used for
-sub-dividing and coloring the bars.}
+\item{fillby}{String. Name of a second categorical variable for sub-dividing
+and coloring the bars.}
 }
 \value{
-A data frame containing bar labels and their positions
+A data frame of bar labels and their positions.
 }
 \description{
 \code{get_bar_labels_resp} takes in the original data frame, and
-returns a data frame of labels and their postions for \code{mk_barplot_resp}.
+returns a data frame of labels and their postions for \code{mk_barplot_resp}
+and \code{mk_barploth_resp}.
 }
 \seealso{
-\code{\link{mk_barplot_resp}}.
+\code{\link{mk_barplot_resp}} and \code{\link{mk_barploth_resp}}.
 }

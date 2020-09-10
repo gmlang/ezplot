@@ -4,7 +4,9 @@
 \name{ads}
 \alias{ads}
 \title{Internet Ads Revenue}
-\format{A data frame with 15 rows and 13 variables:}
+\format{
+A data frame with 15 rows and 13 variables:
+}
 \usage{
 ads
 }

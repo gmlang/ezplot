@@ -4,11 +4,13 @@
 \name{pops}
 \alias{pops}
 \title{A dataset of towns/cities with their populations in the US.}
-\format{A data frame with 19,516 rows and 2 variables.
+\format{
+A data frame with 19,516 rows and 2 variables.
 \describe{
      \item{town}{Name of the town and city.}
      \item{pop}{Population estimate in thousands.}
-}}
+}
+}
 \source{
 http://www.census.gov/popest/data/cities/totals/2012/SUB-EST2012-3.html
 }

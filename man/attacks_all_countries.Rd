@@ -4,7 +4,9 @@
 \name{attacks_all_countries}
 \alias{attacks_all_countries}
 \title{Internet attacks data, aggregated over all countries}
-\format{A data frame with 168 rows and 3 columns:}
+\format{
+A data frame with 168 rows and 3 columns:
+}
 \source{
 \url{https://github.com/hrbrmstr/facetedcountryheatmaps/tree/master/data}
 }

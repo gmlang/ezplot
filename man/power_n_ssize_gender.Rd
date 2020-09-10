@@ -4,7 +4,9 @@
 \name{power_n_ssize_gender}
 \alias{power_n_ssize_gender}
 \title{Fake data for testing mk_facet_lineplot()}
-\format{A data frame with 448 rows and 5 columns:}
+\format{
+A data frame with 448 rows and 5 columns:
+}
 \usage{
 power_n_ssize_gender
 }

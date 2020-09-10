@@ -4,7 +4,8 @@
 \name{films}
 \alias{films}
 \title{Films data downloaded from IMDB}
-\format{A data frame with 5944 rows and 53 variables:
+\format{
+A data frame with 5944 rows and 53 variables:
 \describe{
      \item{title}{Title of the movie.}
      \item{year}{Year of release.}
@@ -17,7 +18,8 @@
      \item{boxoffice}{Total Ticket sales in US dollars.}
      \item{actor, actor, actress, director, and writer}{String variables giving these people's names.}
      \item{action, animation, comedy, drama, documentary, romance, short, and etc}{Binary variables representing if movie was classified as belonging to that genre.}
-}}
+}
+}
 \source{
 \url{http://www.imdb.com/interfaces/}
 }

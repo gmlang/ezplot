@@ -4,13 +4,15 @@
 \name{btbo_by_year}
 \alias{btbo_by_year}
 \title{Aggregated Annual Budget and Boxoffice}
-\format{A data frame with 202 rows and 4 variables:
+\format{
+A data frame with 202 rows and 4 variables:
 \describe{
      \item{year}{Year of release.}
      \item{type}{"Budget" or "Boxoffice".}
      \item{tot}{Total Amount in US Dollars.}
      \item{avg}{Average Amount in US Dollars.}
-}}
+}
+}
 \usage{
 btbo_by_year
 }

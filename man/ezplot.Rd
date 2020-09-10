@@ -5,6 +5,6 @@
 \alias{ezplot}
 \title{ezplot}
 \description{
-This package contains easy-to-use functions for creating the most used
-ggplot2 charts with publishable quality.
+This package contains functions for quickly making high quality common
+statistical charts in ggplot2.
 }

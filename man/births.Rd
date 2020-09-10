@@ -4,7 +4,8 @@
 \name{births}
 \alias{births}
 \title{A dataset of information at birth for 44 babies}
-\format{A data frame with 44 rows and 4 variables, sorted in ascending order
+\format{
+A data frame with 44 rows and 4 variables, sorted in ascending order
 of birth time. (The time window is 24 hours, i.e., 44 babies were born in 24
 hours.)
 \describe{
@@ -12,7 +13,8 @@ hours.)
      \item{weight_g}{Weight (in grams) at birth.}
      \item{minutes}{Time of birth converted to minutes since midnight.}
      \item{diffs}{Difference (in minutes) between consecutive birth times.}
-}}
+}
+}
 \source{
 Dunn, "A Simple Dataset for Demonstrating Common Distributions," Journal of Statistics Education v.7, n.3 (1999)
 }

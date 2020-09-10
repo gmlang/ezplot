@@ -4,7 +4,9 @@
 \name{ab3}
 \alias{ab3}
 \title{Arab Baromteter Wave III Survey}
-\format{A data frame with 12 rows and 6 columns:}
+\format{
+A data frame with 12 rows and 6 columns:
+}
 \usage{
 ab3
 }

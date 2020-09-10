@@ -4,7 +4,9 @@
 \name{nba}
 \alias{nba}
 \title{NBA Player Performance Statistics}
-\format{A data frame with 50 rows and 21 columns:}
+\format{
+A data frame with 50 rows and 21 columns:
+}
 \usage{
 nba
 }
