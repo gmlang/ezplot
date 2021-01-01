@@ -63,56 +63,71 @@ mk_barplot_resp = function(df) {
                                              function(y) sum(y, na.rm = T))
 
                 # get data frame of bar labels and positions
-                df_label = get_bar_labels_resp(df, xvar, yvar, fillby)
+                df_label = get_bar_labels_resp(df, xvar, yvar, fillby, show_pct)
 
 
                 # --- Main Plot --- #
 
-                p = ggplot(df, aes_string(xvar, fill = fillby)) +
-                        geom_bar(aes_string(weight = yvar),
-                                 position = "dodge", alpha = 0.8)
+                p = ggplot(df, aes_string(xvar, weight = yvar, fill = fillby))
 
-                if (show_pct) {
-                        # format continuous axis
-                        p = p + scale_y_continuous(
-                                limits = c(0, 1),
-                                breaks = seq(0, 1, 0.1),
-                                labels = scales::percent
-                                )
+                if (show_pct) { # show percent instead of raw values on y-axis
 
-                        # get bar label text
-                        bar_labels = formattable::percent(df_label[[yvar]],
-                                                          label_decimals)
-                } else {
-                        # format continuous axis
+                        if (fillby == "1") { # single bars
+                                p = p + geom_bar(aes(y = ..prop.., group = 1), alpha = 0.8) +
+                                        geom_text(aes(!!as.name(xvar), pct,
+                                                      label = formattable::percent(pct, label_decimals)),
+                                                  data = df_label, vjust = -0.5,
+                                                  size = label_size) +
+                                        geom_text(aes(!!as.name(xvar), mid_pos,
+                                                      label = ifelse(!!as.name(yvar) <= 1,
+                                                                     round(!!as.name(yvar), 2),
+                                                                     scales::comma(!!as.name(yvar), accuracy = 1))
+                                                                     ),
+                                                  data = df_label,
+                                                  size = label_size)
+                        } else { # stacked bars colored by the fillby var
+                                p = p + geom_bar(position = "fill", alpha = 0.8) +
+                                        geom_text(aes(!!as.name(xvar), pct,
+                                                      label = formattable::percent(pct, label_decimals)),
+                                                  data = df_label,
+                                                  size = label_size,
+                                                  position = position_stack(vjust = 0.5))
+                        }
+
+                        p = p + scale_y_continuous(limits = c(0, 1),
+                                                   breaks = seq(0, 1, 0.1),
+                                                   labels = scales::percent)
+                        ylab = paste('Percent of', yvar)
+
+                } else { # show raw value on y-axis
+
+                        # single bars when fillby is '1' (default) and dodged
+                        # bars when not (when there is a fillby var)
+                        p = p + geom_bar(position = "dodge", alpha = 0.8) +
+                                geom_text(aes(!!as.name(xvar), !!as.name(yvar),
+                                              label = ifelse(!!as.name(yvar) <= 1,
+                                                             round(!!as.name(yvar), 2),
+                                                             scales::comma(!!as.name(yvar), accuracy = 1))
+                                              ),
+                                          data = df_label, vjust = -0.5,
+                                          size = label_size,
+                                          position = position_dodge(width = 0.9)) +
+                                geom_text(aes(!!as.name(xvar), mid_pos,
+                                              label = formattable::percent(pct, label_decimals)),
+                                          data = df_label, size = label_size,
+                                          position = position_dodge(width = 0.9))
+
                         axis_breaks = pretty(c(0, df_label[[yvar]]), 10)
-                        all_bigger_than1 = all(setdiff(abs(axis_breaks), 0) > 1)
-                        if (all_bigger_than1)
-                                con_axis_labs = scales::comma(axis_breaks)
-                        else con_axis_labs = axis_breaks
-                        p = p + scale_y_continuous(
-                                limits = range(axis_breaks),
-                                breaks = axis_breaks,
-                                labels = con_axis_labs)
+                        p = p + scale_y_continuous(limits = range(axis_breaks),
+                                                   breaks = axis_breaks,
+                                                   labels = scales::comma)
+                        ylab = yvar
 
-                        # get bar label text
-                        bar_labels = scales::comma(
-                                df_label[[yvar]],
-                                accuracy = 1/10^label_decimals
-                                )
                 }
-
-                # --- Format bar label --- #
-
-                p = p + geom_text(aes_string(xvar, yvar), data = df_label,
-                                  label = bar_labels,
-                                  vjust = -0.5, size = label_size,
-                                  position = position_dodge2(width = 0.9)
-                                  )
 
                 # --- Customize Theme --- #
 
-                p = p + labs(x = NULL, y = yvar) + theme_cowplot(font_size)
+                p = p + labs(x = NULL, y = ylab) + theme_cowplot(font_size)
 
 
                 # --- Format Legend --- #

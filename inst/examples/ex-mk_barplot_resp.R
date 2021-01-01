@@ -1,33 +1,50 @@
 library(ezplot)
 library(dplyr)
 
+# --- films data --- #
+
 films$mpaa = forcats::fct_explicit_na(films$mpaa) # necessary
 
 g = mk_barplot_resp(films)
 p = g("mpaa", "boxoffice", xorder = "descend", font_size = 10,
       label_decimals = 0)
-add_labs(p, title = "Fuel efficiency generally decreases with engine size",
+add_labs(p,
+         title = "Fuel efficiency generally decreases with engine size",
          subtitle = "Two seaters (sports cars) are an exception ...",
          caption = "Data from fueleconomy.gov")
 
-# use label_size = 0 to remove labels
-g("mpaa", "bo_bt_ratio", fillby = "year_cat", label_size = 0,
-  legend_title = NULL) %>% add_labs(ylab = "boxoffice / budget")
+# set show_pct = T to make a stacked bar chart
+# set label_size = 0 to remove labels
+g("year_cat", "budget", fillby = "mpaa", show_pct = T, label_size = 0,
+  legend_title = NULL)
 
-df = films %>% count(mpaa, made_money) %>% mutate(pct = n / sum(n))
-g = mk_barplot_resp(df)
-g("mpaa", "n", label_decimals = 0)
-g("mpaa", "pct", xorder = "descend")
-g("mpaa", "pct", show_pct = T, label_decimals = 2, font_size = 9) %>%
-    add_labs(ylab = NULL,
-             title = "There're more R rated films than NC-17, PG and PG-13 combined.",
-             subtitle = "Although a substantial portion of the films have mpaa rating info missing.",
-             caption = "data were scrapped from imdb.com in 2010")
-g("mpaa", "pct", fillby = "made_money", show_pct = T, legend_pos = "top")
-g("mpaa", "pct", fillby = "made_money", show_pct = T, legend_pos = "bottom",
-  legend_title = "Is Profitable?")
+# when freq and relative freq are available for a categorical variable,
+# use mk_barplot_resp() to plot them.
+g = mk_barplot_resp(films %>% count(made_money) %>% mutate(pct = n / sum(n)))
+p = g("made_money", "n", label_decimals = 0)
+add_labs(p, xlab = 'Made Money?', ylab = 'Frequency')
+p = g("made_money", "pct", label_decimals = 0, show_pct = T)
+add_labs(p, xlab = 'Made Money?', ylab = 'Relative Frequency')
 
+# --- titanic data --- #
 
-df = films %>% count(made_money)
-g = mk_barplot_resp(df)
-g("made_money", "n", label_decimals = 0)
+d = as.data.frame(Titanic)
+plt = mk_barplot_resp(d)
+plt('Class', 'Freq', fillby = 'Survived') # dodged bar chart
+plt('Class', 'Freq', fillby = 'Survived', show_pct = T) %>% # stacked bar chart
+        add_labs(ylab = 'Relative Frequency')
+
+# once again, when freq and relative freq are directly available,
+# use mk_barplot_resp() to plot them.
+dat = d %>% group_by(Class, Sex) %>%
+        summarise(cnt = sum(Freq), .groups = 'drop_last') %>%
+        mutate(pct = cnt / sum(cnt))
+g = mk_barplot_resp(dat)
+g('Class', 'cnt', fillby = 'Sex') %>% # dodged bar chart
+  add_labs(xlab='Class', ylab='Frequency')
+# the following two way output the identical stacked bar charts
+g('Class', 'cnt', fillby = 'Sex', show_pct = T) %>%
+  add_labs(xlab='Class', ylab='Relative Frequency')
+g('Class', 'pct', fillby = 'Sex', show_pct = T) %>%
+  add_labs(xlab='Class', ylab='Relative Frequency')
+

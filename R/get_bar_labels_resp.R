@@ -12,21 +12,26 @@
 #'               and coloring the bars.
 #' @return A data frame of bar labels and their positions.
 #' @seealso \code{\link{mk_barplot_resp}} and \code{\link{mk_barploth_resp}}.
-get_bar_labels_resp = function(df, gp, resp, fillby) {
+get_bar_labels_resp = function(df, gp, resp, fillby, show_pct) {
         gp_symb = as.name(gp)
         resp_symb = as.name(resp)
         fillby_symb = as.name(fillby)
 
-        if (fillby == gp) {
-                stop("fillby variable can't be the same as grouping var!")
-        } else if (fillby == "1") {
-                df %>% group_by(!!gp_symb) %>%
-                        summarise(!!resp_symb := sum(!!resp_symb, na.rm = T)) %>%
-                        mutate(mid_pos = !!resp_symb / 2)
+        if (fillby == gp)
+                stop("fillby var can't be the same as grouping var!")
+        if (fillby == "1") {
+                df_summ = df %>% group_by(!!gp_symb) %>%
+                        summarise(!!resp_symb := sum(!!resp_symb, na.rm = T),
+                                  .groups = 'drop')
         } else {
-                df %>% group_by(!!fillby_symb, !!gp_symb) %>%
-                        summarise(!!resp_symb := sum(!!resp_symb, na.rm = T)) %>%
-                        mutate(mid_pos = !!resp_symb / 2)
+                df_summ = df %>% group_by(!!gp_symb, !!fillby_symb) %>%
+                        summarise(!!resp_symb := sum(!!resp_symb, na.rm = T),
+                                  .groups = 'drop_last')
         }
+
+        df_summ %>% mutate(
+                pct = !!resp_symb / sum(!!resp_symb),
+                mid_pos = ifelse(rep(show_pct, dplyr::n()),
+                                 pct/2, !!resp_symb / 2))
 }
 

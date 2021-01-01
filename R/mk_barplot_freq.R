@@ -68,11 +68,9 @@ mk_barplot_freq = function(df) {
                 if (show_pct) { # show percent instead of counts on y-axis
 
                         if (fillby == "1") { # single bars show pct of each x catgeory
-                                p = p + geom_bar(aes(y = ..prop.., group = 1),
-                                                 alpha = 0.8) +
+                                p = p + geom_bar(aes(y = ..prop.., group = 1), alpha = 0.8) +
                                         geom_text(aes(!!as.name(xvar), pct,
-                                                      label = formattable::percent(pct, label_decimals)
-                                                      ),
+                                                      label = formattable::percent(pct, label_decimals)),
                                                   data = df_label, vjust = -0.5,
                                                   size = label_size) +
                                         geom_text(aes(!!as.name(xvar), mid_pos,
@@ -80,21 +78,17 @@ mk_barplot_freq = function(df) {
                                                   data = df_label,
                                                   size = label_size)
                         } else { # stacked bars of pcts by fillby var
-                                p = p + geom_bar(position = "fill",
-                                                 alpha = 0.8) +
+                                p = p + geom_bar(position = "fill", alpha = 0.8) +
                                         geom_text(aes(!!as.name(xvar), pct,
-                                                      label = formattable::percent(pct, label_decimals)
-                                                      ),
+                                                      label = formattable::percent(pct, label_decimals)),
                                                   data = df_label,
                                                   size = label_size,
-                                                  position = position_stack(vjust = 0.5)
-                                                  )
+                                                  position = position_stack(vjust = 0.5))
                         }
 
                         p = p + scale_y_continuous(limits = c(0, 1),
                                                    breaks = seq(0, 1, 0.1),
-                                                   labels = scales::percent
-                                                   )
+                                                   labels = scales::percent)
 
                         ylab = "Relative Frequency (%)"
 
@@ -104,21 +98,16 @@ mk_barplot_freq = function(df) {
                                               label = scales::comma(n, accuracy = 1)),
                                           data = df_label, vjust = -0.5,
                                           size = label_size,
-                                          position = position_dodge(width = 0.9)
-                                          ) +
+                                          position = position_dodge(width = 0.9)) +
                                 geom_text(aes(!!as.name(xvar), mid_pos,
-                                              label = formattable::percent(pct, label_decimals)
-                                              ),
+                                              label = formattable::percent(pct, label_decimals)),
                                           data = df_label, size = label_size,
-                                          position = position_dodge(width = 0.9)
-                                          )
+                                          position = position_dodge(width = 0.9))
 
                         axis_breaks = pretty(c(0, df_label$n), 10)
-                        p = p + scale_y_continuous(
-                                limits = range(axis_breaks),
-                                breaks = axis_breaks,
-                                labels = scales::comma
-                                )
+                        p = p + scale_y_continuous(limits = range(axis_breaks),
+                                                   breaks = axis_breaks,
+                                                   labels = scales::comma)
 
                         ylab = "Frequency"
                 }
