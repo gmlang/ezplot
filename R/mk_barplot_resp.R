@@ -48,8 +48,9 @@
 #' @examples inst/examples/ex-mk_barplot_resp.R
 mk_barplot_resp = function(df) {
         function(xvar, yvar, fillby = "1", xorder = "alphanumeric",
-                 show_pct = FALSE, label_decimals = 1, label_size = 3,
-                 legend_title = fillby, legend_pos = "right", font_size = 14) {
+                 is_y_pct = FALSE, show_pct = FALSE, label_decimals = 1,
+                 label_size = 3, legend_title = fillby, legend_pos = "right",
+                 font_size = 14) {
 
                 # --- Prep --- #
 
@@ -63,65 +64,103 @@ mk_barplot_resp = function(df) {
                                              function(y) sum(y, na.rm = T))
 
                 # get data frame of bar labels and positions
-                df_label = get_bar_labels_resp(df, xvar, yvar, fillby, show_pct)
+                df_label = get_bar_labels_resp(df, xvar, yvar, fillby,
+                                               is_y_pct, show_pct)
+                pct_var = 'EZPLOT_pct'
+                mid_var = 'EZPLOT_mid'
 
+                # format bar label text
+                bar_labels_pct = formattable::percent(
+                        df_label[[pct_var]], label_decimals)
+                bar_labels_raw = ifelse(
+                        df_label[[yvar]] <= 1,
+                        round(df_label[[yvar]], 2),
+                        scales::comma(df_label[[yvar]], accuracy = 1))
 
                 # --- Main Plot --- #
 
                 p = ggplot(df, aes_string(xvar, weight = yvar, fill = fillby))
 
-                if (show_pct) { # show percent instead of raw values on y-axis
+                if (is_y_pct) { # if y values are percents
 
-                        if (fillby == "1") { # single bars
-                                p = p + geom_bar(aes(y = ..prop.., group = 1), alpha = 0.8) +
-                                        geom_text(aes(!!as.name(xvar), pct,
-                                                      label = formattable::percent(pct, label_decimals)),
-                                                  data = df_label, vjust = -0.5,
-                                                  size = label_size) +
-                                        geom_text(aes(!!as.name(xvar), mid_pos,
-                                                      label = ifelse(!!as.name(yvar) <= 1,
-                                                                     round(!!as.name(yvar), 2),
-                                                                     scales::comma(!!as.name(yvar), accuracy = 1))
-                                                                     ),
-                                                  data = df_label,
-                                                  size = label_size)
-                        } else { # stacked bars colored by the fillby var
-                                p = p + geom_bar(position = "fill", alpha = 0.8) +
-                                        geom_text(aes(!!as.name(xvar), pct,
-                                                      label = formattable::percent(pct, label_decimals)),
-                                                  data = df_label,
-                                                  size = label_size,
-                                                  position = position_stack(vjust = 0.5))
-                        }
+                        # draw vertical bars, where each bar has height equal
+                        # to sum of pcts over a same x-level
+                        p = p + geom_bar(position = "dodge", alpha = 0.8) +
+                                # label bars with pct at the top
+                                geom_text(aes_string(xvar, yvar,
+                                                     label = bar_labels_pct),
+                                          data = df_label,
+                                          size = label_size,
+                                          vjust = -0.5,
+                                          position = position_dodge2(width=0.9))
 
+                        # format y axis and make ylab
                         p = p + scale_y_continuous(limits = c(0, 1),
                                                    breaks = seq(0, 1, 0.1),
                                                    labels = scales::percent)
-                        ylab = paste('Percent of', yvar)
-
-                } else { # show raw value on y-axis
-
-                        # single bars when fillby is '1' (default) and dodged
-                        # bars when not (when there is a fillby var)
-                        p = p + geom_bar(position = "dodge", alpha = 0.8) +
-                                geom_text(aes(!!as.name(xvar), !!as.name(yvar),
-                                              label = ifelse(!!as.name(yvar) <= 1,
-                                                             round(!!as.name(yvar), 2),
-                                                             scales::comma(!!as.name(yvar), accuracy = 1))
-                                              ),
-                                          data = df_label, vjust = -0.5,
-                                          size = label_size,
-                                          position = position_dodge(width = 0.9)) +
-                                geom_text(aes(!!as.name(xvar), mid_pos,
-                                              label = formattable::percent(pct, label_decimals)),
-                                          data = df_label, size = label_size,
-                                          position = position_dodge(width = 0.9))
-
-                        axis_breaks = pretty(c(0, df_label[[yvar]]), 10)
-                        p = p + scale_y_continuous(limits = range(axis_breaks),
-                                                   breaks = axis_breaks,
-                                                   labels = scales::comma)
                         ylab = yvar
+
+                } else { # otherwise, there are two focuses:
+                        # 1. relative pct of aggregated y-values at each x-level
+                        # 2. sum of y-values at each x-level
+
+                        if (show_pct) { # show relative percents on y-axis
+                                if (fillby == "1") { # single bars
+                                        p = p + geom_bar(aes(y = ..prop.., group = 1),
+                                                         alpha = 0.8) +
+                                                # label pct at the end of each bar
+                                                geom_text(aes_string(xvar, pct_var),
+                                                          data = df_label,
+                                                          label = bar_labels_pct,
+                                                          size = label_size,
+                                                          vjust = -0.5) +
+                                                # label raw at the middle of each bar
+                                                geom_text(aes_string(xvar, mid_var),
+                                                          data = df_label,
+                                                          label = bar_labels_raw,
+                                                          size = label_size)
+                                } else { # stacked bars colored by the fillby var
+                                        p = p + geom_bar(position="fill", alpha=0.8) +
+                                                geom_text(aes_string(xvar, pct_var),
+                                                          data = df_label,
+                                                          label = bar_labels_pct,
+                                                          size = label_size,
+                                                          position = position_stack(
+                                                                  vjust=0.5))
+                                }
+
+                                # format y-axis and make y-axis label
+                                p = p + scale_y_continuous(limits = c(0, 1),
+                                                           breaks = seq(0, 1, 0.1),
+                                                           labels = scales::percent)
+                                ylab = paste('Percent of', yvar)
+
+                        } else { # show aggregated raw values on y-axis
+
+                                # single bars when fillby is '1' (default) and dodged
+                                # bars when not (when there is a fillby var)
+                                p = p + geom_bar(position = "dodge", alpha = 0.8) +
+                                        # show raw at the end of each bar
+                                        geom_text(aes_string(xvar, yvar),
+                                                  data = df_label,
+                                                  label = bar_labels_raw,
+                                                  size = label_size,
+                                                  vjust = -0.5,
+                                                  position = position_dodge(width=0.9)) +
+                                        # show pct in the middle of each bar
+                                        geom_text(aes_string(xvar, mid_var),
+                                                  data = df_label,
+                                                  label = bar_labels_pct,
+                                                  size = label_size,
+                                                  position = position_dodge(width=0.9))
+
+                                # format y-axis and make y-axis label
+                                axis_breaks = pretty(c(0, df_label[[yvar]]), 10)
+                                p = p + scale_y_continuous(limits = range(axis_breaks),
+                                                           breaks = axis_breaks,
+                                                           labels = scales::comma)
+                                ylab = yvar
+                        }
 
                 }
 

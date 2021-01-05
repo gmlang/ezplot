@@ -14,8 +14,8 @@ f("year_cat", fillby = "mpaa")
 f("year_cat", fillby = "mpaa", label_size = 0)
 
 f("mpaa", show_pct = T, xorder = "descend")
-f("mpaa", fillby = "made_money", show_pct = T, xorder = "descend",
-  label_decimals = 2, legend_title = "Is profitable?")
+f("mpaa", fillby = "made_money", show_pct = F, xorder = "descend",
+  label_decimals = 2, label_size = 2, legend_title = "Is profitable?")
 f("year_cat", fillby = "made_money", show_pct = T)
 f("year_cat", fillby = "mpaa", show_pct = T, label_size = 0)
 

@@ -19,14 +19,17 @@ get_bar_labels_freq = function(df, var, fillby, show_pct) {
                 stop("fillby var can't be the same as the var to be counted!")
 
         if (fillby == "1") {
-                df_summ = dplyr::count(df, !!as.name(var))
+                df_summ = dplyr::rename(dplyr::count(df, !!as.name(var)),
+                                        EZPLOT_cnt = n)
         } else {
                 df_summ = dplyr::summarise(
                         dplyr::group_by(df, !!as.name(var), !!as.name(fillby)),
-                        n = dplyr::n())
+                        EZPLOT_cnt = dplyr::n(), .groups = 'drop_last')
         }
 
-        dplyr::mutate(df_summ, pct = n / sum(n),
-                      mid_pos = ifelse(rep(show_pct, dplyr::n()), pct/2, n/2))
+        dplyr::mutate(df_summ,
+                      EZPLOT_pct = EZPLOT_cnt / sum(EZPLOT_cnt),
+                      EZPLOT_mid = ifelse(rep(show_pct, dplyr::n()),
+                                          EZPLOT_pct/2, EZPLOT_cnt/2))
 }
 

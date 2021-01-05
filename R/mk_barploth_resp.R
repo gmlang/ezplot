@@ -47,90 +47,138 @@
 #' @examples inst/examples/ex-mk_barploth_resp.R
 mk_barploth_resp = function(df) {
         function(xvar, yvar, fillby = "1", yorder = "alphanumeric",
-                 show_pct = FALSE, label_decimals = 1, label_size = 3,
-                 legend_title = fillby, legend_pos = "right", font_size = 14) {
+                 is_x_pct = FALSE, show_pct = FALSE, label_decimals = 1,
+                 label_size = 3, legend_title = fillby, legend_pos = "right",
+                 font_size = 14) {
 
                 # --- Prep --- #
 
                 # order y levels:
-                # We're doing things opposite here because we're drawing plot
-                # horizontally. For example, when wanting to order them in
-                # descending order, we implement in ascending order
+                #   We're doing things opposite here because we're drawing plot
+                #   horizontally. For example, when wanting to order them in
+                #   descending order, we implement in ascending order
                 if (yorder == "alphanumeric")
                         df[[yvar]] = factor(df[[yvar]],
-                                            sort(unique(df[[yvar]]),
-                                                 decreasing = T))
+                                            sort(unique(df[[yvar]]), decreasing=T))
                 if (yorder == "descend")
-                        df[[yvar]] = reorder(df[[yvar]], df[[xvar]],
-                                             sum, na.rm = T)
-
+                        df[[yvar]] = reorder(df[[yvar]], df[[xvar]], sum, na.rm=T)
                 if (yorder == "ascend")
-                        df[[yvar]] = reorder(df[[yvar]], -df[[xvar]],
-                                             sum, na.rm = T)
-
+                        df[[yvar]] = reorder(df[[yvar]], -df[[xvar]], sum, na.rm=T)
 
                 # get data frame of bar labels and positions
-                df_label = get_bar_labels_resp(df, gp = yvar, resp = xvar,
-                                               fillby = fillby)
-                # print(df_label)
+                df_label = get_bar_labels_resp(df, yvar, xvar, fillby,
+                                               is_x_pct, show_pct)
+                pct_var = 'EZPLOT_pct'
+                mid_var = 'EZPLOT_mid'
+
+                # format bar label text
+                bar_labels_pct = formattable::percent(
+                        df_label[[pct_var]], label_decimals)
+                bar_labels_raw = ifelse(
+                        df_label[[xvar]] <= 1,
+                        round(df_label[[xvar]], 2),
+                        scales::comma(df_label[[xvar]], accuracy = 1))
 
                 # --- Main Plot --- #
 
-                p = ggplot(df, aes_string(y = yvar, weight = xvar))
+                p = ggplot(df, aes_string(y = yvar, weight = xvar, fill=fillby))
 
-                if (fillby == '1') {
-                        p = p + ggstance::geom_barh(
-                                position="dodgev", alpha=0.9, fill="#435474")
-                } else {
-                        p = p + ggstance::geom_barh(
-                                position="dodgev", alpha=0.9, aes_string(fill=fillby))
-                }
+                if (is_x_pct) { # if x values are percents
 
-                if (show_pct) {
-                        # format continuous axis
+                        # draw horizontal bars, where each bar has height equal
+                        # to sum of pcts over a same y-level
+                        p = p + ggstance::geom_barh(position = "dodgev",
+                                                    alpha = 0.8) +
+                                # label bars with pct in the middle
+                                geom_text(aes_string(mid_var, yvar,
+                                                     label = bar_labels_pct),
+                                          data = df_label,
+                                          size = label_size,
+                                          position = ggstance::position_dodge2v(
+                                                  height = 0.9, reverse = F))
+
+                        # format x axis and make xlab
                         p = p + scale_x_continuous(expand = c(0, 0),
                                                    limits = c(0, 1),
                                                    breaks = seq(0, 1, 0.1),
                                                    labels = scales::percent)
+                        xlab = xvar
 
-                        # get bar label text
-                        bar_labels = formattable::percent(
-                                df_label[[xvar]], label_decimals)
+                } else { # otherwise, there are two focuses:
+                        # 1. relative pct of aggregated x-values at each y-level
+                        # 2. sum of x-values at each y-level
 
-                } else {
-                        # format continuous axis
-                        axis_breaks = pretty(c(0, df_label[[xvar]]), 10)
-                        delta_size = axis_breaks[2] - axis_breaks[1]
-                        all_bigger_than1 = all(setdiff(abs(axis_breaks), 0) > 1)
-                        if (all_bigger_than1)
-                                con_axis_labs = scales::comma(axis_breaks)
-                        else con_axis_labs = axis_breaks
-                        p = p + scale_x_continuous(
-                                expand = c(0, 0),
-                                limits = c(min(axis_breaks),
-                                           max(axis_breaks) + delta_size),
-                                breaks = axis_breaks,
-                                labels = con_axis_labs)
+                        if (show_pct) { # show relative percents on x-axis
 
-                        # get bar label text
-                        bar_labels = scales::comma(
-                                df_label[[xvar]],
-                                accuracy = 1/10^label_decimals)
+                                if (fillby == "1") { # single bars show pct of each x category
+                                        p = p + ggstance::geom_barh(
+                                                aes(x = ..prop.., group = 1),
+                                                alpha = 0.8) +
+                                                geom_text(aes_string(pct_var, yvar),
+                                                          data = df_label,
+                                                          label = bar_labels_pct,
+                                                          size = label_size,
+                                                          hjust = -0.3) +
+                                                geom_text(aes_string(mid_var, yvar),
+                                                          data = df_label,
+                                                          label = bar_labels_raw,
+                                                          size = label_size)
+                                } else { # stacked bars of pcts by fillby var
+                                        p = p + ggstance::geom_barh(position = "fillv",
+                                                                    alpha = 0.8) +
+                                                geom_text(aes_string(pct_var, yvar,
+                                                                     # must put label inside aes
+                                                                     # to ensure correct label order
+                                                                     label = bar_labels_pct),
+                                                          data = df_label,
+                                                          size = label_size,
+                                                          position = ggstance::position_stackv(
+                                                                  hjust = 0.5))
+                                }
+
+                                # format x-axis and make xlab
+                                p = p + scale_x_continuous(expand = c(0, 0),
+                                                           limits = c(0, 1),
+                                                           breaks = seq(0, 1, 0.1),
+                                                           labels = scales::percent)
+                                xlab = paste('Percent of', xvar)
+
+                        } else { # show aggregated raw values on x-axis
+
+                                # single bars when fillby is '1' (default) and dodged
+                                # bars when not (when there is a fillby var)
+                                p = p + ggstance::geom_barh(position = "dodgev",
+                                                            alpha = 0.8) +
+                                        geom_text(aes_string(xvar, yvar),
+                                                  data = df_label,
+                                                  label = bar_labels_raw,
+                                                  size = label_size,
+                                                  hjust = -0.3,
+                                                  position = ggstance::position_dodge2v(
+                                                          height = 0.9, reverse = F)) +
+                                        geom_text(aes_string(mid_var, yvar),
+                                                  data = df_label,
+                                                  label = bar_labels_pct,
+                                                  size = label_size,
+                                                  position = ggstance::position_dodge2v(
+                                                          height = 0.9, reverse = F))
+
+                                # format x-axis and make xlab
+                                axis_breaks = pretty(c(0, df_label[[xvar]]), 10)
+                                delta_size = axis_breaks[2] - axis_breaks[1]
+                                p = p + scale_x_continuous(
+                                        expand = c(0, 0),
+                                        limits = c(min(axis_breaks),
+                                                   max(axis_breaks) + delta_size),
+                                        breaks = axis_breaks,
+                                        labels = scales::comma)
+                                xlab = xvar
+                        }
                 }
-
-                # --- Format bar label --- #
-
-                p = p + geom_text(aes(mid_pos, !!as.name(yvar)),
-                                  data = df_label,
-                                  label = bar_labels,
-                                  size = label_size,
-                                  position = ggstance::position_dodge2v(height=0.9),
-                                  color = 'white')
 
                 # --- Customize Theme --- #
 
-                p = p + labs(x = xvar, y = NULL) + theme_cowplot(font_size)
-
+                p = p + labs(x = xlab, y = NULL) + theme_no_yaxis(font_size)
 
                 # --- Format Legend --- #
 

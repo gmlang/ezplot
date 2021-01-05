@@ -51,14 +51,13 @@ mk_barploth_freq = function(df) {
                 # --- Prep --- #
 
                 # --- order y levels
-                #       We're doing things opposite here (for example,
-                #       when asked to order them in descending order, we implement in
-                #       ascending order) because we're drawing plot horizontally.
+                #       Doing things opposite here (for example, when asked to
+                #       order them in descending order, we implement in ascending
+                #       order) because we're drawing plot horizontally.
                 # ---
                 if (yorder == "alphanumeric")
-                        df[[yvar]] = factor(df[[yvar]],
-                                            sort(unique(df[[yvar]]),
-                                                 decreasing = T))
+                        df[[yvar]] = factor(df[[yvar]], sort(unique(df[[yvar]]),
+                                                             decreasing=T))
                 if (yorder == "descend")
                         # reorder y levels in descending order of their counts
                         df[[yvar]] = reorder(df[[yvar]], df[[yvar]],
@@ -70,6 +69,15 @@ mk_barploth_freq = function(df) {
 
                 # get data frame of bar labels and positions
                 df_label = get_bar_labels_freq(df, yvar, fillby, show_pct)
+                pct_var = 'EZPLOT_pct'
+                cnt_var = 'EZPLOT_cnt'
+                mid_var = 'EZPLOT_mid'
+
+                # format bar label text
+                bar_labels_pct = formattable::percent(
+                        df_label[[pct_var]], label_decimals)
+                bar_labels_cnt = scales::comma(
+                        df_label[[cnt_var]], accuracy = 1)
 
                 # --- Main Plot --- #
 
@@ -77,70 +85,69 @@ mk_barploth_freq = function(df) {
 
                 if (show_pct) { # show percent instead of counts on x-axis
 
-                        if (fillby == "1") { # single bars show pct of each y catgeory
-                                p = p + ggstance::geom_barh(aes(x = ..prop.., group = 1),
-                                                            alpha = 0.8) +
-                                        geom_text(aes(pct, !!as.name(yvar),
-                                                      label = formattable::percent(pct, label_decimals)
-                                                      ),
-                                                  data = df_label, hjust = -0.5,
-                                                  size = label_size) +
-                                        geom_text(aes(mid_pos, !!as.name(yvar),
-                                                      label = scales::comma(n, accuracy = 1)),
+                        if (fillby == "1") {
+                                # single bars show pct of each y catgeory
+                                p = p + ggstance::geom_barh(
+                                                aes(x = ..prop.., group = 1),
+                                                alpha = 0.8) +
+                                        geom_text(aes_string(pct_var, yvar),
                                                   data = df_label,
-                                                  size = label_size
-                                                  )
-                        } else { # stacked bars of pcts by fillby var
+                                                  label = bar_labels_pct,
+                                                  size = label_size,
+                                                  hjust = -0.5) +
+                                        geom_text(aes_string(mid_var, yvar),
+                                                  data = df_label,
+                                                  label = bar_labels_cnt,
+                                                  size = label_size)
+                        } else {
+                                # stacked bars of pcts by fillby var
                                 p = p + ggstance::geom_barh(position = "fillv",
                                                             alpha = 0.8) +
-                                        geom_text(aes(pct, !!as.name(yvar),
-                                                      label = formattable::percent(pct, label_decimals)
-                                                      ),
+                                        geom_text(aes_string(pct_var, yvar,
+                                                             # must put label inside aes
+                                                             # to ensure correct label order
+                                                             label = bar_labels_pct),
                                                   data = df_label,
                                                   size = label_size,
-                                                  position = ggstance::position_stackv(hjust = 0.5)
-                                                  )
+                                                  position = ggstance::position_stackv(
+                                                          hjust = 0.5))
                         }
 
+                        # format x-axis and make xlab
                         p = p + scale_x_continuous(expand = c(0, 0),
                                                    limits = c(0, 1),
                                                    breaks = seq(0, 1, 0.1),
-                                                   labels = scales::percent
-                                                   )
-
+                                                   labels = scales::percent)
                         xlab = "Relative Frequency (%)"
 
                 } else { # show count on x-axis, and this is default
                         p = p + ggstance::geom_barh(position = "dodgev",
                                                     alpha = 0.8) +
-                                geom_text(aes(n, !!as.name(yvar),
-                                              label = scales::comma(n, accuracy = 1)),
-                                          data = df_label, hjust = -0.5,
+                                geom_text(aes_string(cnt_var, yvar),
+                                          data = df_label,
+                                          label = bar_labels_cnt,
+                                          size = label_size,
+                                          hjust = -0.5,
+                                          position = ggstance::position_dodge2v(
+                                                  height = 0.9, reverse = F)) +
+                                geom_text(aes_string(mid_var, yvar),
+                                          data = df_label,
+                                          label = bar_labels_pct,
                                           size = label_size,
                                           position = ggstance::position_dodge2v(
-                                                  height = 0.9)
-                                          ) +
-                                geom_text(aes(mid_pos, !!as.name(yvar),
-                                              label = formattable::percent(pct, label_decimals)
-                                              ),
-                                          data = df_label, size = label_size,
-                                          position = ggstance::position_dodge2v(
-                                                  height = 0.9)
-                                          )
+                                                  height = 0.9, reverse = F))
 
-                        axis_breaks = pretty(c(0, df_label$n), 10)
+                        # format x-axis and make xlab
+                        axis_breaks = pretty(c(0, df_label[[cnt_var]]), 10)
                         delta_size = axis_breaks[2] - axis_breaks[1]
                         p = p + scale_x_continuous(
                                 expand = c(0, 0),
                                 limits = c(min(axis_breaks),
                                            max(axis_breaks) + delta_size),
                                 breaks = axis_breaks,
-                                labels = scales::comma
-                                )
-
+                                labels = scales::comma)
                         xlab = "Frequency"
                 }
-
 
                 # --- Customize Theme --- #
 

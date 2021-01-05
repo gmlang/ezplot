@@ -12,7 +12,7 @@
 #'               and coloring the bars.
 #' @return A data frame of bar labels and their positions.
 #' @seealso \code{\link{mk_barplot_resp}} and \code{\link{mk_barploth_resp}}.
-get_bar_labels_resp = function(df, gp, resp, fillby, show_pct) {
+get_bar_labels_resp = function(df, gp, resp, fillby, is_resp_pct, show_pct) {
         gp_symb = as.name(gp)
         resp_symb = as.name(resp)
         fillby_symb = as.name(fillby)
@@ -30,8 +30,10 @@ get_bar_labels_resp = function(df, gp, resp, fillby, show_pct) {
         }
 
         df_summ %>% mutate(
-                pct = !!resp_symb / sum(!!resp_symb),
-                mid_pos = ifelse(rep(show_pct, dplyr::n()),
-                                 pct/2, !!resp_symb / 2))
+                EZPLOT_pct = ifelse(rep(is_resp_pct, dplyr::n()),
+                                    !!resp_symb,
+                                    !!resp_symb / sum(!!resp_symb)),
+                EZPLOT_mid = ifelse(rep(show_pct, dplyr::n()),
+                                    EZPLOT_pct/2, !!resp_symb / 2))
 }
 
