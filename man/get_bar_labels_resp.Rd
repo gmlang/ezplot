@@ -5,7 +5,7 @@
 \title{Helper function for \code{mk_barplot_resp} and \code{mk_barploth_resp}.
 Not for external use.}
 \usage{
-get_bar_labels_resp(df, gp, resp, fillby, show_pct)
+get_bar_labels_resp(df, gp, resp, fillby, is_resp_pct, show_pct)
 }
 \arguments{
 \item{df}{Data frame of the original data where bar charts are made from.}
