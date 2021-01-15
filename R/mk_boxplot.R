@@ -50,7 +50,7 @@ mk_boxplot = function(df) {
 
                 # draw mean as spade shape
                 p = p + stat_summary(aes_string(group = fillby),
-                                     fun.y = mean, geom = "point", size = 1,
+                                     fun = mean, geom = "point", size = 1,
                                      shape = 5, position = position_dodge(0.75))
 
                 # show number of observations above ymax
