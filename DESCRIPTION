@@ -19,6 +19,8 @@ Imports:
     qqplotr,
     ggstance,
     cowplot,
-    ggalt
+    ggalt,
+    ggpubr,
+    RColorBrewer
 RoxygenNote: 7.1.1
 Encoding: UTF-8

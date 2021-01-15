@@ -156,3 +156,12 @@
 #' }
 #' @source http://www.census.gov/popest/data/cities/totals/2012/SUB-EST2012-3.html
 "pops"
+
+#' @title Fake data for testing mk_forestplot()
+#'
+#' @description
+#' A dataset containing fake point estimates and their confidence intervals of
+#' different groups. See inst/examples/ex-mk_forestplot.R
+#'
+#' @format A data frame with 26 rows and 5 columns:
+"ests_CIs"
