@@ -5,7 +5,6 @@
 #' See \url{https://github.com/wilkelab/cowplot/blob/master/R/themes.R} for
 #' the original cowplot theme.
 #'
-#' @inheritParams ggplot2::theme_gray
 #' @param font_size Overall font size.
 #' @param font_family Font family for plot title, axis titles and labels,
 #'                    legend texts, etc.
