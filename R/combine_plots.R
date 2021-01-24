@@ -31,7 +31,7 @@ combine_plots = function(..., align = 'v', ncol = 2,
         if (labels == 'autonum')
                 labels_txt = paste0(seq_along(list(...)), '.')
 
-        fig = cowplot::plot_grid(p1, p2, p3, p4, ncol=ncol, align=align,
+        fig = cowplot::plot_grid(..., ncol=ncol, align=align,
                                  labels = labels_txt,
                                  label_size = label_size)
 
