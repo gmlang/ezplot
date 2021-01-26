@@ -11,7 +11,8 @@
 #'
 #' @param df A data frame.
 #' @return
-#' \code{function(xvar, yvar, colorby = "1", pt_size = 1, linew = 0.7,
+#' \code{function(xvar, yvar, colorby = "1", xorder = "alphanumeric",
+#'                is_y_pct = FALSE, pt_size = 1, linew = 0.7,
 #'                add_cnt_to_legend = TRUE, legend_title = colorby,
 #'                legend_pos = "right", font_size = 14)}
 #' \itemize{
@@ -19,6 +20,10 @@
 #'      \item yvar. String, name of a continuous variable for y-axis.
 #'      \item colorby. String, name of a categorical variable for grouping and
 #'      coloring the lines. Default = "1", meaning no such variable is supplied.
+#'      \item xorder. String, "alphanumeric", "ascend" or "descend". It specifies
+#'      how categories are ordered on the x-axis. Default is "alphanumeric".
+#'      \item is_y_pct. logical, if TRUE, apply the percent format on y-axis.
+#'      Default is FALSE, which means do not apply any special format to y-axis.
 #'      \item pt_size. Number, size of the points. Default = 1.
 #'      \item linew. Number, width of the line. Default = 0.7.
 #'      \item add_cnt_to_legend. Logical, when TRUE (default), it will show the
@@ -33,11 +38,19 @@
 #' @export
 #' @examples inst/examples/ex-mk_lineplot.R
 mk_lineplot = function(df) {
-        function(xvar, yvar, colorby = "1", pt_size = 1, linew = 0.7,
+        function(xvar, yvar, colorby = "1", xorder = "alphanumeric",
+                 is_y_pct = FALSE, pt_size = 1, linew = 0.7,
                  add_cnt_to_legend = TRUE, legend_title = colorby,
                  legend_pos = "right", font_size = 14) {
 
                 # --- Prep  --- #
+
+                if (xorder == "descend")
+                        # reorder xvar levels in descending order of y
+                        df[[xvar]] = reorder(df[[xvar]], df[[yvar]], function(y) -y)
+                if (xorder == "ascend")
+                        # reorder xvar levels in ascending order of y
+                        df[[xvar]] = reorder(df[[xvar]], df[[yvar]], function(y) y)
 
                 # count total number of non-NA rows and use it as subtitle
                 tot_n = nrow(na.omit(df[c(xvar, yvar)]))
@@ -50,23 +63,35 @@ mk_lineplot = function(df) {
                                   size = linew, alpha = 0.8) +
                         geom_point(size = pt_size, alpha = 0.8)
 
-                # break y-axis into 10 pieces
-                ybreaks = pretty(df[[yvar]], n = 10)
-                p = p + scale_y_continuous(breaks = ybreaks,
-                                           limits = range(ybreaks))
+                # format y-axis
+                if (is_y_pct) { # if y values are percents
+                        # format y axis and make ylab
+                        p = p + scale_y_continuous(limits = c(0, 1),
+                                                   breaks = seq(0, 1, 0.1),
+                                                   labels = scales::percent)
+                        ylab = 'Percentage (%)'
+                } else {
+                        # break y-axis into 10 pieces
+                        ybreaks = pretty(df[[yvar]], n = 10)
+                        p = p + scale_y_continuous(breaks = ybreaks,
+                                                   limits = range(ybreaks))
+                        ylab = yvar
+                }
+
+                # format x-axis
                 if (any(class(df[[xvar]]) %in% c("integer", "numeric"))) {
                         # break x-axis into 10 pieces
                         xbreaks = pretty(df[[xvar]], n = 10)
-                        p = p + scale_x_continuous(
-                                breaks = xbreaks,
-                                limits = range(xbreaks)
-                                )
+                        p = p + scale_x_continuous(breaks = xbreaks,
+                                                   limits = range(xbreaks))
+                        xlab = xvar
+                } else { # xvar is categorical, show its categories directly
+                        xlab = NULL
                 }
-
 
                 # --- Customize Theme --- #
 
-                p = p + labs(x = xvar, y = yvar, subtitle = subtit) +
+                p = p + labs(x = xlab, y = ylab, subtitle = subtit) +
                         theme_cowplot(font_size)
 
 

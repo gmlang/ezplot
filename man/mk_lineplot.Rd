@@ -10,7 +10,8 @@ mk_lineplot(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(xvar, yvar, colorby = "1", pt_size = 1, linew = 0.7,
+\code{function(xvar, yvar, colorby = "1", xorder = "alphanumeric",
+               is_y_pct = FALSE, pt_size = 1, linew = 0.7,
                add_cnt_to_legend = TRUE, legend_title = colorby,
                legend_pos = "right", font_size = 14)}
 \itemize{
@@ -18,6 +19,10 @@ mk_lineplot(df)
      \item yvar. String, name of a continuous variable for y-axis.
      \item colorby. String, name of a categorical variable for grouping and
      coloring the lines. Default = "1", meaning no such variable is supplied.
+     \item xorder. String, "alphanumeric", "ascend" or "descend". It specifies
+     how categories are ordered on the x-axis. Default is "alphanumeric".
+     \item is_y_pct. logical, if TRUE, apply the percent format on y-axis.
+     Default is FALSE, which means do not apply any special format to y-axis.
      \item pt_size. Number, size of the points. Default = 1.
      \item linew. Number, width of the line. Default = 0.7.
      \item add_cnt_to_legend. Logical, when TRUE (default), it will show the

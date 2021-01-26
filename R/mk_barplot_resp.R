@@ -30,8 +30,11 @@
 #'      variable is supplied.
 #'      \item xorder. String, "alphanumeric", "ascend" or "descend". It specifies
 #'      how categories are ordered on the x-axis. Default = "alphanumeric".
-#'      \item show_pct. Logical, if TRUE, format y-axis and bar labels as %;
-#'      otherwise, format them as comma. Default is FALSE.
+#'      \item is_y_pct. Logical, if TRUE, format y-axis as %. Default is FALSE.
+#'      \item show_pct. Logical, if TRUE, calculate the relative frequencies of
+#'      the aggregated y values between each x category, and then display them
+#'      as percentages on y-axis and also format bar labels as %; otherwise,
+#'      format them as comma. Default is FALSE.
 #'      \item label_decimals. Integer, the number of decimal points shown on the
 #'      bar labels. Default = 1.
 #'      \item label_size. Integer, size of bar label text. Default = 3. Hide bar
@@ -139,7 +142,7 @@ mk_barplot_resp = function(df) {
 
                                 # single bars when fillby is '1' (default) and dodged
                                 # bars when not (when there is a fillby var)
-                                p = p + geom_bar(position = "dodge", alpha = 0.8) +
+                                p = p + geom_bar(position="dodge", alpha=0.8) +
                                         # show raw at the end of each bar
                                         geom_text(aes_string(xvar, yvar),
                                                   data = df_label,
