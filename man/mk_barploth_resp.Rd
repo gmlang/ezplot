@@ -12,8 +12,9 @@ mk_barploth_resp(df)
 }
 \value{
 \code{function(xvar, yvar, fillby = "1", yorder = "alphanumeric",
-               show_pct = FALSE, label_decimals = 1, label_size = 3,
-               legend_title = fillby, legend_pos = "right", font_size = 14)}
+               is_x_pct = FALSE, show_pct = FALSE, label_decimals = 1,
+               label_size = 3, legend_title = fillby, legend_pos = "right",
+               font_size = 14)}
 \itemize{
      \item xvar String. Name of a continuous variable for x-axis.
      \item yvar String. Name of a categorical variable for y-axis.
@@ -22,8 +23,13 @@ mk_barploth_resp(df)
      variable is supplied.
      \item yorder String. Possible values: "alphanumeric" (default), "ascend"
      or "descend". It specifies how categories are ordered on the y-axis.
-     \item show_pct Logical. If TRUE, format x-axis and bar labels as % and
-     as comma otherwise. Default is FALSE.
+     \item is_x_pct. Logical, if TRUE, format x-axis as %. Default is FALSE.
+     Set it to TRUE when the input xvar has values between 0 and 1 that can
+     also be viewed as percents.
+     \item show_pct. Logical, if TRUE, calculate the relative frequencies of
+     the aggregated y values between each x category, and then display them
+     as percentages on y-axis and also format bar labels as %; otherwise,
+     format them as comma. Default is FALSE.
      \item label_decimals Integer. The number of decimal places shown on
      the bar labels. Default = 1.
      \item label_size Integer. The size of bar label text. Default = 3. If 0,

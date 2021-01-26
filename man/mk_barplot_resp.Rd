@@ -24,6 +24,8 @@ mk_barplot_resp(df)
      \item xorder. String, "alphanumeric", "ascend" or "descend". It specifies
      how categories are ordered on the x-axis. Default = "alphanumeric".
      \item is_y_pct. Logical, if TRUE, format y-axis as %. Default is FALSE.
+     Set it to TRUE when the input yvar has values between 0 and 1 that can
+     also be viewed as percents.
      \item show_pct. Logical, if TRUE, calculate the relative frequencies of
      the aggregated y values between each x category, and then display them
      as percentages on y-axis and also format bar labels as %; otherwise,
