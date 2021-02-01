@@ -28,10 +28,11 @@ p %>% add_labs(xlab = NULL, ylab = "Mean Boxoffice", subtitle = "haha") %>%
 
 
 # make rank-order plot
-df_wide = data.frame(parts = c('Engine', 'Electrical System', 'Brakes',
-                               'Air Conditioning', 'Transmission', 'Body Integrity'),
-                     indpct = c(0.43, 0.3, 0.12, 0.09, 0.05, 0.01),
-                     cumpct = c(0.43, 0.73, 0.85, 0.94, 0.99, 1.00))
+df_wide = data.frame(
+        parts = c('Engine', 'Electrical System', 'Brakes',
+                  'Air Conditioning', 'Transmission', 'Body Integrity'),
+        indpct = c(0.43, 0.3, 0.12, 0.09, 0.05, 0.01),
+        cumpct = c(0.43, 0.73, 0.85, 0.94, 0.99, 1.00))
 plt = mk_lineplot(df_wide)
 plt('parts', 'cumpct', xorder = 'ascend', is_y_pct = T)
 plt('parts', 'indpct', xorder = 'descend', is_y_pct = T)
@@ -45,4 +46,4 @@ df_long = df_wide %>%
                type = gsub('indpct', 'individual', type),
                type = gsub('cumpct', 'cumulative', type))
 f = mk_lineplot(df_long)
-f('parts', 'pct', colorby = 'type', is_y_pct = T, legend_title = NULL, legend_pos = 'top')
+f('parts', 'pct', colorby='type', is_y_pct=T, legend_title=NULL, legend_pos='top')
