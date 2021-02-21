@@ -33,18 +33,25 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls,
         #       when asked to order them in descending order, we implement in
         #       ascending order) because we're drawing plot horizontally.
         # ---
+        if (is.null(yorder)) {
+                # order the y levels in their order in the data
+                lvls = rev(unique(df[[yvar]]))
+                df[[yvar]] = factor(df[[yvar]], levels = lvls)
+        } else if (yorder == "alphanumeric") {
+                lvls = sort(unique(df[[yvar]]), decreasing=T)
+                df[[yvar]] = factor(df[[yvar]], levels = lvls)
 
-        if (yorder == "alphanumeric")
-                df[[yvar]] = factor(df[[yvar]],
-                                    sort(unique(df[[yvar]]), decreasing = T))
-        if (yorder == "descend")
+        } else if (yorder == "descend") {
                 # reorder y levels in descending order of total abs(x) val
                 df[[yvar]] = reorder(df[[yvar]], abs(df[[xvar]]),
                                      sum, na.rm = T)
-        if (yorder == "ascend")
+        } else if (yorder == "ascend") {
                 # reorder y levels in ascending order of total abs(x) val
                 df[[yvar]] = reorder(df[[yvar]], -abs(df[[xvar]]),
                                      sum, na.rm = T)
+        } else {
+                # do nothing
+        }
 
         # --- split df into 3 subsets: negative, positive and middle based on
         #     fillby_lvls

@@ -4,6 +4,9 @@ library(dplyr)
 films$mpaa = forcats::fct_explicit_na(films$mpaa) # necessary
 
 g = mk_barploth_resp(films)
+unique(films$mpaa)
+g("boxoffice", "mpaa", font_size = 10, label_decimals = 0)
+g("boxoffice", "mpaa", yorder = "alphanumeric", font_size=10, label_decimals=0)
 p = g("boxoffice", "mpaa", yorder = "ascend", font_size = 10, label_decimals = 0)
 add_labs(p, title = "Fuel efficiency generally decreases with engine size",
          subtitle = "Two seaters (sports cars) are an exception ...",

@@ -16,7 +16,7 @@
 #' @param df A data frame.
 #'
 #' @return
-#' \code{function(xvar, yvar, fillby = "1", yorder = "alphanumeric",
+#' \code{function(xvar, yvar, fillby = "1", yorder = NULL,
 #'                is_x_pct = FALSE, show_pct = FALSE, label_decimals = 1,
 #'                label_size = 3, legend_title = fillby, legend_pos = "right",
 #'                font_size = 14)}
@@ -26,8 +26,9 @@
 #'      \item fillby String. Name of a different categorical variable for
 #'      subdividing and coloring the bars. Default = "1", meaning no such
 #'      variable is supplied.
-#'      \item yorder String. Possible values: "alphanumeric" (default), "ascend"
-#'      or "descend". It specifies how categories are ordered on the y-axis.
+#'      \item yorder String. Possible values: NULL (default), "alphanumeric",
+#'      "ascend" or "descend". It specifies how categories are ordered on the
+#'      y-axis. When NULL, the categories are shown in their order in the data.
 #'      \item is_x_pct. Logical, if TRUE, format x-axis as %. Default is FALSE.
 #'      Set it to TRUE when the input xvar has values between 0 and 1 that can
 #'      also be viewed as percents.
@@ -52,7 +53,7 @@
 #' @export
 #' @examples inst/examples/ex-mk_barploth_resp.R
 mk_barploth_resp = function(df) {
-        function(xvar, yvar, fillby = "1", yorder = "alphanumeric",
+        function(xvar, yvar, fillby = "1", yorder = NULL,
                  is_x_pct = FALSE, show_pct = FALSE, label_decimals = 1,
                  label_size = 3, legend_title = fillby, legend_pos = "right",
                  font_size = 14) {
@@ -60,16 +61,24 @@ mk_barploth_resp = function(df) {
                 # --- Prep --- #
 
                 # order y levels:
-                #   We're doing things opposite here because we're drawing plot
-                #   horizontally. For example, when wanting to order them in
-                #   descending order, we implement in ascending order
-                if (yorder == "alphanumeric")
-                        df[[yvar]] = factor(df[[yvar]],
-                                            sort(unique(df[[yvar]]), decreasing=T))
-                if (yorder == "descend")
-                        df[[yvar]] = reorder(df[[yvar]], df[[xvar]], sum, na.rm=T)
-                if (yorder == "ascend")
-                        df[[yvar]] = reorder(df[[yvar]], -df[[xvar]], sum, na.rm=T)
+                #    Doing things opposite here (for example, when asked to
+                #    order them in descending order, we implement in ascending
+                #    order) because we're drawing plot horizontally.
+                if (is.null(yorder)) {
+                        # order the y levels in their order in the data
+                        lvls = rev(unique(df[[yvar]]))
+                        df[[yvar]] = factor(df[[yvar]], levels = lvls)
+                } else if (yorder == "alphanumeric") {
+                        lvls = sort(unique(df[[yvar]]), decreasing=T)
+                        df[[yvar]] = factor(df[[yvar]], levels = lvls)
+                } else if (yorder == "descend") {
+                        df[[yvar]] = reorder(df[[yvar]], df[[xvar]],
+                                             sum, na.rm = T)
+                } else if (yorder == "ascend") {
+                        df[[yvar]] = reorder(df[[yvar]], -df[[xvar]],
+                                             sum, na.rm = T)
+                } else { } # do nothing
+
 
                 # get data frame of bar labels and positions
                 df_label = get_bar_labels_resp(df, yvar, xvar, fillby,

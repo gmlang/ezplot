@@ -12,7 +12,7 @@ mk_barplot_resp(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(xvar, yvar, fillby = "1", xorder = "alphanumeric",
+\code{function(xvar, yvar, fillby = "1", xorder = NULL,
                show_pct = FALSE, label_decimals = 1, label_size = 3,
                legend_title = fillby, legend_pos = "right", font_size = 14)}
 \itemize{
@@ -21,8 +21,9 @@ mk_barplot_resp(df)
      \item fillby. String, name of a different categorical variable for
      subdividing and coloring the bars. Default = "1", meaning no such
      variable is supplied.
-     \item xorder. String, "alphanumeric", "ascend" or "descend". It specifies
-     how categories are ordered on the x-axis. Default = "alphanumeric".
+     \item xorder. String, Possible values: NULL (default), "alphanumeric",
+     "ascend" or "descend". It specifies how categories are ordered on the
+     x-axis. When NULL, the categories are shown in their order in the data.
      \item is_y_pct. Logical, if TRUE, format y-axis as %. Default is FALSE.
      Set it to TRUE when the input yvar has values between 0 and 1 that can
      also be viewed as percents.

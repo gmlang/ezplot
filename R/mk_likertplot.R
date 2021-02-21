@@ -14,7 +14,7 @@
 #'
 #' @return
 #' \code{function(xvar, yvar, fillby, fillby_lvls, rawcnt_var = NULL,
-#'                yorder = "alphanumeric", x_as_pct = FALSE,
+#'                yorder = NULL, x_as_pct = FALSE,
 #'                label_decimals = 1, label_size = 3,
 #'                legend_title = fillby, legend_pos = "right",
 #'                grid_line_size = 0.4, font_size = 14)}
@@ -28,8 +28,9 @@
 #'      \item rawcnt_var. String, name of the variable that contains the raw
 #'      count behind each tier. Default = NULL because not all input dataframe
 #'      has such a variable.
-#'      \item yorder. String, "alphanumeric", "ascend" or "descend". It
-#'      specifies how categories are ordered on the y-axis. Default = "alphanumeric".
+#'      \item yorder String. Possible values: NULL (default), "alphanumeric",
+#'      "ascend" or "descend". It specifies how categories are ordered on the
+#'      y-axis. When NULL, the categories are shown in their order in the data.
 #'      \item x_as_pct. Logical, if TRUE, format x-axis as %; otherwise, format
 #'      it as comma. Default is FALSE.
 #'      \item label_decimals. Integer, the number of decimal points shown on
@@ -50,10 +51,9 @@
 #' @examples inst/examples/ex-mk_likertplot.R
 mk_likertplot = function(df) {
         function(xvar, yvar, fillby, fillby_lvls, rawcnt_var = NULL,
-                 yorder = "alphanumeric", x_as_pct = FALSE,
-                 show_rawcnt = FALSE, label_decimals = 1, label_size = 3,
-                 legend_title = fillby, legend_pos = "right",
-                 grid_line_size = 0, font_size = 14) {
+                 yorder = NULL, x_as_pct = FALSE, show_rawcnt = FALSE,
+                 label_decimals = 1, label_size = 3, legend_title = fillby,
+                 legend_pos = "right", grid_line_size = 0, font_size = 14) {
 
                 # --- Prep --- #
 

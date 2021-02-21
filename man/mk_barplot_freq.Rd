@@ -12,7 +12,7 @@ mk_barplot_freq(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(xvar, fillby = "1", xorder = "alphanumeric", show_pct = FALSE,
+\code{function(xvar, fillby = "1", xorder = NULL, show_pct = FALSE,
                label_decimals = 1, label_size = 3, legend_title = fillby,
                legend_pos = "right", font_size = 14)}
 \itemize{
@@ -20,8 +20,9 @@ mk_barplot_freq(df)
      \item fillby. String, name of a different categorical variable for
      subdividing and coloring the bars. Default is "1", meaning no such
      variable is supplied.
-     \item xorder. String, "alphanumeric", "ascend" or "descend". It specifies
-     how categories are ordered on the x-axis. Default is "alphanumeric".
+     \item xorder. String, Possible values: NULL (default), "alphanumeric",
+     "ascend" or "descend". It specifies how categories are ordered on the
+     x-axis. When NULL, the categories are shown in their order in the data.
      \item show_pct. logical, if TRUE, show percent on y-axis; otherwise,
      show count. Default is FALSE.
      \item label_decimals. Integer, the number of decimal points shown on the

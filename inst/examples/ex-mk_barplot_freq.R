@@ -3,8 +3,12 @@ library(ezplot)
 films$mpaa = forcats::fct_explicit_na(films$mpaa) # necessary
 
 f = mk_barplot_freq(films)
+unique(films$mpaa)
 f("mpaa")
+f("mpaa", xorder = "alphanumeric")
 f("mpaa", xorder = "descend")
+f("mpaa", xorder = "ascend")
+
 f("year_cat", fillby = "made_money", font_size = 10)
 f("mpaa", fillby = "made_money", label_decimals = 0,
   legend_title = "Is profitable?", legend_pos = "top")

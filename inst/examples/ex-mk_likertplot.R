@@ -5,7 +5,14 @@ library(ezplot)
 df = ab3 %>% gather(opinion, pct, -Country)
 lvls = unique(df$opinion)
 plt = mk_likertplot(df)
-plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls)
+
+# the following two plots are identical because it happens Country is already
+# in alphanumerical order in the data
+plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls, yorder = NULL)
+plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls, yorder = 'alphanumeric')
+
+plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls, yorder = 'ascend')
+plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls, yorder = 'descend')
 plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls,
     label_decimals = 2, grid_line_size = 0.4) # add vertical grid lines
 plt("pct", "Country", fillby = "opinion", fillby_lvls = lvls, label_size = 0) # hide bar labels
