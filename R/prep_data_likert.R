@@ -124,11 +124,11 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls,
         xneg = dplyr::pull(
                 dplyr::summarise(
                         dplyr::group_by(df_neg, !!as.name(yvar)),
-                        x = sum(!!as.name(xvar))), x)
+                        x = sum(!!as.name(xvar)), .groups='drop'), x)
         xpos = dplyr::pull(
                 dplyr::summarise(
                         dplyr::group_by(df_pos, !!as.name(yvar)),
-                        x = sum(!!as.name(xvar))), x)
+                        x = sum(!!as.name(xvar)), .groups='drop'), x)
         con_axis_breaks = pretty(c(xneg, xpos), n = 10)
         if (use_pos_label_for_neg_axis) {
                 con_axis_labs = abs(con_axis_breaks)
@@ -164,13 +164,13 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls,
         if (is.null(rawcnt_var)) {
                 df_neg_pos = df_neg_pos %>%
                         summarise(!!xvar := sum(abs(!!as.name(xvar))),
-                                  mid_pos = sum(mid_pos))
+                                  mid_pos = sum(mid_pos), .groups='drop')
         } else {
                 df_neg_pos = df_neg_pos %>%
                         summarise(!!xvar := sum(abs(!!as.name(xvar))),
                                   mid_pos = sum(mid_pos),
-                                  !!rawcnt_var := sum(!!as.name(rawcnt_var))
-                                  )
+                                  !!rawcnt_var := sum(!!as.name(rawcnt_var)),
+                                  .groups='drop')
         }
 
         # return
