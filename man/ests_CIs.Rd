@@ -6,6 +6,13 @@
 \title{Fake data for testing mk_forestplot()}
 \format{
 A data frame with 26 rows and 5 columns:
+\describe{
+     \item{model}{Name of the model tried.}
+     \item{group}{Group.}
+     \item{est}{Coefficient estimate.}
+     \item{lwr}{Lower bound of the 95\% confidence interval.}
+     \item{upr}{Upper bound of the 95\% percent confidence interval.}
+}
 }
 \usage{
 ests_CIs

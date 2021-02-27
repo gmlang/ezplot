@@ -53,9 +53,24 @@
 #'
 #' @description
 #' A dataset containing internet ads revenue from 2000 to 2014.
-#' Source: iab.net
 #'
 #' @format A data frame with 15 rows and 13 variables:
+#' \describe{
+#'      \item{year}{Year.}
+#'      \item{search}{Ads revenue from Search.}
+#'      \item{mobile}{Ads revenue from Mobile.}
+#'      \item{banner}{Ads revenue from Banner.}
+#'      \item{digital_video}{Ads revenue from Digital Video.}
+#'      \item{classifieds}{Ads revenue from Classifieds.}
+#'      \item{lead_generation}{Ads revenue from Lead Generation.}
+#'      \item{rich_media}{Ads revenue from Rich Media.}
+#'      \item{sponsorship}{Ads revenue from Sponsorship.}
+#'      \item{email}{Ads revenue from Email.}
+#'      \item{referals}{Ads revenue from Referals.}
+#'      \item{slotting_fees}{Ads revenue from Slotting Fees.}
+#'      \item{other}{Ads revenue from Other internet channels.}
+#' }
+#' @source \url{https://www.iab.com/}
 "ads"
 
 #' @title Cancer Survival Rates
@@ -78,16 +93,44 @@
 #' obtained from flowingdata.com.
 #'
 #' @format A data frame with 50 rows and 21 columns:
+#' \describe{
+#'      \item{Name}{Name of the player.}
+#'      \item{G}{}
+#'      \item{MIN}{}
+#'      \item{PTS}{}
+#'      \item{FGM}{}
+#'      \item{FGA}{}
+#'      \item{FGP}{}
+#'      \item{FTM}{}
+#'      \item{FTA}{}
+#'      \item{FTP}{}
+#'      \item{X3PM}{}
+#'      \item{X3PA}{}
+#'      \item{X3PP}{}
+#'      \item{ORB}{}
+#'      \item{DRB}{}
+#'      \item{TRB}{}
+#'      \item{AST}{}
+#'      \item{STL}{}
+#'      \item{BLK}{}
+#'      \item{TO}{}
+#'      \item{PF}{}
+#' }
+#' @source \url{https://flowingdata.com/}
 "nba"
 
 #' @title Internet attacks data, aggregated over all countries
 #'
 #' @description
 #' A dataset containing logs of internet attacks of all countries for each hour
-#' of a day during a fixed period. It's derived from this raw data source:
-#' https://github.com/hrbrmstr/facetedcountryheatmaps/tree/master/data
+#' of a day during a fixed period.
 #'
 #' @format A data frame with 168 rows and 3 columns:
+#' \describe{
+#'      \item{wkday}{Week day: Monday, Tuesday, ..., Saturday, Sunday.}
+#'      \item{hour}{00 - 24 hour of a day.}
+#'      \item{n}{Number of attacks.}
+#' }
 #' @source \url{https://github.com/hrbrmstr/facetedcountryheatmaps/tree/master/data}
 "attacks_all_countries"
 
@@ -95,10 +138,16 @@
 #'
 #' @description
 #' A dataset containing logs of internet attacks by country for each hour
-#' of a day during a fixed period. It's derived from this raw data source:
-#' https://github.com/hrbrmstr/facetedcountryheatmaps/tree/master/data
+#' of a day during a fixed period.
 #'
 #' @format A data frame with 1680 rows and 5 columns:
+#' \describe{
+#'      \item{country}{Country name.}
+#'      \item{wkday}{Week day: Monday, Tuesday, ..., Saturday, Sunday.}
+#'      \item{hour}{00 - 24 hour of a day.}
+#'      \item{country_code}{2-letter country code.}
+#'      \item{n}{Number of attacks.}
+#' }
 #' @source \url{https://github.com/hrbrmstr/facetedcountryheatmaps/tree/master/data}
 "attacks_by_country"
 
@@ -110,18 +159,32 @@
 #' "What do you think will be the economic situation in your country during the
 #' next few years (3-5 years) compared to the current situation?"
 #'
-#' Dataset is obtained from http://rnotr.com/likert/ggplot/barometer/likert-plots/.
-#'
 #' @format A data frame with 12 rows and 6 columns:
+#' \describe{
+#'      \item{Country}{Country name.}
+#'      \item{Much worse}{Proportion of respondents said 'Much worse'.}
+#'      \item{Somewhat worse}{Proportion of respondents said 'Somewhat worse'.}
+#'      \item{Almost the same}{Proportion of respondents said 'Almost the same'.}
+#'      \item{Somewhat better}{Proportion of respondents said 'Somewhat better'.}
+#'      \item{Much better}{Proportion of respondents said 'Much better'.}
+#' }
+#' @source \url{http://rnotr.com/likert/ggplot/barometer/likert-plots/}
 "ab3"
 
 #' @title Fake data for testing mk_facet_lineplot()
 #'
 #' @description
 #' A dataset containing fake powers and sample sizes when testing main effect
-#' between male and female. See inst/examples/ex-mk_facet_lineplot.R
+#' between male and female mice.
 #'
 #' @format A data frame with 448 rows and 5 columns:
+#' \describe{
+#'      \item{ssize}{Sample size.}
+#'      \item{csize}{Number of cells per animal.}
+#'      \item{delta}{Difference in outcome between male and female mice.}
+#'      \item{rho}{Correlation coefficient within animal.}
+#'      \item{Power}{Statistical power.}
+#' }
 "power_n_ssize_gender"
 
 #' @title A dataset of information at birth for 44 babies
@@ -164,4 +227,25 @@
 #' different groups. See inst/examples/ex-mk_forestplot.R
 #'
 #' @format A data frame with 26 rows and 5 columns:
+#' \describe{
+#'      \item{model}{Name of the model tried.}
+#'      \item{group}{Group.}
+#'      \item{est}{Coefficient estimate.}
+#'      \item{lwr}{Lower bound of the 95\% confidence interval.}
+#'      \item{upr}{Upper bound of the 95\% percent confidence interval.}
+#' }
 "ests_CIs"
+
+#' @title U.S. Presidents Days in Office
+#'
+#' @description
+#' A dataset containing the number of days in office for all U.S. presidents
+#' until 2020.
+#'
+#' @format A data frame with 44 rows and 2 columns:
+#' \describe{
+#'      \item{president}{Name of the president.}
+#'      \item{days}{Number of days in office.}
+#' }
+#' @source \url{https://en.wikipedia.org/wiki/List_of_presidents_of_the_United_States_by_time_in_office}
+"days_in_office"

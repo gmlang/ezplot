@@ -6,12 +6,29 @@
 \title{Internet Ads Revenue}
 \format{
 A data frame with 15 rows and 13 variables:
+\describe{
+     \item{year}{Year.}
+     \item{search}{Ads revenue from Search.}
+     \item{mobile}{Ads revenue from Mobile.}
+     \item{banner}{Ads revenue from Banner.}
+     \item{digital_video}{Ads revenue from Digital Video.}
+     \item{classifieds}{Ads revenue from Classifieds.}
+     \item{lead_generation}{Ads revenue from Lead Generation.}
+     \item{rich_media}{Ads revenue from Rich Media.}
+     \item{sponsorship}{Ads revenue from Sponsorship.}
+     \item{email}{Ads revenue from Email.}
+     \item{referals}{Ads revenue from Referals.}
+     \item{slotting_fees}{Ads revenue from Slotting Fees.}
+     \item{other}{Ads revenue from Other internet channels.}
+}
+}
+\source{
+\url{https://www.iab.com/}
 }
 \usage{
 ads
 }
 \description{
 A dataset containing internet ads revenue from 2000 to 2014.
-Source: iab.net
 }
 \keyword{datasets}

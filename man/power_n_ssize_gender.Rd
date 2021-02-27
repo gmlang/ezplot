@@ -6,12 +6,19 @@
 \title{Fake data for testing mk_facet_lineplot()}
 \format{
 A data frame with 448 rows and 5 columns:
+\describe{
+     \item{ssize}{Sample size.}
+     \item{csize}{Number of cells per animal.}
+     \item{delta}{Difference in outcome between male and female mice.}
+     \item{rho}{Correlation coefficient within animal.}
+     \item{Power}{Statistical power.}
+}
 }
 \usage{
 power_n_ssize_gender
 }
 \description{
 A dataset containing fake powers and sample sizes when testing main effect
-between male and female. See inst/examples/ex-mk_facet_lineplot.R
+between male and female mice.
 }
 \keyword{datasets}

@@ -6,6 +6,11 @@
 \title{Internet attacks data, aggregated over all countries}
 \format{
 A data frame with 168 rows and 3 columns:
+\describe{
+     \item{wkday}{Week day: Monday, Tuesday, ..., Saturday, Sunday.}
+     \item{hour}{00 - 24 hour of a day.}
+     \item{n}{Number of attacks.}
+}
 }
 \source{
 \url{https://github.com/hrbrmstr/facetedcountryheatmaps/tree/master/data}
@@ -15,7 +20,6 @@ attacks_all_countries
 }
 \description{
 A dataset containing logs of internet attacks of all countries for each hour
-of a day during a fixed period. It's derived from this raw data source:
-https://github.com/hrbrmstr/facetedcountryheatmaps/tree/master/data
+of a day during a fixed period.
 }
 \keyword{datasets}

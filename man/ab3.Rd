@@ -6,6 +6,17 @@
 \title{Arab Baromteter Wave III Survey}
 \format{
 A data frame with 12 rows and 6 columns:
+\describe{
+     \item{Country}{Country name.}
+     \item{Much worse}{Proportion of respondents said 'Much worse'.}
+     \item{Somewhat worse}{Proportion of respondents said 'Somewhat worse'.}
+     \item{Almost the same}{Proportion of respondents said 'Almost the same'.}
+     \item{Somewhat better}{Proportion of respondents said 'Somewhat better'.}
+     \item{Much better}{Proportion of respondents said 'Much better'.}
+}
+}
+\source{
+\url{http://rnotr.com/likert/ggplot/barometer/likert-plots/}
 }
 \usage{
 ab3
@@ -15,7 +26,5 @@ A dataset containing estimates for twelve countries on a Likert-type rating
 of confidence in the future economy. Respondents were asked,
 "What do you think will be the economic situation in your country during the
 next few years (3-5 years) compared to the current situation?"
-
-Dataset is obtained from http://rnotr.com/likert/ggplot/barometer/likert-plots/.
 }
 \keyword{datasets}

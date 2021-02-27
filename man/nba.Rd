@@ -6,6 +6,32 @@
 \title{NBA Player Performance Statistics}
 \format{
 A data frame with 50 rows and 21 columns:
+\describe{
+     \item{Name}{Name of the player.}
+     \item{G}{}
+     \item{MIN}{}
+     \item{PTS}{}
+     \item{FGM}{}
+     \item{FGA}{}
+     \item{FGP}{}
+     \item{FTM}{}
+     \item{FTA}{}
+     \item{FTP}{}
+     \item{X3PM}{}
+     \item{X3PA}{}
+     \item{X3PP}{}
+     \item{ORB}{}
+     \item{DRB}{}
+     \item{TRB}{}
+     \item{AST}{}
+     \item{STL}{}
+     \item{BLK}{}
+     \item{TO}{}
+     \item{PF}{}
+}
+}
+\source{
+\url{https://flowingdata.com/}
 }
 \usage{
 nba
