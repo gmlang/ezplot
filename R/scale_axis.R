@@ -34,6 +34,14 @@
 #' @export
 #' @examples inst/examples/ex-scale_axis.R
 scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
+        # Starting ggplot2 v3.1.1, setting `limit` to the range of the axis breaks
+        # inside scale_x_continuous() / scale_y_continuous() will throw
+        # this warning:
+        #       Removed 2 rows containing missing values (geom_bar)
+        # although no data are actually removed. This is a bug as documented
+        # here: https://github.com/tidyverse/ggplot2/issues/2887
+        # To fix, I'm using `coord_cartesian(ylim=)` or `coord_cartesian(xlim=)`
+        # instead.
 
         # extract data along x or y axis
         d = layer_data(p)
@@ -65,32 +73,28 @@ scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
 
         if (axis == "y") {
                 switch(scale,
-                       default = p + scale_y_continuous(
-                               limits = range(axis_breaks),
-                               breaks = axis_breaks),
-                       comma = p + scale_y_continuous(
-                               limits = range(axis_breaks),
-                               breaks = axis_breaks,
-                               labels = scales::comma),
-                       dollar = p + scale_y_continuous(
-                               limits = range(axis_breaks),
-                               breaks = axis_breaks,
-                               labels = scales::dollar),
-                       pct = p + scale_y_continuous(
-                               limits = range(axis_breaks),
-                               breaks = axis_breaks,
-                               labels = to_pct),
+                       default = p + coord_cartesian(ylim = range(axis_breaks))+
+                               scale_y_continuous(breaks = axis_breaks),
+                       comma = p + coord_cartesian(ylim = range(axis_breaks)) +
+                               scale_y_continuous(breaks = axis_breaks,
+                                                  labels = scales::comma),
+                       dollar = p + coord_cartesian(ylim = range(axis_breaks)) +
+                               scale_y_continuous(breaks = axis_breaks,
+                                                  labels = scales::dollar),
+                       pct = p + coord_cartesian(ylim = range(axis_breaks)) +
+                               scale_y_continuous(breaks = axis_breaks,
+                                                  labels = to_pct),
                        log = p + scale_y_continuous(
                                trans = scales::log_trans(),
                                breaks = scales::trans_breaks(
-                                       'log', function(x) exp(x), n = nticks),
+                                       'log', function(x) exp(x), n=nticks),
                                labels = scales::trans_format(
                                        'log', scales::math_format(e^.x))
                                ),
                        log1p = p + scale_y_continuous(
                                trans = scales::log1p_trans(),
                                breaks = scales::trans_breaks(
-                                       'log1p', function(x) exp(x+1), n = nticks),
+                                       'log1p', function(x) exp(x+1), n=nticks),
                                labels = scales::trans_format(
                                        'log1p', scales::math_format(
                                                e^.x, function(x) round(x, 2)))
@@ -127,21 +131,17 @@ scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
         } else {
 
                 switch(scale,
-                       default = p + scale_x_continuous(
-                               limits = range(axis_breaks),
-                               breaks = axis_breaks),
-                       comma = p + scale_x_continuous(
-                               limits = range(axis_breaks),
-                               breaks = axis_breaks,
-                               labels = scales::comma),
-                       dollar = p + scale_x_continuous(
-                               limits = range(axis_breaks),
-                               breaks = axis_breaks,
-                               labels = scales::dollar),
-                       pct = p + scale_x_continuous(
-                               limits = range(axis_breaks),
-                               breaks = axis_breaks,
-                               labels = to_pct),
+                       default = p + coord_cartesian(xlim = range(axis_breaks))+
+                               scale_x_continuous(breaks = axis_breaks),
+                       comma = p + coord_cartesian(xlim = range(axis_breaks)) +
+                               scale_x_continuous(breaks = axis_breaks,
+                                                  labels = scales::comma),
+                       dollar = p + coord_cartesian(xlim = range(axis_breaks)) +
+                               scale_x_continuous(breaks = axis_breaks,
+                                                  labels = scales::dollar),
+                       pct = p + coord_cartesian(xlim = range(axis_breaks)) +
+                               scale_x_continuous(breaks = axis_breaks,
+                                                  labels = to_pct),
                        log = p + scale_x_continuous(
                                trans = scales::log_trans(),
                                breaks = scales::trans_breaks(
