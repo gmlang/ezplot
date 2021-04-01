@@ -5,7 +5,7 @@ films$mpaa = forcats::fct_explicit_na(films$mpaa) # necessary
 
 f = mk_barplot_freq(films)
 unique(films$mpaa)
-f("mpaa") %>% scale_axis(scale='dollar')
+f("mpaa")
 f("mpaa", xorder = "alphanumeric")
 f("mpaa", xorder = "descend")
 f("mpaa", xorder = "ascend")
