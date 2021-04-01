@@ -52,8 +52,10 @@ mk_barplot_freq = function(df) {
 
                 if (is.null(xorder)) {
                         # order the x levels in their order in the data
-                        lvls = unique(df[[xvar]])
-                        df[[xvar]] = factor(df[[xvar]], levels = lvls)
+                        if (is.character(df[[xvar]])) {
+                                lvls = unique(df[[xvar]])
+                                df[[xvar]] = factor(df[[xvar]], levels = lvls)
+                        }
                 } else if (xorder == "alphanumeric") {
                         lvls = sort(unique(df[[xvar]]))
                         df[[xvar]] = factor(df[[xvar]], levels = lvls)

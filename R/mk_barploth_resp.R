@@ -66,8 +66,14 @@ mk_barploth_resp = function(df) {
                 #    order) because we're drawing plot horizontally.
                 if (is.null(yorder)) {
                         # order the y levels in their order in the data
-                        lvls = rev(unique(df[[yvar]]))
-                        df[[yvar]] = factor(df[[yvar]], levels = lvls)
+                        if (is.character(df[[yvar]])) {
+                                lvls = rev(unique(df[[yvar]]))
+                                df[[yvar]] = factor(df[[yvar]], levels = lvls)
+                        }
+                        if (is.factor(df[[yvar]])) {
+                                lvls = rev(levels(df[[yvar]]))
+                                df[[yvar]] = factor(df[[yvar]], levels = lvls)
+                        }
                 } else if (yorder == "alphanumeric") {
                         lvls = sort(unique(df[[yvar]]), decreasing=T)
                         df[[yvar]] = factor(df[[yvar]], levels = lvls)

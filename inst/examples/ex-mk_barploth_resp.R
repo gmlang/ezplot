@@ -94,3 +94,5 @@ df = read.csv(text="category,pct
 df$category = reorder(df$category, df$pct)
 plt = mk_barploth_resp(df)
 plt("pct", "category", is_x_pct = T)
+
+

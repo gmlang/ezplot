@@ -4,7 +4,7 @@ library(dplyr)
 # --- histograms --- #
 
 f = mk_histdens(iris)
-f("Sepal.Length") # draws histogram by default
+f("Sepal.Length")
 f("Sepal.Length", bins = 100, font_size = 12, legend_pos = "top") %>%
         add_labs(xlab = "Sepal Length")
 f("Sepal.Length", bins = 50, add_vline_mean = F)

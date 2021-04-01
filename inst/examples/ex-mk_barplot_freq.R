@@ -1,4 +1,5 @@
 library(ezplot)
+library(dplyr)
 
 films$mpaa = forcats::fct_explicit_na(films$mpaa) # necessary
 
