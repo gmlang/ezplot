@@ -53,13 +53,15 @@ scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
                         d[[paste0(axis, 'max_final')]])
         }
 
-        if (scale == 'pct') {
-                min_val = 0
-                max_val = 1
-        } else {
-                min_val = min(vec[is.finite(vec)], na.rm = T)
-                max_val = max(vec[is.finite(vec)], na.rm = T)
-        }
+        # if (scale == 'pct') {
+        #         min_val = 0
+        #         max_val = 1
+        # } else {
+        #         min_val = min(vec[is.finite(vec)], na.rm = T)
+        #         max_val = max(vec[is.finite(vec)], na.rm = T)
+        # }
+        min_val = min(vec[is.finite(vec)], na.rm = T)
+        max_val = max(vec[is.finite(vec)], na.rm = T)
         axis_breaks = pretty(c(min_val, max_val), nticks)
 
         # get function that converts numeric to percent format
