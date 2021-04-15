@@ -12,7 +12,7 @@ scale_axis(p, axis = "y", scale = "default", nticks = 10, digits)
 \item{axis}{A string of value "x" or "y". Default = "y".}
 
 \item{scale}{A string of value "default", "comma", "dollar", "pct", "log",
-"log1p", "log10", "log2", "sqrt", or "exp". It specifies which scale to use.}
+"log1p", "log10", "log2", "sqrt", "exp", or 'date'.}
 
 \item{nticks}{Number of ticks on axis. Default = 10. The actual number of
 ticks shown will be 1 or 2 less or more that the number user supplied depends
@@ -37,6 +37,7 @@ or y-axis one of the following scales:
     \item log2  . Use log2 transformation.
     \item sqrt  . Use squared root transformation.
     \item exp   . Use exponential transformation.
+    \item date  . Use date format.
 }
 If a ggplot object has too few breaks on an axis (to see the max value), and
 if you don't need to apply any scales to the axis (due to the values are

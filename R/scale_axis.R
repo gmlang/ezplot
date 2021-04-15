@@ -13,6 +13,7 @@
 #'     \item log2  . Use log2 transformation.
 #'     \item sqrt  . Use squared root transformation.
 #'     \item exp   . Use exponential transformation.
+#'     \item date  . Use date format.
 #' }
 #' If a ggplot object has too few breaks on an axis (to see the max value), and
 #' if you don't need to apply any scales to the axis (due to the values are
@@ -23,7 +24,7 @@
 #' @param p A ggplot2 object.
 #' @param axis A string of value "x" or "y". Default = "y".
 #' @param scale A string of value "default", "comma", "dollar", "pct", "log",
-#' "log1p", "log10", "log2", "sqrt", or "exp". It specifies which scale to use.
+#' "log1p", "log10", "log2", "sqrt", "exp", or 'date'.
 #' @param nticks Number of ticks on axis. Default = 10. The actual number of
 #' ticks shown will be 1 or 2 less or more that the number user supplied depends
 #' on the actual limit of the data. This is caused by rounding in computation.
@@ -53,16 +54,11 @@ scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
                         d[[paste0(axis, 'max_final')]])
         }
 
-        # if (scale == 'pct') {
-        #         min_val = 0
-        #         max_val = 1
-        # } else {
-        #         min_val = min(vec[is.finite(vec)], na.rm = T)
-        #         max_val = max(vec[is.finite(vec)], na.rm = T)
-        # }
-        min_val = min(vec[is.finite(vec)], na.rm = T)
-        max_val = max(vec[is.finite(vec)], na.rm = T)
-        axis_breaks = pretty(c(min_val, max_val), nticks)
+        if (scale != 'date') {
+                min_val = min(vec[is.finite(vec)], na.rm = T)
+                max_val = max(vec[is.finite(vec)], na.rm = T)
+                axis_breaks = pretty(c(min_val, max_val), nticks)
+        }
 
         # get function that converts numeric to percent format
         if (missing(digits)) {
@@ -127,7 +123,9 @@ scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
                                        'exp', function(x) log(x), n = nticks),
                                labels = scales::trans_format(
                                        'exp', scales::math_format(ln(.x)))
-                               )
+                               ),
+                       date = p + scale_y_date(
+                               breaks = scales::pretty_breaks(nticks))
                 )
 
         } else {
@@ -185,7 +183,9 @@ scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
                                        'exp', function(x) log(x), n = nticks),
                                labels = scales::trans_format(
                                        'exp', scales::math_format(ln(.x)))
-                               )
+                               ),
+                       date = p + scale_x_date(
+                               breaks = scales::pretty_breaks(nticks))
                 )
         }
 
