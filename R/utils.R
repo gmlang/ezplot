@@ -26,16 +26,6 @@ moe_lm_param = function(se, n, k = 1, conf_level = .95) {
         qt(1 - sig_level/2, dof) * se
 }
 
-cb_gray = "#999999"
-color_palette = c("#E64B3599", "#4DBBD599", "#00A08799", "#3C548899",
-                  "#F39B7F99", "#8491B499", "#91D1C299", "#DC000099",
-                  "#7E614899", "#B09C8599", "#80000099", "#76767699",
-                  "#FFA31999", "#8A904599", "#155F8399", "#C1662299",
-                  "#8F393199", "#58593F99", "#350E2099",
-                  "#386cb0","#f87f01","#7fc97f","#ef3b2c","#feca01",
-                  "#a6cee3","#fb9a99","#984ea3","#8C591D")
-
-
 #' @title CDF of the Pareto Distribution.
 #'
 #' @description

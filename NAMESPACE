@@ -2,6 +2,7 @@
 
 export(add_labs)
 export(add_lm_line)
+export(cb_colors)
 export(check_expdist)
 export(check_normality)
 export(check_pareto)
