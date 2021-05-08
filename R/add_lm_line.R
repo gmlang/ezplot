@@ -45,53 +45,60 @@ add_lm_line = function(p, alpha = 0.8, linew = 1, show = "eq",
                        eq_tb_xpos = "left", eq_tb_ypos = "top",
                        pv_r2_xpos = "right", pv_r2_ypos = "bottom", ...) {
 
-        p = p + ggplot2::geom_line(stat = "smooth", method = "lm",
+        p = p + ggplot2::geom_line(stat="smooth", method="lm", formula='y ~ x',
                                    alpha = alpha, size = linew)
 
-        if (show == "eq")
+        # there're bugs in stat_fit_glance() and stat_fit_tb() that fail to
+        # invoke broom::glance() on a lm object. So we explicitly call
+        # broom::glance() here as a hack, otherwise, p-val extraction in
+        # stat_fit_glance() and table extraction in stat_fit_tb() will fail
+        broom::glance()
+
+        if (show == "eq") {
                 p = p + ggpmisc::stat_poly_eq(
-                                ggplot2::aes(
-                                        label = paste(..eq.label..,
-                                                      ..rr.label..,
-                                                      sep = "*\",\"~~")
-                                        ),
-                                formula = y ~ x,
-                                parse = TRUE, # allows italic to work
-                                label.x = eq_tb_xpos,
-                                label.y = eq_tb_ypos, ...) +
-                        ggpmisc::stat_fit_glance(
-                                ggplot2::aes(
-                                        label = paste('~italic(p)~-value',
-                                                      ifelse(..p.value.. < 0.001,
-                                                             "< 0.001",
-                                                             paste('~"="~', round(..p.value.., 3))
-                                                             ))
-                                        ),
-                                parse = TRUE, # allows italic to work
-                                label.x = pv_r2_xpos,
-                                label.y = pv_r2_ypos)
+                        ggplot2::aes(label = paste(..eq.label..,
+                                                   ..rr.label..,
+                                                   sep = "*\",\"~~")),
+                        formula = y ~ x,
+                        parse = TRUE, # allows italic to work
+                        label.x = eq_tb_xpos,
+                        label.y = eq_tb_ypos,
+                        ...)
+                p = p + ggpmisc::stat_fit_glance(
+                        ggplot2::aes(
+                                label = paste('~italic(p)~-value',
+                                              ifelse(..p.value.. < 0.001, "< 0.001",
+                                                     paste('~"="~', round(..p.value.., 3))))
+                                ),
+                        # method = 'lm',
+                        # method.args = list(formula = y ~ x),
+                        # glance.args = list(formula = y ~ x),
+                        parse = TRUE, # allows italic to work
+                        label.x = pv_r2_xpos,
+                        label.y = pv_r2_ypos)
+        }
 
-        if (show == "tb")
+        if (show == "tb") {
                 p = p + ggpmisc::stat_fit_tb(
-                                tb.type = "fit.summary",
-                                tb.vars = c("term",
-                                            "est" = "estimate",
-                                            "se" = "std.error",
-                                            "~italic(t)~stat" = "statistic",
-                                            "~italic(p)~val" = "p.value"),
-                                parse = TRUE, # allows italic to work
-                                label.x = eq_tb_xpos,
-                                label.y = eq_tb_ypos, ...) +
-                        ggpmisc::stat_fit_glance(
-                                ggplot2::aes(
-                                        label = sprintf('~italic(R^2)~"="~%.3f',
-                                                        ..r.squared..)),
-                                parse = TRUE, # allows italic to work
-                                label.x = pv_r2_xpos,
-                                label.y = pv_r2_ypos)
-
+                        tb.type = "fit.summary",
+                        tb.vars = c("term",
+                                    "est" = "estimate",
+                                    "se" = "std.error",
+                                    "~italic(t)~stat" = "statistic",
+                                    "~italic(p)~val" = "p.value"),
+                        parse = TRUE, # allows italic to work
+                        label.x = eq_tb_xpos,
+                        label.y = eq_tb_ypos,
+                        ...)
+                p = p + ggpmisc::stat_fit_glance(
+                        ggplot2::aes(label = sprintf('~italic(R^2)~"="~%.3f',
+                                                     ..r.squared..)),
+                        method.args = list(formula = y ~ x),
+                        parse = TRUE, # allows italic to work
+                        label.x = pv_r2_xpos,
+                        label.y = pv_r2_ypos)
+        }
         p
-
 }
 
 
