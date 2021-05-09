@@ -39,3 +39,13 @@ plt = mk_boxplot(films)
 p = plt(yvar = "budget")
 p = add_labs(p, ylab = "budget ($)", title = "Distribution of Budget")
 scale_axis(p, scale = "dollar")
+
+dat = tibble(date = as.Date(40100:40129, origin = "1899-12-30"),
+             rainfall = rnorm(30, 4))
+plt = mk_barplot_resp(dat)
+p = plt('date', 'rainfall')
+scale_axis(p, 'x', scale = 'date', nticks = 15)
+
+dat = tibble(trt = c("a", "b", "c"), outcome = c(2.3, 1.9, 3.2))
+plt = mk_barplot_resp(dat)
+plt('trt', 'outcome')

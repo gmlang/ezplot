@@ -35,30 +35,31 @@
 #' @export
 #' @examples inst/examples/ex-scale_axis.R
 scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
-        # Starting ggplot2 v3.1.1, setting `limit` to the range of the axis breaks
-        # inside scale_x_continuous() / scale_y_continuous() will throw
-        # this warning:
+        # Starting ggplot2 v3.1.1, setting `limit` and `breaks` to the range of
+        # the axis inside scale_x_continuous() or scale_y_continuous() will
+        # throw this warning:
         #       Removed 2 rows containing missing values (geom_bar)
         # although no data are actually removed. This is a bug as documented
         # here: https://github.com/tidyverse/ggplot2/issues/2887
-        # To fix, I'm using `coord_cartesian(ylim=)` or `coord_cartesian(xlim=)`
-        # instead.
+        # To fix, I tried using `coord_cartesian(ylim=)` and
+        # `coord_cartesian(xlim=)`, but they produce unsatisfactory figures.
+        # My final solutiont was to insert `oob = function(x, limits) x`
+        # inside scale_x_continuous() or scale_y_continuous().
 
         # extract data along x or y axis
         d = layer_data(p)
         if (axis %in% names(d)) {
                 vec = d[[axis]]
-        } else { # 'xmax_final' or 'ymax_final' and 'xmin_final' or 'ymin_final'
-                 # must be there, happens for boxplot
-                vec = c(d[[paste0(axis, 'min_final')]],
-                        d[[paste0(axis, 'max_final')]])
-        }
-
-        if (scale != 'date') {
                 min_val = min(vec[is.finite(vec)], na.rm = T)
                 max_val = max(vec[is.finite(vec)], na.rm = T)
-                axis_breaks = pretty(c(min_val, max_val), nticks)
+                if (class(vec) == 'numeric') min_val = min(min_val, 0)
+        } else { # when p is a boxplot, 'xmax_final' or 'ymax_final' and
+                 # 'xmin_final' or 'ymin_final' are there instead
+                min_val = d[[paste0(axis, 'min_final')]]
+                max_val = d[[paste0(axis, 'max_final')]]
         }
+        if (scale != 'date') axis_breaks = pretty(c(min_val, max_val), nticks)
+
 
         # get function that converts numeric to percent format
         if (missing(digits)) {
@@ -71,16 +72,25 @@ scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
 
         if (axis == "y") {
                 switch(scale,
-                       default = p + coord_cartesian(ylim = range(axis_breaks))+
-                               scale_y_continuous(breaks = axis_breaks),
-                       comma = p + coord_cartesian(ylim = range(axis_breaks)) +
+                       default = p + # coord_cartesian(ylim = range(axis_breaks))+
                                scale_y_continuous(breaks = axis_breaks,
+                                                  # limits = range(axis_breaks),
+                                                  # oob = function(x, limits) x
+                                                  ),
+                       comma = p + # coord_cartesian(ylim = range(axis_breaks)) +
+                               scale_y_continuous(breaks = axis_breaks,
+                                                  # limits = range(axis_breaks),
+                                                  # oob = function(x, limits) x,
                                                   labels = scales::comma),
-                       dollar = p + coord_cartesian(ylim = range(axis_breaks)) +
+                       dollar = p + # coord_cartesian(ylim = range(axis_breaks)) +
                                scale_y_continuous(breaks = axis_breaks,
+                                                  # limits = range(axis_breaks),
+                                                  # oob = function(x, limits) x,
                                                   labels = scales::dollar),
-                       pct = p + coord_cartesian(ylim = range(axis_breaks)) +
+                       pct = p + # coord_cartesian(ylim = range(axis_breaks)) +
                                scale_y_continuous(breaks = axis_breaks,
+                                                  # limits = range(axis_breaks),
+                                                  # oob = function(x, limits) x,
                                                   labels = to_pct),
                        log = p + scale_y_continuous(
                                trans = scales::log_trans(),
@@ -98,6 +108,7 @@ scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
                                                e^.x, function(x) round(x, 2)))
                                ),
                        log10 = p + scale_y_log10(
+                               trans = scales::log10_trans(),
                                breaks = scales::trans_breaks(
                                        'log10', function(x) 10^x, n = nticks),
                                labels = scales::trans_format(
@@ -125,22 +136,33 @@ scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
                                        'exp', scales::math_format(ln(.x)))
                                ),
                        date = p + scale_y_date(
-                               breaks = scales::pretty_breaks(nticks))
+                               breaks = scales::pretty_breaks(nticks),
+                               label = scales::label_date_short()
+                               )
                 )
 
         } else {
 
                 switch(scale,
-                       default = p + coord_cartesian(xlim = range(axis_breaks))+
-                               scale_x_continuous(breaks = axis_breaks),
-                       comma = p + coord_cartesian(xlim = range(axis_breaks)) +
+                       default = p + # coord_cartesian(xlim = range(axis_breaks))+
+                               scale_x_continuous(breaks = axis_breaks
+                                                  # limits = range(axis_breaks),
+                                                  # oob = function(x, limits) x
+                                                  ),
+                       comma = p + # coord_cartesian(xlim = range(axis_breaks)) +
                                scale_x_continuous(breaks = axis_breaks,
+                                                  # limits = range(axis_breaks),
+                                                  # oob = function(x, limits) x,
                                                   labels = scales::comma),
-                       dollar = p + coord_cartesian(xlim = range(axis_breaks)) +
+                       dollar = p + # coord_cartesian(xlim = range(axis_breaks)) +
                                scale_x_continuous(breaks = axis_breaks,
+                                                  # limits = range(axis_breaks),
+                                                  # oob = function(x, limits) x,
                                                   labels = scales::dollar),
-                       pct = p + coord_cartesian(xlim = range(axis_breaks)) +
+                       pct = p + # coord_cartesian(xlim = range(axis_breaks)) +
                                scale_x_continuous(breaks = axis_breaks,
+                                                  # limits = range(axis_breaks),
+                                                  # oob = function(x, limits) x,
                                                   labels = to_pct),
                        log = p + scale_x_continuous(
                                trans = scales::log_trans(),
@@ -158,6 +180,7 @@ scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
                                                e^.x, function(x) round(x, 2)))
                                ),
                        log10 = p + scale_x_log10(
+                               trans = scales::log10_trans(),
                                breaks = scales::trans_breaks(
                                        'log10', function(x) 10^x, n = nticks),
                                labels = scales::trans_format(
@@ -185,7 +208,9 @@ scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
                                        'exp', scales::math_format(ln(.x)))
                                ),
                        date = p + scale_x_date(
-                               breaks = scales::pretty_breaks(nticks))
+                               breaks = scales::pretty_breaks(nticks),
+                               label = scales::label_date_short()
+                               )
                 )
         }
 
