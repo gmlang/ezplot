@@ -65,17 +65,45 @@ mk_histdens = function(df) {
                         p = p + geom_density(alpha = 0.8, ...)
                 }
 
-                if (add_vline_median)
-                        p = p + geom_vline(
-                                aes(xintercept = med, color = "median"),
-                                data = df_stats, size = 1,
-                                linetype = "dashed", show.legend = T)
+                legend_med = paste("median:", round(df_stats$med, 2))
+                legend_avg = paste("mean:", round(df_stats$avg, 2))
+                color_med = "#fc7d0b"
+                color_avg = '#56A286'
+                if (add_vline_median & add_vline_mean) {
 
-                if (add_vline_mean)
-                        p = p + geom_vline(
-                                aes(xintercept = avg, color = "mean"),
-                                data = df_stats, size = 1,
-                                linetype = "dashed", show.legend = T)
+                        # add dashed lines at median and mean
+                        p = p + geom_vline(aes(xintercept=med, color="median"),
+                                           data=df_stats, size=1,
+                                           linetype="dashed", show.legend=T) +
+                                geom_vline(aes(xintercept=avg, color="mean"),
+                                           data=df_stats, size=1,
+                                           linetype="dashed", show.legend=T)
+
+                        # add legend to show the values of the median and mean
+                        p = p + scale_color_manual(
+                                name = "",
+                                values = c(median=color_med, mean=color_avg),
+                                labels = c(median=legend_med, mean=legend_avg))
+
+                } else if (add_vline_median){
+                        # add dashed lines at the median
+                        p = p + geom_vline(aes(xintercept=med, color="median"),
+                                           data=df_stats, size=1,
+                                           linetype="dashed", show.legend=T) +
+                                # add legend to show the median value
+                                scale_color_manual(name = "",
+                                                   values=c(median=color_med),
+                                                   labels=c(median=legend_med))
+                } else if (add_vline_mean) {
+                        # add dashed lines at the mean
+                        p = p + geom_vline(aes(xintercept=avg, color="mean"),
+                                           data = df_stats, size = 1,
+                                           linetype="dashed", show.legend=T) +
+                                # add legend to show the mean value
+                                scale_color_manual(name = "",
+                                                   values=c(mean = color_avg),
+                                                   labels=c(mean = legend_avg))
+                } else { }
 
                 # --- Facet --- #
 
@@ -92,20 +120,11 @@ mk_histdens = function(df) {
 
                 # --- Format Legend --- #
 
-                # add legend to indicate median and mean
-                p = p + scale_color_manual(
-                        name = "",
-                        values = c(median = "#fc7d0b", mean = "#a3acb9"),
-                        labels = c(median = paste("median:",
-                                                  round(df_stats$med, 2)),
-                                   mean = paste("mean:",
-                                                round(df_stats$avg, 2)))) +
-                        # but remove legend of the blue fill of the bars
-                        guides(fill = 'none') +
+                # remove legend of the blue fill of the bars
+                p = p + guides(fill = 'none') +
                         theme(legend.position = legend_pos)
 
                 p
-
         }
 }
 
