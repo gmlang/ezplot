@@ -98,7 +98,7 @@ mk_lineplot = function(df) {
                 # --- Format Legend --- #
 
                 if (colorby == "1") { # remove legend
-                        p = p + guides(color = FALSE, fill = FALSE)
+                        p = p + guides(color = 'none', fill = 'none')
                 } else {
                         if (add_cnt_to_legend) {
                                 # count number of non-NA observations for each

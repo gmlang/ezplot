@@ -98,7 +98,7 @@ mk_lollipop = function(df) {
                 # --- Format Legend --- #
 
                 # remove legend
-                p = p + guides(color = FALSE, fill = FALSE)
+                p = p + guides(color = 'none', fill = 'none')
 
 
 

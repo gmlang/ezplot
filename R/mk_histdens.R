@@ -101,7 +101,7 @@ mk_histdens = function(df) {
                                    mean = paste("mean:",
                                                 round(df_stats$avg, 2)))) +
                         # but remove legend of the blue fill of the bars
-                        guides(fill = FALSE) +
+                        guides(fill = 'none') +
                         theme(legend.position = legend_pos)
 
                 p

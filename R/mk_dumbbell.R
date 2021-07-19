@@ -188,7 +188,7 @@ mk_dumbbell = function(df) {
                 # # --- Format legend --- #
                 #
                 # # remove legend
-                # p = p + guides(color = FALSE, fill = FALSE)
+                # p = p + guides(color = 'none', fill = 'none')
 
 
 

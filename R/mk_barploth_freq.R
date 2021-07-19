@@ -170,7 +170,7 @@ mk_barploth_freq = function(df) {
                 # --- Format Legend --- #
 
                 if (fillby == "1") { # remove legend
-                        p = p + guides(color = FALSE, fill = FALSE)
+                        p = p + guides(color = 'none', fill = 'none')
                 } else { # use colorblind-friendly colors
                         p = p + ggthemes::scale_fill_tableau(
                                 "Color Blind", name = legend_title) +

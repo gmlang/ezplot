@@ -69,7 +69,7 @@ mk_heatmap = function(df) {
                 # --- Format Legend --- #
 
                 if (remove_legend)
-                        p = p + guides(color = FALSE, fill = FALSE)
+                        p = p + guides(color = 'none', fill = 'none')
 
 
                 # --- Customize Theme --- #

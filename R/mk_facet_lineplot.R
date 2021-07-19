@@ -74,7 +74,7 @@ mk_facet_lineplot = function(df) {
                 # --- Format Legend --- #
 
                 if (colorby == "1")  # remove legend
-                        p = p + guides(color = FALSE, fill = FALSE)
+                        p = p + guides(color = 'none', fill = 'none')
 
                 p
         }
