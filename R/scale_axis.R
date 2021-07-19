@@ -108,7 +108,6 @@ scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
                                                e^.x, function(x) round(x, 2)))
                                ),
                        log10 = p + scale_y_log10(
-                               trans = scales::log10_trans(),
                                breaks = scales::trans_breaks(
                                        'log10', function(x) 10^x, n = nticks),
                                labels = scales::trans_format(
@@ -180,7 +179,6 @@ scale_axis = function(p, axis = "y", scale = "default", nticks = 10, digits) {
                                                e^.x, function(x) round(x, 2)))
                                ),
                        log10 = p + scale_x_log10(
-                               trans = scales::log10_trans(),
                                breaks = scales::trans_breaks(
                                        'log10', function(x) 10^x, n = nticks),
                                labels = scales::trans_format(
