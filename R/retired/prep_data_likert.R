@@ -90,18 +90,14 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls,
 
         # --- fill x values of missing ylevels with 0 --- #
 
-        pair_vnms = c(yvar, fillby)
-        
         ylvls_in_neg_not_pos = setdiff(unique(df_neg[[yvar]]),
                                        unique(df_pos[[yvar]]))
         if (length(ylvls_in_neg_not_pos) > 0) {
                 add_pos = setNames(expand.grid(ylvls_in_neg_not_pos,
                                                fillby_lvls[idx_pos_lvls]),
-                                   pair_vnms)
-                for (vname in setdiff(names(df_pos), pair_vnms)) 
-                        add_pos[[vname]] = 0
-                df_pos = rbind(select(df_pos, all_of(pair_vnms), everything()), 
-                               add_pos)
+                                   names(df_pos)[1:2])
+                for (vname in names(df_pos)[-(1:2)]) add_pos[[vname]] = 0
+                df_pos = rbind(df_pos, add_pos)
         }
 
         ylvls_in_pos_not_neg = setdiff(unique(df_pos[[yvar]]),
@@ -109,11 +105,9 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls,
         if (length(ylvls_in_pos_not_neg) > 0) {
                 add_neg = setNames(expand.grid(ylvls_in_pos_not_neg,
                                                fillby_lvls[idx_neg_lvls]),
-                                   pair_vnms)
-                for (vname in setdiff(names(df_neg), pair_vnms)) 
-                        add_neg[[vname]] = 0
-                df_neg = rbind(select(df_neg, all_of(pair_vnms), everything()), 
-                               add_neg)
+                                   names(df_neg)[1:2])
+                for (vname in names(df_neg)[-(1:2)]) add_neg[[vname]] = 0
+                df_neg = rbind(df_neg, add_neg)
         }
 
         # --- change x values of the negative set to negative if not already so
@@ -143,16 +137,9 @@ prep_data_likert = function(df, xvar, yvar, fillby, fillby_lvls,
 
         # --- pick good bar colors --- #
 
-        if (nlvls == 2) { # use colorblind friendly colors
-                pal = cb_colors[c('vermilion', 'bluish green')] 
-        } else if (nlvls == 3) {
-                pal = c(cb_colors['vermilion'], cb_gray, cb_colors['bluish green'])
-                
-        } else if (nlvls == 5) {
-                pal = c(cb_colors[c('vermilion', 'reddish purple')], cb_gray, 
-                        cb_colors[c('sky blue', 'bluish green')])
+        if (nlvls == 2) { # use colorblind friendly blue and orange
+                pal = c("#fc7d0b", "#1170aa")
         } else {
-                # do not use color blind friendly colors anymore
                 pal = RColorBrewer::brewer.pal(nlvls, "RdBu")
                 if (!is.null(idx_mid_lvl)) # make middle level gray
                         pal[idx_mid_lvl] = "#DFDFDF"
