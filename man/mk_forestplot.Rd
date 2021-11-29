@@ -41,6 +41,12 @@ data frame of coefficient estimates and 95\% confidence intervals.}
      bottom, to left.
      \item font_size. Overall font size. Default = 14. The font size of the
      axes and legend text is a fraction of this value.
+     \item xlab. A string for labeling the x-axis. When NULL (default), the
+     value of xvar is used. This parameter is added to the function because
+     the object returned from the function cannot be modified by add_labs().
+     \item title. A string as the title of the plot. When NULL (default), the
+     plot is untitled. This parameter is added to the function because
+     the object returned from the function cannot be modified by add_labs().
 }
 }
 \description{

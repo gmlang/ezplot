@@ -40,6 +40,12 @@
 #'      bottom, to left.
 #'      \item font_size. Overall font size. Default = 14. The font size of the
 #'      axes and legend text is a fraction of this value.
+#'      \item xlab. A string for labeling the x-axis. When NULL (default), the
+#'      value of xvar is used. This parameter is added to the function because
+#'      the object returned from the function cannot be modified by add_labs().
+#'      \item title. A string as the title of the plot. When NULL (default), the
+#'      plot is untitled. This parameter is added to the function because
+#'      the object returned from the function cannot be modified by add_labs().
 #' }
 #'
 #' @export
@@ -47,7 +53,8 @@
 mk_forestplot = function(df) {
         function(xvar, xmin_var, xmax_var, yvar, colorby = '1', panel_space = 1,
                  add_vline_xpos = 0, strip_text_y_margin = c(2, 3, 2, 3),
-                 plot_margin = c(2, 1, 2, 1), font_size = 14) {
+                 plot_margin = c(2, 1, 2, 1), font_size = 14,
+                 xlab = NULL, title = NULL) {
 
                 # --- set up --- #
 
@@ -92,9 +99,10 @@ mk_forestplot = function(df) {
 
                 # --- Customize Theme --- #
 
-                # apply the bw theme, necessary
-                p = p + labs(x=paste(xvar, '95% Confidence Interval', sep=', '),
-                             y=NULL) +
+                if (is.null(xlab))
+                        xlab = paste(xvar, 'with Lower and Upper Bounds')
+                p = p + labs(x=xlab, y=NULL, title=title) +
+                        # apply the bw theme, necessary
                         theme_bw(base_size = font_size) +
                         # further customize the theme
                         theme(axis.ticks        = element_blank(),
