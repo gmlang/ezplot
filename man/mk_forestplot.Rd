@@ -47,6 +47,9 @@ data frame of coefficient estimates and 95\% confidence intervals.}
      \item title. A string as the title of the plot. When NULL (default), the
      plot is untitled. This parameter is added to the function because
      the object returned from the function cannot be modified by add_labs().
+     \item scale_x_pct. Logical. If TRUE, use % scale on the x-axis so that
+     the x-labels are all %. Default is FALSE.
+     \item digits. Number of digits when using percent format on x-axis.
 }
 }
 \description{

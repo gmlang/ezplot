@@ -18,7 +18,7 @@
 #'
 #' @return
 #' \code{function(yvar, fillby = "1", yorder = NULL, show_pct = FALSE,
-#'                label_decimals = 1, label_size = 3, legend_title = fillby,
+#'                pct_label_decimals = 1, label_size = 3, legend_title = fillby,
 #'                legend_pos = "right", font_size = 14)}
 #' \itemize{
 #'      \item yvar. String, name of a categorical variable for y-axis.
@@ -30,8 +30,8 @@
 #'      y-axis. When NULL, the categories are shown in their order in the data.
 #'      \item show_pct. Logical, if TRUE, show percent on y-axis; otherwise,
 #'      show count. Default is FALSE.
-#'      \item label_decimals. Integer, the number of decimal points shown on
-#'      the bar labels. Default = 1.
+#'      \item pct_label_decimals. Integer, number of decimal points shown for
+#'      the percent labels. Default = 1.
 #'      \item label_size. Integer, size of bar label text. Default is 3. Hide
 #'      bar labels when its value is 0.
 #'      \item legend_title. String, legend title. Default is the name of the
@@ -46,7 +46,7 @@
 #' @examples inst/examples/ex-mk_barploth_freq.R
 mk_barploth_freq = function(df) {
         function(yvar, fillby = "1", yorder = NULL, show_pct = FALSE,
-                 label_decimals = 1, label_size = 3, legend_title = fillby,
+                 pct_label_decimals = 1, label_size = 3, legend_title = fillby,
                  legend_pos = "right", font_size = 14) {
 
                 # --- Prep --- #
@@ -88,7 +88,7 @@ mk_barploth_freq = function(df) {
 
                 # format bar label text
                 bar_labels_pct = formattable::percent(
-                        df_label[[pct_var]], label_decimals)
+                        df_label[[pct_var]], pct_label_decimals)
                 bar_labels_cnt = scales::comma(
                         df_label[[cnt_var]], accuracy = 1)
 

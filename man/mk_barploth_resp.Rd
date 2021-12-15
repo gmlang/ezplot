@@ -11,8 +11,8 @@ mk_barploth_resp(df)
 \item{df}{A data frame.}
 }
 \value{
-\code{function(xvar, yvar, fillby = "1", yorder = NULL,
-               is_x_pct = FALSE, show_pct = FALSE, label_decimals = 1,
+\code{function(xvar, yvar, fillby = "1", yorder = NULL, is_x_pct = FALSE,
+               show_pct = FALSE, pct_label_decimals=1, raw_label_decimals=0,
                label_size = 3, legend_title = fillby, legend_pos = "right",
                font_size = 14)}
 \itemize{
@@ -31,8 +31,10 @@ mk_barploth_resp(df)
      the aggregated y values between each x category, and then display them
      as percentages on y-axis and also format bar labels as %; otherwise,
      format them as comma. Default is FALSE.
-     \item label_decimals Integer. The number of decimal places shown on
-     the bar labels. Default = 1.
+     \item pct_label_decimals. Integer, number of decimal points shown for
+     the percent labels. Default = 1.
+     \item raw_label_decimals. Integer, number of decimal points shown for
+     the raw number labels. Default = 0.
      \item label_size Integer. The size of bar label text. Default = 3. If 0,
      bar labels will not be shown.
      \item legend_title String. Legend title. Default is the name of the

@@ -46,6 +46,10 @@
 #'      \item title. A string as the title of the plot. When NULL (default), the
 #'      plot is untitled. This parameter is added to the function because
 #'      the object returned from the function cannot be modified by add_labs().
+#'      \item scale_x_pct. Logical. If TRUE, use % scale on the x-axis so that
+#'      the x-labels are all %. Default is FALSE.
+#'      \item digits. Number of digits when using percent format on x-axis.
+#       Default is NULL. Only valid when scale_x_pct is TRUE.
 #' }
 #'
 #' @export
@@ -53,8 +57,8 @@
 mk_forestplot = function(df) {
         function(xvar, xmin_var, xmax_var, yvar, colorby = '1', panel_space = 1,
                  add_vline_xpos = 0, strip_text_y_margin = c(2, 3, 2, 3),
-                 plot_margin = c(2, 1, 2, 1), font_size = 14,
-                 xlab = NULL, title = NULL) {
+                 plot_margin = c(2, 1, 2, 1), font_size = 14, xlab = NULL,
+                 title = NULL, scale_x_pct = FALSE, digits) {
 
                 # --- set up --- #
 
@@ -76,6 +80,13 @@ mk_forestplot = function(df) {
                 # make x-axis breaks
                 xaxis_breaks = pretty(c(df[[xmin_var]], df[[xmax_var]]), 10)
 
+                # helper function
+                if (missing(digits)) {
+                        to_pct = scales::percent
+                } else {
+                        to_pct = function(v) scales::percent(v, accuracy = 10^(-digits))
+                }
+
                 # --- Main Plot --- #
 
                 p = ggplot(df, aes_string(xvar, yvar, xmin=xmin_var, xmax=xmax_var)) +
@@ -86,9 +97,20 @@ mk_forestplot = function(df) {
                                        col = pals, height = 0.4, size = 0.8) +
                         # add vertical line at 0
                         geom_vline(xintercept=add_vline_xpos,
-                                   linetype="dashed", alpha=.5) +
-                        scale_x_continuous(limits = range(xaxis_breaks),
-                                           breaks = xaxis_breaks)
+                                   linetype="dashed", alpha=.5)
+
+                if (scale_x_pct) {
+                        p = p + scale_x_continuous(
+                                # limits = range(xaxis_breaks),
+                                breaks = xaxis_breaks,
+                                labels = to_pct)
+
+                } else {
+                        p = p + scale_x_continuous(
+                                limits = range(xaxis_breaks),
+                                breaks = xaxis_breaks)
+
+                }
 
                 # --- Facet when colorby is not '1' --- #
 

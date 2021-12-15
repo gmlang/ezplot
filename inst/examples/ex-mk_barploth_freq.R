@@ -8,7 +8,7 @@ f("mpaa")
 f("mpaa", yorder = "alphanumeric")
 f("mpaa", yorder = "ascend")
 f("mpaa", yorder = "descend")
-f("mpaa", fillby = "made_money", label_decimals = 0)
+f("mpaa", fillby = "made_money", pct_label_decimals = 0)
 f("year_cat", font_size = 10)
 # use label_size = 0 to remove the bar labels
 f("year_cat", fillby = "made_money", yorder = "descend", label_size = 0,

@@ -13,8 +13,9 @@ mk_barplot_resp(df)
 }
 \value{
 \code{function(xvar, yvar, fillby = "1", xorder = NULL,
-               show_pct = FALSE, label_decimals = 1, label_size = 3,
-               legend_title = fillby, legend_pos = "right", font_size = 14)}
+               show_pct = FALSE, pct_label_decimals=1, raw_label_decimals=0,
+               label_size = 3, legend_title = fillby, legend_pos = "right",
+               font_size = 14)}
 \itemize{
      \item xvar. String, name of a categorical variable for x-axis.
      \item yvar. String, name of a continuous variable for y-axis.
@@ -31,8 +32,10 @@ mk_barplot_resp(df)
      the aggregated y values between each x category, and then display them
      as percentages on y-axis and also format bar labels as %; otherwise,
      format them as comma. Default is FALSE.
-     \item label_decimals. Integer, the number of decimal points shown on the
-     bar labels. Default = 1.
+     \item pct_label_decimals. Integer, number of decimal points shown for
+     the percent labels. Default = 1.
+     \item raw_label_decimals. Integer, number of decimal points shown for
+     the raw number labels. Default = 0.
      \item label_size. Integer, size of bar label text. Default = 3. Hide bar
      labels when its value is 0.
      \item legend_title. String, legend title. Default is the name of the

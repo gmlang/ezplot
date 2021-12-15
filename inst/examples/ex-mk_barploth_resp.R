@@ -5,9 +5,9 @@ films$mpaa = forcats::fct_explicit_na(films$mpaa) # necessary
 
 g = mk_barploth_resp(films)
 unique(films$mpaa)
-g("boxoffice", "mpaa", font_size = 10, label_decimals = 0)
-g("boxoffice", "mpaa", yorder = "alphanumeric", font_size=10, label_decimals=0)
-p = g("boxoffice", "mpaa", yorder = "ascend", font_size = 10, label_decimals = 0)
+g("boxoffice", "mpaa", font_size = 10)
+g("boxoffice", "mpaa", yorder = "alphanumeric", font_size=10)
+p = g("boxoffice", "mpaa", yorder = "ascend", font_size = 10)
 add_labs(p, title = "Fuel efficiency generally decreases with engine size",
          subtitle = "Two seaters (sports cars) are an exception ...",
          caption = "Data from fueleconomy.gov")
@@ -24,11 +24,10 @@ g("boxoffice_in_mil", "mpaa", yorder = "descend", font_size = 10) %>%
 g("bo_bt_ratio", "mpaa", fillby = "year_cat", label_size = 0,
   legend_title = NULL, legend_pos = "top")
 
+# use is_x_pct = T when the x values are percentages between 0 and 1
 df = films %>% count(mpaa, made_money) %>% mutate(pct = n / sum(n))
 g = mk_barploth_resp(df)
-g("pct", "mpaa", yorder = "descend", is_x_pct = T, label_decimals = 2,
-  font_size = 9)
-g("pct", "mpaa", yorder = "descend", show_pct = T, label_decimals = 2,
+g("pct", "mpaa", yorder = "descend", is_x_pct = T, pct_label_decimals = 2,
   font_size = 9) %>%
   add_labs(xlab = 'Relative Frequency (%)',
            title = "There're more R rated films than NC-17, PG and PG-13 combined.",
@@ -42,8 +41,9 @@ g("n", "mpaa", fillby = "made_money", show_pct = T, legend_pos = "bottom",
 
 df = ggplot2::diamonds %>% count(clarity) %>% mutate(pct = n / sum(n))
 g = mk_barploth_resp(df)
-g("n", "clarity", label_decimals = 0) %>% add_labs(xlab = 'Frequency')
-g("pct", "clarity", show_pct = T) %>% add_labs(xlab = 'Relative Frequency (%)')
+g("n", "clarity", pct_label_decimals = 0) %>% add_labs(xlab = 'Frequency')
+g("pct", "clarity", show_pct = T, raw_label_decimals = 2) %>%
+        add_labs(xlab = 'Relative Frequency (%)')
 
 # --- titanic data --- #
 
@@ -64,7 +64,8 @@ g('cnt', 'Class', fillby = 'Sex') %>% # dodged bar chart
 
 # set `is_y_pct = T` when y-values are percentages and already aggregated
 g('pct', 'Class', fillby = 'Sex', is_x_pct = T)
-g('pct', 'Class', fillby = 'Sex')
+# alternatively, show raw values at the end of the bars and the percentages in the middle
+g('pct', 'Class', fillby = 'Sex', raw_label_decimals = 2)
 
 
 df = read.csv(text="category,pct
@@ -93,6 +94,18 @@ df = read.csv(text="category,pct
 # change category to factor and order its levels in ascending order of pct
 df$category = reorder(df$category, df$pct)
 plt = mk_barploth_resp(df)
-plt("pct", "category", is_x_pct = T)
+plt("pct", "category", is_x_pct = T, pct_label_decimals = 0)
 
+# you can choose how many decimal points to display for raw values
+df = read.csv(text="group,avg_value
+A,1.878974923
+B,2.022301957
+C,2.05136
+D,1.767081929
+E,1.63550033
+F,1.561277385", stringsAsFactors = FALSE, sep=',', header=TRUE)
+
+plt = mk_barploth_resp(df)
+plt('avg_value', 'group') # the raw labels have 0 decimals by default
+plt('avg_value', 'group', raw_label_decimals = 2) # show 2 decimals to see details
 

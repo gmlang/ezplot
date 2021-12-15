@@ -6,10 +6,10 @@ library(dplyr)
 films$mpaa = forcats::fct_explicit_na(films$mpaa) # necessary
 
 g = mk_barplot_resp(films)
-g("mpaa", "boxoffice", font_size = 10, label_decimals = 0)
-g("mpaa", "boxoffice", xorder = "alphanumeric", font_size=10, label_decimals=0)
+g("mpaa", "boxoffice", font_size = 10)
+g("mpaa", "boxoffice", xorder = "alphanumeric", font_size=10)
 p = g("mpaa", "boxoffice", xorder = "descend", font_size = 10,
-      label_decimals = 0)
+      pct_label_decimals = 0)
 add_labs(p,
          title = "Fuel efficiency generally decreases with engine size",
          subtitle = "Two seaters (sports cars) are an exception ...",
@@ -23,9 +23,9 @@ g("year_cat", "budget", fillby = "mpaa", show_pct = T, label_size = 0,
 # when freq and relative freq are available for a categorical variable,
 # use mk_barplot_resp() to plot them.
 g = mk_barplot_resp(films %>% count(made_money) %>% mutate(pct = n / sum(n)))
-p = g("made_money", "n", label_decimals = 0)
+p = g("made_money", "n")
 add_labs(p, xlab = 'Made Money?', ylab = 'Frequency')
-p = g("made_money", "pct", label_decimals = 0, show_pct = T)
+p = g("made_money", "pct", is_y_pct = T)
 add_labs(p, xlab = 'Made Money?', ylab = 'Relative Frequency')
 
 # --- titanic data --- #
@@ -54,7 +54,8 @@ g('Class', 'pct', fillby = 'Sex', show_pct = T) %>%
 
 # set `is_y_pct = T` when y-values are percentages
 g('Class', 'pct', fillby = 'Sex', is_y_pct = T)
-g('Class', 'pct', fillby = 'Sex')
+# alternatively, show raw values at the top of the bars and the percentages in the middle
+g('Class', 'pct', fillby = 'Sex', raw_label_decimals = 2)
 dd = dat %>% group_by(Class) %>% summarise(cnt = sum(cnt), .groups = 'drop') %>%
   mutate(pct = cnt / sum(cnt))
 g = mk_barplot_resp(dd)
@@ -87,8 +88,23 @@ df = read.csv(text="category,pct
 # change category to factor and order its levels in ascending order of pct
 df$category = reorder(df$category, df$pct)
 plt = mk_barplot_resp(df)
-plt("category", "pct", is_y_pct = T) %>%
+plt("category", "pct", is_y_pct = T, pct_label_decimals = 0) %>%
   rotate_axis_text(text_angle_x = 90, vjust_x = 0.5)
+
+
+# you can choose how many decimal points to display for raw values
+df = read.csv(text="group,avg_value
+A,1.878974923
+B,2.022301957
+C,2.05136
+D,1.767081929
+E,1.63550033
+F,1.561277385", stringsAsFactors = FALSE, sep=',', header=TRUE)
+
+plt = mk_barplot_resp(df)
+plt('group', 'avg_value') # the raw labels have 0 decimals by default
+plt('group', 'avg_value', raw_label_decimals = 2) # show 2 decimals to see details
+
 
 
 

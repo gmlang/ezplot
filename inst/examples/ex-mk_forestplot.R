@@ -4,6 +4,10 @@ library(dplyr)
 f = mk_forestplot(ests_CIs)
 f(xvar='est', xmin_var='lwr', xmax_var='upr', yvar='model', colorby='1',
   font_size = 10, panel_space = .5)
+f(xvar='est', xmin_var='lwr', xmax_var='upr', yvar='model', colorby='1',
+  font_size = 10, panel_space = .5, scale_x_pct = T)
+f(xvar='est', xmin_var='lwr', xmax_var='upr', yvar='model', colorby='1',
+  font_size = 10, panel_space = .5, scale_x_pct = T, digits = 1)
 f(xvar='est', xmin_var='lwr', xmax_var='upr', yvar='model', colorby='group',
   font_size = 10, panel_space = .5, xlab = 'Point Estimate with 95% CI',
   title = 'Fancy!')
