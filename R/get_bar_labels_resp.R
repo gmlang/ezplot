@@ -17,9 +17,10 @@ get_bar_labels_resp = function(df, gp, resp, fillby, is_resp_pct, show_pct) {
         resp_symb = as.name(resp)
         fillby_symb = as.name(fillby)
 
-        if (fillby == gp)
-                stop("fillby var can't be the same as grouping var!")
-        if (fillby == "1") {
+        # if (fillby == gp)
+        #         stop("fillby var can't be the same as grouping var!")
+
+        if (fillby == gp | fillby == "1") {
                 df_summ = df %>% group_by(!!gp_symb) %>%
                         summarise(!!resp_symb := sum(!!resp_symb, na.rm = T),
                                   .groups = 'drop')

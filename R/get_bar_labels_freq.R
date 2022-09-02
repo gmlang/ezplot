@@ -15,10 +15,10 @@
 #' @seealso \code{\link{mk_barplot_freq}}.
 get_bar_labels_freq = function(df, var, fillby, show_pct) {
 
-        if (fillby == var)
-                stop("fillby var can't be the same as the var to be counted!")
+        # if (fillby == var)
+        #         stop("fillby var can't be the same as the var to be counted!")
 
-        if (fillby == "1") {
+        if (fillby == var | fillby == "1") {
                 df_summ = dplyr::rename(dplyr::count(df, !!as.name(var)),
                                         EZPLOT_cnt = n)
         } else {
