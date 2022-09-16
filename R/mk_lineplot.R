@@ -79,7 +79,14 @@ mk_lineplot = function(df) {
                 }
 
                 # format x-axis
-                if (any(class(df[[xvar]]) %in% c("integer", "numeric"))) {
+                if (any(class(df[[xvar]]) %in% c("POSIXct", "POSIXt"))) {
+                        xbreaks = seq(min(df[[xvar]]), max(df[[xvar]]),
+                                      length.out=8)
+                        p = p + scale_x_datetime(breaks = xbreaks,
+                                                 limits = range(xbreaks),
+                                                 date_labels = "%b %Y")
+                        xlab = NULL
+                } else if (any(class(df[[xvar]]) %in% c("integer", "numeric"))) {
                         # break x-axis into 10 pieces
                         xbreaks = pretty(df[[xvar]], n = 10)
                         p = p + scale_x_continuous(breaks = xbreaks,
